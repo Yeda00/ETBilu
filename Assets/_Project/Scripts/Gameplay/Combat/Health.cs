@@ -11,6 +11,8 @@ namespace OneMoreTime.Gameplay.Combat
         [SerializeField, Min(1)] int maxHealth = 1;
         [Tooltip("Seconds of invulnerability after taking damage (GDD 03).")]
         [SerializeField, Min(0f)] float invulnerabilitySeconds;
+        [Tooltip("Absorbs every hit while on: armour, or a boss part under its shield (GDD 06).")]
+        [SerializeField] bool shielded;
 
         HealthModel model;
 
@@ -23,8 +25,13 @@ namespace OneMoreTime.Gameplay.Combat
         public float Normalized => Model.Normalized;
         public bool IsDead => Model.IsDead;
         public bool IsInvulnerable => Model.IsInvulnerable(Time.time);
+        public bool Shielded
+        {
+            get => Model.Shielded;
+            set => Model.Shielded = value;
+        }
 
-        HealthModel Model => model ??= new HealthModel(maxHealth, invulnerabilitySeconds);
+        HealthModel Model => model ??= new HealthModel(maxHealth, invulnerabilitySeconds) { Shielded = shielded };
 
         public bool TakeDamage(in DamageInfo info)
         {

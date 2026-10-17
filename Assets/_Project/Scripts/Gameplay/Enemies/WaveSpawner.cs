@@ -9,6 +9,7 @@ namespace OneMoreTime.Gameplay.Enemies
     /// <summary>
     /// Plays a <see cref="WaveSchedule"/>: shows a short warning at the right edge, then spawns the
     /// wave just outside it. Killing is never required — the scroll goes on (GDD 04).
+    /// Waits for <see cref="Play"/>: the stage decides when the encounter starts.
     /// </summary>
     public sealed class WaveSpawner : MonoBehaviour
     {
@@ -22,6 +23,7 @@ namespace OneMoreTime.Gameplay.Enemies
         readonly List<Enemy> alive = new();
         TimelineCursor warnings, spawns;
         float clock;
+        bool playing;
         bool cleared;
 
         public event Action<Enemy> EnemySpawned;
@@ -30,6 +32,10 @@ namespace OneMoreTime.Gameplay.Enemies
 
         public float Clock => clock;
         public int AliveCount => alive.Count;
+        public bool IsPlaying => playing;
+
+        /// <summary>Start the schedule from its first wave.</summary>
+        public void Play() => playing = true;
 
         void Start()
         {
@@ -53,6 +59,8 @@ namespace OneMoreTime.Gameplay.Enemies
 
         void Update()
         {
+            if (!playing)
+                return;
             clock += Time.deltaTime;
 
             due.Clear();

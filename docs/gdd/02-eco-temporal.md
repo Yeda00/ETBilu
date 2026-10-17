@@ -4,7 +4,7 @@ chapter: "02"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost)
+source: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost, SwitchPad)
 ---
 
 # ONE MORE TIME | Loop e eco temporal
@@ -91,14 +91,17 @@ explícita do objeto.
 | Ecos ao mesmo tempo | Até 3 (`EchoConfig.maxActiveEchoes`) |
 | Corpo do eco | Sem colisor e sem vida: não bloqueia a nave nem recebe dano |
 | Entrada e saída | O eco aparece e some com um fade de 0,2 s |
+| Gadget | O uso da mina temporal entra na gravação (`EchoEventType.Gadget`); o eco solta a mina no mesmo ponto e instante → [05](05-armadilhas-gadgets-puzzles.md) |
+| Interruptores | O eco segura um interruptor enquanto está sobre a placa. O interruptor confere posições, não colisões, então o eco sem colisor também conta → [05](05-armadilhas-gadgets-puzzles.md) |
+| Puzzles fixos no mundo | A rolagem para no trecho do interruptor (`TrapSection` zera `Playfield.ScrollSpeed`), então o eco volta ao ponto onde foi gravado |
 
 *Por quê:* num side-scroller a tela anda o tempo todo; gravar em coordenadas do mundo deixaria o eco
 para trás, fora da tela, poucos segundos depois.
 
 ## Perguntas em aberto
 
-- [ ] Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final.
+- [ ] Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final. O protótipo segura o interruptor só enquanto o eco ou a nave está sobre a placa, com 0,15 s de folga ao sair.
 - [ ] O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".
 - [ ] Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional. O protótipo já suporta 3 → [10](10-producao.md).
-- [ ] Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (`Playfield.ScrollSpeed = 0`) ou o eco grava em coordenadas do mundo ali? → [05](05-armadilhas-gadgets-puzzles.md)
+- [ ] Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (`Playfield.ScrollSpeed = 0`) ou o eco grava em coordenadas do mundo ali? O protótipo para a rolagem; falta confirmar como regra → [05](05-armadilhas-gadgets-puzzles.md)
 - [ ] Manter a gravação consumida a cada invocação, ou permitir reinvocar a mesma gravação?

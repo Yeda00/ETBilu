@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Echo.EchoGhost
   projectile: {fileID: 3937968666234665963, guid: 493d8a51d20ba40da8e77627581adec8, type: 3}
+  mine: {fileID: 1136294659759232104, guid: 42937b2e496364c1baeeb90f171daced, type: 3}
   visual: {fileID: 7070747181994661312}
   fadeRenderers:
   - {fileID: 2465826902063332509}

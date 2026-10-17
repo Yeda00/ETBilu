@@ -6,7 +6,8 @@ ao lado de versões anteriores de si mesmo. Protótipo para game jam, em Unity 6
 ## Jogar o protótipo
 
 Abra o projeto no Unity 6 (6000.3.25f1), abra `Assets/_Project/Scenes/Arena_01.unity` e dê Play.
-Tudo é placeholder enquanto a arte não chega.
+Tudo é placeholder enquanto a arte não chega. A arena tem ondas de inimigos, um corredor de
+armadilhas (o eco pode segurar o interruptor) e o Guardião do Ciclo; derrotá-lo é a vitória.
 
 | Tecla | Ação |
 |---|---|
@@ -14,6 +15,7 @@ Tudo é placeholder enquanto a arte não chega.
 | Espaço ou clique | Atirar |
 | Segurar Shift | Gravar até 5 s |
 | E | Invocar o eco da gravação |
+| Q | Soltar a mina temporal |
 | Esc | Pausar |
 
 Testes: Window › General › Test Runner › EditMode, ou `unity command run_tests --mode editor`.

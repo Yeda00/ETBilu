@@ -58,12 +58,14 @@ script, nunca aleatórias — o jogador aprende o padrão e planeja o que gravar
 
 Laser gate, laser rotativo, campo de minas, barreiras móveis. Gadgets: mina temporal e pulso de
 interferência (escudo refletor e arpão magnético são expansão). Puzzles de poucos segundos, resolvidos
-dividindo a tarefa entre a nave e o eco.
+dividindo a tarefa entre a nave e o eco. No protótipo: laser gate, barreira móvel e um interruptor que o
+eco segura enquanto está sobre ele; a mina temporal (Q), que o eco também solta.
 
 ## O chefe → [06](gdd/06-chefe-e-runs.md)
 
 **O Guardião do Ciclo** (provisório): Sobrevivência → Preparação → Sincronização → Última chance.
-Vencível com boa sequência temporal, nunca pixel-perfect.
+Vencível com boa sequência temporal, nunca pixel-perfect. No protótipo, as fases 1 a 3: os dois
+geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável.
 
 ## Controles e HUD → [07](gdd/07-controles-e-interface.md)
 
@@ -84,18 +86,19 @@ explicação e descobre sozinho para que serve o eco.
 ## Protótipo — estado atual → [10](gdd/10-producao.md)
 
 Jogável em `Assets/_Project/Scenes/Arena_01.unity`, todo em placeholder (primitivas 3D): nave, tiro,
-gravação de 5 s, eco que repete movimento e tiros, drones e ondulantes em ondas por script, HUD,
-pausa, derrota (o encontro recomeça) e vitória (sobreviver ao encontro). Faltam armadilhas, gadget,
-torreta, chefe e combos.
+gravação de 5 s, eco que repete movimento, tiros e gadget, drones e ondulantes em ondas por script,
+corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
+(fases 1 a 3), HUD, pausa, derrota (o encontro atual recomeça) e vitória (derrotar o Guardião).
+Faltam torreta, combos, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).
 
 ## Perguntas em aberto
 
 - Chefe com quatro fases ou duas? → [06](gdd/06-chefe-e-runs.md)
 - Um ou dois gadgets no MVP? → [05](gdd/05-armadilhas-gadgets-puzzles.md)
 - Um ou até três ecos no MVP? → [02](gdd/02-eco-temporal.md)
-- Quais duas armadilhas entram na jam? → [05](gdd/05-armadilhas-gadgets-puzzles.md)
 - Regra do eco para dispositivos de presença contínua → [02](gdd/02-eco-temporal.md)
-- A gravação é relativa à tela: como ficam os puzzles com interruptores fixos no mundo? → [02](gdd/02-eco-temporal.md)
+- A gravação é relativa à tela: o protótipo para a rolagem nos puzzles; vira regra? → [02](gdd/02-eco-temporal.md)
+- Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração → [06](gdd/06-chefe-e-runs.md)
 - Quais elementos são modelos 3D e quais são sprites 2D → [08](gdd/08-direcao-visual-e-sonora.md)
 - Donos de cada capítulo, datas e equipe da jam → [10](gdd/10-producao.md)
 

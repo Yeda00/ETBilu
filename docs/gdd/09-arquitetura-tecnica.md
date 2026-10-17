@@ -38,8 +38,8 @@ O código fica em `Assets/_Project/Scripts`, em quatro assemblies:
 
 | Assembly | Conteúdo |
 |---|---|
-| `OneMoreTime.Core` | Regras em C# puro, testáveis sem cena: gravação, reprodução, vida, linha do tempo das ondas |
-| `OneMoreTime.Gameplay` | Componentes da cena: input, playfield, nave, tiro, inimigos, ondas, sessão |
+| `OneMoreTime.Core` | Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião |
+| `OneMoreTime.Gameplay` | Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros e sessão |
 | `OneMoreTime.UI` | O HUD |
 | `OneMoreTime.Editor` | A ferramenta que monta o conteúdo placeholder (menu *One More Time › Bootstrap*) |
 
@@ -54,9 +54,17 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | `WeaponSystem` | `ShipWeapon` + `Projectile` + `ProjectilePool` | Tiros reaproveitados por pool |
 | `DamageSystem` | `Health` (+ `HealthModel` no Core) + `ContactDamage` | |
 | `EnemyController` | `Enemy` + `WaveSpawner` + `WaveSchedule` | Ondas são um asset de dados |
-| `GadgetSystem`, `TrapController`, `BossController`, `ComboEvaluator` | — | Ainda não existem |
+| `GadgetSystem` | `ShipGadget` + `TimeMine` (+ `Cooldown`, `TimeMineModel` no Core) | A nave solta a mina; o eco reproduz o evento `Gadget` |
+| `TrapController` | `TrapSection` + `LaserGate` + `MovingBarrier` + `SwitchPad` (+ `TrapCycle`, `ShutterCycle`, `PresenceSwitch`, `LaserGateModel` no Core) | `TrapSection` para a rolagem no puzzle e encerra o encontro |
+| `BossController` | `GuardianBoss` + `SweepLaser` (+ `GuardianModel` no Core) | Fases, escudos, geradores e padrões de tiro |
+| `ComboEvaluator` | — | Ainda não existe |
 | — | `Playfield` | O quadro que rola, com a câmera, a nave e os ecos |
-| — | `GameSession` | Pontuação, pausa, vitória e derrota |
+| — | `StageDirector` + `RunCheckpoint` | Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte |
+| — | `GameSession` | Pontuação, pausa, vitória (o Guardião cai) e derrota |
+
+Armadilhas e tiros do chefe usam a layer `EnemyProjectile`, que só colide com a nave. A mina não tem
+colisor: o alcance e a explosão são consultas de física (`CheckSphere`, `OverlapSphere`) na layer `Enemy`.
+O interruptor também não usa física: compara posições, para o eco, que não tem colisor, poder segurá-lo.
 
 ## Como armazenar a gravação
 
@@ -98,5 +106,5 @@ public struct EchoEvent
 
 ## Perguntas em aberto
 
-- [ ] Lista final de valores de `EchoEventType`.
+- [ ] Lista final de valores de `EchoEventType`. O protótipo usa `Shot` e `Gadget`.
 - [x] Com o mundo em 3D (2.5D), `EchoSample` e `EchoEvent` continuam com `Vector2`: a nave se move só no plano de jogo, e as posições são relativas ao playfield → [02](02-eco-temporal.md).

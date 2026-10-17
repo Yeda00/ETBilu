@@ -35,6 +35,10 @@ movimento e ataque.
 | Drone | 2 de vida, 100 pontos | `Drone` |
 | Ondulante | 1 de vida, 100 pontos | `Ondulante` |
 | Inimigo que bate na nave | 1 de dano | `ContactDamage` |
+| Mina temporal | 4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s | `TimeMine_Ship`, `TimeMine_Echo`, `PlayerShip` → `ShipGadget` |
+| Laser gate e barreira móvel | 1 de dano ao contato | prefabs em `Prefabs/Traps` |
+| Tiros do Guardião | 1 de dano | `Shot_Enemy` |
+| Guardião | núcleo 120 de vida, geradores 12 | `Guardian` → [06](06-chefe-e-runs.md) |
 
 Valores para testar, não definitivos.
 
@@ -50,6 +54,7 @@ Só três categorias, para simplificar o protótipo. O código também marca o d
 que bate na nave), que o GDD v0.1 não lista.
 
 O protótipo já separa os tiros da nave dos tiros do eco (`ShotSource`), o que os combos vão precisar.
+O dano de gadget já existe: é o da mina temporal → [05](05-armadilhas-gadgets-puzzles.md). O dano combinado ainda não.
 
 ## Combos temporais
 
@@ -81,11 +86,11 @@ O jogo pode premiar:
 
 A pontuação **não é necessária** para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.
 
-No protótipo atual a pontuação é só **100 por inimigo abatido**, como placeholder; os prêmios acima ainda não existem.
+No protótipo atual a pontuação é só **100 por inimigo abatido**, **250 por gerador do Guardião** e **5000 pelo núcleo**, como placeholder; os prêmios acima ainda não existem.
 
 ## Perguntas em aberto
 
 - [ ] Valores de vida, dano e invulnerabilidade: os de partida estão na tabela acima; falta validar jogando.
 - [ ] O dano de contato entra como quarta categoria, ou é parte do dano direto?
-- [ ] Combos temporais: nenhum implementado ainda.
+- [ ] Combos temporais: nenhum implementado ainda. A sincronização dos geradores do Guardião já pede nave e eco juntos, como o Synchronized Strike, mas não é reconhecida como combo nem tem feedback próprio. Trap Bait depende de armadilhas que firam inimigos, e as do protótipo só ferem a nave.
 - [ ] Tamanho da "janela curta" de Crossfire e Synchronized Strike: `_TBD_` (§16 pede janelas generosas no começo).

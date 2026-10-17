@@ -46,12 +46,12 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 | Pasta | O que vai nela |
 |---|---|
 | `Scripts/Core` | Regras em C# puro, sem MonoBehaviour, cobertas por testes (`OneMoreTime.Core`) |
-| `Scripts/Gameplay` | Componentes da cena (`OneMoreTime.Gameplay`), uma subpasta por área: Input, World, Ship, Echo, Combat, Enemies, Session |
+| `Scripts/Gameplay` | Componentes da cena (`OneMoreTime.Gameplay`), uma subpasta por área: Input, World, Ship, Echo, Combat, Enemies, Gadgets, Traps, Boss, Session |
 | `Scripts/UI` | HUD (`OneMoreTime.UI`); layout e estilo em `UI/Hud.uxml` e `UI/Hud.uss` |
 | `Scripts/Editor` | Ferramentas de Editor (`OneMoreTime.Editor`) |
 | `Tests/EditMode` | Testes do Core |
 | `Data` | ScriptableObjects de ajuste: `EchoConfig`, ondas em `Data/Waves` |
-| `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, World |
+| `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Traps, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
 | `Scenes` | `Arena_01.unity`, a única cena no build por enquanto |
 | `Input` | `OneMoreTimeControls.inputactions` — o único asset de input do jogo |
@@ -63,6 +63,8 @@ Convenções:
 - **Arte troca sem tocar no código:** cada prefab tem um filho `Visual`; substitua o que está dentro dele.
 - **A cena tem grupos fixos na raiz:** `Systems`, `Lighting`, `Playfield` (câmera, nave, ecos), `World` (cenário), `UI`.
 - **Physics layers** (8–12): Player, PlayerProjectile, Enemy, EnemyProjectile, Echo. A matriz de colisão só deixa tiro acertar o outro lado e inimigo bater na nave; o eco não colide com nada.
+  Armadilhas e tiros do chefe ficam em EnemyProjectile (só ferem a nave). Mina e interruptor não usam colisão: a mina faz consultas de física, o interruptor compara posições.
+- **Encontros:** o `StageDirector` encadeia ondas → corredor de armadilhas → Guardião. Para testar um encontro direto, mude `startAt` no inspector (sem salvar a cena).
 
 ## Trabalhando pelo Unity CLI
 
@@ -72,4 +74,8 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
 - **Conteúdo placeholder:** o menu *One More Time › Bootstrap › Build Placeholder Content* (`unity command menu --path "One More Time/Bootstrap/Build Placeholder Content"`) recria o que faltar — materiais, prefabs, dados, painel de UI e a cena. Não sobrescreve nada que exista; apague um asset para ele ser refeito.
 - **Play mode só anda com a janela do Unity em primeiro plano.** Em segundo plano o jogo fica parado no frame 1 e o teclado é ignorado. Rode `unity command editor_focus` depois de `editor_play`.
 - **Teclas simultâneas:** `simulate_key` troca o estado inteiro do teclado. Para segurar várias, enfileire um `KeyboardState` com `unity command eval` (`InputSystem.QueueStateEvent`).
+  O teclado só chega ao jogo com a Game view em foco (`EditorWindow.GetWindow(GameView).Focus()` por eval); com a tela do Mac bloqueada, os eventos se perdem.
+  Cada `eval` leva alguns segundos: para segurar uma tecla por um tempo exato, enfileire os estados a partir de um `EditorApplication.update` registrado no próprio eval.
+- **Play mode em segundo plano:** `unity command eval 'UnityEngine.Application.runInBackground = true;'` depois de `editor_play` mantém o jogo rodando sem foco (vale só até sair do Play mode).
+- **Pular para um encontro no Play mode:** `RunCheckpoint.Save(StageSegment.Boss)` e `SceneManager.LoadScene(0)` por eval, o mesmo caminho de uma morte.
 - **Capturas** (`capture_game_view --save_path`) são relativas a `Assets/`: salve fora do projeto ou apague depois, para não versionar.

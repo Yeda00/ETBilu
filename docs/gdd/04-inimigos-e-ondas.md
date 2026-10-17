@@ -54,7 +54,7 @@ Para a jam, a recomendação é **começar com um tipo** e adicionar os outros d
 - Os primeiros 10 s não têm obstáculos (ainda não existem): é voo livre.
 - Há ondas extras em 0:33 (drones em dois níveis), 0:50 (ondulantes) e 1:10 (drones), para o encontro não ficar vazio.
 - O aviso de entrada é um marcador piscando na borda direita, 0,8 s antes da onda.
-- O encontro termina 4 s depois da última onda, quando não resta inimigo vivo.
+- O encontro termina 4 s depois da última onda, quando não resta inimigo vivo; aí começa o corredor de armadilhas → [06](06-chefe-e-runs.md).
 
 Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 reaproveitam os mesmos
 três inimigos, combinados com as armadilhas e o gadget → [06](06-chefe-e-runs.md).
