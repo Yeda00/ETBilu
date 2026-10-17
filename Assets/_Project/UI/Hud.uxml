@@ -1,0 +1,52 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="Hud.uss" />
+    <ui:VisualElement name="hud" class="hud" picking-mode="Ignore">
+        <ui:VisualElement class="top" picking-mode="Ignore">
+            <ui:VisualElement class="left" picking-mode="Ignore">
+                <ui:Label text="INTEGRIDADE" class="caption integrity" />
+                <ui:VisualElement class="bar">
+                    <ui:VisualElement name="integrity-fill" class="fill integrity" />
+                </ui:VisualElement>
+
+                <ui:Label text="MEMÓRIA TEMPORAL" class="caption memory" />
+                <ui:VisualElement class="row" picking-mode="Ignore">
+                    <ui:VisualElement class="bar wide">
+                        <ui:VisualElement name="memory-fill" class="fill memory" />
+                    </ui:VisualElement>
+                    <ui:Label name="memory-value" text="0,0 / 5,0 s" class="value" />
+                </ui:VisualElement>
+                <ui:VisualElement class="row" picking-mode="Ignore">
+                    <ui:VisualElement name="rec-dot" class="rec-dot" />
+                    <ui:Label name="memory-state" text="Segure SHIFT para gravar" class="state" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="right" picking-mode="Ignore">
+                <ui:Label text="PONTUAÇÃO" class="caption score" />
+                <ui:Label name="score" text="000000" class="score-value" />
+                <ui:Label text="ECOS ATIVOS" class="caption echo" />
+                <ui:VisualElement class="slots" picking-mode="Ignore">
+                    <ui:VisualElement name="echo-slot-1" class="slot">
+                        <ui:Label text="Eco 01" class="slot-name" />
+                        <ui:Label text="disponível" class="slot-state" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="echo-slot-2" class="slot">
+                        <ui:Label text="Eco 02" class="slot-name" />
+                        <ui:Label text="disponível" class="slot-state" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="echo-slot-3" class="slot">
+                        <ui:Label text="Eco 03" class="slot-name" />
+                        <ui:Label text="disponível" class="slot-state" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="message" class="message hidden" picking-mode="Ignore">
+            <ui:Label name="message-title" text="ONE MORE TIME" class="message-title" />
+            <ui:Label name="message-hint" text="" class="message-hint" />
+        </ui:VisualElement>
+
+        <ui:Label text="WASD mover · ESPAÇO atirar · SHIFT gravar · E invocar eco · ESC pausar" class="hint" />
+    </ui:VisualElement>
+</ui:UXML>

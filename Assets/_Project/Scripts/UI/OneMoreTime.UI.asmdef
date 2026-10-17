@@ -1,0 +1,17 @@
+{
+    "name": "OneMoreTime.UI",
+    "rootNamespace": "OneMoreTime.UI",
+    "references": [
+        "OneMoreTime.Core",
+        "OneMoreTime.Gameplay"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

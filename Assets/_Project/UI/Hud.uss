@@ -1,0 +1,63 @@
+/* Placeholder HUD. Colours follow GDD 08: cyan = you, violet = echo, orange/red = danger. */
+
+.hud {
+    flex-grow: 1;
+    padding: 24px 32px;
+    justify-content: space-between;
+    -unity-font-style: bold;
+}
+
+.top { flex-direction: row; justify-content: space-between; }
+.left, .right { width: 420px; }
+.right { align-items: flex-end; }
+.row { flex-direction: row; align-items: center; margin-top: 4px; }
+
+.caption { font-size: 13px; letter-spacing: 2px; margin: 10px 0 4px 0; padding: 0; }
+.caption.integrity { color: rgb(63, 224, 160); }
+.caption.memory { color: rgb(255, 77, 109); }
+.caption.score { color: rgb(54, 226, 255); }
+.caption.echo { color: rgb(177, 140, 255); margin-top: 14px; }
+
+.bar {
+    width: 220px;
+    height: 12px;
+    background-color: rgba(19, 34, 69, 0.85);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.bar.wide { width: 260px; }
+.fill { height: 100%; width: 100%; }
+.fill.integrity { background-color: rgb(63, 224, 160); }
+.fill.memory { background-color: rgb(255, 77, 109); width: 0%; }
+.fill.memory.ready { background-color: rgb(177, 140, 255); }
+
+.value { color: rgb(230, 236, 255); font-size: 14px; margin-left: 10px; }
+.state { color: rgb(201, 212, 242); font-size: 13px; -unity-font-style: normal; }
+
+.rec-dot {
+    width: 10px; height: 10px; border-radius: 5px; margin-right: 8px;
+    background-color: rgb(42, 58, 99);
+}
+.rec-dot.on { background-color: rgb(255, 77, 109); }
+
+.score-value { color: rgb(230, 236, 255); font-size: 34px; margin: 0; padding: 0; }
+
+.slots { flex-direction: row; }
+.slot {
+    width: 108px; height: 54px; margin-left: 8px; padding: 6px 10px;
+    border-radius: 8px; border-width: 1px;
+    border-color: rgb(36, 52, 95);
+    background-color: rgba(15, 24, 48, 0.85);
+}
+.slot.playing { border-color: rgb(177, 140, 255); background-color: rgba(28, 22, 64, 0.9); }
+.slot.locked { opacity: 0.35; }
+.slot-name { color: rgb(201, 212, 242); font-size: 13px; margin: 0; padding: 0; }
+.slot-state { color: rgb(93, 111, 158); font-size: 12px; -unity-font-style: normal; margin: 2px 0 0 0; padding: 0; }
+.slot.playing .slot-state { color: rgb(177, 140, 255); }
+
+.message { position: absolute; left: 0; right: 0; top: 38%; align-items: center; }
+.message.hidden { display: none; }
+.message-title { color: rgb(255, 138, 61); font-size: 46px; letter-spacing: 6px; }
+.message-hint { color: rgb(255, 201, 161); font-size: 16px; -unity-font-style: normal; }
+
+.hint { align-self: center; color: rgba(138, 155, 196, 0.85); font-size: 12px; -unity-font-style: normal; }
