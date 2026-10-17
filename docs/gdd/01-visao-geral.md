@@ -26,7 +26,7 @@ para criar novas estratégias.
 |---|---|
 | Pilar de design | Cada tentativa deve ensinar algo e criar uma nova possibilidade |
 | Fantasia do jogador | Ser um piloto preso num ciclo temporal que transforma cada movimento, esquiva e disparo em parte de uma estratégia maior |
-| Premissa de câmera | 2D side-scrolling, a nave avança na horizontal — referência: as fases de avião de *Cuphead* |
+| Premissa de câmera | Side-scrolling **2.5D**: mundo 3D visto por uma câmera lateral que lê como 2D; a nave avança na horizontal — referência: as fases de avião de *Cuphead* |
 
 *Por quê:* o jogador não fica mais forte por ter mais vida ou dano. Ele fica mais forte porque
 aprende a coordenar suas ações com as versões anteriores da nave.
@@ -43,10 +43,11 @@ aprende a coordenar suas ações com as versões anteriores da nave.
 
 | Item | Definição inicial |
 |---|---|
-| Gênero | Shooter 2D com padrões de bullet hell |
-| Câmera | Lateral, com avanço horizontal |
+| Gênero | Shooter side-scrolling 2.5D com padrões de bullet hell |
+| Câmera | Lateral, com avanço horizontal; leitura 2D sobre um mundo 3D |
 | Plataforma-alvo | PC |
-| Motor | Unity 2D — o projeto está em Unity 6 (6000.3.25f1), URP 17.3 e Input System 1.20 |
+| Motor | Unity 6 (6000.3.25f1), URP 17.3 e Input System 1.20 |
+| Visual | Mundo e jogabilidade em 3D; parte dos elementos serão sprites 2D → [08](08-direcao-visual-e-sonora.md) |
 | Modo | Single-player |
 | Estrutura | Runs curtas com encontros de combate e chefe → [06](06-chefe-e-runs.md) |
 | Duração-alvo da run | 5–10 minutos no protótipo completo |
@@ -81,3 +82,4 @@ O protótipo se concentra em três experiências:
 
 - [ ] Quem é dono de cada capítulo deste GDD? Hoje todos estão como `_TBD_`.
 - [ ] Público-alvo: não está escrito no GDD v0.1.
+- [ ] O GDD v0.1 descrevia o jogo como 2D; a correção para 2.5D vem do dono do projeto, e outros trechos do v0.1 ainda podem assumir 2D → [09](09-arquitetura-tecnica.md).

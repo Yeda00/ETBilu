@@ -73,3 +73,4 @@ public struct EchoEvent
 ## Perguntas em aberto
 
 - [ ] Lista final de valores de `EchoEventType`.
+- [ ] Com o mundo em 3D (2.5D), `EchoSample` e `EchoEvent` continuam com `Vector2`, ou passam a `Vector3`? Depende de a nave se mover só num plano → [08](08-direcao-visual-e-sonora.md).

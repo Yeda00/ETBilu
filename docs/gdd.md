@@ -22,10 +22,11 @@ derrotar chefes. Cada tentativa deixa para trás ações que viram estratégia: 
 
 | | |
 |---|---|
-| Gênero | Shooter 2D side-scrolling com padrões de bullet hell |
+| Gênero | Shooter side-scrolling **2.5D** (mundo 3D, câmera lateral de leitura 2D) com padrões de bullet hell |
 | Modo | Single-player |
 | Plataforma | PC |
 | Motor | Unity 6 (6000.3), URP, Input System |
+| Visual | Mundo e jogabilidade em 3D; parte dos elementos serão sprites 2D → [08](gdd/08-direcao-visual-e-sonora.md) |
 | Estrutura | Runs curtas de 5–10 min: encontros de combate e um chefe |
 | Contexto | Protótipo para game jam |
 
@@ -71,7 +72,7 @@ O HUD mostra integridade, memória temporal, ecos ativos, gadget, vida do chefe 
 
 ## Visual e som → [08](gdd/08-direcao-visual-e-sonora.md)
 
-Arcade sci-fi. **Ciano** é você, **eco translúcido** é o seu passado, **laranja e vermelho** é perigo.
+2.5D: mundo 3D visto por câmera lateral, com alguns sprites 2D. Arcade sci-fi. **Ciano** é você, **eco translúcido** é o seu passado, **laranja e vermelho** é perigo.
 O som também explica: a gravação pulsa, a invocação reverte, o eco soa filtrado.
 
 ## Escopo da jam → [10](gdd/10-producao.md)
@@ -87,6 +88,7 @@ explicação e descobre sozinho para que serve o eco.
 - Um ou até três ecos no MVP? → [02](gdd/02-eco-temporal.md)
 - Quais duas armadilhas entram na jam? → [05](gdd/05-armadilhas-gadgets-puzzles.md)
 - Regra do eco para dispositivos de presença contínua → [02](gdd/02-eco-temporal.md)
+- Quais elementos são modelos 3D e quais são sprites 2D → [08](gdd/08-direcao-visual-e-sonora.md)
 - Donos de cada capítulo, datas e equipe da jam → [10](gdd/10-producao.md)
 
 ## O GDD completo

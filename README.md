@@ -1,6 +1,6 @@
 # ONE MORE TIME
 
-Um shooter 2D de nave em que o jogador grava e reproduz suas próprias ações passadas para lutar
+Um shooter 2.5D de nave (mundo 3D, câmera lateral) em que o jogador grava e reproduz suas próprias ações passadas para lutar
 ao lado de versões anteriores de si mesmo. Protótipo para game jam, em Unity 6 (6000.3), URP.
 
 ## Documentação

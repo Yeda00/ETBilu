@@ -18,7 +18,7 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Obrigatório — MVP | Opcional — só depois de validar o MVP | Fora do escopo inicial |
 |---|---|---|
 | Nave com movimento e disparo | Até três ecos simultâneos | Rebobinar o mundo inteiro |
-| Uma arena side-scrolling | Um combo temporal com feedback próprio | Campanha extensa |
+| Uma arena side-scrolling 2.5D | Um combo temporal com feedback próprio | Campanha extensa |
 | Gravação de cinco segundos | Um puzzle de sincronização | Vários chefes |
 | Reprodução de movimento e disparos | Um segundo gadget | Progressão roguelite complexa |
 | Pelo menos um tipo de inimigo (drone), com ondas por script | Pontuação por combos e esquivas | Árvore de habilidades |

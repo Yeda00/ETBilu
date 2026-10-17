@@ -15,6 +15,16 @@ Como o jogo se parece e soa, com uma regra: a tela e o som têm que explicar a m
 
 Estética de **arcade sci-fi**: silhuetas legíveis, efeitos de energia e contrastes fortes.
 
+### 2.5D: mundo 3D, leitura 2D
+
+O jogo é um **side-scrolling 2.5D**: o mundo e a jogabilidade são 3D, vistos por uma câmera lateral que lê como 2D. **Alguns elementos serão sprites 2D**, misturados ao mundo 3D.
+
+*Por quê:* a leitura lateral mantém o bullet hell legível, e o 3D dá profundidade, luz e efeitos de energia.
+
+> **Q:** quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: nave, eco, inimigos, projéteis, efeitos, cenário). Marcado como `_TBD_` até o dono decidir.
+
+### Cor
+
 | Elemento | Cor | Regra |
 |---|---|---|
 | **Nave atual** | Azul ou ciano intenso | Contorno nítido; disparos bem visíveis |
@@ -42,3 +52,5 @@ O áudio também comunica a mecânica temporal.
 
 - [ ] Quem é dono da arte e do áudio?
 - [ ] Referências visuais além de *Cuphead* (câmera): `_TBD_`.
+- [ ] Quais elementos são modelos 3D e quais são sprites 2D: `_TBD_`.
+- [ ] A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? `_TBD_`.

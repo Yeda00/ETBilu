@@ -59,7 +59,7 @@
     <div class="scroll"><table class="kv"><tbody>
       <tr><th scope="row">Pilar de design</th><td>Cada tentativa deve ensinar algo e criar uma nova possibilidade</td></tr>
       <tr><th scope="row">Fantasia do jogador</th><td>Ser um piloto preso num ciclo temporal que transforma cada movimento, esquiva e disparo em parte de uma estratégia maior</td></tr>
-      <tr><th scope="row">Premissa de câmera</th><td>2D side-scrolling, a nave avança na horizontal — referência: as fases de avião de <em>Cuphead</em></td></tr>
+      <tr><th scope="row">Premissa de câmera</th><td>Side-scrolling <strong>2.5D</strong>: mundo 3D visto por uma câmera lateral que lê como 2D; a nave avança na horizontal — referência: as fases de avião de <em>Cuphead</em></td></tr>
     </tbody></table></div>
     <p class="why"><em>Por quê:</em> o jogador não fica mais forte por ter mais vida ou dano. Ele fica mais forte porque aprende a coordenar suas ações com as versões anteriores da nave.</p>
   </section>
@@ -72,10 +72,11 @@
   </section>
   <section class="part"><h3>Formato e escopo</h3>
     <div class="scroll"><table class="kv"><tbody>
-      <tr><th scope="row">Gênero</th><td>Shooter 2D com padrões de bullet hell</td></tr>
-      <tr><th scope="row">Câmera</th><td>Lateral, com avanço horizontal</td></tr>
+      <tr><th scope="row">Gênero</th><td>Shooter side-scrolling 2.5D com padrões de bullet hell</td></tr>
+      <tr><th scope="row">Câmera</th><td>Lateral, com avanço horizontal; leitura 2D sobre um mundo 3D</td></tr>
       <tr><th scope="row">Plataforma-alvo</th><td>PC</td></tr>
-      <tr><th scope="row">Motor</th><td>Unity 2D — o projeto está em Unity 6 (6000.3.25f1), URP 17.3 e Input System 1.20</td></tr>
+      <tr><th scope="row">Motor</th><td>Unity 6 (6000.3.25f1), URP 17.3 e Input System 1.20</td></tr>
+      <tr><th scope="row">Visual</th><td>Mundo e jogabilidade em 3D; parte dos elementos serão sprites 2D → <a href="#c08">08</a></td></tr>
       <tr><th scope="row">Modo</th><td>Single-player</td></tr>
       <tr><th scope="row">Estrutura</th><td>Runs curtas com encontros de combate e chefe → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Duração-alvo da run</th><td>5–10 minutos no protótipo completo</td></tr>
@@ -99,6 +100,7 @@
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Quem é dono de cada capítulo deste GDD? Hoje todos estão como <span class="tbd">_TBD_</span>.</span></li>
     <li><span>Público-alvo: não está escrito no GDD v0.1.</span></li>
+    <li><span>O GDD v0.1 descrevia o jogo como 2D; a correção para 2.5D vem do dono do projeto, e outros trechos do v0.1 ainda podem assumir 2D. <a href="#c09">→ 09</a></span></li>
   </ul></div>
 </section>
 
@@ -404,6 +406,11 @@
   <p class="summary">Como o jogo se parece e soa, com uma regra: a tela e o som têm que explicar a mecânica temporal.</p>
   <section class="part"><h3>Direção visual</h3>
     <p>Estética de <strong>arcade sci-fi</strong>: silhuetas legíveis, efeitos de energia e contrastes fortes.</p>
+    <h4>2.5D: mundo 3D, leitura 2D</h4>
+    <p>O jogo é um <strong>side-scrolling 2.5D</strong>: o mundo e a jogabilidade são 3D, vistos por uma câmera lateral que lê como 2D. <strong>Alguns elementos serão sprites 2D</strong>, misturados ao mundo 3D.</p>
+    <p class="why"><em>Por quê:</em> a leitura lateral mantém o bullet hell legível, e o 3D dá profundidade, luz e efeitos de energia.</p>
+    <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: nave, eco, inimigos, projéteis, efeitos, cenário).</div>
+    <h4>Cor</h4>
     <div class="pillars">
       <div class="pillar"><span class="n">AZUL · CIANO</span><b>Nave atual</b><p>Contorno nítido e disparos bem visíveis.</p></div>
       <div class="pillar"><span class="n">TRANSLÚCIDO</span><b>Eco temporal</b><p>Contorno luminoso e um rastro que sugere repetição; distinguível mesmo com muitos projéteis.</p></div>
@@ -424,6 +431,8 @@
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Quem é dono da arte e do áudio?</span></li>
     <li><span>Referências visuais além de <em>Cuphead</em> (câmera): <span class="tbd">_TBD_</span>.</span></li>
+    <li><span>Quais elementos são modelos 3D e quais são sprites 2D: <span class="tbd">_TBD_</span>.</span></li>
+    <li><span>A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? <span class="tbd">_TBD_</span></span></li>
   </ul></div>
 </section>
 
@@ -479,6 +488,7 @@
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Lista final de valores de <code>EchoEventType</code>.</span></li>
+    <li><span>Com o mundo em 3D (2.5D), <code>EchoSample</code> e <code>EchoEvent</code> continuam com <code>Vector2</code>, ou passam a <code>Vector3</code>? Depende de a nave se mover só num plano. <a href="#c08">→ 08</a></span></li>
   </ul></div>
 </section>
 
@@ -494,7 +504,7 @@
   <section class="part"><h3>Escopo</h3>
     <div class="cols">
       <div class="col mvp"><h3>Obrigatório — MVP</h3><ul>
-        <li>Nave com movimento e disparo</li><li>Uma arena side-scrolling</li><li>Gravação de cinco segundos</li><li>Reprodução de movimento e disparos</li><li>Pelo menos um tipo de inimigo (drone), com ondas por script</li><li>Duas armadilhas</li><li>Um gadget funcional</li><li>Um chefe com uma janela de vulnerabilidade temporal</li><li>Interface mínima e condição de vitória e derrota</li></ul></div>
+        <li>Nave com movimento e disparo</li><li>Uma arena side-scrolling 2.5D</li><li>Gravação de cinco segundos</li><li>Reprodução de movimento e disparos</li><li>Pelo menos um tipo de inimigo (drone), com ondas por script</li><li>Duas armadilhas</li><li>Um gadget funcional</li><li>Um chefe com uma janela de vulnerabilidade temporal</li><li>Interface mínima e condição de vitória e derrota</li></ul></div>
       <div class="col opt"><h3>Opcional — depois do MVP</h3><ul>
         <li>Até três ecos simultâneos</li><li>Um combo temporal com feedback próprio</li><li>Um puzzle de sincronização</li><li>Um segundo gadget</li><li>Pontuação por combos e esquivas</li></ul></div>
       <div class="col out"><h3>Fora do escopo inicial</h3><ul>
