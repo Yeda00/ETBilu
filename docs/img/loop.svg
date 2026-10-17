@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 260" role="img" aria-labelledby="t d">
+  <title id="t">Core gameplay loop</title>
+  <desc id="d">Cinco passos em sequência: avançar, gravar, invocar o eco, criar combos e derrotar o chefe. Uma seta volta ao início: cada tentativa ensina algo.</desc>
+  <style>
+    .k{font:700 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em}
+    .s{font:400 12px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#c9d4f2}
+    .n{font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#5d6f9e}
+    .loop{font:600 12px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#b18cff}
+  </style>
+  <defs>
+    <pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#16213f" stroke-width="1"/></pattern>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5d6f9e"/></marker>
+    <marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#b18cff"/></marker>
+  </defs>
+  <rect width="800" height="260" rx="14" fill="#0a0f1f"/>
+  <rect width="800" height="260" rx="14" fill="url(#g)"/>
+
+  <!-- nodes: w=136, gap=20, x = 20,176,332,488,644 -->
+  <g>
+    <rect x="20" y="44" width="136" height="96" rx="10" fill="#0f1830" stroke="#36e2ff" stroke-width="1.5"/>
+    <text x="32" y="64" class="n">01</text>
+    <text x="88" y="90" class="k" fill="#36e2ff" text-anchor="middle">AVANÇAR</text>
+    <text x="88" y="111" class="s" text-anchor="middle">Desviar, atirar,</text>
+    <text x="88" y="127" class="s" text-anchor="middle">ler inimigos</text>
+  </g>
+  <g>
+    <rect x="176" y="44" width="136" height="96" rx="10" fill="#0f1830" stroke="#36e2ff" stroke-width="1.5"/>
+    <text x="188" y="64" class="n">02</text>
+    <circle cx="292" cy="60" r="5" fill="#ff4d6d"/>
+    <text x="244" y="90" class="k" fill="#36e2ff" text-anchor="middle">GRAVAR</text>
+    <text x="244" y="111" class="s" text-anchor="middle">Movimento, tiros</text>
+    <text x="244" y="127" class="s" text-anchor="middle">e gadgets</text>
+  </g>
+  <g>
+    <rect x="332" y="44" width="136" height="96" rx="10" fill="#151233" stroke="#b18cff" stroke-width="1.5" stroke-dasharray="5 3"/>
+    <text x="344" y="64" class="n">03</text>
+    <text x="400" y="90" class="k" fill="#b18cff" text-anchor="middle">INVOCAR O ECO</text>
+    <text x="400" y="111" class="s" text-anchor="middle">Reproduzir as</text>
+    <text x="400" y="127" class="s" text-anchor="middle">ações gravadas</text>
+  </g>
+  <g>
+    <rect x="488" y="44" width="136" height="96" rx="10" fill="#151233" stroke="#b18cff" stroke-width="1.5"/>
+    <text x="500" y="64" class="n">04</text>
+    <text x="556" y="90" class="k" fill="#b18cff" text-anchor="middle">CRIAR COMBOS</text>
+    <text x="556" y="111" class="s" text-anchor="middle">Nave + eco</text>
+    <text x="556" y="127" class="s" text-anchor="middle">+ armadilhas</text>
+  </g>
+  <g>
+    <rect x="644" y="44" width="136" height="96" rx="10" fill="#22140f" stroke="#ff8a3d" stroke-width="1.5"/>
+    <text x="656" y="64" class="n">05</text>
+    <text x="712" y="86" class="k" fill="#ff8a3d" text-anchor="middle">DERROTAR</text>
+    <text x="712" y="101" class="k" fill="#ff8a3d" text-anchor="middle">O CHEFE</text>
+    <text x="712" y="124" class="s" text-anchor="middle">Usar o que aprendeu</text>
+  </g>
+
+  <g stroke="#5d6f9e" stroke-width="1.5" fill="none" marker-end="url(#a)">
+    <path d="M157 92H174"/>
+    <path d="M313 92H330"/>
+    <path d="M469 92H486"/>
+    <path d="M625 92H642"/>
+  </g>
+
+  <!-- the loop back: one more time -->
+  <path d="M712 141 V176 Q712 206 682 206 H118 Q88 206 88 176 V143" fill="none" stroke="#b18cff" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#av)"/>
+  <rect x="240" y="194" width="320" height="24" rx="12" fill="#0a0f1f" stroke="#b18cff" stroke-width="1"/>
+  <text x="400" y="211" class="loop" text-anchor="middle">↻  one more time — cada tentativa ensina algo</text>
+  <text x="400" y="244" class="n" text-anchor="middle">CORE LOOP · GDD §3</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 250" role="img" aria-labelledby="t d">
+  <title id="t">Os três tipos de inimigo</title>
+  <desc id="d">Drone: entra pela direita e voa em linha reta, sem atirar. Ondulante: zigue-zague senoidal em grupos de três a cinco. Torreta: parada no cenário, atira na direção da nave.</desc>
+  <style>
+    .h{font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.06em}
+    .s{font:400 12px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#c9d4f2}
+    .r{font:600 12px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#b18cff}
+    .n{font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#5d6f9e}
+  </style>
+  <defs>
+    <path id="ship" d="M12 0 L-8 -8 L-4 0 L-8 8 Z"/>
+    <path id="drone" d="M-10 0 L4 -8 L10 -8 L6 0 L10 8 L4 8 Z"/>
+    <path id="wave" d="M-9 0 L0 -7 L9 0 L0 7 Z"/>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff8a3d"/></marker>
+  </defs>
+  <rect width="800" height="250" rx="14" fill="#0a0f1f"/>
+  <g fill="#0f1830" stroke="#1e2b52"><rect x="10" y="10" width="252" height="230" rx="10"/><rect x="274" y="10" width="252" height="230" rx="10"/><rect x="538" y="10" width="252" height="230" rx="10"/></g>
+
+  <!-- Drone -->
+  <g transform="translate(10 10)">
+    <text x="14" y="26" class="h" fill="#ff8a3d">DRONE</text><text x="238" y="26" class="n" text-anchor="end">LINHA RETA · NÃO ATIRA</text>
+    <rect x="12" y="38" width="228" height="112" rx="6" fill="#0a0f1f"/>
+    <path d="M232 94 H30" stroke="#ff8a3d" stroke-opacity=".5" stroke-dasharray="4 5" marker-end="url(#a)"/>
+    <g fill="#ff8a3d" stroke="#ffd2a8" stroke-width=".8"><use href="#drone" x="96" y="94"/><use href="#drone" x="136" y="94"/><use href="#drone" x="176" y="94"/></g>
+    <path d="M232 62 l-8 -5 v10 z" fill="#ffc94d"/><text x="218" y="66" class="n" text-anchor="end" fill="#ffc94d">aviso de entrada</text>
+    <text x="14" y="176" class="s">Entra pela direita, em fila.</text>
+    <text x="14" y="200" class="r">Com o eco:</text>
+    <text x="14" y="218" class="s">alvo fácil de Crossfire; ensina a gravar</text>
+  </g>
+
+  <!-- Ondulante -->
+  <g transform="translate(274 10)">
+    <text x="14" y="26" class="h" fill="#ff8a3d">ONDULANTE</text><text x="238" y="26" class="n" text-anchor="end">SENOIDE · GRUPOS DE 3–5</text>
+    <rect x="12" y="38" width="228" height="112" rx="6" fill="#0a0f1f"/>
+    <path d="M232 94 C212 64 192 64 172 94 S132 124 112 94 S72 64 52 94 S32 124 22 108" fill="none" stroke="#ff8a3d" stroke-opacity=".5" stroke-dasharray="4 5" marker-end="url(#a)"/>
+    <g fill="#ff8a3d" stroke="#ffd2a8" stroke-width=".8"><use href="#wave" x="172" y="94"/><use href="#wave" x="142" y="116"/><use href="#wave" x="112" y="94"/><use href="#wave" x="82" y="72"/></g>
+    <text x="14" y="176" class="s">Zigue-zague em grupo; padrão legível.</text>
+    <text x="14" y="200" class="r">Com o eco:</text>
+    <text x="14" y="218" class="s">pode ser levado a armadilhas (Trap Bait)</text>
+  </g>
+
+  <!-- Torreta -->
+  <g transform="translate(538 10)">
+    <text x="14" y="26" class="h" fill="#ff8a3d">TORRETA</text><text x="238" y="26" class="n" text-anchor="end">FIXA · MIRA NA NAVE</text>
+    <rect x="12" y="38" width="228" height="112" rx="6" fill="#0a0f1f"/>
+    <path d="M12 138 H240" stroke="#2a3a63" stroke-width="2"/>
+    <g transform="translate(196 138)"><path d="M-16 0 V-10 Q-16 -18 -8 -18 H8 Q16 -18 16 -10 V0 Z" fill="#ff8a3d" stroke="#ffd2a8" stroke-width=".8"/><path d="M-4 -16 L-22 -32" stroke="#ff8a3d" stroke-width="5" stroke-linecap="round"/></g>
+    <path d="M172 106 L58 70" stroke="#ff4d6d" stroke-opacity=".5" stroke-dasharray="2 5"/>
+    <g fill="#ff4d6d"><circle cx="150" cy="99" r="3.5"/><circle cx="118" cy="89" r="3.5"/><circle cx="86" cy="79" r="3.5"/></g>
+    <use href="#ship" transform="translate(48 66)" fill="#36e2ff"/>
+    <use href="#ship" transform="translate(48 116)" fill="#b18cff" fill-opacity=".35" stroke="#d9c7ff"/>
+    <text x="14" y="176" class="s">Fica no cenário e atira em você.</text>
+    <text x="14" y="200" class="r">Com o eco:</text>
+    <text x="14" y="218" class="s">nave e eco atacam de dois ângulos</text>
+  </g>
+</svg>

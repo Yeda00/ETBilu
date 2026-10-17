@@ -1,0 +1,111 @@
+---
+title: GDD de uma página
+chapter: "00"
+status: draft
+owner: _TBD_
+updated: 2026-10-17
+source: GDD v0.1 em PDF (docs/source/GDD_One_More_Time_v0.1.pdf), reorganizado em capítulos em 2026-10-17
+---
+
+# ONE MORE TIME | GDD de uma página
+
+O jogo inteiro numa página. A versão visual, [`gdd.html`](gdd.html), é gerada a partir deste arquivo.
+Cada bloco aponta para o capítulo do GDD completo, em [`gdd/`](gdd/), que guarda os detalhes.
+
+**O passado continua lutando.**
+
+Um shooter de nave em que o jogador grava e reproduz suas próprias ações passadas para lutar ao mesmo
+tempo com versões anteriores de si mesmo, desviar de armadilhas e explorar combinações temporais para
+derrotar chefes. Cada tentativa deixa para trás ações que viram estratégia: *One More Time*.
+
+![Nave atual e eco temporal lutando juntos](img/echo-concept.svg)
+
+| | |
+|---|---|
+| Gênero | Shooter 2D side-scrolling com padrões de bullet hell |
+| Modo | Single-player |
+| Plataforma | PC |
+| Motor | Unity 6 (6000.3), URP, Input System |
+| Estrutura | Runs curtas de 5–10 min: encontros de combate e um chefe |
+| Contexto | Protótipo para game jam |
+
+## O loop → [02](gdd/02-eco-temporal.md)
+
+![Core loop](img/loop.svg)
+
+**Avançar** (desviar, atirar, ler inimigos) → **Gravar** (movimento, tiros, gadgets) → **Invocar o eco**
+→ **Criar combos** (nave + eco + armadilhas) → **Derrotar o chefe**.
+
+## O eco temporal → [02](gdd/02-eco-temporal.md)
+
+Segure **Shift** para gravar até **5 s** de posição, rotação, tiros e gadgets. Aperte **E** e uma nave
+fantasma repete a sequência a partir do ponto inicial, enquanto você continua pilotando. Até **3 ecos**.
+
+**Regra fundamental:** o eco reproduz as ações, mas não rebobina o mundo. O que morreu continua morto.
+
+## Combate → [03](gdd/03-combate.md)
+
+Movimento em 8 direções, disparo contínuo, um gadget. Três tipos de dano: direto, de gadget e combinado.
+Cinco combos temporais: **Crossfire**, **Trap Bait**, **Double Pulse**, **Reflect Chain**, **Synchronized Strike**.
+
+## Inimigos → [04](gdd/04-inimigos-e-ondas.md)
+
+**Drone** (reto), **Ondulante** (senoidal, em grupos) e **Torreta** (fixa, mira na nave). Ondas por
+script, nunca aleatórias — o jogador aprende o padrão e planeja o que gravar.
+
+## Armadilhas, gadgets, puzzles → [05](gdd/05-armadilhas-gadgets-puzzles.md)
+
+Laser gate, laser rotativo, campo de minas, barreiras móveis. Gadgets: mina temporal e pulso de
+interferência (escudo refletor e arpão magnético são expansão). Puzzles de poucos segundos, resolvidos
+dividindo a tarefa entre a nave e o eco.
+
+## O chefe → [06](gdd/06-chefe-e-runs.md)
+
+**O Guardião do Ciclo** (provisório): Sobrevivência → Preparação → Sincronização → Última chance.
+Vencível com boa sequência temporal, nunca pixel-perfect.
+
+## Controles e HUD → [07](gdd/07-controles-e-interface.md)
+
+WASD/setas · Espaço/clique atira · **Shift** grava · **E** invoca · **Q** gadget · Esc pausa.
+O HUD mostra integridade, memória temporal, ecos ativos, gadget, vida do chefe e combos.
+
+## Visual e som → [08](gdd/08-direcao-visual-e-sonora.md)
+
+Arcade sci-fi. **Ciano** é você, **eco translúcido** é o seu passado, **laranja e vermelho** é perigo.
+O som também explica: a gravação pulsa, a invocação reverte, o eco soa filtrado.
+
+## Escopo da jam → [10](gdd/10-producao.md)
+
+**MVP:** nave, uma arena, gravação de 5 s, reprodução, drones por script, duas armadilhas, um gadget,
+um chefe com janela de vulnerabilidade, vitória e derrota. O teste que importa: alguém joga sem
+explicação e descobre sozinho para que serve o eco.
+
+## Perguntas em aberto
+
+- Chefe com quatro fases ou duas? → [06](gdd/06-chefe-e-runs.md)
+- Um ou dois gadgets no MVP? → [05](gdd/05-armadilhas-gadgets-puzzles.md)
+- Um ou até três ecos no MVP? → [02](gdd/02-eco-temporal.md)
+- Quais duas armadilhas entram na jam? → [05](gdd/05-armadilhas-gadgets-puzzles.md)
+- Regra do eco para dispositivos de presença contínua → [02](gdd/02-eco-temporal.md)
+- Donos de cada capítulo, datas e equipe da jam → [10](gdd/10-producao.md)
+
+## O GDD completo
+
+Um capítulo por arquivo em [`gdd/`](gdd/), ordenado das regras para a sensação (mecânica → dinâmica →
+estética) e depois produção. Versão visual: [`gdd-full.html`](gdd-full.html).
+
+| # | Capítulo | Dono | Status |
+|---|---|---|---|
+| 01 | [Visão geral](gdd/01-visao-geral.md) | _TBD_ | draft |
+| 02 | [Loop e eco temporal](gdd/02-eco-temporal.md) | _TBD_ | draft |
+| 03 | [Combate](gdd/03-combate.md) | _TBD_ | draft |
+| 04 | [Inimigos e ondas](gdd/04-inimigos-e-ondas.md) | _TBD_ | draft |
+| 05 | [Armadilhas, gadgets e puzzles](gdd/05-armadilhas-gadgets-puzzles.md) | _TBD_ | draft |
+| 06 | [Chefe e estrutura das runs](gdd/06-chefe-e-runs.md) | _TBD_ | draft |
+| 07 | [Controles e interface](gdd/07-controles-e-interface.md) | _TBD_ | draft |
+| 08 | [Direção visual e sonora](gdd/08-direcao-visual-e-sonora.md) | _TBD_ | draft |
+| 09 | [Arquitetura técnica](gdd/09-arquitetura-tecnica.md) | _TBD_ | draft |
+| 10 | [Produção — escopo da jam](gdd/10-producao.md) | _TBD_ | draft |
+
+Capítulos novos começam de [`gdd/_template.md`](gdd/_template.md), que também guarda as convenções.
+O PDF original, a fonte de tudo isto, fica em [`source/`](source/GDD_One_More_Time_v0.1.pdf).

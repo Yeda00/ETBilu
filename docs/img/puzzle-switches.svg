@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" role="img" aria-labelledby="t d">
+  <title id="t">Puzzle 1 — Dois interruptores</title>
+  <desc id="d">Passo 1: gravar uma passagem pelo interruptor 1. Passo 2: o eco repete a passagem e desliga o laser 1. Passo 3: a nave vai ao interruptor 2 e desliga o laser 2. Passo 4: com as duas barreiras desligadas, a nave atravessa o corredor.</desc>
+  <style>
+    .h{font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.06em}
+    .s{font:400 11.5px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#c9d4f2}
+    .n{font:700 9.5px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#5d6f9e}
+  </style>
+  <defs>
+    <path id="ship" d="M11 0 L-7 -7 L-3.5 0 L-7 7 Z"/>
+    <g id="room">
+      <rect x="10" y="36" width="168" height="112" rx="6" fill="#0a0f1f"/>
+      <path d="M10 60 H178 M10 124 H178" stroke="#1e2b52"/>
+    </g>
+    <g id="s1"><rect x="-13" y="-4" width="26" height="8" rx="2"/></g>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#36e2ff"/></marker>
+  </defs>
+  <rect width="800" height="240" rx="14" fill="#0a0f1f"/>
+  <g fill="#0f1830" stroke="#1e2b52"><rect x="10" y="10" width="188" height="220" rx="10"/><rect x="204" y="10" width="188" height="220" rx="10"/><rect x="398" y="10" width="188" height="220" rx="10"/><rect x="592" y="10" width="188" height="220" rx="10"/></g>
+
+  <!-- common: S1 at (44,50), S2 at (84,136); L1 at x=140, L2 at x=160 inside corridor y 60..124 -->
+
+  <!-- 1 -->
+  <g transform="translate(10 10)">
+    <circle cx="22" cy="20" r="9" fill="#36e2ff"/><text x="22" y="24" class="h" fill="#0a0f1f" text-anchor="middle">1</text>
+    <text x="38" y="24" class="h" fill="#36e2ff">GRAVAR</text>
+    <use href="#room"/>
+    <g fill="#3fe0a0" fill-opacity=".5"><use href="#s1" x="44" y="50"/><use href="#s1" x="84" y="136"/></g>
+    <text x="62" y="54" class="n">S1</text><text x="102" y="140" class="n">S2</text>
+    <path d="M140 60 V124 M160 60 V124" stroke="#ff4d6d" stroke-width="3"/>
+    <path d="M20 92 C30 60 40 50 60 52 S100 80 110 92" fill="none" stroke="#36e2ff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#a)"/>
+    <use href="#ship" transform="translate(44 52)" fill="#36e2ff"/>
+    <circle cx="164" cy="46" r="4" fill="#ff4d6d"/><text x="156" y="50" class="n" text-anchor="end" fill="#ff4d6d">REC</text>
+    <text x="12" y="176" class="s">Segure Shift e passe</text>
+    <text x="12" y="192" class="s">pelo interruptor 1.</text>
+  </g>
+
+  <!-- 2 -->
+  <g transform="translate(204 10)">
+    <circle cx="22" cy="20" r="9" fill="#b18cff"/><text x="22" y="24" class="h" fill="#0a0f1f" text-anchor="middle">2</text>
+    <text x="38" y="24" class="h" fill="#b18cff">REPRODUZIR</text>
+    <use href="#room"/>
+    <g fill="#3fe0a0"><use href="#s1" x="44" y="50"/></g><g fill="#3fe0a0" fill-opacity=".5"><use href="#s1" x="84" y="136"/></g>
+    <text x="62" y="54" class="n" fill="#3fe0a0">S1</text><text x="102" y="140" class="n">S2</text>
+    <use href="#ship" transform="translate(44 52)" fill="#b18cff" fill-opacity=".35" stroke="#d9c7ff"/>
+    <path d="M140 60 V124" stroke="#5d6f9e" stroke-width="2" stroke-dasharray="3 5"/>
+    <path d="M160 60 V124" stroke="#ff4d6d" stroke-width="3"/>
+    <text x="140" y="134" class="n" text-anchor="middle">L1 OFF</text>
+    <use href="#ship" transform="translate(30 104)" fill="#36e2ff"/>
+    <text x="12" y="176" class="s">Aperte E: o eco repete a</text>
+    <text x="12" y="192" class="s">passagem e desliga o laser 1.</text>
+  </g>
+
+  <!-- 3 -->
+  <g transform="translate(398 10)">
+    <circle cx="22" cy="20" r="9" fill="#36e2ff"/><text x="22" y="24" class="h" fill="#0a0f1f" text-anchor="middle">3</text>
+    <text x="38" y="24" class="h" fill="#36e2ff">DIVIDIR A TAREFA</text>
+    <use href="#room"/>
+    <g fill="#3fe0a0"><use href="#s1" x="44" y="50"/><use href="#s1" x="84" y="136"/></g>
+    <text x="62" y="54" class="n" fill="#3fe0a0">S1</text><text x="102" y="140" class="n" fill="#3fe0a0">S2</text>
+    <use href="#ship" transform="translate(44 52)" fill="#b18cff" fill-opacity=".35" stroke="#d9c7ff"/>
+    <path d="M30 104 C50 120 64 132 78 134" fill="none" stroke="#36e2ff" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <use href="#ship" transform="translate(84 134)" fill="#36e2ff"/>
+    <path d="M140 60 V124 M160 60 V124" stroke="#5d6f9e" stroke-width="2" stroke-dasharray="3 5"/>
+    <text x="150" y="134" class="n" text-anchor="middle">L1 · L2 OFF</text>
+    <text x="12" y="176" class="s">Pilote a nave até o</text>
+    <text x="12" y="192" class="s">interruptor 2.</text>
+  </g>
+
+  <!-- 4 -->
+  <g transform="translate(592 10)">
+    <circle cx="22" cy="20" r="9" fill="#3fe0a0"/><text x="22" y="24" class="h" fill="#0a0f1f" text-anchor="middle">4</text>
+    <text x="38" y="24" class="h" fill="#3fe0a0">ATRAVESSAR</text>
+    <use href="#room"/>
+    <g fill="#3fe0a0" fill-opacity=".5"><use href="#s1" x="44" y="50"/><use href="#s1" x="84" y="136"/></g>
+    <path d="M140 60 V124 M160 60 V124" stroke="#5d6f9e" stroke-width="2" stroke-dasharray="3 5"/>
+    <path d="M84 128 C100 100 110 92 150 92 H164" fill="none" stroke="#36e2ff" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <use href="#ship" transform="translate(168 92)" fill="#36e2ff"/>
+    <text x="12" y="176" class="s">As duas barreiras caíram:</text>
+    <text x="12" y="192" class="s">atravesse o corredor.</text>
+    <text x="12" y="214" class="h" fill="#3fe0a0">✓ DUAS NAVES, UMA TAREFA</text>
+  </g>
+</svg>

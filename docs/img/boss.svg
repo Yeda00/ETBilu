@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-labelledby="t d">
+  <title id="t">O Guardião do Ciclo e suas quatro fases</title>
+  <desc id="d">O chefe é uma máquina com um núcleo blindado, dois geradores que o protegem e um laser. Fase 1, sobrevivência; fase 2, preparação; fase 3, sincronização, quando os dois geradores caem numa janela curta e o núcleo fica exposto; fase 4, última chance.</desc>
+  <style>
+    .h{font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.06em}
+    .s{font:400 11.5px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#c9d4f2}
+    .r{font:600 11.5px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#b18cff}
+    .n{font:700 9.5px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#8a9bc4}
+  </style>
+  <defs>
+    <radialGradient id="core"><stop offset="0" stop-color="#ffe3b8"/><stop offset=".5" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ff4d6d"/></radialGradient>
+    <pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#141e3a"/></pattern>
+  </defs>
+  <rect width="800" height="300" rx="14" fill="#0a0f1f"/>
+  <rect x="10" y="10" width="292" height="280" rx="10" fill="url(#g)" stroke="#1e2b52"/>
+
+  <!-- boss schematic -->
+  <text x="24" y="32" class="h" fill="#ff8a3d">O GUARDIÃO DO CICLO</text>
+  <text x="24" y="47" class="n">NOME PROVISÓRIO</text>
+  <path d="M290 64 H200 Q150 64 130 100 L110 136 Q104 150 110 164 L130 200 Q150 236 200 236 H290 Z" fill="#22140f" stroke="#ff8a3d" stroke-width="1.5"/>
+  <!-- generators -->
+  <rect x="228" y="76" width="30" height="26" rx="4" fill="#2a1016" stroke="#ffc94d"/>
+  <rect x="228" y="198" width="30" height="26" rx="4" fill="#2a1016" stroke="#ffc94d"/>
+  <path d="M243 102 V122 M243 198 V178" stroke="#ffc94d" stroke-width="2" stroke-dasharray="3 3"/>
+  <text x="264" y="93" class="n" fill="#ffc94d">G1</text><text x="264" y="215" class="n" fill="#ffc94d">G2</text>
+  <!-- core + shield -->
+  <circle cx="218" cy="150" r="40" fill="none" stroke="#ffc94d" stroke-width="3" stroke-opacity=".7"/>
+  <circle cx="218" cy="150" r="22" fill="url(#core)"/>
+  <text x="222" y="206" class="n" fill="#ffc94d" text-anchor="end">NÚCLEO</text>
+  <!-- laser emitter + beam -->
+  <circle cx="122" cy="150" r="8" fill="#2a1016" stroke="#ff4d6d" stroke-width="2"/>
+  <path d="M112 150 H24" stroke="#ff4d6d" stroke-width="3" stroke-opacity=".6"/>
+  <text x="26" y="142" class="n" fill="#ff4d6d">LASER</text>
+  <!-- projectiles -->
+  <g fill="#ff8a3d"><circle cx="70" cy="96" r="4"/><circle cx="50" cy="82" r="4"/><circle cx="76" cy="206" r="4"/><circle cx="54" cy="222" r="4"/><circle cx="92" cy="118" r="3"/><circle cx="96" cy="184" r="3"/></g>
+  <text x="24" y="262" class="s" fill="#8a9bc4">Blindado na maior parte do encontro.</text>
+  <text x="24" y="278" class="s" fill="#8a9bc4">Protege uma passagem temporal.</text>
+
+  <!-- phase cards 2x2 -->
+  <g>
+    <rect x="316" y="10" width="229" height="135" rx="10" fill="#0f1830" stroke="#1e2b52"/>
+    <rect x="551" y="10" width="229" height="135" rx="10" fill="#0f1830" stroke="#1e2b52"/>
+    <rect x="316" y="155" width="229" height="135" rx="10" fill="#0f1830" stroke="#1e2b52"/>
+    <rect x="551" y="155" width="229" height="135" rx="10" fill="#1d1124" stroke="#ff4d6d" stroke-opacity=".6"/>
+  </g>
+  <!-- 1 -->
+  <g transform="translate(316 10)">
+    <text x="14" y="26" class="h" fill="#5d6f9e">FASE 1</text><text x="70" y="26" class="h" fill="#ff8a3d">SOBREVIVÊNCIA</text>
+    <rect x="14" y="38" width="200" height="5" rx="2.5" fill="#1e2b52"/><rect x="14" y="38" width="200" height="5" rx="2.5" fill="#ff8a3d"/>
+    <text x="14" y="66" class="s">Projéteis em padrões simples e</text>
+    <text x="14" y="82" class="s">um laser que varre a tela.</text>
+    <text x="14" y="110" class="r">→ mover-se, achar janelas</text>
+    <text x="14" y="126" class="r">   seguras e gravar uma rota</text>
+  </g>
+  <!-- 2 -->
+  <g transform="translate(551 10)">
+    <text x="14" y="26" class="h" fill="#5d6f9e">FASE 2</text><text x="70" y="26" class="h" fill="#ff8a3d">PREPARAÇÃO</text>
+    <rect x="14" y="38" width="200" height="5" rx="2.5" fill="#1e2b52"/><rect x="14" y="38" width="160" height="5" rx="2.5" fill="#ff8a3d"/>
+    <text x="14" y="66" class="s">Dois geradores laterais</text>
+    <text x="14" y="82" class="s">protegem o núcleo.</text>
+    <text x="14" y="110" class="r">→ gravar tiros contra um gerador</text>
+    <text x="14" y="126" class="r">   e atacar o outro</text>
+  </g>
+  <!-- 3 -->
+  <g transform="translate(316 155)">
+    <text x="14" y="26" class="h" fill="#5d6f9e">FASE 3</text><text x="70" y="26" class="h" fill="#ff8a3d">SINCRONIZAÇÃO</text>
+    <rect x="14" y="38" width="200" height="5" rx="2.5" fill="#1e2b52"/><rect x="14" y="38" width="110" height="5" rx="2.5" fill="#ff8a3d"/>
+    <text x="14" y="66" class="s">Os dois geradores caem numa</text>
+    <text x="14" y="82" class="s">janela curta: núcleo exposto.</text>
+    <text x="14" y="110" class="r">→ nave e eco atirando juntos,</text>
+    <text x="14" y="126" class="r">   vivo durante os projéteis</text>
+  </g>
+  <!-- 4 -->
+  <g transform="translate(551 155)">
+    <text x="14" y="26" class="h" fill="#5d6f9e">FASE 4</text><text x="70" y="26" class="h" fill="#ff4d6d">ÚLTIMA CHANCE</text>
+    <rect x="14" y="38" width="200" height="5" rx="2.5" fill="#1e2b52"/><rect x="14" y="38" width="44" height="5" rx="2.5" fill="#ff4d6d"/>
+    <text x="14" y="66" class="s">Mais ataques, janelas de</text>
+    <text x="14" y="82" class="s">vulnerabilidade menores.</text>
+    <text x="14" y="110" class="r">→ aproveitar os ecos já criados</text>
+    <text x="14" y="126" class="r">   para fechar o combate</text>
+  </g>
+</svg>

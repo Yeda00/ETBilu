@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" role="img" aria-labelledby="t d">
+  <title id="t">A nave atual e o eco temporal</title>
+  <desc id="d">Num cenário de rolagem lateral, a nave atual em ciano e o eco em violeta translúcido, que repete uma trajetória gravada, atiram no mesmo inimigo e criam um Crossfire. Um inimigo destruído antes continua destruído: o eco não rebobina o mundo.</desc>
+  <style>
+    .l{font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em}
+    .s{font:400 12px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+  </style>
+  <defs>
+    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#141e3a" stroke-width="1"/></pattern>
+    <radialGradient id="glowC"><stop offset="0" stop-color="#36e2ff" stop-opacity=".45"/><stop offset="1" stop-color="#36e2ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowV"><stop offset="0" stop-color="#b18cff" stop-opacity=".45"/><stop offset="1" stop-color="#b18cff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="boom"><stop offset="0" stop-color="#fff3d6"/><stop offset=".35" stop-color="#ffb35c"/><stop offset="1" stop-color="#ff8a3d" stop-opacity="0"/></radialGradient>
+    <path id="ship" d="M16 0 L-10 -10 L-5 0 L-10 10 Z"/>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5d6f9e"/></marker>
+  </defs>
+  <rect width="800" height="340" rx="14" fill="#0a0f1f"/>
+  <rect width="800" height="340" rx="14" fill="url(#g)"/>
+  <!-- stars -->
+  <g fill="#3a4a78">
+    <circle cx="120" cy="40" r="1.2"/><circle cx="230" cy="96" r="1"/><circle cx="610" cy="54" r="1.4"/><circle cx="700" cy="280" r="1"/>
+    <circle cx="80" cy="140" r="1"/><circle cx="420" cy="300" r="1.2"/><circle cx="760" cy="80" r="1"/><circle cx="330" cy="240" r="1"/>
+    <circle cx="560" cy="310" r="1"/><circle cx="170" cy="300" r="1.3"/>
+  </g>
+
+  <!-- scroll direction -->
+  <text x="24" y="30" class="l" fill="#5d6f9e">AVANÇO HORIZONTAL</text>
+  <path d="M164 26 H214" stroke="#5d6f9e" stroke-width="1.5" marker-end="url(#a)"/>
+  <g transform="translate(676 18)">
+    <rect width="100" height="22" rx="11" fill="#151233" stroke="#b18cff"/>
+    <circle cx="14" cy="11" r="4" fill="#b18cff"/>
+    <text x="26" y="15" class="l" fill="#b18cff">ECO 1 / 3</text>
+  </g>
+
+  <!-- recorded path: already replayed (solid) and still to replay (dashed) -->
+  <path d="M60 250 C150 250 190 140 290 160 S420 210 520 170" fill="none" stroke="#b18cff" stroke-opacity=".55" stroke-width="2"/>
+  <path d="M520 170 S650 110 760 130" fill="none" stroke="#b18cff" stroke-opacity=".5" stroke-width="2" stroke-dasharray="4 6"/>
+  <!-- sample dots along the recording -->
+  <g fill="#b18cff" fill-opacity=".6">
+    <circle cx="60" cy="250" r="3"/><circle cx="120" cy="244" r="2"/><circle cx="170" cy="215" r="2"/><circle cx="220" cy="175" r="2"/>
+    <circle cx="290" cy="160" r="2"/><circle cx="350" cy="174" r="2"/><circle cx="410" cy="191" r="2"/><circle cx="470" cy="186" r="2"/>
+  </g>
+  <text x="62" y="272" class="s" fill="#8a9bc4">início da gravação</text>
+
+  <!-- ghost copies (earlier frames of the echo) -->
+  <use href="#ship" transform="translate(290 160) rotate(-5)" fill="#b18cff" fill-opacity=".12" stroke="#b18cff" stroke-opacity=".3"/>
+  <use href="#ship" transform="translate(410 191) rotate(8)" fill="#b18cff" fill-opacity=".18" stroke="#b18cff" stroke-opacity=".4"/>
+
+  <!-- destroyed enemy stays destroyed -->
+  <g transform="translate(380 92)" opacity=".7">
+    <path d="M0 -12 L12 0 L0 12 L-12 0 Z" fill="none" stroke="#5d6f9e" stroke-dasharray="3 3"/>
+    <path d="M-7 -7 L7 7 M7 -7 L-7 7" stroke="#5d6f9e" stroke-width="2"/>
+  </g>
+  <text x="400" y="80" class="s" fill="#8a9bc4">destruído antes do eco:</text>
+  <text x="400" y="96" class="s" fill="#8a9bc4">continua destruído</text>
+
+  <!-- echo ship -->
+  <circle cx="520" cy="170" r="30" fill="url(#glowV)"/>
+  <use href="#ship" transform="translate(520 170) rotate(-12)" fill="#b18cff" fill-opacity=".35" stroke="#d9c7ff" stroke-width="1.5"/>
+  <text x="470" y="134" class="l" fill="#b18cff">ECO</text>
+  <text x="502" y="134" class="s" fill="#c9b6ff">repete os 5 s gravados</text>
+
+  <!-- current ship -->
+  <path d="M300 300 C360 300 410 286 470 282" fill="none" stroke="#36e2ff" stroke-opacity=".35" stroke-width="2"/>
+  <circle cx="470" cy="282" r="30" fill="url(#glowC)"/>
+  <use href="#ship" transform="translate(470 282) rotate(-8)" fill="#36e2ff" stroke="#c8f7ff" stroke-width="1"/>
+  <text x="404" y="322" class="l" fill="#36e2ff">NAVE ATUAL</text>
+  <text x="490" y="322" class="s" fill="#9fefff">você controla</text>
+
+  <!-- bullets -->
+  <g stroke-linecap="round" stroke-width="3">
+    <path d="M548 178 L562 182 M584 189 L598 193 M620 199 L634 203" stroke="#b18cff"/>
+    <path d="M498 276 L512 271 M540 262 L554 257 M582 248 L596 243 M622 234 L636 229" stroke="#36e2ff"/>
+  </g>
+
+  <!-- target + crossfire -->
+  <circle cx="672" cy="216" r="36" fill="url(#boom)"/>
+  <g transform="translate(672 216)">
+    <path d="M0 -14 L14 0 L0 14 L-14 0 Z" fill="#ff8a3d" stroke="#ffd2a8" stroke-width="1.5"/>
+    <circle r="4" fill="#22140f"/>
+  </g>
+  <text x="704" y="254" class="l" fill="#ff8a3d" text-anchor="middle">CROSSFIRE</text>
+  <text x="704" y="270" class="s" fill="#ffc9a1" text-anchor="middle">dano adicional</text>
+</svg>

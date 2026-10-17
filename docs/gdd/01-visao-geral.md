@@ -1,0 +1,83 @@
+---
+title: Visão geral
+chapter: "01"
+status: draft
+owner: _TBD_
+updated: 2026-10-17
+source: GDD v0.1 (PDF) §1, §2 e §17 — docs/source/GDD_One_More_Time_v0.1.pdf
+---
+
+# ONE MORE TIME | Visão geral
+
+O que o jogo é, qual é a fantasia do jogador, os pilares que orientam cada decisão e o formato do protótipo.
+
+![Nave atual e eco temporal lutando juntos](../img/echo-concept.svg)
+
+## High concept
+
+Um shooter de nave em que o jogador **grava e reproduz suas próprias ações passadas** para lutar
+ao mesmo tempo com versões anteriores de si mesmo, desviar de armadilhas e explorar combinações
+temporais para derrotar chefes.
+
+O tema central é *One More Time*: cada tentativa deixa para trás ações que podem ser reproduzidas
+para criar novas estratégias.
+
+| | |
+|---|---|
+| Pilar de design | Cada tentativa deve ensinar algo e criar uma nova possibilidade |
+| Fantasia do jogador | Ser um piloto preso num ciclo temporal que transforma cada movimento, esquiva e disparo em parte de uma estratégia maior |
+| Premissa de câmera | 2D side-scrolling, a nave avança na horizontal — referência: as fases de avião de *Cuphead* |
+
+*Por quê:* o jogador não fica mais forte por ter mais vida ou dano. Ele fica mais forte porque
+aprende a coordenar suas ações com as versões anteriores da nave.
+
+## Pilares de experiência
+
+| # | Pilar | O que significa |
+|---|---|---|
+| 1 | **O passado continua lutando** | As ações gravadas viram ecos que repetem trajetórias, tiros e gadgets |
+| 2 | **Combate baseado em habilidade** | O jogador precisa dominar o movimento, ler padrões de ataque e criar boas trajetórias |
+| 3 | **Soluções inteligentes** | Armadilhas, dispositivos e chefes são vencidos por sincronização e posicionamento, não só por dano bruto |
+
+## Formato e escopo
+
+| Item | Definição inicial |
+|---|---|
+| Gênero | Shooter 2D com padrões de bullet hell |
+| Câmera | Lateral, com avanço horizontal |
+| Plataforma-alvo | PC |
+| Motor | Unity 2D — o projeto está em Unity 6 (6000.3.25f1), URP 17.3 e Input System 1.20 |
+| Modo | Single-player |
+| Estrutura | Runs curtas com encontros de combate e chefe → [06](06-chefe-e-runs.md) |
+| Duração-alvo da run | 5–10 minutos no protótipo completo |
+| Duração de uma gravação | 5 segundos → [02](02-eco-temporal.md) |
+| Ecos simultâneos | Até 3 no protótipo |
+| Conteúdo inicial | Uma arena, um conjunto de armadilhas e um chefe |
+| Controles | Teclado e mouse, ou só teclado; suporte a controle pode vir depois → [07](07-controles-e-interface.md) |
+| Contexto | Protótipo para game jam |
+
+Os números são parâmetros iniciais de design para testar, não valores definitivos.
+
+## Resumo executivo
+
+O diferencial é transformar o **próprio histórico do jogador em ferramenta de gameplay**. Uma esquiva
+pode virar distração, um disparo pode preparar um ataque posterior e um gadget pode abrir uma rota
+que seria impossível atravessar sozinho.
+
+O protótipo se concentra em três experiências:
+
+| Experiência | O jogador… |
+|---|---|
+| **Repetir** | observa o eco executando exatamente o que foi gravado |
+| **Combinar** | usa a nave atual e o eco para atacar, desviar ou manipular armadilhas |
+| **Descobrir** | percebe uma solução temporal para um desafio que parecia impossível |
+
+> **Recomendação de produção:** começar com uma única arena e um chefe que exija dois ataques
+> sincronizados. Se essa experiência funcionar, e o jogador sentir que planejou uma solução
+> inteligente, o coração do jogo está validado. O resto — mais gadgets, chefes, upgrades e estrutura
+> roguelite — cresce a partir desse núcleo sem pôr em risco a entrega da jam.
+
+## Perguntas em aberto
+
+- [ ] Quem é dono de cada capítulo deste GDD? Hoje todos estão como `_TBD_`.
+- [ ] Público-alvo: não está escrito no GDD v0.1.

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 270" role="img" aria-labelledby="t d">
+  <title id="t">Mapa de teclas proposto</title>
+  <desc id="d">WASD ou setas movimentam a nave. Espaço ou botão esquerdo do mouse atira. Segurar Shift grava. E invoca o eco. Q usa o gadget. Esc pausa.</desc>
+  <style>
+    .k{font:700 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ks{font:700 10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .s{font:400 12px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#c9d4f2}
+    .n{font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#5d6f9e;letter-spacing:.06em}
+  </style>
+  <rect width="800" height="270" rx="14" fill="#0a0f1f"/>
+
+  <!-- keys: default -->
+  <g fill="#111a33" stroke="#24345f">
+    <rect x="24" y="80" width="40" height="44" rx="7"/>
+    <rect x="24" y="130" width="52" height="44" rx="7"/>
+  </g>
+  <g class="ks" fill="#3a4a78"><text x="44" y="106" text-anchor="middle">TAB</text><text x="50" y="156" text-anchor="middle">CAPS</text></g>
+
+  <!-- Esc -->
+  <rect x="24" y="26" width="44" height="44" rx="7" fill="#111a33" stroke="#8a9bc4"/>
+  <text x="46" y="53" class="ks" fill="#c9d4f2" text-anchor="middle">ESC</text>
+
+  <!-- Q W E -->
+  <rect x="70" y="80" width="44" height="44" rx="7" fill="#2a2210" stroke="#ffc94d" stroke-width="1.5"/><text x="92" y="107" class="k" fill="#ffc94d" text-anchor="middle">Q</text>
+  <rect x="120" y="80" width="44" height="44" rx="7" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5"/><text x="142" y="107" class="k" fill="#36e2ff" text-anchor="middle">W</text>
+  <rect x="170" y="80" width="44" height="44" rx="7" fill="#1c1640" stroke="#b18cff" stroke-width="1.5"/><text x="192" y="107" class="k" fill="#b18cff" text-anchor="middle">E</text>
+  <!-- A S D -->
+  <rect x="82" y="130" width="44" height="44" rx="7" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5"/><text x="104" y="157" class="k" fill="#36e2ff" text-anchor="middle">A</text>
+  <rect x="132" y="130" width="44" height="44" rx="7" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5"/><text x="154" y="157" class="k" fill="#36e2ff" text-anchor="middle">S</text>
+  <rect x="182" y="130" width="44" height="44" rx="7" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5"/><text x="204" y="157" class="k" fill="#36e2ff" text-anchor="middle">D</text>
+  <!-- Shift + Space -->
+  <rect x="24" y="180" width="96" height="44" rx="7" fill="#2a1016" stroke="#ff4d6d" stroke-width="1.5"/>
+  <circle cx="40" cy="202" r="4" fill="#ff4d6d"/><text x="80" y="207" class="ks" fill="#ff8fa3" text-anchor="middle">SHIFT</text>
+  <rect x="126" y="180" width="200" height="44" rx="7" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="226" y="207" class="ks" fill="#36e2ff" text-anchor="middle">ESPAÇO</text>
+
+  <!-- arrows -->
+  <g fill="#0d2633" stroke="#36e2ff" stroke-opacity=".6">
+    <rect x="404" y="130" width="44" height="44" rx="7"/>
+    <rect x="354" y="180" width="44" height="44" rx="7"/><rect x="404" y="180" width="44" height="44" rx="7"/><rect x="454" y="180" width="44" height="44" rx="7"/>
+  </g>
+  <g fill="#36e2ff" fill-opacity=".8">
+    <path d="M426 144 l7 10 h-14z"/><path d="M426 210 l7 -10 h-14z"/><path d="M370 202 l10 -7 v14z"/><path d="M482 202 l-10 -7 v14z"/>
+  </g>
+  <text x="426" y="118" class="n" text-anchor="middle">OU SETAS</text>
+
+  <!-- mouse -->
+  <g transform="translate(540 120)">
+    <rect x="0" y="0" width="64" height="104" rx="32" fill="#111a33" stroke="#24345f"/>
+    <path d="M32 0 V44 M0 44 H64" stroke="#24345f"/>
+    <path d="M32 0 A32 32 0 0 0 0 32 V44 H32 Z" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5" stroke-dasharray="5 3"/>
+  </g>
+  <text x="572" y="108" class="n" text-anchor="middle">OU CLIQUE</text>
+
+  <!-- legend -->
+  <g transform="translate(250 30)">
+    <text x="0" y="0" class="n">AÇÃO</text>
+    <rect x="0" y="12" width="12" height="12" rx="3" fill="#36e2ff"/><text x="20" y="22" class="s">Movimentar · atirar</text>
+    <rect x="0" y="34" width="12" height="12" rx="3" fill="#ff4d6d"/><text x="20" y="44" class="s">Segurar Shift: gravar</text>
+    <rect x="160" y="12" width="12" height="12" rx="3" fill="#b18cff"/><text x="180" y="22" class="s">E: invocar o eco</text>
+    <rect x="160" y="34" width="12" height="12" rx="3" fill="#ffc94d"/><text x="180" y="44" class="s">Q: usar o gadget</text>
+    <rect x="320" y="12" width="12" height="12" rx="3" fill="#8a9bc4"/><text x="340" y="22" class="s">Esc: pausar</text>
+  </g>
+  <text x="776" y="254" class="n" text-anchor="end">ATALHOS PROVISÓRIOS · GRAVAR E INVOCAR EM TECLAS SEPARADAS</text>
+</svg>
