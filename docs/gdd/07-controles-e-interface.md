@@ -4,7 +4,7 @@ chapter: "07"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §11 — docs/source/GDD_One_More_Time_v0.1.pdf
+source: GDD v0.1 (PDF) §11; protótipo em Assets/_Project/Input e Assets/_Project/UI
 ---
 
 # ONE MORE TIME | Controles e interface
@@ -29,13 +29,17 @@ Os atalhos são provisórios.
 *Por quê:* o que importa é **separar a gravação da reprodução**, para o jogador não invocar o eco sem
 querer enquanto tenta desviar de uma armadilha.
 
-O projeto já tem um `Assets/InputSystem_Actions.inputactions` (o padrão do Unity); estas ações ainda não estão nele.
+No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControls.inputactions` (mapa `Gameplay`), lidas só pelo `PlayerInputReader`. Q já está mapeado, mas ainda não há gadget.
 
 ## HUD
 
 ![Mockup conceitual do HUD](../img/hud.svg)
 
 *Mockup conceitual — não representa uma interface implementada.*
+
+O HUD do protótipo (UI Toolkit: `Hud.uxml` e `Hud.uss`) já mostra integridade, memória temporal com o
+tempo gravado, os três espaços de eco, a pontuação e as mensagens de pausa, derrota e encontro concluído.
+Faltam o gadget, a vida do chefe e o aviso de combo.
 
 O HUD mostra com clareza:
 

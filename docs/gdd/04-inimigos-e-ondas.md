@@ -4,7 +4,7 @@ chapter: "04"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §5.5 — docs/source/GDD_One_More_Time_v0.1.pdf
+source: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project/Data/Waves/Encounter01_PrimeiroCiclo.asset
 ---
 
 # ONE MORE TIME | Inimigos e ondas
@@ -48,10 +48,19 @@ Para a jam, a recomendação é **começar com um tipo** e adicionar os outros d
 | 0:40 – 1:00 | Primeiro grupo de ondulantes | Ler o padrão e atacar com nave e eco ao mesmo tempo |
 | 1:00 – 1:20 | Torreta + drones | Introduzir a ideia de dividir tarefas entre nave e eco |
 
+**No protótipo atual** o encontro 1 está em `Encounter01_PrimeiroCiclo.asset`, com estas diferenças:
+
+- Drone e ondulante existem; a **torreta ainda não**, então 1:00–1:20 usa só drones.
+- Os primeiros 10 s não têm obstáculos (ainda não existem): é voo livre.
+- Há ondas extras em 0:33 (drones em dois níveis), 0:50 (ondulantes) e 1:10 (drones), para o encontro não ficar vazio.
+- O aviso de entrada é um marcador piscando na borda direita, 0,8 s antes da onda.
+- O encontro termina 4 s depois da última onda, quando não resta inimigo vivo.
+
 Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 reaproveitam os mesmos
 três inimigos, combinados com as armadilhas e o gadget → [06](06-chefe-e-runs.md).
 
 ## Perguntas em aberto
 
-- [ ] Limite de inimigos simultâneos na tela: `_TBD_`.
+- [ ] Limite de inimigos simultâneos na tela: `_TBD_` (o protótipo ainda não limita).
+- [ ] Torreta: falta implementar.
 - [ ] Ondas dos encontros 2 e 3: só o encontro 1 tem linha do tempo no v0.1.

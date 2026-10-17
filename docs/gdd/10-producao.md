@@ -4,7 +4,7 @@ chapter: "10"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §14, §15 e §16 — docs/source/GDD_One_More_Time_v0.1.pdf
+source: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17
 ---
 
 # ONE MORE TIME | Produção — escopo da jam
@@ -27,17 +27,31 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Um chefe com uma janela de vulnerabilidade temporal | | |
 | Interface mínima e condição de vitória e derrota | | |
 
+## Estado do MVP
+
+| Item do MVP | Estado |
+|---|---|
+| Nave com movimento e disparo | ✅ |
+| Uma arena side-scrolling 2.5D | ✅ cena `Arena_01`, placeholder |
+| Gravação de cinco segundos | ✅ |
+| Reprodução de movimento e disparos | ✅ |
+| Drone com ondas por script | ✅ (e o ondulante) |
+| Duas armadilhas | ⬜ |
+| Um gadget funcional | ⬜ |
+| Um chefe com janela de vulnerabilidade temporal | ⬜ |
+| Interface mínima e condição de vitória e derrota | ✅ vitória = sobreviver ao encontro, até o chefe existir |
+
 ## Critérios de aceitação do protótipo
 
 O protótipo está pronto para teste quando:
 
-1. [ ] O jogador grava e reproduz uma sequência de cinco segundos.
-2. [ ] O eco repete movimentos e disparos sem depender do controle atual.
-3. [ ] A reprodução continua funcionando quando os inimigos se movem ou morrem.
+1. [x] O jogador grava e reproduz uma sequência de cinco segundos.
+2. [x] O eco repete movimentos e disparos sem depender do controle atual.
+3. [x] A reprodução continua funcionando quando os inimigos se movem ou morrem.
 4. [ ] Uma armadilha pode ser manipulada por uma ação registrada.
 5. [ ] O jogador combina o eco com a nave atual para criar pelo menos um ataque especial.
 6. [ ] O chefe pode ser derrotado usando a mecânica temporal.
-7. [ ] O jogador entende visualmente qual nave é a atual e qual é o eco.
+7. [ ] O jogador entende visualmente qual nave é a atual e qual é o eco. (Com placeholder já se distingue; falta testar com jogadores.)
 8. [ ] A mecânica continua legível nos momentos com mais projéteis.
 
 > **O teste mais importante:** ver alguém jogar **sem explicar a solução**. A pessoa precisa perceber

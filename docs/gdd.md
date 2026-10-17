@@ -81,6 +81,13 @@ O som também explica: a gravação pulsa, a invocação reverte, o eco soa filt
 um chefe com janela de vulnerabilidade, vitória e derrota. O teste que importa: alguém joga sem
 explicação e descobre sozinho para que serve o eco.
 
+## Protótipo — estado atual → [10](gdd/10-producao.md)
+
+Jogável em `Assets/_Project/Scenes/Arena_01.unity`, todo em placeholder (primitivas 3D): nave, tiro,
+gravação de 5 s, eco que repete movimento e tiros, drones e ondulantes em ondas por script, HUD,
+pausa, derrota (o encontro recomeça) e vitória (sobreviver ao encontro). Faltam armadilhas, gadget,
+torreta, chefe e combos.
+
 ## Perguntas em aberto
 
 - Chefe com quatro fases ou duas? → [06](gdd/06-chefe-e-runs.md)
@@ -88,6 +95,7 @@ explicação e descobre sozinho para que serve o eco.
 - Um ou até três ecos no MVP? → [02](gdd/02-eco-temporal.md)
 - Quais duas armadilhas entram na jam? → [05](gdd/05-armadilhas-gadgets-puzzles.md)
 - Regra do eco para dispositivos de presença contínua → [02](gdd/02-eco-temporal.md)
+- A gravação é relativa à tela: como ficam os puzzles com interruptores fixos no mundo? → [02](gdd/02-eco-temporal.md)
 - Quais elementos são modelos 3D e quais são sprites 2D → [08](gdd/08-direcao-visual-e-sonora.md)
 - Donos de cada capítulo, datas e equipe da jam → [10](gdd/10-producao.md)
 

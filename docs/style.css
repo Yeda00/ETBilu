@@ -205,6 +205,8 @@ ul.clean li::marker { color: var(--faint); }
 .q li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; }
 .q li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; border: 1.5px solid var(--gadget); border-radius: 4px; }
 .q a { font: 600 12px var(--mono); }
+.q li.done::before { background: var(--ok); border-color: var(--ok); }
+.q li.done > span { color: var(--muted); }
 
 /* chapter index */
 .index { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }

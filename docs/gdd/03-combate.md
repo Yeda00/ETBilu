@@ -4,7 +4,7 @@ chapter: "03"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §5.1–5.4 — docs/source/GDD_One_More_Time_v0.1.pdf
+source: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Drone, Ondulante)
 ---
 
 # ONE MORE TIME | Combate
@@ -24,6 +24,20 @@ A nave começa com um conjunto pequeno de ações:
 O jogador atira enquanto se move. O foco é esquivar e se posicionar, não alternar o tempo todo entre
 movimento e ataque.
 
+## Valores de partida no protótipo
+
+| Item | Valor | Onde mudar |
+|---|---|---|
+| Integridade da nave | 3 | `PlayerShip` → `Health` |
+| Invulnerabilidade após dano | 1,2 s | `PlayerShip` → `Health` |
+| Velocidade da nave | 9 u/s | `PlayerShip` → `ShipMotor` |
+| Disparo principal | 10 tiros/s, dano 1 | `PlayerShip` → `ShipWeapon`, `Shot_Ship` |
+| Drone | 2 de vida, 100 pontos | `Drone` |
+| Ondulante | 1 de vida, 100 pontos | `Ondulante` |
+| Inimigo que bate na nave | 1 de dano | `ContactDamage` |
+
+Valores para testar, não definitivos.
+
 ## Tipos de dano
 
 | Tipo | Origem |
@@ -32,7 +46,10 @@ movimento e ataque.
 | **De gadget** | Minas, pulsos ou ataques especiais |
 | **Combinado** | Efeitos especiais ativados quando as ações da nave atual e do eco coincidem |
 
-Só três categorias, para simplificar o protótipo.
+Só três categorias, para simplificar o protótipo. O código também marca o dano de **contato** (um inimigo
+que bate na nave), que o GDD v0.1 não lista.
+
+O protótipo já separa os tiros da nave dos tiros do eco (`ShotSource`), o que os combos vão precisar.
 
 ## Combos temporais
 
@@ -64,7 +81,11 @@ O jogo pode premiar:
 
 A pontuação **não é necessária** para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.
 
+No protótipo atual a pontuação é só **100 por inimigo abatido**, como placeholder; os prêmios acima ainda não existem.
+
 ## Perguntas em aberto
 
-- [ ] Valores de vida, dano e duração da invulnerabilidade: `_TBD_`.
+- [ ] Valores de vida, dano e invulnerabilidade: os de partida estão na tabela acima; falta validar jogando.
+- [ ] O dano de contato entra como quarta categoria, ou é parte do dano direto?
+- [ ] Combos temporais: nenhum implementado ainda.
 - [ ] Tamanho da "janela curta" de Crossfire e Synchronized Strike: `_TBD_` (§16 pede janelas generosas no começo).

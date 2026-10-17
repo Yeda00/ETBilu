@@ -4,7 +4,7 @@ chapter: "06"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §9 e §10 — docs/source/GDD_One_More_Time_v0.1.pdf
+source: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GameSession)
 ---
 
 # ONE MORE TIME | Chefe e estrutura das runs
@@ -52,6 +52,8 @@ A repetição deve reforçar o tema *One More Time*. Dois modelos estão em jogo
 | **A — Eco durante a vida** | O jogador grava e reproduz enquanto está vivo. A morte reinicia o encontro | **Recomendado para o protótipo** |
 | **B — Ciclos acumulados** | Ao reiniciar, o jogador deixa um eco persistente da tentativa anterior | Evolução futura |
 
+**No protótipo atual** o modelo A está implementado: ao morrer, o encontro recomeça depois de 2 s, sem ecos. O chefe ainda não existe; o encontro termina quando a última onda é vencida.
+
 *Por quê:* o modelo A é mais previsível e mais fácil de balancear. O modelo B pode entrar depois, se
 "tentar mais uma vez" também virar a estrutura narrativa do jogo.
 
@@ -59,4 +61,5 @@ A repetição deve reforçar o tema *One More Time*. Dois modelos estão em jogo
 
 - [ ] O chefe tem quatro fases (§9) ou duas (tabela do §10, "chefe com duas fases de combate")?
 - [ ] Nome definitivo do chefe — "O Guardião do Ciclo" é provisório.
-- [ ] Confirmar o modelo A como sistema do protótipo.
+- [ ] Confirmar o modelo A como sistema do protótipo (é o que está implementado).
+- [ ] O Guardião do Ciclo: falta implementar.

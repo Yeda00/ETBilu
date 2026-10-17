@@ -109,7 +109,7 @@
   <header>
     <h2 id="h02"><span class="n">02</span>Loop e eco temporal</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §3 e §4 · <code>docs/gdd/02-eco-temporal.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost) · <code>docs/gdd/02-eco-temporal.md</code></p>
   </header>
   <p class="summary">O loop central do jogo e o sistema que o sustenta: o que é gravado, como o eco nasce e as regras que o mantêm previsível.</p>
   <section class="part"><h3>Core gameplay loop</h3>
@@ -157,10 +157,23 @@
     </tbody></table></div>
     <p><strong>Dispositivos de presença contínua.</strong> Um eco pode manter um interruptor ativado enquanto sua trajetória permanece sobre ele, mas não ativa um mecanismo só por passar perto — a menos que essa seja a regra explícita do objeto.</p>
   </section>
+  <section class="part"><h3>No protótipo atual</h3>
+    <div class="scroll"><table><thead><tr><th>Regra</th><th>Como está implementado</th></tr></thead><tbody>
+      <tr><th scope="row">Espaço da gravação</th><td>Posições relativas à <strong>tela</strong> (o playfield que rola), não ao mundo: o eco refaz o mesmo trajeto na tela mesmo com a câmera avançando</td></tr>
+      <tr><th scope="row">Uma gravação por eco</th><td>Invocar consome a gravação; para outro eco, grave de novo (<code>EchoConfig.consumeRecordingOnInvoke</code>, ligado)</td></tr>
+      <tr><th scope="row">Limite de 5 s</th><td>A gravação para sozinha em 5 s; para começar outra é preciso soltar Shift</td></tr>
+      <tr><th scope="row">Ecos ao mesmo tempo</th><td>Até 3 (<code>EchoConfig.maxActiveEchoes</code>)</td></tr>
+      <tr><th scope="row">Corpo do eco</th><td>Sem colisor e sem vida: não bloqueia a nave nem recebe dano</td></tr>
+      <tr><th scope="row">Entrada e saída</th><td>O eco aparece e some com um fade de 0,2 s</td></tr>
+    </tbody></table></div>
+    <p class="why"><em>Por quê:</em> num side-scroller a tela anda o tempo todo; gravar em coordenadas do mundo deixaria o eco para trás, fora da tela, poucos segundos depois.</p>
+  </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final.</span></li>
     <li><span>O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".</span></li>
-    <li><span>Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional. <a href="#c10">→ 10</a></span></li>
+    <li><span>Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional. O protótipo já suporta 3. <a href="#c10">→ 10</a></span></li>
+    <li><span>Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (<code>Playfield.ScrollSpeed = 0</code>) ou o eco grava em coordenadas do mundo ali? <a href="#c05">→ 05</a></span></li>
+    <li><span>Manter a gravação consumida a cada invocação, ou permitir reinvocar a mesma gravação?</span></li>
   </ul></div>
 </section>
 
@@ -169,7 +182,7 @@
   <header>
     <h2 id="h03"><span class="n">03</span>Combate</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §5.1–5.4 · <code>docs/gdd/03-combate.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Drone, Ondulante) · <code>docs/gdd/03-combate.md</code></p>
   </header>
   <p class="summary">O que a nave do jogador faz, os tipos de dano, os combos temporais e o que a pontuação premia.</p>
   <section class="part"><h3>Nave do jogador</h3>
@@ -182,12 +195,25 @@
     </ul>
     <p>O jogador atira enquanto se move. O foco é esquivar e se posicionar, não alternar o tempo todo entre movimento e ataque.</p>
   </section>
+  <section class="part"><h3>Valores de partida no protótipo</h3>
+    <div class="scroll"><table><thead><tr><th>Item</th><th>Valor</th><th>Onde mudar</th></tr></thead><tbody>
+      <tr><th scope="row">Integridade da nave</th><td>3</td><td><code>PlayerShip</code> → <code>Health</code></td></tr>
+      <tr><th scope="row">Invulnerabilidade após dano</th><td>1,2 s</td><td><code>PlayerShip</code> → <code>Health</code></td></tr>
+      <tr><th scope="row">Velocidade da nave</th><td>9 u/s</td><td><code>PlayerShip</code> → <code>ShipMotor</code></td></tr>
+      <tr><th scope="row">Disparo principal</th><td>10 tiros/s, dano 1</td><td><code>PlayerShip</code> → <code>ShipWeapon</code>, <code>Shot_Ship</code></td></tr>
+      <tr><th scope="row">Drone</th><td>2 de vida, 100 pontos</td><td><code>Drone</code></td></tr>
+      <tr><th scope="row">Ondulante</th><td>1 de vida, 100 pontos</td><td><code>Ondulante</code></td></tr>
+      <tr><th scope="row">Inimigo que bate na nave</th><td>1 de dano</td><td><code>ContactDamage</code></td></tr>
+    </tbody></table></div>
+    <p class="muted small">Valores para testar, não definitivos.</p>
+  </section>
   <section class="part"><h3>Tipos de dano</h3>
     <div class="scroll"><table><thead><tr><th>Tipo</th><th>Origem</th></tr></thead><tbody>
       <tr><th scope="row"><span class="chip you">Direto</span></th><td>Tiros convencionais da nave</td></tr>
       <tr><th scope="row"><span class="chip st">De gadget</span></th><td>Minas, pulsos ou ataques especiais</td></tr>
       <tr><th scope="row"><span class="chip echo">Combinado</span></th><td>Efeitos especiais ativados quando as ações da nave atual e do eco coincidem</td></tr>
     </tbody></table></div>
+    <p>O código também marca o dano de <strong>contato</strong> (um inimigo que bate na nave), que o GDD v0.1 não lista. O protótipo já separa os tiros da nave dos tiros do eco (<code>ShotSource</code>), o que os combos vão precisar.</p>
   </section>
   <section class="part"><h3>Combos temporais</h3>
     <p>Os combos são <strong>eventos específicos</strong> que o jogo reconhece, não multiplicadores genéricos.</p>
@@ -205,9 +231,12 @@
   <section class="part"><h3>Pontuação por habilidade</h3>
     <ul class="clean"><li>Combos temporais.</li><li>Inimigos eliminados por armadilhas.</li><li>Sequências sem sofrer dano.</li><li>Sincronizações precisas.</li><li>Destruição de projéteis ou mecanismos usando o ambiente.</li></ul>
     <p>A pontuação <strong>não é necessária</strong> para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.</p>
+    <p class="muted small">No protótipo atual a pontuação é só <strong>100 por inimigo abatido</strong>, como placeholder; os prêmios acima ainda não existem.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>Valores de vida, dano e duração da invulnerabilidade: <span class="tbd">_TBD_</span>.</span></li>
+    <li><span>Valores de vida, dano e invulnerabilidade: os de partida estão na tabela acima; falta validar jogando.</span></li>
+    <li><span>O dano de contato entra como quarta categoria, ou é parte do dano direto?</span></li>
+    <li><span>Combos temporais: nenhum implementado ainda.</span></li>
     <li><span>Tamanho da "janela curta" de Crossfire e Synchronized Strike: <span class="tbd">_TBD_</span> (§16 pede janelas generosas no começo).</span></li>
   </ul></div>
 </section>
@@ -217,7 +246,7 @@
   <header>
     <h2 id="h04"><span class="n">04</span>Inimigos e ondas</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §5.5 · <code>docs/gdd/04-inimigos-e-ondas.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project/Data/Waves/Encounter01_PrimeiroCiclo.asset · <code>docs/gdd/04-inimigos-e-ondas.md</code></p>
   </header>
   <p class="summary">Quem a nave enfrenta, como cada inimigo conversa com o eco, e como as ondas entram na tela.</p>
   <p>Os inimigos surgem durante o avanço da fase, entrando pela direita (e às vezes por cima ou por baixo). Em vez de spawn aleatório, cada encontro segue uma <strong>lista de ondas com tempo e posição definidos</strong>.</p>
@@ -249,10 +278,19 @@
       <tr><td><code>0:40–1:00</code></td><td>Primeiro grupo de ondulantes</td><td>Ler o padrão e atacar com nave e eco ao mesmo tempo</td></tr>
       <tr><td><code>1:00–1:20</code></td><td>Torreta + drones</td><td>Introduzir a ideia de dividir tarefas entre nave e eco</td></tr>
     </tbody></table></div>
+    <p><strong>No protótipo atual</strong> o encontro 1 está em <code>Encounter01_PrimeiroCiclo.asset</code>, com estas diferenças:</p>
+    <ul class="clean">
+      <li>Drone e ondulante existem; a <strong>torreta ainda não</strong>, então 1:00–1:20 usa só drones.</li>
+      <li>Os primeiros 10 s não têm obstáculos (ainda não existem): é voo livre.</li>
+      <li>Há ondas extras em 0:33 (drones em dois níveis), 0:50 (ondulantes) e 1:10 (drones), para o encontro não ficar vazio.</li>
+      <li>O aviso de entrada é um marcador piscando na borda direita, 0,8 s antes da onda.</li>
+      <li>O encontro termina 4 s depois da última onda, quando não resta inimigo vivo.</li>
+    </ul>
     <p class="muted small">Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 reaproveitam os mesmos três inimigos, combinados com as armadilhas e o gadget → <a href="#c06">06</a>.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>Limite de inimigos simultâneos na tela: <span class="tbd">_TBD_</span>.</span></li>
+    <li><span>Limite de inimigos simultâneos na tela: <span class="tbd">_TBD_</span> (o protótipo ainda não limita).</span></li>
+    <li><span>Torreta: falta implementar.</span></li>
     <li><span>Ondas dos encontros 2 e 3: só o encontro 1 tem linha do tempo no v0.1.</span></li>
   </ul></div>
 </section>
@@ -323,7 +361,7 @@
   <header>
     <h2 id="h06"><span class="n">06</span>Chefe e estrutura das runs</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10 · <code>docs/gdd/06-chefe-e-runs.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GameSession) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
   </header>
   <p class="summary">O chefe do protótipo, fase a fase, e como os encontros de uma run ensinam e combinam as mecânicas.</p>
   <section class="part"><h3>O Guardião do Ciclo <span class="muted small">(nome provisório)</span></h3>
@@ -349,12 +387,14 @@
   <section class="part"><h3>Progressão entre tentativas</h3>
     <p>A repetição deve reforçar o tema <em>One More Time</em>. Dois modelos estão em jogo:</p>
     <figure><img src="img/progression.svg" alt="Modelo A, eco durante a vida, e modelo B, ciclos acumulados." width="800" height="250" loading="lazy"></figure>
+    <p><strong>No protótipo atual</strong> o modelo A está implementado: ao morrer, o encontro recomeça depois de 2 s, sem ecos. O chefe ainda não existe; o encontro termina quando a última onda é vencida.</p>
     <p class="why"><em>Por quê:</em> o modelo A é mais previsível e mais fácil de balancear. O modelo B pode entrar depois, se "tentar mais uma vez" também virar a estrutura narrativa do jogo.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>O chefe tem quatro fases (§9) ou duas (tabela do §10, "chefe com duas fases de combate")?</span></li>
     <li><span>Nome definitivo do chefe — "O Guardião do Ciclo" é provisório.</span></li>
-    <li><span>Confirmar o modelo A como sistema do protótipo.</span></li>
+    <li><span>Confirmar o modelo A como sistema do protótipo (é o que está implementado).</span></li>
+    <li><span>O Guardião do Ciclo: falta implementar.</span></li>
   </ul></div>
 </section>
 
@@ -363,7 +403,7 @@
   <header>
     <h2 id="h07"><span class="n">07</span>Controles e interface</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §11 · <code>docs/gdd/07-controles-e-interface.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §11; protótipo em Assets/_Project/Input e Assets/_Project/UI · <code>docs/gdd/07-controles-e-interface.md</code></p>
   </header>
   <p class="summary">Como o jogador pilota, grava e invoca ecos sem parar de desviar — e o que o HUD precisa mostrar.</p>
   <section class="part"><h3>Controles propostos</h3>
@@ -377,10 +417,11 @@
       <tr><th scope="row">Pausar</th><td><kbd>Esc</kbd></td></tr>
     </tbody></table></div>
     <p class="why"><em>Por quê:</em> os atalhos são provisórios. O que importa é <strong>separar a gravação da reprodução</strong>, para o jogador não invocar o eco sem querer enquanto tenta desviar de uma armadilha.</p>
-    <p class="muted small">O projeto já tem um <code>Assets/InputSystem_Actions.inputactions</code> (o padrão do Unity); estas ações ainda não estão nele.</p>
+    <p class="muted small">No protótipo, estas ações estão em <code>Assets/_Project/Input/OneMoreTimeControls.inputactions</code> (mapa <code>Gameplay</code>), lidas só pelo <code>PlayerInputReader</code>. Q já está mapeado, mas ainda não há gadget.</p>
   </section>
   <section class="part"><h3>HUD</h3>
     <figure><img src="img/hud.svg" alt="Mockup conceitual do HUD." width="800" height="250" loading="lazy"><figcaption>Mockup conceitual — não representa uma interface implementada.</figcaption></figure>
+    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação e as mensagens de pausa, derrota e encontro concluído. Faltam o gadget, a vida do chefe e o aviso de combo.</p>
     <div class="scroll"><table><thead><tr><th>Elemento</th><th>Por que o jogador precisa</th></tr></thead><tbody>
       <tr><th scope="row">Vida restante (integridade)</th><td>Saber quanto risco ainda pode correr</td></tr>
       <tr><th scope="row">Gravação (memória temporal)</th><td>Planejar a sequência sem olhar o relógio</td></tr>
@@ -401,7 +442,7 @@
   <header>
     <h2 id="h08"><span class="n">08</span>Direção visual e sonora</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §12 · <code>docs/gdd/08-direcao-visual-e-sonora.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01) · <code>docs/gdd/08-direcao-visual-e-sonora.md</code></p>
   </header>
   <p class="summary">Como o jogo se parece e soa, com uma regra: a tela e o som têm que explicar a mecânica temporal.</p>
   <section class="part"><h3>Direção visual</h3>
@@ -409,6 +450,7 @@
     <h4>2.5D: mundo 3D, leitura 2D</h4>
     <p>O jogo é um <strong>side-scrolling 2.5D</strong>: o mundo e a jogabilidade são 3D, vistos por uma câmera lateral que lê como 2D. <strong>Alguns elementos serão sprites 2D</strong>, misturados ao mundo 3D.</p>
     <p class="why"><em>Por quê:</em> a leitura lateral mantém o bullet hell legível, e o 3D dá profundidade, luz e efeitos de energia.</p>
+    <p><strong>No protótipo atual:</strong> câmera em <strong>perspectiva</strong> (campo de visão 40°, a 20 unidades do plano de jogo), a jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade. Tudo é placeholder feito de primitivas — nave, eco, inimigos e cenário — até a arte chegar.</p>
     <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: nave, eco, inimigos, projéteis, efeitos, cenário).</div>
     <h4>Cor</h4>
     <div class="pillars">
@@ -432,7 +474,7 @@
     <li><span>Quem é dono da arte e do áudio?</span></li>
     <li><span>Referências visuais além de <em>Cuphead</em> (câmera): <span class="tbd">_TBD_</span>.</span></li>
     <li><span>Quais elementos são modelos 3D e quais são sprites 2D: <span class="tbd">_TBD_</span>.</span></li>
-    <li><span>A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? <span class="tbd">_TBD_</span></span></li>
+    <li><span>A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? O protótipo usa perspectiva; falta confirmar.</span></li>
   </ul></div>
 </section>
 
@@ -441,11 +483,11 @@
   <header>
     <h2 id="h09"><span class="n">09</span>Arquitetura técnica</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §13 · <code>docs/gdd/09-arquitetura-tecnica.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §13; código em Assets/_Project/Scripts · <code>docs/gdd/09-arquitetura-tecnica.md</code></p>
   </header>
   <p class="summary">A arquitetura sugerida para Unity: quem grava, quem reproduz, e como o eco conversa com os outros sistemas.</p>
   <p>A implementação é <strong>modular</strong>: o sistema temporal não depende diretamente da lógica de cada inimigo ou armadilha.</p>
-  <figure><img src="img/architecture.svg" alt="Diagrama de componentes." width="800" height="470" loading="lazy"><figcaption>Diagrama conceitual — nenhum destes componentes existe ainda no projeto.</figcaption></figure>
+  <figure><img src="img/architecture.svg" alt="Diagrama de componentes." width="800" height="470" loading="lazy"><figcaption>Diagrama conceitual do GDD v0.1. O que existe hoje está em "Implementação atual", abaixo.</figcaption></figure>
   <section class="part"><h3>Componentes principais</h3>
     <div class="scroll"><table><thead><tr><th>Componente</th><th>Responsabilidade</th></tr></thead><tbody>
       <tr><td><code>PlayerController</code></td><td>Movimento e entrada do jogador</td></tr>
@@ -458,6 +500,27 @@
       <tr><td><code>EnemyController</code></td><td>Movimento e comportamento dos inimigos</td></tr>
       <tr><td><code>BossController</code></td><td>Fases, ataques e pontos fracos</td></tr>
       <tr><td><code>ComboEvaluator</code></td><td>Detecta as condições dos combos temporais</td></tr>
+    </tbody></table></div>
+  </section>
+  <section class="part"><h3>Implementação atual</h3>
+    <p>O código fica em <code>Assets/_Project/Scripts</code>, em quatro assemblies; os testes em <code>Assets/_Project/Tests/EditMode</code>.</p>
+    <div class="scroll"><table><thead><tr><th>Assembly</th><th>Conteúdo</th></tr></thead><tbody>
+      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida, linha do tempo das ondas</td></tr>
+      <tr><td><code>OneMoreTime.Gameplay</code></td><td>Componentes da cena: input, playfield, nave, tiro, inimigos, ondas, sessão</td></tr>
+      <tr><td><code>OneMoreTime.UI</code></td><td>O HUD</td></tr>
+      <tr><td><code>OneMoreTime.Editor</code></td><td>A ferramenta que monta o conteúdo placeholder (menu <em>One More Time › Bootstrap</em>)</td></tr>
+    </tbody></table></div>
+    <div class="scroll"><table><thead><tr><th>Sugerido no GDD</th><th>No protótipo</th><th>Nota</th></tr></thead><tbody>
+      <tr><td><code>PlayerController</code></td><td><code>PlayerInputReader</code> + <code>ShipMotor</code></td><td>Input separado do movimento</td></tr>
+      <tr><td><code>TemporalRecorder</code></td><td><code>EchoRecorder</code> (Core) + <code>EchoAbility</code></td><td><code>EchoAbility</code> liga input, nave e arma ao gravador</td></tr>
+      <tr><td><code>TemporalRecording</code></td><td><code>EchoRecording</code> (Core)</td><td></td></tr>
+      <tr><td><code>EchoPlayback</code></td><td><code>EchoPlayback</code> (Core) + <code>EchoGhost</code></td><td><code>EchoGhost</code> é a nave fantasma na cena</td></tr>
+      <tr><td><code>WeaponSystem</code></td><td><code>ShipWeapon</code> + <code>Projectile</code> + <code>ProjectilePool</code></td><td>Tiros reaproveitados por pool</td></tr>
+      <tr><td><code>DamageSystem</code></td><td><code>Health</code> (+ <code>HealthModel</code>) + <code>ContactDamage</code></td><td></td></tr>
+      <tr><td><code>EnemyController</code></td><td><code>Enemy</code> + <code>WaveSpawner</code> + <code>WaveSchedule</code></td><td>Ondas são um asset de dados</td></tr>
+      <tr><td><code>GadgetSystem</code>, <code>TrapController</code>, <code>BossController</code>, <code>ComboEvaluator</code></td><td>—</td><td>Ainda não existem</td></tr>
+      <tr><td>—</td><td><code>Playfield</code></td><td>O quadro que rola, com a câmera, a nave e os ecos</td></tr>
+      <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação, pausa, vitória e derrota</td></tr>
     </tbody></table></div>
   </section>
   <section class="part"><h3>Como armazenar a gravação</h3>
@@ -488,7 +551,7 @@
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Lista final de valores de <code>EchoEventType</code>.</span></li>
-    <li><span>Com o mundo em 3D (2.5D), <code>EchoSample</code> e <code>EchoEvent</code> continuam com <code>Vector2</code>, ou passam a <code>Vector3</code>? Depende de a nave se mover só num plano. <a href="#c08">→ 08</a></span></li>
+    <li class="done"><span>✓ Resolvido: <code>EchoSample</code> e <code>EchoEvent</code> continuam com <code>Vector2</code>, porque a nave se move só no plano de jogo e as posições são relativas ao playfield. <a href="#c02">→ 02</a></span></li>
   </ul></div>
 </section>
 
@@ -497,7 +560,7 @@
   <header>
     <h2 id="h10"><span class="n">10</span>Produção — escopo da jam</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16 · <code>docs/gdd/10-producao.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 · <code>docs/gdd/10-producao.md</code></p>
   </header>
   <p class="summary">O que entra na jam, o que fica de fora, quando o protótipo está pronto para teste e o que pode dar errado.</p>
   <p>O objetivo é <strong>validar se a mecânica central é divertida</strong>, não construir todo o conteúdo previsto para o jogo final.</p>
@@ -511,16 +574,29 @@
         <li>Rebobinar o mundo inteiro</li><li>Campanha extensa</li><li>Vários chefes</li><li>Progressão roguelite complexa</li><li>Árvore de habilidades</li><li>Muitos gadgets com sistemas de física independentes</li></ul></div>
     </div>
   </section>
+  <section class="part"><h3>Estado do MVP</h3>
+    <div class="scroll"><table><thead><tr><th>Item do MVP</th><th>Estado</th></tr></thead><tbody>
+      <tr><th scope="row">Nave com movimento e disparo</th><td><span class="chip ok">feito</span></td></tr>
+      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code>, placeholder</td></tr>
+      <tr><th scope="row">Gravação de cinco segundos</th><td><span class="chip ok">feito</span></td></tr>
+      <tr><th scope="row">Reprodução de movimento e disparos</th><td><span class="chip ok">feito</span></td></tr>
+      <tr><th scope="row">Drone com ondas por script</th><td><span class="chip ok">feito</span> e o ondulante</td></tr>
+      <tr><th scope="row">Duas armadilhas</th><td><span class="chip">pendente</span></td></tr>
+      <tr><th scope="row">Um gadget funcional</th><td><span class="chip">pendente</span></td></tr>
+      <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip">pendente</span></td></tr>
+      <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = sobreviver ao encontro, até o chefe existir</td></tr>
+    </tbody></table></div>
+  </section>
   <section class="part"><h3>Critérios de aceitação do protótipo</h3>
     <p>O protótipo está pronto para teste quando:</p>
     <ul class="q">
-      <li><span>O jogador grava e reproduz uma sequência de cinco segundos.</span></li>
-      <li><span>O eco repete movimentos e disparos sem depender do controle atual.</span></li>
-      <li><span>A reprodução continua funcionando quando os inimigos se movem ou morrem.</span></li>
+      <li class="done"><span>O jogador grava e reproduz uma sequência de cinco segundos.</span></li>
+      <li class="done"><span>O eco repete movimentos e disparos sem depender do controle atual.</span></li>
+      <li class="done"><span>A reprodução continua funcionando quando os inimigos se movem ou morrem.</span></li>
       <li><span>Uma armadilha pode ser manipulada por uma ação registrada.</span></li>
       <li><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial.</span></li>
       <li><span>O chefe pode ser derrotado usando a mecânica temporal.</span></li>
-      <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco.</span></li>
+      <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (Com placeholder já se distingue; falta testar com jogadores.)</span></li>
       <li><span>A mecânica continua legível nos momentos com mais projéteis.</span></li>
     </ul>
     <div class="rule ok"><span class="osd">O teste mais importante</span>Ver alguém jogar <strong>sem explicar a solução</strong>. A pessoa precisa perceber sozinha que pode gravar uma ação e aproveitar a repetição para fazer outra.</div>

@@ -4,7 +4,7 @@ chapter: "08"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §12 — docs/source/GDD_One_More_Time_v0.1.pdf
+source: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01)
 ---
 
 # ONE MORE TIME | Direção visual e sonora
@@ -20,6 +20,10 @@ Estética de **arcade sci-fi**: silhuetas legíveis, efeitos de energia e contra
 O jogo é um **side-scrolling 2.5D**: o mundo e a jogabilidade são 3D, vistos por uma câmera lateral que lê como 2D. **Alguns elementos serão sprites 2D**, misturados ao mundo 3D.
 
 *Por quê:* a leitura lateral mantém o bullet hell legível, e o 3D dá profundidade, luz e efeitos de energia.
+
+**No protótipo atual:** câmera em **perspectiva** (campo de visão 40°, a 20 unidades do plano de jogo), a
+jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade. Tudo é
+placeholder feito de primitivas — nave, eco, inimigos e cenário — até a arte chegar.
 
 > **Q:** quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: nave, eco, inimigos, projéteis, efeitos, cenário). Marcado como `_TBD_` até o dono decidir.
 
@@ -53,4 +57,4 @@ O áudio também comunica a mecânica temporal.
 - [ ] Quem é dono da arte e do áudio?
 - [ ] Referências visuais além de *Cuphead* (câmera): `_TBD_`.
 - [ ] Quais elementos são modelos 3D e quais são sprites 2D: `_TBD_`.
-- [ ] A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? `_TBD_`.
+- [ ] A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? O protótipo usa perspectiva; falta confirmar.

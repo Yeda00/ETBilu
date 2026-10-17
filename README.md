@@ -3,6 +3,21 @@
 Um shooter 2.5D de nave (mundo 3D, câmera lateral) em que o jogador grava e reproduz suas próprias ações passadas para lutar
 ao lado de versões anteriores de si mesmo. Protótipo para game jam, em Unity 6 (6000.3), URP.
 
+## Jogar o protótipo
+
+Abra o projeto no Unity 6 (6000.3.25f1), abra `Assets/_Project/Scenes/Arena_01.unity` e dê Play.
+Tudo é placeholder enquanto a arte não chega.
+
+| Tecla | Ação |
+|---|---|
+| WASD ou setas | Mover a nave |
+| Espaço ou clique | Atirar |
+| Segurar Shift | Gravar até 5 s |
+| E | Invocar o eco da gravação |
+| Esc | Pausar |
+
+Testes: Window › General › Test Runner › EditMode, ou `unity command run_tests --mode editor`.
+
 ## Documentação
 
 | Documento | O que é |

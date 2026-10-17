@@ -4,7 +4,7 @@ chapter: "02"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §3 e §4 — docs/source/GDD_One_More_Time_v0.1.pdf
+source: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost)
 ---
 
 # ONE MORE TIME | Loop e eco temporal
@@ -81,8 +81,24 @@ todo para a interface → [07](07-controles-e-interface.md).
 permanece sobre ele, mas não ativa um mecanismo só por passar perto — a menos que essa seja a regra
 explícita do objeto.
 
+## No protótipo atual
+
+| Regra | Como está implementado |
+|---|---|
+| Espaço da gravação | Posições relativas à **tela** (o playfield que rola), não ao mundo: o eco refaz o mesmo trajeto na tela mesmo com a câmera avançando |
+| Uma gravação por eco | Invocar consome a gravação; para outro eco, grave de novo (`EchoConfig.consumeRecordingOnInvoke`, ligado) |
+| Limite de 5 s | A gravação para sozinha em 5 s; para começar outra é preciso soltar Shift |
+| Ecos ao mesmo tempo | Até 3 (`EchoConfig.maxActiveEchoes`) |
+| Corpo do eco | Sem colisor e sem vida: não bloqueia a nave nem recebe dano |
+| Entrada e saída | O eco aparece e some com um fade de 0,2 s |
+
+*Por quê:* num side-scroller a tela anda o tempo todo; gravar em coordenadas do mundo deixaria o eco
+para trás, fora da tela, poucos segundos depois.
+
 ## Perguntas em aberto
 
 - [ ] Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final.
 - [ ] O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".
-- [ ] Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional → [10](10-producao.md).
+- [ ] Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional. O protótipo já suporta 3 → [10](10-producao.md).
+- [ ] Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (`Playfield.ScrollSpeed = 0`) ou o eco grava em coordenadas do mundo ali? → [05](05-armadilhas-gadgets-puzzles.md)
+- [ ] Manter a gravação consumida a cada invocação, ou permitir reinvocar a mesma gravação?
