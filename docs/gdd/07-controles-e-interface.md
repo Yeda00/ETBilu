@@ -29,7 +29,7 @@ Os atalhos são provisórios.
 *Por quê:* o que importa é **separar a gravação da reprodução**, para o jogador não invocar o eco sem
 querer enquanto tenta desviar de uma armadilha.
 
-No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControls.inputactions` (mapa `Gameplay`), lidas só pelo `PlayerInputReader`. Q já está mapeado, mas ainda não há gadget.
+No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControls.inputactions` (mapa `Gameplay`), lidas só pelo `PlayerInputReader`. Q solta a mina temporal → [05](05-armadilhas-gadgets-puzzles.md).
 
 ## HUD
 
@@ -38,8 +38,10 @@ No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControl
 *Mockup conceitual — não representa uma interface implementada.*
 
 O HUD do protótipo (UI Toolkit: `Hud.uxml` e `Hud.uss`) já mostra integridade, memória temporal com o
-tempo gravado, os três espaços de eco, a pontuação e as mensagens de pausa, derrota e encontro concluído.
-Faltam o gadget, a vida do chefe e o aviso de combo.
+tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s")
+e as mensagens de pausa, derrota e vitória ("GUARDIÃO DERROTADO"). Com o Guardião em cena, um painel no
+topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo: blindado, protegido pelos
+geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta. Falta o aviso de combo.
 
 O HUD mostra com clareza:
 

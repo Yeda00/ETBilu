@@ -17,6 +17,8 @@
 .caption.memory { color: rgb(255, 77, 109); }
 .caption.score { color: rgb(54, 226, 255); }
 .caption.echo { color: rgb(177, 140, 255); margin-top: 14px; }
+.caption.gadget { color: rgb(54, 226, 255); margin-top: 14px; }
+.caption.boss { color: rgb(255, 138, 61); -unity-text-align: middle-center; }
 
 .bar {
     width: 220px;
@@ -30,6 +32,22 @@
 .fill.integrity { background-color: rgb(63, 224, 160); }
 .fill.memory { background-color: rgb(255, 77, 109); width: 0%; }
 .fill.memory.ready { background-color: rgb(177, 140, 255); }
+.fill.gadget { background-color: rgb(54, 226, 255); }
+.fill.gadget.charging { background-color: rgb(42, 58, 99); }
+.fill.boss { background-color: rgb(255, 138, 61); }
+.fill.boss.vulnerable { background-color: rgb(255, 77, 109); }
+
+/* Boss panel: top centre, shown only while the Guardian is on screen. */
+.boss { width: 420px; align-items: center; }
+.boss.hidden { display: none; }
+.bar.boss { width: 400px; height: 14px; }
+.boss-phase { color: rgb(255, 201, 161); font-size: 13px; letter-spacing: 2px; margin-top: 2px; }
+.pip {
+    width: 12px; height: 12px; margin-right: 6px; border-radius: 2px;
+    rotate: 45deg;
+    background-color: rgb(255, 138, 61);
+}
+.pip.down { background-color: rgb(42, 58, 99); }
 
 .value { color: rgb(230, 236, 255); font-size: 14px; margin-left: 10px; }
 .state { color: rgb(201, 212, 242); font-size: 13px; -unity-font-style: normal; }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using OneMoreTime.Core.Echo;
 using OneMoreTime.Gameplay.Combat;
+using OneMoreTime.Gameplay.Gadgets;
 using OneMoreTime.Gameplay.World;
 using UnityEngine;
 
@@ -9,12 +10,15 @@ namespace OneMoreTime.Gameplay.Echo
 {
     /// <summary>
     /// The ghost ship. Replays a recording on its own clock from the recorded start point, fires
-    /// each recorded shot once, and never decides anything (GDD 02). It has no Health and no
-    /// collider, so it neither blocks the ship nor takes damage.
+    /// each recorded shot and drops each recorded mine once, and never decides anything (GDD 02).
+    /// It has no Health and no collider, so it neither blocks the ship nor takes damage. Switches
+    /// still see it: they check positions, not physics (see SwitchPad).
     /// </summary>
     public sealed class EchoGhost : MonoBehaviour
     {
         [SerializeField] Projectile projectile;
+        [Tooltip("Mine dropped when the recording used the gadget.")]
+        [SerializeField] TimeMine mine;
         [Tooltip("Visual child that banks like the recorded ship.")]
         [SerializeField] Transform visual;
         [Tooltip("Renderers faded at the start and end of the playback.")]
@@ -65,6 +69,8 @@ namespace OneMoreTime.Gameplay.Echo
             {
                 if (e.type == EchoEventType.Shot)
                     pool.Spawn(projectile, playfield.LocalToWorld(e.position), playfield.DirectionToWorld(e.direction), Faction.Player, ShotSource.Echo);
+                else if (e.type == EchoEventType.Gadget && mine != null)
+                    Instantiate(mine, playfield.LocalToWorld(e.position), Quaternion.identity, pool.transform).Arm(Faction.Player, ShotSource.Echo);
             }
             ApplyFade();
         }

@@ -17,14 +17,16 @@ namespace OneMoreTime.Gameplay.Session
     }
 
     /// <summary>
-    /// Score, pause, win and loss of one encounter. Death restarts the encounter — the
-    /// "eco durante a vida" model recommended for the prototype (GDD 06).
+    /// Score, pause, win and loss. Victory is the Guardian of the Cycle falling (the stage reports it).
+    /// Death reloads the scene at the current encounter — the "eco durante a vida" model recommended
+    /// for the prototype (GDD 06).
     /// </summary>
     public sealed class GameSession : MonoBehaviour
     {
         [SerializeField] PlayerInputReader input;
         [SerializeField] Health player;
         [SerializeField] WaveSpawner spawner;
+        [SerializeField] StageDirector stage;
         [SerializeField, Min(0f)] float restartDelay = 2f;
 
         public event Action Changed;
@@ -37,9 +39,11 @@ namespace OneMoreTime.Gameplay.Session
         {
             if (player != null) player.Died += OnPlayerDied;
             if (spawner != null)
-            {
                 spawner.EnemyRemoved += OnEnemyRemoved;
-                spawner.Cleared += OnCleared;
+            if (stage != null)
+            {
+                stage.Scored += AddScore;
+                stage.Completed += OnCleared;
             }
         }
 
@@ -47,9 +51,11 @@ namespace OneMoreTime.Gameplay.Session
         {
             if (player != null) player.Died -= OnPlayerDied;
             if (spawner != null)
-            {
                 spawner.EnemyRemoved -= OnEnemyRemoved;
-                spawner.Cleared -= OnCleared;
+            if (stage != null)
+            {
+                stage.Scored -= AddScore;
+                stage.Completed -= OnCleared;
             }
             Time.timeScale = 1f;
         }
@@ -74,7 +80,14 @@ namespace OneMoreTime.Gameplay.Session
             if (!killed || State != SessionState.Playing)
                 return;
             Kills++;
-            Score += enemy.ScoreValue;
+            AddScore(enemy.ScoreValue);
+        }
+
+        void AddScore(int points)
+        {
+            if (State != SessionState.Playing && State != SessionState.Paused)
+                return;
+            Score += points;
             Changed?.Invoke();
         }
 

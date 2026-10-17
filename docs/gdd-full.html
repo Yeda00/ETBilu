@@ -109,7 +109,7 @@
   <header>
     <h2 id="h02"><span class="n">02</span>Loop e eco temporal</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost) · <code>docs/gdd/02-eco-temporal.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost, SwitchPad) · <code>docs/gdd/02-eco-temporal.md</code></p>
   </header>
   <p class="summary">O loop central do jogo e o sistema que o sustenta: o que é gravado, como o eco nasce e as regras que o mantêm previsível.</p>
   <section class="part"><h3>Core gameplay loop</h3>
@@ -165,14 +165,17 @@
       <tr><th scope="row">Ecos ao mesmo tempo</th><td>Até 3 (<code>EchoConfig.maxActiveEchoes</code>)</td></tr>
       <tr><th scope="row">Corpo do eco</th><td>Sem colisor e sem vida: não bloqueia a nave nem recebe dano</td></tr>
       <tr><th scope="row">Entrada e saída</th><td>O eco aparece e some com um fade de 0,2 s</td></tr>
+      <tr><th scope="row">Gadget</th><td>O uso da mina temporal entra na gravação (<code>EchoEventType.Gadget</code>); o eco solta a mina no mesmo ponto e instante → <a href="#c05">05</a></td></tr>
+      <tr><th scope="row">Interruptores</th><td>O eco segura um interruptor enquanto está sobre a placa. O interruptor confere posições, não colisões, então o eco sem colisor também conta → <a href="#c05">05</a></td></tr>
+      <tr><th scope="row">Puzzles fixos no mundo</th><td>A rolagem para no trecho do interruptor (<code>TrapSection</code> zera <code>Playfield.ScrollSpeed</code>), então o eco volta ao ponto onde foi gravado</td></tr>
     </tbody></table></div>
     <p class="why"><em>Por quê:</em> num side-scroller a tela anda o tempo todo; gravar em coordenadas do mundo deixaria o eco para trás, fora da tela, poucos segundos depois.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final.</span></li>
+    <li><span>Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final. O protótipo segura o interruptor só enquanto o eco ou a nave está sobre a placa, com 0,15 s de folga ao sair.</span></li>
     <li><span>O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".</span></li>
     <li><span>Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional. O protótipo já suporta 3. <a href="#c10">→ 10</a></span></li>
-    <li><span>Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (<code>Playfield.ScrollSpeed = 0</code>) ou o eco grava em coordenadas do mundo ali? <a href="#c05">→ 05</a></span></li>
+    <li><span>Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (<code>Playfield.ScrollSpeed = 0</code>) ou o eco grava em coordenadas do mundo ali? O protótipo para a rolagem; falta confirmar como regra. <a href="#c05">→ 05</a></span></li>
     <li><span>Manter a gravação consumida a cada invocação, ou permitir reinvocar a mesma gravação?</span></li>
   </ul></div>
 </section>
@@ -204,6 +207,10 @@
       <tr><th scope="row">Drone</th><td>2 de vida, 100 pontos</td><td><code>Drone</code></td></tr>
       <tr><th scope="row">Ondulante</th><td>1 de vida, 100 pontos</td><td><code>Ondulante</code></td></tr>
       <tr><th scope="row">Inimigo que bate na nave</th><td>1 de dano</td><td><code>ContactDamage</code></td></tr>
+      <tr><th scope="row">Mina temporal</th><td>4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s</td><td><code>TimeMine_Ship</code>, <code>TimeMine_Echo</code>, <code>PlayerShip</code> → <code>ShipGadget</code></td></tr>
+      <tr><th scope="row">Laser gate e barreira móvel</th><td>1 de dano ao contato</td><td>prefabs em <code>Prefabs/Traps</code></td></tr>
+      <tr><th scope="row">Tiros do Guardião</th><td>1 de dano</td><td><code>Shot_Enemy</code></td></tr>
+      <tr><th scope="row">Guardião</th><td>núcleo 120 de vida, geradores 12</td><td><code>Guardian</code> → <a href="#c06">06</a></td></tr>
     </tbody></table></div>
     <p class="muted small">Valores para testar, não definitivos.</p>
   </section>
@@ -213,7 +220,7 @@
       <tr><th scope="row"><span class="chip st">De gadget</span></th><td>Minas, pulsos ou ataques especiais</td></tr>
       <tr><th scope="row"><span class="chip echo">Combinado</span></th><td>Efeitos especiais ativados quando as ações da nave atual e do eco coincidem</td></tr>
     </tbody></table></div>
-    <p>O código também marca o dano de <strong>contato</strong> (um inimigo que bate na nave), que o GDD v0.1 não lista. O protótipo já separa os tiros da nave dos tiros do eco (<code>ShotSource</code>), o que os combos vão precisar.</p>
+    <p>O código também marca o dano de <strong>contato</strong> (um inimigo que bate na nave), que o GDD v0.1 não lista. O protótipo já separa os tiros da nave dos tiros do eco (<code>ShotSource</code>), o que os combos vão precisar. O dano de gadget já existe: é o da mina temporal → <a href="#c05">05</a>. O dano combinado ainda não.</p>
   </section>
   <section class="part"><h3>Combos temporais</h3>
     <p>Os combos são <strong>eventos específicos</strong> que o jogo reconhece, não multiplicadores genéricos.</p>
@@ -231,12 +238,12 @@
   <section class="part"><h3>Pontuação por habilidade</h3>
     <ul class="clean"><li>Combos temporais.</li><li>Inimigos eliminados por armadilhas.</li><li>Sequências sem sofrer dano.</li><li>Sincronizações precisas.</li><li>Destruição de projéteis ou mecanismos usando o ambiente.</li></ul>
     <p>A pontuação <strong>não é necessária</strong> para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.</p>
-    <p class="muted small">No protótipo atual a pontuação é só <strong>100 por inimigo abatido</strong>, como placeholder; os prêmios acima ainda não existem.</p>
+    <p class="muted small">No protótipo atual a pontuação é só <strong>100 por inimigo abatido</strong>, <strong>250 por gerador do Guardião</strong> e <strong>5000 pelo núcleo</strong>, como placeholder; os prêmios acima ainda não existem.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Valores de vida, dano e invulnerabilidade: os de partida estão na tabela acima; falta validar jogando.</span></li>
     <li><span>O dano de contato entra como quarta categoria, ou é parte do dano direto?</span></li>
-    <li><span>Combos temporais: nenhum implementado ainda.</span></li>
+    <li><span>Combos temporais: nenhum implementado ainda. A sincronização dos geradores do Guardião já pede nave e eco juntos, como o Synchronized Strike, mas não é reconhecida como combo nem tem feedback próprio. Trap Bait depende de armadilhas que firam inimigos, e as do protótipo só ferem a nave.</span></li>
     <li><span>Tamanho da "janela curta" de Crossfire e Synchronized Strike: <span class="tbd">_TBD_</span> (§16 pede janelas generosas no começo).</span></li>
   </ul></div>
 </section>
@@ -284,7 +291,7 @@
       <li>Os primeiros 10 s não têm obstáculos (ainda não existem): é voo livre.</li>
       <li>Há ondas extras em 0:33 (drones em dois níveis), 0:50 (ondulantes) e 1:10 (drones), para o encontro não ficar vazio.</li>
       <li>O aviso de entrada é um marcador piscando na borda direita, 0,8 s antes da onda.</li>
-      <li>O encontro termina 4 s depois da última onda, quando não resta inimigo vivo.</li>
+      <li>O encontro termina 4 s depois da última onda, quando não resta inimigo vivo; aí começa o corredor de armadilhas → <a href="#c06">06</a>.</li>
     </ul>
     <p class="muted small">Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 reaproveitam os mesmos três inimigos, combinados com as armadilhas e o gadget → <a href="#c06">06</a>.</p>
   </section>
@@ -300,7 +307,7 @@
   <header>
     <h2 id="h05"><span class="n">05</span>Armadilhas, gadgets e puzzles</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §6, §7 e §8 · <code>docs/gdd/05-armadilhas-gadgets-puzzles.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §6, §7 e §8; protótipo em Assets/_Project (TrapSection, LaserGate, MovingBarrier, SwitchPad, ShipGadget, TimeMine) · <code>docs/gdd/05-armadilhas-gadgets-puzzles.md</code></p>
   </header>
   <p class="summary">O cenário que desafia o movimento, as ferramentas que a nave carrega e os puzzles que só se resolvem com o eco.</p>
   <section class="part"><h3>Armadilhas e obstáculos</h3>
@@ -313,6 +320,17 @@
       <tr><th scope="row">Barreiras móveis</th><td>Obstáculos que abrem e fecham rotas; exigem precisão</td><td>O eco mantém um mecanismo num estado, abrindo uma janela de passagem</td></tr>
     </tbody></table></div>
     <div class="rule warn"><span class="osd">Para a jam</span>Implemente <strong>apenas dois tipos de armadilha e uma variação de obstáculo</strong>. A variedade vem das combinações com o eco, não da quantidade de objetos diferentes.</div>
+    <h4>No protótipo atual</h4>
+    <p>O protótipo tem o <strong>laser gate</strong> (em duas variações: com ciclo, e preso a um interruptor) e as <strong>barreiras móveis</strong>, ligados por um <strong>interruptor de presença</strong>. Ficam no corredor do encontro 2 (prefab <code>TrapSection_Corredor</code>), que entra pela direita quando as ondas do encontro 1 acabam → <a href="#c06">06</a>.</p>
+    <div class="scroll"><table><thead><tr><th>Peça</th><th>Como funciona</th><th>Valores de partida</th></tr></thead><tbody>
+      <tr><th scope="row">Laser gate com ciclo</th><td>Feixe vertical de ponta a ponta da tela; liga e desliga sozinho e pisca uma linha fina de aviso antes de ligar</td><td>1,5 s ligado, 1,5 s desligado, aviso nos últimos 0,5 s</td></tr>
+      <tr><th scope="row">Laser gate do interruptor</th><td>Sempre ligado; desliga enquanto alguém está sobre o interruptor ligado a ele</td><td>—</td></tr>
+      <tr><th scope="row">Barreira móvel</th><td>Dois blocos, um de cima e um de baixo, que se afastam e se fecham no meio da tela</td><td>fechada 1,2 s, abre em 0,5 s, aberta 1,6 s, fecha em 0,5 s; vão de 4,5 u</td></tr>
+      <tr><th scope="row">Interruptor de presença</th><td>Fica pressionado enquanto a nave <strong>ou um eco</strong> está sobre a placa; acende ciano para a nave e violeta para o eco, junto com o conduto até o laser</td><td>placa de 1,8 × 1,4 u; solta 0,15 s depois que a placa fica vazia</td></tr>
+      <tr><th scope="row">Dano</th><td>Feixe e blocos ferem a nave ao contato; não ferem inimigos nem o eco</td><td>1 de dano, com a invulnerabilidade normal da nave → <a href="#c03">03</a></td></tr>
+    </tbody></table></div>
+    <p>O corredor, na ordem em que chega: o laser com ciclo e a barreira móvel atravessam a tela com a rolagem, e a nave precisa passar por eles no momento certo. Depois a rolagem <strong>para</strong> com o interruptor e o laser preso a ele na tela; o encontro termina quando a nave passa desse laser. Aí as armadilhas desligam, a tela acelera para tirar o corredor de cena e o chefe entra.</p>
+    <p class="why"><em>Por quê:</em> a gravação é relativa à tela → <a href="#c02">02</a>. Com a rolagem parada, o eco volta exatamente ao ponto do interruptor onde foi gravado.</p>
   </section>
   <section class="part"><h3>Gadgets</h3>
     <p>A nave carrega <strong>um gadget por vez</strong> no protótipo. O objetivo é criar escolhas táticas sem sobrecarregar os controles.</p>
@@ -322,6 +340,18 @@
       <tr><th scope="row">Escudo refletor</th><td>Bloqueia ou reflete certos tiros</td><td>Permite construir uma sequência de ricochetes</td><td><span class="chip">expansão</span></td></tr>
       <tr><th scope="row">Arpão magnético</th><td>Puxa a nave ou inimigos leves</td><td>Pode conduzir inimigos para uma armadilha</td><td><span class="chip">expansão</span></td></tr>
     </tbody></table></div>
+    <p>Escudo refletor e arpão ficam para expansões, caso o núcleo já esteja divertido.</p>
+    <h4>No protótipo atual</h4>
+    <p>O gadget do protótipo é a <strong>mina temporal</strong>, na tecla <strong>Q</strong> (<code>ShipGadget</code> na nave, prefab <code>TimeMine_Ship</code>).</p>
+    <div class="scroll"><table><thead><tr><th>Regra</th><th>Valor de partida</th></tr></thead><tbody>
+      <tr><th scope="row">Onde cai</th><td>No ponto da nave, e fica parada no mundo: não acompanha a tela que rola</td></tr>
+      <tr><th scope="row">Armar</th><td>0,4 s depois de solta; antes disso não explode</td></tr>
+      <tr><th scope="row">Explosão</th><td>Quando um inimigo chega a 1,4 u da mina armada, ou sozinha depois de 4 s</td></tr>
+      <tr><th scope="row">Dano</th><td>4, do tipo gadget, em todo inimigo num raio de 2,4 u → <a href="#c03">03</a></td></tr>
+      <tr><th scope="row">Recarga</th><td>1,5 s entre uma mina e outra</td></tr>
+      <tr><th scope="row">Com o eco</th><td>O uso entra na gravação (<code>EchoEventType.Gadget</code>) e o eco solta uma mina (<code>TimeMine_Echo</code>, violeta) no mesmo ponto e no mesmo instante da gravação</td></tr>
+    </tbody></table></div>
+    <p class="muted small">O pulso de interferência ainda não existe.</p>
   </section>
   <section class="part"><h3>Puzzles integrados ao combate</h3>
     <p>Os puzzles surgem naturalmente durante o voo e duram poucos segundos. São desafios de <strong>leitura, sincronização e execução</strong>.</p>
@@ -335,6 +365,7 @@
       <li><span>Atravessar o corredor com as duas barreiras desativadas.</span></li>
     </ol>
     <p style="margin-top:12px">O jogador aprende a <strong>dividir uma tarefa entre duas versões da nave</strong>.</p>
+    <p class="muted small"><strong>No protótipo</strong>, o corredor do encontro 2 tem a versão com <strong>um</strong> interruptor: grave a nave parada sobre o interruptor, invoque o eco e atravesse o laser enquanto o eco segura o interruptor.</p>
     <h4>Puzzle 2 — Refletir o ataque do chefe</h4>
     <p><strong>Objetivo:</strong> atingir um núcleo protegido usando o ataque do próprio chefe.</p>
     <ol class="steps echo">
@@ -350,8 +381,12 @@
     <p>Feedback visual claro: os receptores acendem, uma conexão de energia aparece e o mecanismo muda de estado.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>Quais duas armadilhas e qual variação de obstáculo entram na jam?</span></li>
-    <li><span>Gadgets no MVP: §7 põe mina temporal <strong>e</strong> pulso de interferência no escopo inicial; §14 pede <strong>um</strong> gadget no MVP e o segundo como opcional. <a href="#c10">→ 10</a></span></li>
+    <li class="done"><span>Quais duas armadilhas e qual variação de obstáculo entram na jam? No protótipo: laser gate (com ciclo, e a variação presa a um interruptor) e barreiras móveis.</span></li>
+    <li><span>Gadgets no MVP: §7 põe mina temporal <strong>e</strong> pulso de interferência no escopo inicial; §14 pede <strong>um</strong> gadget no MVP e o segundo como opcional. O protótipo tem só a mina temporal. <a href="#c10">→ 10</a></span></li>
+    <li><span>"Detonação" da mina temporal: no protótipo ela explode sozinha no fim do pavio de 4 s. Falta decidir se o jogador também detona manualmente, e com qual tecla.</span></li>
+    <li><span>Barreiras móveis presas a um interruptor ("o eco mantém um mecanismo num estado"): no protótipo a barreira só segue o ciclo.</span></li>
+    <li><span>Puzzle 1 com dois interruptores, como no exemplo acima: o protótipo tem um.</span></li>
+    <li><span>As armadilhas devem ferir inimigos (o combo Trap Bait depende disso → <a href="#c03">03</a>)? No protótipo só ferem a nave.</span></li>
     <li><span>Puzzle 2 entra no protótipo? Depende do escudo refletor, que é expansão.</span></li>
   </ul></div>
 </section>
@@ -361,7 +396,7 @@
   <header>
     <h2 id="h06"><span class="n">06</span>Chefe e estrutura das runs</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GameSession) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
   </header>
   <p class="summary">O chefe do protótipo, fase a fase, e como os encontros de uma run ensinam e combinam as mecânicas.</p>
   <section class="part"><h3>O Guardião do Ciclo <span class="muted small">(nome provisório)</span></h3>
@@ -374,6 +409,22 @@
       <tr><th scope="row">4 · Última chance</th><td>Com pouca vida, mais ataques e janelas de vulnerabilidade menores</td><td>Aproveitar os ecos já criados para fechar o combate</td></tr>
     </tbody></table></div>
     <div class="rule ok"><span class="osd">Critério de sucesso</span>O chefe é vencível com uma boa sequência temporal, mas <strong>não exige combinação pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</div>
+    <h4>No protótipo atual</h4>
+    <p>Uma versão mínima com as <strong>fases 1 a 3</strong> (prefab <code>Guardian</code>, regras em <code>GuardianModel</code>). A fase 4 não existe. O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda direita.</p>
+    <div class="scroll"><table><thead><tr><th>Parte</th><th>Como funciona</th></tr></thead><tbody>
+      <tr><th scope="row">Blindagem (casco)</th><td>Absorve todos os tiros e fere a nave que encostar nela</td></tr>
+      <tr><th scope="row">Núcleo</th><td>120 de vida. Absorve os tiros enquanto o escudo âmbar está à vista; só toma dano quando fica vulnerável</td></tr>
+      <tr><th scope="row">Geradores (cima e baixo)</th><td>12 de vida cada. Derrubar o primeiro abre uma <strong>janela</strong>; se o segundo cai dentro dela, o núcleo fica <strong>vulnerável por 4 s</strong>. Se a janela fecha com um gerador de pé, o que caiu volta com a vida cheia</td></tr>
+      <tr><th scope="row">Volta dos geradores</th><td>Quando a vulnerabilidade acaba, os dois geradores voltam com a vida cheia</td></tr>
+    </tbody></table></div>
+    <div class="scroll"><table><thead><tr><th>Fase</th><th>No protótipo</th></tr></thead><tbody>
+      <tr><th scope="row">1 · Sobrevivência</th><td>12 s com tudo blindado. Leque de 5 tiros mirados na nave a cada 1,4 s. O laser varre de uma borda até perto do meio da tela, alternando a metade de cima e a de baixo: aviso de 0,9 s, varredura de 2,2 s, pausa de 1,6 s</td></tr>
+      <tr><th scope="row">2 · Preparação</th><td>Geradores expostos, janela <strong>generosa de 6 s</strong>. Rajada de 3 tiros mirados a cada 1,2 s. A primeira vez que o núcleo fica vulnerável encerra a fase: quando a vulnerabilidade acaba, começa a fase 3</td></tr>
+      <tr><th scope="row">3 · Sincronização</th><td>A mesma regra com janela <strong>curta de 2,5 s</strong>. Um anel de 14 tiros a cada 1,3 s, que gira um pouco a cada anel. Repete até o núcleo cair</td></tr>
+    </tbody></table></div>
+    <p>O núcleo destruído derrota o Guardião, e <strong>essa é a vitória do encontro</strong>. Pontuação: 250 por gerador derrubado e 5000 pelo núcleo. O HUD mostra a vida do núcleo, os dois geradores, a fase, a janela e o tempo de vulnerabilidade → <a href="#c07">07</a>.</p>
+    <p class="muted small">Todos os números são valores de partida para testar, no prefab <code>Guardian</code>.</p>
+    <p class="why"><em>Por quê:</em> a janela é o que pede o eco. Grave os tiros contra um gerador (a fase 1, com tudo blindado, é um bom momento) e invoque o eco quando os geradores abrirem, atacando o outro com a nave.</p>
   </section>
   <section class="part"><h3>Estrutura das runs</h3>
     <div class="scroll"><table><thead><tr><th>Encontro</th><th>Conteúdo</th><th>Objetivo de design</th></tr></thead><tbody>
@@ -383,18 +434,28 @@
       <tr><th scope="row">4 · Guardião</th><td>O chefe</td><td>Testar o domínio da mecânica</td></tr>
     </tbody></table></div>
     <p class="muted small">No protótipo, os encontros podem ser segmentos de uma única fase, sem mapa de progressão.</p>
+    <p><strong>No protótipo atual</strong>, a cena <code>Arena_01</code> encadeia três encontros (<code>StageDirector</code>):</p>
+    <div class="scroll"><table><thead><tr><th>Ordem</th><th>Encontro</th><th>Começa quando</th><th>Termina quando</th></tr></thead><tbody>
+      <tr><td>1</td><th scope="row">Primeiro ciclo — ondas → <a href="#c04">04</a></th><td>A cena carrega</td><td>4 s depois da última onda, sem inimigo vivo na tela</td></tr>
+      <tr><td>2</td><th scope="row">Armadilha — o corredor de armadilhas → <a href="#c05">05</a></th><td>O encontro 1 termina; o corredor entra pela direita</td><td>A nave passa do laser preso ao interruptor</td></tr>
+      <tr><td>4</td><th scope="row">Guardião</th><td>O corredor sai da tela (rolagem acelerada para 6 u/s)</td><td>O núcleo é destruído: vitória</td></tr>
+    </tbody></table></div>
+    <p class="muted small">O encontro 3, <strong>Combinação</strong>, ainda não existe. O <code>StageDirector</code> tem um campo <code>startAt</code> para começar direto no corredor ou no Guardião ao testar.</p>
   </section>
   <section class="part"><h3>Progressão entre tentativas</h3>
     <p>A repetição deve reforçar o tema <em>One More Time</em>. Dois modelos estão em jogo:</p>
     <figure><img src="img/progression.svg" alt="Modelo A, eco durante a vida, e modelo B, ciclos acumulados." width="800" height="250" loading="lazy"></figure>
-    <p><strong>No protótipo atual</strong> o modelo A está implementado: ao morrer, o encontro recomeça depois de 2 s, sem ecos. O chefe ainda não existe; o encontro termina quando a última onda é vencida.</p>
+    <p><strong>No protótipo atual</strong> o modelo A está implementado: ao morrer, a cena recarrega depois de 2 s <strong>no encontro em que a morte aconteceu</strong> (ondas, corredor ou Guardião), sem ecos e com a pontuação zerada (<code>RunCheckpoint</code>). Derrotar o Guardião é a vitória.</p>
     <p class="why"><em>Por quê:</em> o modelo A é mais previsível e mais fácil de balancear. O modelo B pode entrar depois, se "tentar mais uma vez" também virar a estrutura narrativa do jogo.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>O chefe tem quatro fases (§9) ou duas (tabela do §10, "chefe com duas fases de combate")?</span></li>
+    <li><span>O chefe tem quatro fases (§9) ou duas (tabela do §10, "chefe com duas fases de combate")? O protótipo tem as fases 1 a 3; a fase 4, Última chance, não está implementada.</span></li>
     <li><span>Nome definitivo do chefe — "O Guardião do Ciclo" é provisório.</span></li>
     <li><span>Confirmar o modelo A como sistema do protótipo (é o que está implementado).</span></li>
-    <li><span>O Guardião do Ciclo: falta implementar.</span></li>
+    <li class="done"><span>O Guardião do Ciclo: versão mínima implementada (fases 1 a 3).</span></li>
+    <li><span>Na fase 2 o núcleo também fica vulnerável quando os dois geradores caem; o v0.1 só fala de núcleo exposto na fase 3. Manter assim?</span></li>
+    <li><span>Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar?</span></li>
+    <li><span>O Guardião entrando fere a nave que estiver no caminho (dano de contato da blindagem). É justo, ou a blindagem só fere depois que ele para?</span></li>
   </ul></div>
 </section>
 
@@ -417,11 +478,11 @@
       <tr><th scope="row">Pausar</th><td><kbd>Esc</kbd></td></tr>
     </tbody></table></div>
     <p class="why"><em>Por quê:</em> os atalhos são provisórios. O que importa é <strong>separar a gravação da reprodução</strong>, para o jogador não invocar o eco sem querer enquanto tenta desviar de uma armadilha.</p>
-    <p class="muted small">No protótipo, estas ações estão em <code>Assets/_Project/Input/OneMoreTimeControls.inputactions</code> (mapa <code>Gameplay</code>), lidas só pelo <code>PlayerInputReader</code>. Q já está mapeado, mas ainda não há gadget.</p>
+    <p class="muted small">No protótipo, estas ações estão em <code>Assets/_Project/Input/OneMoreTimeControls.inputactions</code> (mapa <code>Gameplay</code>), lidas só pelo <code>PlayerInputReader</code>. Q solta a mina temporal → <a href="#c05">05</a>.</p>
   </section>
   <section class="part"><h3>HUD</h3>
     <figure><img src="img/hud.svg" alt="Mockup conceitual do HUD." width="800" height="250" loading="lazy"><figcaption>Mockup conceitual — não representa uma interface implementada.</figcaption></figure>
-    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação e as mensagens de pausa, derrota e encontro concluído. Faltam o gadget, a vida do chefe e o aviso de combo.</p>
+    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s") e as mensagens de pausa, derrota e vitória ("GUARDIÃO DERROTADO"). Com o Guardião em cena, um painel no topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo: blindado, protegido pelos geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta. Falta o aviso de combo.</p>
     <div class="scroll"><table><thead><tr><th>Elemento</th><th>Por que o jogador precisa</th></tr></thead><tbody>
       <tr><th scope="row">Vida restante (integridade)</th><td>Saber quanto risco ainda pode correr</td></tr>
       <tr><th scope="row">Gravação (memória temporal)</th><td>Planejar a sequência sem olhar o relógio</td></tr>
@@ -505,8 +566,8 @@
   <section class="part"><h3>Implementação atual</h3>
     <p>O código fica em <code>Assets/_Project/Scripts</code>, em quatro assemblies; os testes em <code>Assets/_Project/Tests/EditMode</code>.</p>
     <div class="scroll"><table><thead><tr><th>Assembly</th><th>Conteúdo</th></tr></thead><tbody>
-      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida, linha do tempo das ondas</td></tr>
-      <tr><td><code>OneMoreTime.Gameplay</code></td><td>Componentes da cena: input, playfield, nave, tiro, inimigos, ondas, sessão</td></tr>
+      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião</td></tr>
+      <tr><td><code>OneMoreTime.Gameplay</code></td><td>Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros e sessão</td></tr>
       <tr><td><code>OneMoreTime.UI</code></td><td>O HUD</td></tr>
       <tr><td><code>OneMoreTime.Editor</code></td><td>A ferramenta que monta o conteúdo placeholder (menu <em>One More Time › Bootstrap</em>)</td></tr>
     </tbody></table></div>
@@ -518,10 +579,15 @@
       <tr><td><code>WeaponSystem</code></td><td><code>ShipWeapon</code> + <code>Projectile</code> + <code>ProjectilePool</code></td><td>Tiros reaproveitados por pool</td></tr>
       <tr><td><code>DamageSystem</code></td><td><code>Health</code> (+ <code>HealthModel</code>) + <code>ContactDamage</code></td><td></td></tr>
       <tr><td><code>EnemyController</code></td><td><code>Enemy</code> + <code>WaveSpawner</code> + <code>WaveSchedule</code></td><td>Ondas são um asset de dados</td></tr>
-      <tr><td><code>GadgetSystem</code>, <code>TrapController</code>, <code>BossController</code>, <code>ComboEvaluator</code></td><td>—</td><td>Ainda não existem</td></tr>
+      <tr><td><code>GadgetSystem</code></td><td><code>ShipGadget</code> + <code>TimeMine</code> (+ <code>Cooldown</code>, <code>TimeMineModel</code> no Core)</td><td>A nave solta a mina; o eco reproduz o evento <code>Gadget</code></td></tr>
+      <tr><td><code>TrapController</code></td><td><code>TrapSection</code> + <code>LaserGate</code> + <code>MovingBarrier</code> + <code>SwitchPad</code> (+ <code>TrapCycle</code>, <code>ShutterCycle</code>, <code>PresenceSwitch</code>, <code>LaserGateModel</code> no Core)</td><td><code>TrapSection</code> para a rolagem no puzzle e encerra o encontro</td></tr>
+      <tr><td><code>BossController</code></td><td><code>GuardianBoss</code> + <code>SweepLaser</code> (+ <code>GuardianModel</code> no Core)</td><td>Fases, escudos, geradores e padrões de tiro</td></tr>
+      <tr><td><code>ComboEvaluator</code></td><td>—</td><td>Ainda não existe</td></tr>
       <tr><td>—</td><td><code>Playfield</code></td><td>O quadro que rola, com a câmera, a nave e os ecos</td></tr>
-      <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação, pausa, vitória e derrota</td></tr>
+      <tr><td>—</td><td><code>StageDirector</code> + <code>RunCheckpoint</code></td><td>Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte</td></tr>
+      <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação, pausa, vitória (o Guardião cai) e derrota</td></tr>
     </tbody></table></div>
+    <p>Armadilhas e tiros do chefe usam a layer <code>EnemyProjectile</code>, que só colide com a nave. A mina não tem colisor: o alcance e a explosão são consultas de física (<code>CheckSphere</code>, <code>OverlapSphere</code>) na layer <code>Enemy</code>. O interruptor também não usa física: compara posições, para o eco, que não tem colisor, poder segurá-lo.</p>
   </section>
   <section class="part"><h3>Como armazenar a gravação</h3>
     <p>Uma amostra de movimento:</p>
@@ -550,7 +616,7 @@
     <p class="why"><em>Por quê:</em> gravar dados, e não o mundo, é o que mantém a <a href="#regra-fundamental">regra fundamental</a> barata de implementar.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>Lista final de valores de <code>EchoEventType</code>.</span></li>
+    <li><span>Lista final de valores de <code>EchoEventType</code>. O protótipo usa <code>Shot</code> e <code>Gadget</code>.</span></li>
     <li class="done"><span>✓ Resolvido: <code>EchoSample</code> e <code>EchoEvent</code> continuam com <code>Vector2</code>, porque a nave se move só no plano de jogo e as posições são relativas ao playfield. <a href="#c02">→ 02</a></span></li>
   </ul></div>
 </section>
@@ -560,7 +626,7 @@
   <header>
     <h2 id="h10"><span class="n">10</span>Produção — escopo da jam</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 · <code>docs/gdd/10-producao.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (armadilhas, gadget e chefe) · <code>docs/gdd/10-producao.md</code></p>
   </header>
   <p class="summary">O que entra na jam, o que fica de fora, quando o protótipo está pronto para teste e o que pode dar errado.</p>
   <p>O objetivo é <strong>validar se a mecânica central é divertida</strong>, não construir todo o conteúdo previsto para o jogo final.</p>
@@ -581,10 +647,10 @@
       <tr><th scope="row">Gravação de cinco segundos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Reprodução de movimento e disparos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Drone com ondas por script</th><td><span class="chip ok">feito</span> e o ondulante</td></tr>
-      <tr><th scope="row">Duas armadilhas</th><td><span class="chip">pendente</span></td></tr>
-      <tr><th scope="row">Um gadget funcional</th><td><span class="chip">pendente</span></td></tr>
-      <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip">pendente</span></td></tr>
-      <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = sobreviver ao encontro, até o chefe existir</td></tr>
+      <tr><th scope="row">Duas armadilhas</th><td><span class="chip ok">feito</span> laser gate (com ciclo e preso a um interruptor) e barreira móvel → <a href="#c05">05</a></td></tr>
+      <tr><th scope="row">Um gadget funcional</th><td><span class="chip ok">feito</span> mina temporal, na tecla Q, reproduzida pelo eco → <a href="#c05">05</a></td></tr>
+      <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, fases 1 a 3 → <a href="#c06">06</a></td></tr>
+      <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = derrotar o Guardião; derrota recomeça o encontro atual</td></tr>
     </tbody></table></div>
   </section>
   <section class="part"><h3>Critérios de aceitação do protótipo</h3>
@@ -593,9 +659,9 @@
       <li class="done"><span>O jogador grava e reproduz uma sequência de cinco segundos.</span></li>
       <li class="done"><span>O eco repete movimentos e disparos sem depender do controle atual.</span></li>
       <li class="done"><span>A reprodução continua funcionando quando os inimigos se movem ou morrem.</span></li>
-      <li><span>Uma armadilha pode ser manipulada por uma ação registrada.</span></li>
-      <li><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial.</span></li>
-      <li><span>O chefe pode ser derrotado usando a mecânica temporal.</span></li>
+      <li class="done"><span>Uma armadilha pode ser manipulada por uma ação registrada. (O eco segura o interruptor do corredor enquanto a nave passa.)</span></li>
+      <li><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Derrubar os dois geradores do Guardião já pede nave e eco juntos, mas nenhum combo é reconhecido nem tem feedback próprio → <a href="#c03">03</a>.)</span></li>
+      <li class="done"><span>O chefe pode ser derrotado usando a mecânica temporal. (O eco derruba um gerador enquanto a nave derruba o outro.)</span></li>
       <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (Com placeholder já se distingue; falta testar com jogadores.)</span></li>
       <li><span>A mecânica continua legível nos momentos com mais projéteis.</span></li>
     </ul>
@@ -613,6 +679,7 @@
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Data e regras da game jam: <span class="tbd">_TBD_</span>.</span></li>
+    <li><span>Os critérios 4 e 6 foram verificados pelo Unity CLI, não com jogadores. Falta o teste sem explicação.</span></li>
     <li><span>Equipe e quem faz o quê: <span class="tbd">_TBD_</span>.</span></li>
   </ul></div>
 </section>

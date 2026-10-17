@@ -10,8 +10,9 @@ using UnityEngine;
 namespace OneMoreTime.Gameplay.Echo
 {
     /// <summary>
-    /// Hold Record to capture up to 5 s of the ship; press Invoke to release an echo that replays
-    /// it while you keep flying (GDD 02). Recording and invoking are separate buttons on purpose (GDD 07).
+    /// Hold Record to capture up to 5 s of the ship — movement, shots and gadget uses; press Invoke to
+    /// release an echo that replays it while you keep flying (GDD 02). Recording and invoking are
+    /// separate buttons on purpose (GDD 07).
     /// Runs after the motor and weapon so it samples this frame's final pose.
     /// </summary>
     [DefaultExecutionOrder(100)]
@@ -21,6 +22,7 @@ namespace OneMoreTime.Gameplay.Echo
         [SerializeField] PlayerInputReader input;
         [SerializeField] ShipMotor motor;
         [SerializeField] ShipWeapon weapon;
+        [SerializeField] ShipGadget gadget;
         [SerializeField] Playfield playfield;
         [SerializeField] ProjectilePool pool;
         [SerializeField] EchoGhost echoPrefab;
@@ -51,12 +53,16 @@ namespace OneMoreTime.Gameplay.Echo
         {
             if (weapon != null)
                 weapon.Fired += OnShipFired;
+            if (gadget != null)
+                gadget.Used += OnGadgetUsed;
         }
 
         void OnDisable()
         {
             if (weapon != null)
                 weapon.Fired -= OnShipFired;
+            if (gadget != null)
+                gadget.Used -= OnGadgetUsed;
             recorder?.Cancel();
         }
 
@@ -115,6 +121,12 @@ namespace OneMoreTime.Gameplay.Echo
         {
             if (recorder.IsRecording)
                 recorder.AddEvent(EchoEventType.Shot, origin, direction);
+        }
+
+        void OnGadgetUsed(Vector2 origin, Vector2 direction)
+        {
+            if (recorder.IsRecording)
+                recorder.AddEvent(EchoEventType.Gadget, origin, direction);
         }
 
         void OnGhostFinished(EchoGhost ghost)

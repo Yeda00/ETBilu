@@ -80,6 +80,7 @@
     <header><h2 id="boss">O chefe <a class="to" href="gdd-full.html#c06">→ 06</a></h2><span class="osd">nome provisório</span></header>
     <figure><img src="img/boss.svg" alt="O Guardião do Ciclo: núcleo blindado, dois geradores, laser; quatro fases." width="800" height="300"></figure>
     <p><strong>O Guardião do Ciclo</strong> protege uma passagem temporal. Vencível com uma boa sequência temporal — <strong>nunca pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</p>
+    <p class="muted">No protótipo, as fases 1 a 3: os dois geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável.</p>
   </section>
 
   <section class="plate" aria-labelledby="traps">
@@ -96,6 +97,7 @@
     </table></div>
     <figure><img src="img/puzzle-switches.svg" alt="Puzzle dos dois interruptores, em quatro passos: gravar, reproduzir, dividir a tarefa, atravessar." width="800" height="240"></figure>
     <p>Puzzles de poucos segundos, no meio do voo. O jogador aprende a <strong>dividir uma tarefa entre duas versões da nave</strong>.</p>
+    <p class="muted">No protótipo: laser gate, barreira móvel e um interruptor que o eco segura enquanto está sobre ele; a mina temporal (Q), que o eco também solta.</p>
   </section>
 
   <section class="plate" aria-labelledby="ctl">
@@ -136,8 +138,8 @@
 
   <section class="plate" aria-labelledby="proto">
     <header><h2 id="proto">Protótipo — estado atual <a class="to" href="gdd-full.html#c10">→ 10</a></h2><span class="osd">Assets/_Project/Scenes/Arena_01.unity</span></header>
-    <p>Jogável, todo em placeholder (primitivas 3D): nave, tiro, gravação de 5 s, eco que repete movimento e tiros, drones e ondulantes em ondas por script, HUD, pausa, derrota (o encontro recomeça) e vitória (sobreviver ao encontro).</p>
-    <div class="rule warn"><span class="osd">Falta</span>Armadilhas, gadget, torreta, chefe e combos.</div>
+    <p>Jogável, todo em placeholder (primitivas 3D): nave, tiro, gravação de 5 s, eco que repete movimento, tiros e gadget, drones e ondulantes em ondas por script, corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo (fases 1 a 3), HUD, pausa, derrota (o encontro atual recomeça) e vitória (derrotar o Guardião).</p>
+    <div class="rule warn"><span class="osd">Falta</span>Torreta, combos, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).</div>
   </section>
 
   <section class="plate" aria-labelledby="open">
@@ -146,9 +148,9 @@
       <li><span>O chefe tem quatro fases (§9) ou duas (§10)? <a href="gdd-full.html#c06">→ 06</a></span></li>
       <li><span>Um ou dois gadgets no MVP? §7 põe mina e pulso no escopo inicial; §14 pede um. <a href="gdd-full.html#c05">→ 05</a></span></li>
       <li><span>Um ou até três ecos no MVP? §2 diz até 3; §14 põe três ecos como opcional. <a href="gdd-full.html#c02">→ 02</a></span></li>
-      <li><span>Quais duas armadilhas entram na jam? <a href="gdd-full.html#c05">→ 05</a></span></li>
       <li><span>Regra do eco para dispositivos de presença contínua. <a href="gdd-full.html#c02">→ 02</a></span></li>
-      <li><span>A gravação é relativa à tela: como ficam os puzzles com interruptores fixos no mundo? <a href="gdd-full.html#c02">→ 02</a></span></li>
+      <li><span>A gravação é relativa à tela: o protótipo para a rolagem nos puzzles; vira regra? <a href="gdd-full.html#c02">→ 02</a></span></li>
+      <li><span>Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração. <a href="gdd-full.html#c06">→ 06</a></span></li>
       <li><span>Quais elementos são modelos 3D e quais são sprites 2D. <a href="gdd-full.html#c08">→ 08</a></span></li>
       <li><span>Donos de cada capítulo, data da jam e equipe. <a href="gdd-full.html#c10">→ 10</a></span></li>
     </ul>

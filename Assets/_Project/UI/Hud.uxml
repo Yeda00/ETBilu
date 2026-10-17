@@ -19,6 +19,27 @@
                     <ui:VisualElement name="rec-dot" class="rec-dot" />
                     <ui:Label name="memory-state" text="Segure SHIFT para gravar" class="state" />
                 </ui:VisualElement>
+
+                <ui:Label text="GADGET · MINA TEMPORAL" class="caption gadget" />
+                <ui:VisualElement class="row" picking-mode="Ignore">
+                    <ui:VisualElement class="bar">
+                        <ui:VisualElement name="gadget-fill" class="fill gadget" />
+                    </ui:VisualElement>
+                    <ui:Label name="gadget-state" text="Q · pronta" class="value" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="boss" class="boss hidden" picking-mode="Ignore">
+                <ui:Label text="O GUARDIÃO DO CICLO" class="caption boss" />
+                <ui:VisualElement class="bar boss">
+                    <ui:VisualElement name="boss-fill" class="fill boss" />
+                </ui:VisualElement>
+                <ui:VisualElement class="row" picking-mode="Ignore">
+                    <ui:VisualElement name="generator-1" class="pip" />
+                    <ui:VisualElement name="generator-2" class="pip" />
+                    <ui:Label name="boss-state" text="" class="state" />
+                </ui:VisualElement>
+                <ui:Label name="boss-phase" text="" class="boss-phase" />
             </ui:VisualElement>
 
             <ui:VisualElement class="right" picking-mode="Ignore">
@@ -47,6 +68,6 @@
             <ui:Label name="message-hint" text="" class="message-hint" />
         </ui:VisualElement>
 
-        <ui:Label text="WASD mover · ESPAÇO atirar · SHIFT gravar · E invocar eco · ESC pausar" class="hint" />
+        <ui:Label text="WASD mover · ESPAÇO atirar · SHIFT gravar · E invocar eco · Q mina · ESC pausar" class="hint" />
     </ui:VisualElement>
 </ui:UXML>

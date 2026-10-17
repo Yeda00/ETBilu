@@ -1,15 +1,18 @@
 using System.Globalization;
+using OneMoreTime.Core.Boss;
+using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Echo;
 using OneMoreTime.Gameplay.Session;
+using OneMoreTime.Gameplay.Ship;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace OneMoreTime.UI
 {
     /// <summary>
-    /// Placeholder HUD (GDD 07): integrity, temporal memory, active echoes, score and the session
-    /// message. Layout and look live in UI/Hud.uxml and UI/Hud.uss, so the artist can restyle
+    /// Placeholder HUD (GDD 07): integrity, temporal memory, active echoes, gadget recharge, score,
+    /// the Guardian's health and vulnerability, and the session message. Layout and look live in UI/Hud.uxml and UI/Hud.uss, so the artist can restyle
     /// without touching code.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
@@ -18,11 +21,14 @@ namespace OneMoreTime.UI
         [SerializeField] Health player;
         [SerializeField] EchoAbility echo;
         [SerializeField] GameSession session;
+        [SerializeField] ShipGadget gadget;
+        [SerializeField] StageDirector stage;
 
         static readonly CultureInfo PtBr = CultureInfo.GetCultureInfo("pt-BR");
 
-        VisualElement integrityFill, memoryFill, recDot, message;
-        Label memoryValue, memoryState, score, messageTitle, messageHint;
+        VisualElement integrityFill, memoryFill, recDot, message, gadgetFill, bossPanel, bossFill;
+        Label memoryValue, memoryState, score, messageTitle, messageHint, gadgetState, bossState, bossPhase;
+        VisualElement[] generatorPips;
         VisualElement[] slots;
         Label[] slotStates;
 
@@ -38,6 +44,13 @@ namespace OneMoreTime.UI
             message = root.Q("message");
             messageTitle = root.Q<Label>("message-title");
             messageHint = root.Q<Label>("message-hint");
+            gadgetFill = root.Q("gadget-fill");
+            gadgetState = root.Q<Label>("gadget-state");
+            bossPanel = root.Q("boss");
+            bossFill = root.Q("boss-fill");
+            bossState = root.Q<Label>("boss-state");
+            bossPhase = root.Q<Label>("boss-phase");
+            generatorPips = new[] { root.Q("generator-1"), root.Q("generator-2") };
 
             slots = new VisualElement[3];
             slotStates = new Label[3];
@@ -58,6 +71,12 @@ namespace OneMoreTime.UI
 
             if (echo != null)
                 UpdateEcho();
+
+            if (gadget != null && gadgetFill != null)
+                UpdateGadget();
+
+            if (bossPanel != null)
+                UpdateBoss(stage != null ? stage.Boss : null);
 
             if (session != null)
                 UpdateSession();
@@ -90,6 +109,44 @@ namespace OneMoreTime.UI
             }
         }
 
+        void UpdateGadget()
+        {
+            SetFill(gadgetFill, 1f - gadget.CooldownNormalized);
+            gadgetFill.EnableInClassList("charging", !gadget.IsReady);
+            gadgetState.text = gadget.IsReady ? "Q · pronta" : string.Format(PtBr, "recarga {0:0.0} s", gadget.CooldownRemaining);
+        }
+
+        void UpdateBoss(GuardianBoss boss)
+        {
+            bossPanel.EnableInClassList("hidden", boss == null);
+            if (boss == null)
+                return;
+
+            SetFill(bossFill, boss.CoreNormalized);
+            bossFill.EnableInClassList("vulnerable", boss.CoreVulnerable);
+            for (int i = 0; i < generatorPips.Length; i++)
+                generatorPips[i]?.EnableInClassList("down", !boss.IsGeneratorUp(i));
+
+            bossPhase.text = boss.IsEntering ? "" : boss.Phase switch
+            {
+                GuardianPhase.Survival => "FASE 1 · SOBREVIVÊNCIA",
+                GuardianPhase.Preparation => "FASE 2 · PREPARAÇÃO",
+                GuardianPhase.Synchronization => "FASE 3 · SINCRONIZAÇÃO",
+                _ => "",
+            };
+
+            if (boss.IsEntering)
+                bossState.text = "o Guardião se aproxima";
+            else if (boss.Phase == GuardianPhase.Defeated)
+                bossState.text = "núcleo destruído";
+            else if (boss.CoreVulnerable)
+                bossState.text = string.Format(PtBr, "NÚCLEO VULNERÁVEL · {0:0.0} s", boss.VulnerableRemaining);
+            else if (boss.WindowRemaining > 0f)
+                bossState.text = string.Format(PtBr, "gerador caído · janela {0:0.0} s", boss.WindowRemaining);
+            else
+                bossState.text = boss.Phase == GuardianPhase.Survival ? "núcleo blindado" : "núcleo protegido pelos geradores";
+        }
+
         void UpdateSession()
         {
             score.text = session.Score.ToString("000000", PtBr);
@@ -102,7 +159,7 @@ namespace OneMoreTime.UI
                     ShowMessage("ONE MORE TIME", "o encontro recomeça…");
                     break;
                 case SessionState.Cleared:
-                    ShowMessage("ENCONTRO CONCLUÍDO", $"pontuação {session.Score:000000} · {session.Kills} abates");
+                    ShowMessage("GUARDIÃO DERROTADO", $"pontuação {session.Score:000000} · {session.Kills} abates");
                     break;
                 default:
                     message.AddToClassList("hidden");

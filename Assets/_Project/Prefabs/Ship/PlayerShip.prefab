@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 5833313698970566445}
   - component: {fileID: 4250339786789062163}
   - component: {fileID: 4503295146122120678}
+  - component: {fileID: 5956445578714040267}
   m_Layer: 8
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -405,6 +406,7 @@ MonoBehaviour:
   faction: 0
   maxHealth: 3
   invulnerabilitySeconds: 1.2
+  shielded: 0
 --- !u!114 &5833313698970566445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,6 +460,25 @@ MonoBehaviour:
   input: {fileID: 0}
   motor: {fileID: 5833313698970566445}
   weapon: {fileID: 4250339786789062163}
+  gadget: {fileID: 5956445578714040267}
   playfield: {fileID: 0}
   pool: {fileID: 0}
   echoPrefab: {fileID: 1167158097409581532, guid: 4920255b5968f47559a18ed14ced94d6, type: 3}
+--- !u!114 &5956445578714040267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796504879319981029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2b6194a89eb47598ed90a54484b402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Ship.ShipGadget
+  input: {fileID: 0}
+  playfield: {fileID: 0}
+  pool: {fileID: 0}
+  mine: {fileID: 946013017931682518, guid: 20746323b779a4b06a9112386d7200f4, type: 3}
+  cooldownSeconds: 1.5
+  dropOffset: {x: -0.3, y: 0}

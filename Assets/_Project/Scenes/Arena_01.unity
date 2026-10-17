@@ -152,6 +152,7 @@ Transform:
   - {fileID: 1735093689}
   - {fileID: 880318358}
   - {fileID: 340722395}
+  - {fileID: 1943902052}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &230011974
@@ -276,6 +277,7 @@ MonoBehaviour:
   input: {fileID: 1401411813}
   player: {fileID: 567245531}
   spawner: {fileID: 880318357}
+  stage: {fileID: 1943902051}
   restartDelay: 2
 --- !u!4 &340722395
 Transform:
@@ -333,6 +335,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1401411813}
     - target: {fileID: 5833313698970566445, guid: 0fc64def6e9e7488b9f2e52d2e2347f7, type: 3}
+      propertyPath: playfield
+      value: 
+      objectReference: {fileID: 904703256}
+    - target: {fileID: 5956445578714040267, guid: 0fc64def6e9e7488b9f2e52d2e2347f7, type: 3}
+      propertyPath: pool
+      value: 
+      objectReference: {fileID: 1735093688}
+    - target: {fileID: 5956445578714040267, guid: 0fc64def6e9e7488b9f2e52d2e2347f7, type: 3}
+      propertyPath: input
+      value: 
+      objectReference: {fileID: 1401411813}
+    - target: {fileID: 5956445578714040267, guid: 0fc64def6e9e7488b9f2e52d2e2347f7, type: 3}
       propertyPath: playfield
       value: 
       objectReference: {fileID: 904703256}
@@ -412,6 +426,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ceb79e8c4e454c0c804325a12139ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Combat.Health
+--- !u!114 &567245532 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5956445578714040267, guid: 0fc64def6e9e7488b9f2e52d2e2347f7, type: 3}
+  m_PrefabInstance: {fileID: 567245528}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2b6194a89eb47598ed90a54484b402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Ship.ShipGadget
 --- !u!1 &567456072
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +485,8 @@ MonoBehaviour:
   player: {fileID: 567245531}
   echo: {fileID: 567245530}
   session: {fileID: 340722394}
+  gadget: {fileID: 567245532}
+  stage: {fileID: 1943902051}
 --- !u!114 &567456075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,6 +1155,61 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735093687}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 143153982}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1943902050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943902052}
+  - component: {fileID: 1943902051}
+  m_Layer: 0
+  m_Name: StageDirector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1943902051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943902050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3db7501bf7c8d40c9871ba9cedf4c4b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Session.StageDirector
+  playfield: {fileID: 904703256}
+  waves: {fileID: 880318357}
+  ship: {fileID: 567245529}
+  echoes: {fileID: 567245530}
+  pool: {fileID: 1735093688}
+  world: {fileID: 687199027}
+  trapSection: {fileID: 8156573256078891116, guid: 24aa144dd48464648b19093c9587c8a9, type: 3}
+  boss: {fileID: 1985196233868160455, guid: c5030c6e15be14e10871eb43a0352992, type: 3}
+  startAt: 0
+  sectionSpawnMargin: 1
+  exitScrollSpeed: 6
+--- !u!4 &1943902052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943902050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}

@@ -4,7 +4,7 @@ chapter: "06"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GameSession)
+source: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession)
 ---
 
 # ONE MORE TIME | Chefe e estrutura das runs
@@ -28,6 +28,33 @@ de combate que protege uma passagem temporal. O núcleo fica blindado durante a 
 > **Critério de sucesso:** o chefe é vencível com uma boa sequência temporal, mas **não exige combinação
 > pixel-perfect**. O desafio vem da leitura de padrões e do planejamento.
 
+### No protótipo atual
+
+Uma versão mínima com as **fases 1 a 3** (prefab `Guardian`, regras em `GuardianModel`). A fase 4 não existe.
+O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda direita.
+
+| Parte | Como funciona |
+|---|---|
+| **Blindagem** (casco) | Absorve todos os tiros e fere a nave que encostar nela |
+| **Núcleo** | 120 de vida. Absorve os tiros enquanto o escudo âmbar está à vista; só toma dano quando fica vulnerável |
+| **Geradores** (cima e baixo) | 12 de vida cada. Derrubar o primeiro abre uma **janela**; se o segundo cai dentro dela, o núcleo fica **vulnerável por 4 s**. Se a janela fecha com um gerador de pé, o que caiu volta com a vida cheia |
+| **Volta dos geradores** | Quando a vulnerabilidade acaba, os dois geradores voltam com a vida cheia |
+
+| Fase | No protótipo |
+|---|---|
+| 1 · Sobrevivência | 12 s com tudo blindado. Leque de 5 tiros mirados na nave a cada 1,4 s. O laser varre de uma borda até perto do meio da tela, alternando a metade de cima e a de baixo: aviso de 0,9 s, varredura de 2,2 s, pausa de 1,6 s |
+| 2 · Preparação | Geradores expostos, janela **generosa de 6 s**. Rajada de 3 tiros mirados a cada 1,2 s. A primeira vez que o núcleo fica vulnerável encerra a fase: quando a vulnerabilidade acaba, começa a fase 3 |
+| 3 · Sincronização | A mesma regra com janela **curta de 2,5 s**. Um anel de 14 tiros a cada 1,3 s, que gira um pouco a cada anel. Repete até o núcleo cair |
+
+O núcleo destruído derrota o Guardião, e **essa é a vitória do encontro**. Pontuação: 250 por gerador
+derrubado e 5000 pelo núcleo. O HUD mostra a vida do núcleo, os dois geradores, a fase, a janela e o
+tempo de vulnerabilidade → [07](07-controles-e-interface.md).
+
+Todos os números são valores de partida para testar, no prefab `Guardian`.
+
+*Por quê:* a janela é o que pede o eco. Grave os tiros contra um gerador (a fase 1, com tudo blindado, é
+um bom momento) e invoque o eco quando os geradores abrirem, atacando o outro com a nave.
+
 ## Estrutura das runs
 
 Runs curtas, com encontros que introduzem e depois combinam as mecânicas.
@@ -41,6 +68,17 @@ Runs curtas, com encontros que introduzem e depois combinam as mecânicas.
 
 No protótipo, os encontros podem ser segmentos de **uma única fase**, sem mapa de progressão.
 
+**No protótipo atual**, a cena `Arena_01` encadeia três encontros (`StageDirector`):
+
+| Ordem | Encontro | Começa quando | Termina quando |
+|---|---|---|---|
+| 1 | **Primeiro ciclo** — ondas → [04](04-inimigos-e-ondas.md) | A cena carrega | 4 s depois da última onda, sem inimigo vivo na tela |
+| 2 | **Armadilha** — o corredor de armadilhas → [05](05-armadilhas-gadgets-puzzles.md) | O encontro 1 termina; o corredor entra pela direita | A nave passa do laser preso ao interruptor |
+| 4 | **Guardião** | O corredor sai da tela (rolagem acelerada para 6 u/s) | O núcleo é destruído: vitória |
+
+O encontro 3, **Combinação**, ainda não existe. O `StageDirector` tem um campo `startAt` para começar
+direto no corredor ou no Guardião ao testar.
+
 ## Progressão entre tentativas
 
 A repetição deve reforçar o tema *One More Time*. Dois modelos estão em jogo:
@@ -52,14 +90,17 @@ A repetição deve reforçar o tema *One More Time*. Dois modelos estão em jogo
 | **A — Eco durante a vida** | O jogador grava e reproduz enquanto está vivo. A morte reinicia o encontro | **Recomendado para o protótipo** |
 | **B — Ciclos acumulados** | Ao reiniciar, o jogador deixa um eco persistente da tentativa anterior | Evolução futura |
 
-**No protótipo atual** o modelo A está implementado: ao morrer, o encontro recomeça depois de 2 s, sem ecos. O chefe ainda não existe; o encontro termina quando a última onda é vencida.
+**No protótipo atual** o modelo A está implementado: ao morrer, a cena recarrega depois de 2 s **no encontro em que a morte aconteceu** (ondas, corredor ou Guardião), sem ecos e com a pontuação zerada (`RunCheckpoint`). Derrotar o Guardião é a vitória.
 
 *Por quê:* o modelo A é mais previsível e mais fácil de balancear. O modelo B pode entrar depois, se
 "tentar mais uma vez" também virar a estrutura narrativa do jogo.
 
 ## Perguntas em aberto
 
-- [ ] O chefe tem quatro fases (§9) ou duas (tabela do §10, "chefe com duas fases de combate")?
+- [ ] O chefe tem quatro fases (§9) ou duas (tabela do §10, "chefe com duas fases de combate")? O protótipo tem as fases 1 a 3; a fase 4, Última chance, não está implementada.
 - [ ] Nome definitivo do chefe — "O Guardião do Ciclo" é provisório.
 - [ ] Confirmar o modelo A como sistema do protótipo (é o que está implementado).
-- [ ] O Guardião do Ciclo: falta implementar.
+- [x] O Guardião do Ciclo: versão mínima implementada (fases 1 a 3).
+- [ ] Na fase 2 o núcleo também fica vulnerável quando os dois geradores caem; o v0.1 só fala de núcleo exposto na fase 3. Manter assim?
+- [ ] Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar?
+- [ ] O Guardião entrando fere a nave que estiver no caminho (dano de contato da blindagem). É justo, ou a blindagem só fere depois que ele para?
