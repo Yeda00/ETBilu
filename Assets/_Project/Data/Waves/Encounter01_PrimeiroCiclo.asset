@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5213c1db9d1490a98563dd3069c842, type: 3}
+  m_Name: Encounter01_PrimeiroCiclo
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Enemies.WaveSchedule
+  warningSeconds: 0.8
+  clearDelay: 4
+  waves:
+  - label: 3 drones em fila, vindo do centro
+    time: 10
+    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
+    pattern: 0
+    count: 3
+    height: 0
+    spacing: 2.2
+    secondRow: 0
+    secondRowHeight: 0
+  - label: "drones em dois n\xEDveis de altura"
+    time: 25
+    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
+    pattern: 0
+    count: 3
+    height: 0.5
+    spacing: 2.2
+    secondRow: 1
+    secondRowHeight: -0.5
+  - label: "drones em dois n\xEDveis de altura (2)"
+    time: 33
+    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
+    pattern: 0
+    count: 3
+    height: 0.7
+    spacing: 2.2
+    secondRow: 1
+    secondRowHeight: -0.1
+  - label: primeiro grupo de ondulantes
+    time: 40
+    enemy: {fileID: 5020631678949466328, guid: 27646cbdb58c44fd7a09ba2f6cee2416, type: 3}
+    pattern: 1
+    count: 4
+    height: 0.2
+    spacing: 1.6
+    secondRow: 0
+    secondRowHeight: 0.2
+  - label: ondulantes (2)
+    time: 50
+    enemy: {fileID: 5020631678949466328, guid: 27646cbdb58c44fd7a09ba2f6cee2416, type: 3}
+    pattern: 1
+    count: 5
+    height: -0.3
+    spacing: 1.6
+    secondRow: 0
+    secondRowHeight: -0.3
+  - label: drones (torreta pendente)
+    time: 60
+    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
+    pattern: 0
+    count: 3
+    height: 0.6
+    spacing: 2.2
+    secondRow: 1
+    secondRowHeight: -0.6
+  - label: drones finais
+    time: 70
+    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
+    pattern: 0
+    count: 4
+    height: 0
+    spacing: 2
+    secondRow: 0
+    secondRowHeight: 0
