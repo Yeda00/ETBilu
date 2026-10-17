@@ -19,13 +19,15 @@ namespace OneMoreTime.Core.Combat
         public int Current { get; private set; }
         public bool IsDead => Current <= 0;
         public float Normalized => (float)Current / Max;
+        /// <summary>Armour or an energy shield: every hit is absorbed while on (GDD 06, núcleo blindado).</summary>
+        public bool Shielded { get; set; }
 
         public bool IsInvulnerable(float now) => now < invulnerableUntil;
 
         /// <summary>Apply damage at time <paramref name="now"/>. Returns true if it landed.</summary>
         public bool TryDamage(int amount, float now)
         {
-            if (amount <= 0 || IsDead || IsInvulnerable(now))
+            if (amount <= 0 || IsDead || Shielded || IsInvulnerable(now))
                 return false;
             Current = Math.Max(0, Current - amount);
             if (invulnerabilitySeconds > 0f)

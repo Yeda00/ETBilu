@@ -27,6 +27,16 @@ namespace OneMoreTime.Tests
             Assert.That(hp.Current, Is.Zero);
             Assert.That(hp.TryDamage(1, 10f), Is.False);
         }
+
+        [Test]
+        public void Shield_absorbs_hits_without_starting_invulnerability()
+        {
+            var hp = new HealthModel(3, 1f) { Shielded = true };
+            Assert.That(hp.TryDamage(1, 0f), Is.False);
+            Assert.That(hp.Current, Is.EqualTo(3));
+            hp.Shielded = false;
+            Assert.That(hp.TryDamage(1, 0.1f), Is.True, "no invulnerability left over from the absorbed hit");
+        }
     }
 
     public class TimelineCursorTests
