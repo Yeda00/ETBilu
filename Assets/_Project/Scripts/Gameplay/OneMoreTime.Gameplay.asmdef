@@ -1,0 +1,17 @@
+{
+    "name": "OneMoreTime.Gameplay",
+    "rootNamespace": "OneMoreTime.Gameplay",
+    "references": [
+        "OneMoreTime.Core",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
