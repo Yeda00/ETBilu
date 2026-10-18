@@ -48,11 +48,12 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 | Pasta | O que vai nela |
 |---|---|
 | `Scripts/Core` | Regras em C# puro, sem MonoBehaviour, cobertas por testes (`OneMoreTime.Core`) |
-| `Scripts/Gameplay` | Componentes da cena (`OneMoreTime.Gameplay`), uma subpasta por área: Input, World, Ship, Echo, Combat, Enemies, Gadgets, Traps, Boss, Session |
+| `Scripts/Gameplay` | Componentes da cena (`OneMoreTime.Gameplay`), uma subpasta por área: Input, World, Ship, Echo, Combat, Enemies, Gadgets, Traps, Boss, Session, Feedback, Audio |
 | `Scripts/UI` | HUD (`OneMoreTime.UI`); layout e estilo em `UI/Hud.uxml` e `UI/Hud.uss` |
 | `Scripts/Editor` | Ferramentas de Editor (`OneMoreTime.Editor`) |
 | `Tests/EditMode` | Testes do Core |
-| `Data` | ScriptableObjects de ajuste: `EchoConfig`, ondas em `Data/Waves` |
+| `Data` | ScriptableObjects de ajuste: `EchoConfig`, `AudioLibrary` (qual clipe toca em cada cue e qual música em cada encontro), ondas em `Data/Waves` |
+| `Audio` | Clipes CC0 do OpenGameArt: `SFX/`, `UI/`, `Music/`. Fontes e licenças em `Audio/CREDITS.md`; ao trocar ou somar um pack, atualize o arquivo |
 | `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Traps, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
 | `Art/Ships` | Modelos de blockout: `Bilu_BlockOut` (nave e eco), `Enemie_S_1`/`Enemie_S`/`Enemie_S_3_BlockOut` (caça), `Enemie_M_1`/`_2`/`_3_BlockOut` (artilheiro), `Enemie_Boss_BlockOut` (Guardião). `BI_Ships_BlockOut` e `Enemie_M_BlockOut` (igual ao `M_2`) estão sem uso |
@@ -79,6 +80,7 @@ Convenções:
 Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez de editar `.unity`, `.prefab` ou `.asset` à mão.
 
 - **Testes:** `unity command run_tests --mode editor`.
+- **Áudio:** o menu *One More Time › Bootstrap › Build Audio* (`unity command menu --path "One More Time/Bootstrap/Build Audio"`) cria o `AudioLibrary`, ajusta a importação da música (Streaming) e liga o grupo `Systems/Audio` na cena. Não sobrescreve nada que exista: para refazer o mapeamento, apague `Data/AudioLibrary.asset`. Som novo = um `SoundCue` no Core, um pedido no `AudioDirector` (ou `ProjectilePool.Raise`) e o clipe no asset.
 - **Conteúdo placeholder:** o menu *One More Time › Bootstrap › Build Placeholder Content* (`unity command menu --path "One More Time/Bootstrap/Build Placeholder Content"`) recria o que faltar — materiais, prefabs, dados, painel de UI e a cena. Não sobrescreve nada que exista; apague um asset para ele ser refeito.
   Os inimigos `Enemy_S` e `Enemy_M` saem do bootstrap já com as três variações de modelo (prefabs antigos, de um modelo só,
   ganham as variações no lugar, sem perder as referências das ondas). Atenção: apagar `PlayerShip`, `EchoGhost` ou `Guardian`

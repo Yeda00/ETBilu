@@ -84,7 +84,7 @@ O HUD mostra integridade, memória temporal, ecos ativos, gadget, vida do chefe 
 
 2.5D: mundo 3D visto por câmera lateral, com alguns sprites 2D. Arcade sci-fi. **Ciano** é você, **eco translúcido** é o seu passado, **laranja e vermelho** é perigo.
 No protótipo, o mundo é desenhado em baixa resolução (270 px de altura) e ampliado sem suavizar, como no *Star Fox* do SNES; o HUD fica nítido.
-O som também explica: a gravação pulsa, a invocação reverte, o eco soa filtrado.
+O som também explica: a gravação pulsa, a invocação reverte, o eco soa filtrado. No protótipo isso já toca; a música muda a cada encontro.
 
 ## Escopo da jam → [10](gdd/10-producao.md)
 
@@ -99,8 +99,8 @@ blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, t
 gravação de 5 s, eco que repete movimento, tiros e gadget, caças, interceptadores e artilheiros que atiram, em ondas por script,
 corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
 (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
-atual recomeça) e vitória (derrotar o Guardião).
-Faltam torreta, os outros três combos, som, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).
+atual recomeça), vitória (derrotar o Guardião) e som: efeitos e música CC0 ligados ao jogo, com os valores ainda por ajustar de ouvido.
+Faltam torreta, os outros três combos, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).
 
 ## Perguntas em aberto
 

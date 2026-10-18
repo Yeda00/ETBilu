@@ -101,8 +101,36 @@ O áudio também comunica a mecânica temporal.
 | Combo temporal | Efeito sonoro exclusivo e curto |
 | Chefe vulnerável | Mudança musical ou sinal sonoro marcante |
 
-Os clipes já estão no projeto, em `Assets/_Project/Audio`, mas **ainda não estão ligados ao jogo**: nenhum
-som toca. Todos são CC0, do OpenGameArt (fontes e licenças em `Audio/CREDITS.md`):
+**No protótipo atual** o som já toca. O `AudioDirector` escuta os mesmos eventos de dano, morte, combo, eco e
+chefe que o feedback de combate, e pede cada **cue** (`SoundCue`: "tiro da nave", "inimigo grande morreu"…) ao
+`SfxPlayer`, que escolhe o clipe no `AudioLibrary` (asset em `Data/`). Trocar um som é trocar o clipe no
+asset, sem tocar no código. Efeitos repetidos têm limite de vozes e intervalo mínimo (`CueThrottle`), para o
+bullet hell não virar ruído, e panoramizam pela posição na tela. Os valores são de partida, escolhidos pelo
+nome dos arquivos, e precisam de ajuste de ouvido.
+
+| Momento | O que toca |
+|---|---|
+| Tiro da nave | *Shoot 2* ou *3* do pack Deva |
+| Tiro do eco | Os mesmos, mais graves e abafados (filtro passa-baixa em 1800 Hz) |
+| Tiro de inimigo e do chefe | Lasers retrô da Kenney |
+| Acerto, escudo | *Hit* do Deva; impacto metálico da Kenney |
+| Dano na nave | *Ouch* do Mini pack |
+| Inimigo, gerador, núcleo e nave destruídos | Explosões em escala crescente (Deva e Kenney) |
+| Mina solta e detonada | *Powerup* do Deva; explosão grave da Kenney |
+| Gravando (Shift) | Pulso gerado em código (onda quadrada) que acelera e sobe de tom até os 5 s; bipe ao começar e ao parar |
+| Invocação do eco (E) | Loop de reversão de tempo cortado em 0,7 s, depois um impacto 0,55 s mais tarde |
+| Combo temporal | *Starpower* do Mini pack, curto |
+| Chefe vulnerável, nova fase | Campo de força da Kenney; rugido do Mini pack |
+| Interruptor, corredor limpo, pausa, vitória | Bipes e jingles curtos (*Pickup*, *Powerup*, menu, *Win Jingle*) |
+
+A música muda a cada encontro: ondas com *8-bit Epic Space Shooter*, corredor de armadilhas com *Pulsar* e o
+Guardião com a faixa *Boss* do *NES Shooter Music* (intro e loop). A música abaixa na pausa e some na vitória e
+na derrota. Não existe tela de título no jogo ainda; *NES Shooter Music* é a candidata a ela.
+
+Ainda sem som: lasers e barreiras do corredor, o laser giratório do Guardião e a fase 4 do chefe (que não
+existe). O pulso de interferência também não existe ainda.
+
+Os clipes ficam em `Assets/_Project/Audio`. Todos são CC0, do OpenGameArt (fontes e licenças em `Audio/CREDITS.md`):
 
 | Pasta | Conteúdo |
 |---|---|
@@ -115,11 +143,8 @@ som toca. Todos são CC0, do OpenGameArt (fontes e licenças em `Audio/CREDITS.m
 | `Music/NesShooter` | *NES Shooter Music*: cinco faixas (*Venus*, *Map*, *Mars*, *Mercury*, *Boss*, esta com intro), quatro jingles e os projetos FamiTracker. É a candidata à tela de título |
 | `Music/Pulsar`, `EpicSpaceShooter`, `RushPoint`, `OnAgainOffAgain` | Quatro faixas mais animadas, em estilo NES, candidatas aos stages (de 27 s a 164 s) |
 
-A camada sonora da tabela acima continua planejada: não há som de gravação nem de combo, e nenhum clipe foi
-escolhido para cada evento. Os eventos de dano, morte e combo já estão separados para receber áudio sem
-alterar as regras de combate.
-
-> **Q:** fazer os disparos do eco soarem levemente abafados, como se viessem de outra camada temporal.
+> **Q:** os disparos do eco soarem levemente abafados, como se viessem de outra camada temporal. O protótipo
+> já usa um filtro passa-baixa (1800 Hz) nos tiros do eco; falta o dono confirmar o efeito.
 
 ## Perguntas em aberto
 

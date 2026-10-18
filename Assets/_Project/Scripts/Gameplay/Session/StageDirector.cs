@@ -45,6 +45,8 @@ namespace OneMoreTime.Gameplay.Session
         public event Action Completed;
         public event Action<int> Scored;
 
+        /// <summary>False until the first encounter begins.</summary>
+        public bool HasBegun { get; private set; }
         public StageSegment Segment { get; private set; }
         public TrapSection Section { get; private set; }
         public GuardianBoss Boss { get; private set; }
@@ -68,6 +70,7 @@ namespace OneMoreTime.Gameplay.Session
 
         void Begin(StageSegment segment)
         {
+            HasBegun = true;
             Segment = segment;
             if (segment < StageSegment.Done)
                 RunCheckpoint.Save(segment);

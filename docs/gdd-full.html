@@ -248,7 +248,7 @@
       <tr><th scope="row">Crossfire</th><td>A nave e um eco acertam o <strong>mesmo alvo</strong> (inimigo, gerador ou núcleo do Guardião) com até <strong>1 s</strong> de diferença. Dois acertos da mesma fonte não contam. Cada par de acertos dá um combo só, e o mesmo alvo só dá outro depois de 1 s</td><td><strong>+3 de dano combinado</strong> no alvo, se ele ainda estiver vivo, e <strong>100 pontos</strong></td></tr>
       <tr><th scope="row">Synchronized Strike</th><td>Os dois geradores do Guardião caem com até <strong>2,5 s</strong> de diferença, <strong>um derrubado pela nave e o outro por um eco</strong>, e o núcleo fica vulnerável</td><td>O <strong>escudo do núcleo cai</strong>, pela regra do próprio Guardião → <a href="#c06">06</a>, e <strong>1000 pontos</strong></td></tr>
     </tbody></table></div>
-    <p>Os dois ficam no <code>ComboTracker</code>; as regras, em <code>CrossfireRule</code> e <code>SynchronizedStrikeRule</code> (Core, com testes). Além do aviso no HUD → <a href="#c07">07</a>, ambos acionam <strong>Convergência Temporal</strong> no ponto do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso curto de câmera. Ainda não há som exclusivo: o projeto já tem clipes de áudio, mas nenhum está ligado ao jogo → <a href="#c08">08</a>.</p>
+    <p>Os dois ficam no <code>ComboTracker</code>; as regras, em <code>CrossfireRule</code> e <code>SynchronizedStrikeRule</code> (Core, com testes). Além do aviso no HUD → <a href="#c07">07</a>, ambos acionam <strong>Convergência Temporal</strong> no ponto do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso curto de câmera. Cada combo toca um efeito sonoro curto próprio → <a href="#c08">08</a>.</p>
     <p>Os tamanhos das janelas são <strong>valores de partida</strong>, generosos de propósito (o §16 pede janelas de sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike, o mesmo da janela curta da fase 3 do Guardião. Falta validar jogando.</p>
     <p class="why"><em>Por quê:</em> derrubar os geradores sem o eco ainda abre o núcleo, se o jogador for rápido o bastante (pergunta em aberto em <a href="#c06">06</a>). O Synchronized Strike não muda essa regra: ele reconhece e premia quando a abertura veio da nave e do eco juntos.</p>
   </section>
@@ -619,7 +619,24 @@
       <tr><th scope="row">Combo temporal</th><td>Efeito sonoro exclusivo e curto</td></tr>
       <tr><th scope="row">Chefe vulnerável</th><td>Mudança musical ou sinal sonoro marcante</td></tr>
     </tbody></table></div>
-    <p>Os clipes já estão no projeto, em <code>Assets/_Project/Audio</code>, mas <strong>ainda não estão ligados ao jogo</strong>: nenhum som toca. Todos são CC0, do OpenGameArt (fontes e licenças em <code>Audio/CREDITS.md</code>):</p>
+    <p><strong>No protótipo atual</strong> o som já toca. O <code>AudioDirector</code> escuta os mesmos eventos de dano, morte, combo, eco e chefe que o feedback de combate, e pede cada <strong>cue</strong> (<code>SoundCue</code>: "tiro da nave", "inimigo grande morreu"…) ao <code>SfxPlayer</code>, que escolhe o clipe no <code>AudioLibrary</code> (asset em <code>Data/</code>). Trocar um som é trocar o clipe no asset, sem tocar no código. Efeitos repetidos têm limite de vozes e intervalo mínimo (<code>CueThrottle</code>), para o bullet hell não virar ruído, e panoramizam pela posição na tela. Os valores são de partida, escolhidos pelo nome dos arquivos, e precisam de ajuste de ouvido.</p>
+    <div class="scroll"><table><thead><tr><th>Momento</th><th>O que toca</th></tr></thead><tbody>
+      <tr><th scope="row">Tiro da nave</th><td><em>Shoot 2</em> ou <em>3</em> do pack Deva</td></tr>
+      <tr><th scope="row">Tiro do eco</th><td>Os mesmos, mais graves e abafados (filtro passa-baixa em 1800 Hz)</td></tr>
+      <tr><th scope="row">Tiro de inimigo e do chefe</th><td>Lasers retrô da Kenney</td></tr>
+      <tr><th scope="row">Acerto, escudo</th><td><em>Hit</em> do Deva; impacto metálico da Kenney</td></tr>
+      <tr><th scope="row">Dano na nave</th><td><em>Ouch</em> do Mini pack</td></tr>
+      <tr><th scope="row">Inimigo, gerador, núcleo e nave destruídos</th><td>Explosões em escala crescente (Deva e Kenney)</td></tr>
+      <tr><th scope="row">Mina solta e detonada</th><td><em>Powerup</em> do Deva; explosão grave da Kenney</td></tr>
+      <tr><th scope="row">Gravando (Shift)</th><td>Pulso gerado em código (onda quadrada) que acelera e sobe de tom até os 5 s; bipe ao começar e ao parar</td></tr>
+      <tr><th scope="row">Invocação do eco (E)</th><td>Loop de reversão de tempo cortado em 0,7 s, depois um impacto 0,55 s mais tarde</td></tr>
+      <tr><th scope="row">Combo temporal</th><td><em>Starpower</em> do Mini pack, curto</td></tr>
+      <tr><th scope="row">Chefe vulnerável, nova fase</th><td>Campo de força da Kenney; rugido do Mini pack</td></tr>
+      <tr><th scope="row">Interruptor, corredor limpo, pausa, vitória</th><td>Bipes e jingles curtos (<em>Pickup</em>, <em>Powerup</em>, menu, <em>Win Jingle</em>)</td></tr>
+    </tbody></table></div>
+    <p>A música muda a cada encontro: ondas com <em>8-bit Epic Space Shooter</em>, corredor de armadilhas com <em>Pulsar</em> e o Guardião com a faixa <em>Boss</em> do <em>NES Shooter Music</em> (intro e loop). A música abaixa na pausa e some na vitória e na derrota. Não existe tela de título no jogo ainda; <em>NES Shooter Music</em> é a candidata a ela.</p>
+    <p>Ainda sem som: lasers e barreiras do corredor, o laser giratório do Guardião e a fase 4 do chefe (que não existe). O pulso de interferência também não existe ainda.</p>
+    <p>Os clipes ficam em <code>Assets/_Project/Audio</code>. Todos são CC0, do OpenGameArt (fontes e licenças em <code>Audio/CREDITS.md</code>):</p>
     <div class="scroll"><table><thead><tr><th>Pasta</th><th>Conteúdo</th></tr></thead><tbody>
       <tr><th scope="row"><code>SFX/Mini8bit</code></th><td>210 efeitos retrô em OGG: tiro (<em>Pew</em>), explosões, dano (<em>Ouch</em>), <em>Space</em>, <em>Teleport</em>, <em>Powerup</em>, <em>Pickup</em>, <em>Menu</em> e outros</td></tr>
       <tr><th scope="row"><code>SFX/Deva8bit</code></th><td>46 efeitos retrô em WAV: tiro, explosões, impactos, power-ups, erros</td></tr>
@@ -630,8 +647,7 @@
       <tr><th scope="row"><code>Music/NesShooter</code></th><td><em>NES Shooter Music</em>: cinco faixas (<em>Venus</em>, <em>Map</em>, <em>Mars</em>, <em>Mercury</em>, <em>Boss</em>, esta com intro), quatro jingles e os projetos FamiTracker. É a candidata à tela de título</td></tr>
       <tr><th scope="row"><code>Music/Pulsar</code>, <code>EpicSpaceShooter</code>, <code>RushPoint</code>, <code>OnAgainOffAgain</code></th><td>Quatro faixas mais animadas, em estilo NES, candidatas aos stages (de 27 s a 164 s)</td></tr>
     </tbody></table></div>
-    <p>A camada sonora da tabela acima continua planejada: não há som de gravação nem de combo, e nenhum clipe foi escolhido para cada evento. Os eventos de dano, morte e combo já estão separados para receber áudio sem alterar as regras de combate.</p>
-    <div class="rule"><span class="osd">Q · proposta</span>Fazer os disparos do eco soarem levemente abafados, como se viessem de outra camada temporal.</div>
+    <div class="rule"><span class="osd">Q · proposta</span>Os disparos do eco soarem levemente abafados, como se viessem de outra camada temporal. O protótipo já usa um filtro passa-baixa (1800 Hz) nos tiros do eco; falta o dono confirmar o efeito.</div>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Quem é dono da arte e do áudio?</span></li>
@@ -691,6 +707,7 @@
       <tr><td>—</td><td><code>PixelView</code></td><td>O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → <a href="#c08">08</a></td></tr>
       <tr><td>—</td><td><code>StageDirector</code> + <code>RunCheckpoint</code></td><td>Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte</td></tr>
       <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota</td></tr>
+      <tr><td><code>AudioSystem</code></td><td><code>AudioDirector</code> + <code>SfxPlayer</code> + <code>MusicPlayer</code> + <code>AudioLibrary</code> (+ <code>SoundCue</code>, <code>CueThrottle</code>, <code>RecordPulse</code>, <code>VolumeFader</code> no Core)</td><td>O <code>AudioDirector</code> traduz eventos de tiro, dano, morte, eco, combo, chefe, armadilha e pausa em cues; tiros e minas chegam por <code>ProjectilePool.CueRaised</code>. O <code>SfxPlayer</code> toca numa reserva fixa de <code>AudioSource</code> (escolhe clipe, tom, pan e abafamento) e o <code>MusicPlayer</code> encadeia intro e loop por encontro. Os clipes de cada cue ficam no <code>AudioLibrary</code> (asset em <code>Data/</code>); o menu <em>One More Time › Bootstrap › Build Audio</em> cria o asset e liga o áudio na cena → <a href="#c08">08</a></td></tr>
       <tr><td>—</td><td><code>CombatFeedbackDirector</code> + <code>CombatVfxPool</code> + <code>CameraImpact</code></td><td>Traduz eventos de dano, escudo, morte e combo em flashes, VFX reutilizados e impulsos proporcionais de câmera; não altera vida, dano ou colisão</td></tr>
     </tbody></table></div>
     <p>Armadilhas e tiros do chefe usam a layer <code>EnemyProjectile</code>, que só colide com a nave. A mina não tem colisor: o alcance e a explosão são consultas de física (<code>CheckSphere</code>, <code>OverlapSphere</code>) na layer <code>Enemy</code>. O interruptor também não usa física: compara posições, para o eco, que não tem colisor, poder segurá-lo.</p>
@@ -761,7 +778,7 @@
       <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, fases 1 a 3 → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = derrotar o Guardião; derrota recomeça o encontro atual</td></tr>
     </tbody></table></div>
-    <p>Dos opcionais, já entraram <strong>dois combos temporais com aviso no HUD</strong> (Crossfire e Synchronized Strike) e a <strong>pontuação por combos</strong> → <a href="#c03">03</a>. Ainda sem som próprio.</p>
+    <p>Dos opcionais, já entraram <strong>dois combos temporais com aviso no HUD</strong> (Crossfire e Synchronized Strike) e a <strong>pontuação por combos</strong> → <a href="#c03">03</a>, e o <strong>áudio</strong>: efeitos e música CC0 ligados ao jogo → <a href="#c08">08</a>.</p>
   </section>
   <section class="part"><h3>Critérios de aceitação do protótipo</h3>
     <p>O protótipo está pronto para teste quando:</p>

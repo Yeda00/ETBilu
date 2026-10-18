@@ -62,6 +62,7 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | — | `PixelView` | O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → [08](08-direcao-visual-e-sonora.md) |
 | — | `StageDirector` + `RunCheckpoint` | Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte |
 | — | `GameSession` | Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota |
+| `AudioSystem` | `AudioDirector` + `SfxPlayer` + `MusicPlayer` + `AudioLibrary` (+ `SoundCue`, `CueThrottle`, `RecordPulse`, `VolumeFader` no Core) | O `AudioDirector` traduz eventos de tiro, dano, morte, eco, combo, chefe, armadilha e pausa em cues; tiros e minas chegam por `ProjectilePool.CueRaised`. O `SfxPlayer` toca numa reserva fixa de `AudioSource` (escolhe clipe, tom, pan e abafamento) e o `MusicPlayer` encadeia intro e loop por encontro. Os clipes de cada cue ficam no `AudioLibrary` (asset em `Data/`); o menu *One More Time › Bootstrap › Build Audio* cria o asset e liga o áudio na cena → [08](08-direcao-visual-e-sonora.md) |
 | — | `CombatFeedbackDirector` + `CombatVfxPool` + `CameraImpact` | Traduz eventos de dano, escudo, morte e combo em flashes, VFX reutilizados e impulsos proporcionais de câmera; não altera vida, dano ou colisão |
 
 Armadilhas e tiros do chefe usam a layer `EnemyProjectile`, que só colide com a nave. A mina não tem

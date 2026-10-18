@@ -82,7 +82,7 @@ namespace OneMoreTime.Gameplay.Echo
                     shotFeedback?.Play(e.position, e.direction);
                 }
                 else if (e.type == EchoEventType.Gadget && mine != null)
-                    Instantiate(mine, playfield.LocalToWorld(e.position), Quaternion.identity, pool.transform).Arm(Faction.Player, ShotSource.Echo);
+                    Instantiate(mine, playfield.LocalToWorld(e.position), Quaternion.identity, pool.transform).Arm(Faction.Player, ShotSource.Echo, pool);
             }
             ApplyFade();
         }

@@ -51,7 +51,7 @@ namespace OneMoreTime.Gameplay.Ship
 
             var origin = (Vector2)transform.localPosition + dropOffset;
             var dropped = Instantiate(mine, playfield.LocalToWorld(origin), Quaternion.identity, pool != null ? pool.transform : null);
-            dropped.Arm(Faction.Player, ShotSource.Ship);
+            dropped.Arm(Faction.Player, ShotSource.Ship, pool);
             Used?.Invoke(origin, Vector2.right);
         }
 

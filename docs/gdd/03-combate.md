@@ -106,8 +106,8 @@ nave e do eco: um tiro ou uma mina conta para quem o disparou, a nave atual ou u
 
 Os dois ficam no `ComboTracker`; as regras, em `CrossfireRule` e `SynchronizedStrikeRule` (Core, com testes).
 Além do aviso no HUD → [07](07-controles-e-interface.md), ambos acionam **Convergência Temporal** no ponto
-do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso curto de câmera. Ainda não há
-som exclusivo: o projeto já tem clipes de áudio, mas nenhum está ligado ao jogo → [08](08-direcao-visual-e-sonora.md).
+do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso curto de câmera. Cada combo
+toca um efeito sonoro curto próprio → [08](08-direcao-visual-e-sonora.md).
 
 Os tamanhos das janelas são **valores de partida**, generosos de propósito (o §16 pede janelas de
 sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike, o mesmo da

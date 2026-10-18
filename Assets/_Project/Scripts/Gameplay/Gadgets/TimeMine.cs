@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using OneMoreTime.Core.Audio;
 using OneMoreTime.Core.Gadgets;
 using OneMoreTime.Gameplay.Combat;
 using UnityEngine;
@@ -33,15 +34,21 @@ namespace OneMoreTime.Gameplay.Gadgets
         TimeMineModel model;
         Faction faction = Faction.Player;
         ShotSource source = ShotSource.Ship;
+        ProjectilePool relay;
         float blastAge = -1f;
 
         public bool HasExploded => model != null && model.HasExploded;
 
-        /// <summary>Called right after the mine is dropped: who it belongs to, for damage and combos.</summary>
-        public void Arm(Faction owner, ShotSource from)
+        /// <summary>
+        /// Called right after the mine is dropped: who it belongs to, for damage and combos. The pool, when
+        /// given, carries the mine's sound cues (drop and blast) to the audio director.
+        /// </summary>
+        public void Arm(Faction owner, ShotSource from, ProjectilePool soundRelay = null)
         {
             faction = owner;
             source = from;
+            relay = soundRelay;
+            relay?.Raise(SoundCue.MineDrop, transform.position);
         }
 
         void Awake()
@@ -68,6 +75,7 @@ namespace OneMoreTime.Gameplay.Gadgets
 
         void Explode()
         {
+            relay?.Raise(SoundCue.MineBlast, transform.position);
             struck.Clear();
             int n = Physics.OverlapSphereNonAlloc(transform.position, blastRadius, Hits, targets, QueryTriggerInteraction.Collide);
             for (int i = 0; i < n; i++)

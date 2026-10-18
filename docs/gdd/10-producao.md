@@ -42,7 +42,7 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Interface mínima e condição de vitória e derrota | ✅ vitória = derrotar o Guardião; derrota recomeça o encontro atual |
 
 Dos opcionais, já entraram **dois combos temporais com aviso no HUD** (Crossfire e Synchronized Strike) e a
-**pontuação por combos** → [03](03-combate.md). Ainda sem som próprio.
+**pontuação por combos** → [03](03-combate.md), e o **áudio**: efeitos e música CC0 ligados ao jogo → [08](08-direcao-visual-e-sonora.md).
 
 ## Critérios de aceitação do protótipo
 

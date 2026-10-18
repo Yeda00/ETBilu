@@ -1,0 +1,444 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f397e8a4fadfd4d9d9d53013a3535aa3, type: 3}
+  m_Name: AudioLibrary
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Audio.AudioLibrary
+  cues:
+  - cue: 1
+    clips:
+    - {fileID: 8300000, guid: 35447af04b5524b84b194d74b4fdc719, type: 3}
+    - {fileID: 8300000, guid: 02001c952b6074242bb55cbcc38457c6, type: 3}
+    volume: 0.35
+    pitchMin: 0.95
+    pitchMax: 1.08
+    maxVoices: 4
+    minInterval: 0.04
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 2
+    clips:
+    - {fileID: 8300000, guid: 35447af04b5524b84b194d74b4fdc719, type: 3}
+    - {fileID: 8300000, guid: 02001c952b6074242bb55cbcc38457c6, type: 3}
+    volume: 0.26
+    pitchMin: 0.85
+    pitchMax: 0.95
+    maxVoices: 3
+    minInterval: 0.04
+    panned: 1
+    lowPassHz: 1800
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 3
+    clips:
+    - {fileID: 8300000, guid: cd8e60639e2b147bb9df0ed49f9409bc, type: 3}
+    - {fileID: 8300000, guid: 8a616f41910a5485abd4ba6f0a3a7774, type: 3}
+    - {fileID: 8300000, guid: 32c1a301d0ba34f89828c77fc6a2cf68, type: 3}
+    - {fileID: 8300000, guid: e1d630b1335ff4ecdb0473e334b14996, type: 3}
+    - {fileID: 8300000, guid: 906a3ea2bf7b241beb525f2fa8f61dd5, type: 3}
+    volume: 0.22
+    pitchMin: 0.9
+    pitchMax: 1.1
+    maxVoices: 4
+    minInterval: 0.05
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 4
+    clips:
+    - {fileID: 8300000, guid: e4c24a69b1c2c446f95ccfebcf30db92, type: 3}
+    - {fileID: 8300000, guid: fc09d2dcec28b411295b30030da32946, type: 3}
+    - {fileID: 8300000, guid: a024de222f4794f87935ddfbad049b74, type: 3}
+    - {fileID: 8300000, guid: e8a80eb5ec11f4bc19c2fd7839819496, type: 3}
+    - {fileID: 8300000, guid: c1373269e5f9a461287af4f388a94cce, type: 3}
+    volume: 0.28
+    pitchMin: 0.95
+    pitchMax: 1.1
+    maxVoices: 3
+    minInterval: 0.04
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 5
+    clips:
+    - {fileID: 8300000, guid: 5e4e18bcb0e664d0584edc02d0ad3b6f, type: 3}
+    - {fileID: 8300000, guid: a9052a1f5bddf4decb6dc506b5576f1b, type: 3}
+    volume: 0.35
+    pitchMin: 0.95
+    pitchMax: 1.05
+    maxVoices: 2
+    minInterval: 0.06
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 6
+    clips:
+    - {fileID: 8300000, guid: 2d44942fee06e4467a0b1c10939e8f2f, type: 3}
+    - {fileID: 8300000, guid: d2840fc36c3154fd69fc63987e99b839, type: 3}
+    - {fileID: 8300000, guid: 1051607e45fbc4c85b737ca998ccdf9a, type: 3}
+    volume: 0.7
+    pitchMin: 0.98
+    pitchMax: 1.02
+    maxVoices: 1
+    minInterval: 0.1
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 7
+    clips:
+    - {fileID: 8300000, guid: e05dd2e881f0d44ddb1669b1df52e71c, type: 3}
+    - {fileID: 8300000, guid: bb335f38890fd41bc92baaa44adec906, type: 3}
+    volume: 0.5
+    pitchMin: 0.95
+    pitchMax: 1.1
+    maxVoices: 4
+    minInterval: 0.03
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 8
+    clips:
+    - {fileID: 8300000, guid: 48e0f4ae8029d492dac15d1a3b9a24ad, type: 3}
+    - {fileID: 8300000, guid: 74bfdf9c735b54557bf026a28036dcaf, type: 3}
+    - {fileID: 8300000, guid: 0324f50f8049d458e9087eebbfa98533, type: 3}
+    volume: 0.6
+    pitchMin: 0.92
+    pitchMax: 1.05
+    maxVoices: 3
+    minInterval: 0.05
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 9
+    clips:
+    - {fileID: 8300000, guid: a3c1fa25428ba4c9e984666ab8027294, type: 3}
+    - {fileID: 8300000, guid: fff86cff159bd4065a52c25315a8fffe, type: 3}
+    volume: 0.75
+    pitchMin: 0.95
+    pitchMax: 1.02
+    maxVoices: 2
+    minInterval: 0.1
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 10
+    clips:
+    - {fileID: 8300000, guid: 74163d93fc0bf4e6da05cffa0e6de75e, type: 3}
+    - {fileID: 8300000, guid: 39ed6ea5d649f40ef8a024ed8a974a6e, type: 3}
+    volume: 0.9
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.2
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 11
+    clips:
+    - {fileID: 8300000, guid: 3c40c443c68fa44bc9dcbd71f99b7a63, type: 3}
+    volume: 0.9
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.2
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 12
+    clips:
+    - {fileID: 8300000, guid: 59b4ce6cde7954c919bd61ceb1548b35, type: 3}
+    volume: 0.4
+    pitchMin: 0.95
+    pitchMax: 1.05
+    maxVoices: 2
+    minInterval: 0.1
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 13
+    clips:
+    - {fileID: 8300000, guid: 3e3dbcf23e64b48bb92d855dbda8c38c, type: 3}
+    volume: 0.7
+    pitchMin: 0.95
+    pitchMax: 1.05
+    maxVoices: 2
+    minInterval: 0.1
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 14
+    clips:
+    - {fileID: 8300000, guid: 56cfb24f2c2a1424e98347fd28e130f3, type: 3}
+    volume: 0.4
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.1
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 15
+    clips:
+    - {fileID: 8300000, guid: c8596d8ae6bf041a59119ce269d8fa0c, type: 3}
+    volume: 0.35
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.1
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 16
+    clips:
+    - {fileID: 8300000, guid: a2e357a96b5e5498ebb9d77fa32850b2, type: 3}
+    volume: 0.45
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 2
+    minInterval: 0.1
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0.7
+    fadeOutSeconds: 0.2
+  - cue: 17
+    clips:
+    - {fileID: 8300000, guid: ed64a1beefd584dddbf2efac3a13f8bd, type: 3}
+    volume: 0.6
+    pitchMin: 0.7
+    pitchMax: 0.8
+    maxVoices: 2
+    minInterval: 0.1
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 18
+    clips:
+    - {fileID: 8300000, guid: de94c894786cc4d67a540b89f182ca66, type: 3}
+    - {fileID: 8300000, guid: e2514121e1ae64d75ae88c29e560f4ff, type: 3}
+    volume: 0.55
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 2
+    minInterval: 0.1
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 1.2
+    fadeOutSeconds: 0.3
+  - cue: 19
+    clips:
+    - {fileID: 8300000, guid: 492d97ab6c9114d38a2f6805a4df8014, type: 3}
+    volume: 0.6
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.3
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 20
+    clips:
+    - {fileID: 8300000, guid: b385f4c3a34eb4552ac63ed404d5994d, type: 3}
+    - {fileID: 8300000, guid: a93d0f48d87ac4afcb785f9da3a4563a, type: 3}
+    volume: 0.7
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.5
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 1.6
+    fadeOutSeconds: 0.4
+  - cue: 21
+    clips:
+    - {fileID: 8300000, guid: fb9c161b63a984d009ba1e07712499d3, type: 3}
+    volume: 0.4
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 2
+    minInterval: 0.1
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 22
+    clips:
+    - {fileID: 8300000, guid: c0d2df86d1776419fb68633f8b6181e3, type: 3}
+    volume: 0.3
+    pitchMin: 0.8
+    pitchMax: 0.8
+    maxVoices: 2
+    minInterval: 0.1
+    panned: 1
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 23
+    clips:
+    - {fileID: 8300000, guid: 8fbd6fbfbc923488ea6d2f296a1a2ac5, type: 3}
+    volume: 0.55
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.3
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 24
+    clips:
+    - {fileID: 8300000, guid: fd067c06ebabf41fdb7c0860709f4265, type: 3}
+    volume: 0.5
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.1
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 25
+    clips:
+    - {fileID: 8300000, guid: c08aadbcfcfb84413a4379ef895fbd7c, type: 3}
+    volume: 0.5
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.1
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 26
+    clips:
+    - {fileID: 8300000, guid: d827ead3053af410399b4a088509b036, type: 3}
+    volume: 0.8
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.5
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 27
+    clips:
+    - {fileID: 8300000, guid: c08aadbcfcfb84413a4379ef895fbd7c, type: 3}
+    volume: 0.45
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 2
+    minInterval: 0.04
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 28
+    clips:
+    - {fileID: 8300000, guid: fd067c06ebabf41fdb7c0860709f4265, type: 3}
+    volume: 0.55
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 2
+    minInterval: 0.05
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 29
+    clips:
+    - {fileID: 8300000, guid: c0d2df86d1776419fb68633f8b6181e3, type: 3}
+    volume: 0.45
+    pitchMin: 0.85
+    pitchMax: 0.85
+    maxVoices: 2
+    minInterval: 0.05
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 30
+    clips:
+    - {fileID: 8300000, guid: 811f12138325145129bc75925d5b2a57, type: 3}
+    volume: 0.6
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.2
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 31
+    clips:
+    - {fileID: 8300000, guid: 938e08bb5021d486b93ebfc9e759e4b8, type: 3}
+    volume: 0.5
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.1
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 0
+    fadeOutSeconds: 0.1
+  - cue: 32
+    clips:
+    - {fileID: 8300000, guid: d93634306837b43de8bd0a7b15f7b9ff, type: 3}
+    volume: 0.6
+    pitchMin: 1
+    pitchMax: 1
+    maxVoices: 1
+    minInterval: 0.5
+    panned: 0
+    lowPassHz: 0
+    maxSeconds: 1.4
+    fadeOutSeconds: 0.3
+  music:
+  - track: 0
+    intro: {fileID: 0}
+    loop: {fileID: 8300000, guid: 229a893702efd40488dc6cd8a6f198cb, type: 3}
+    volume: 0.6
+  - track: 1
+    intro: {fileID: 0}
+    loop: {fileID: 8300000, guid: 66e9b9ce0ca16490db34656558865485, type: 3}
+    volume: 0.6
+  - track: 2
+    intro: {fileID: 8300000, guid: 26b44b44fd44640a799a497917512793, type: 3}
+    loop: {fileID: 8300000, guid: 880d0b66e5f3b451fa7ac9c519475cb0, type: 3}
+    volume: 0.65
+  - track: 3
+    intro: {fileID: 0}
+    loop: {fileID: 8300000, guid: fae0457095ff643659b8d7b120bb6c57, type: 3}
+    volume: 0.65
+  - track: 4
+    intro: {fileID: 0}
+    loop: {fileID: 8300000, guid: 8bc018dba00e24e3ebf34b4dab892383, type: 3}
+    volume: 0.6
+  - track: 5
+    intro: {fileID: 0}
+    loop: {fileID: 8300000, guid: cfebc9d1acbda46f3959db44aa822368, type: 3}
+    volume: 0.6
