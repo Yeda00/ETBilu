@@ -7,7 +7,7 @@ updated: 2026-10-18
 source: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01, modelos em Art/Ships)
 ---
 
-# ONE MORE TIME | Direção visual e sonora
+# BILU'S INVASION | Direção visual e sonora
 
 Como o jogo se parece e soa, com uma regra: a tela e o som têm que explicar a mecânica temporal.
 

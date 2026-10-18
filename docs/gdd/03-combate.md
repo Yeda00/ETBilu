@@ -7,7 +7,7 @@ updated: 2026-10-18
 source: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Enemy_S, Enemy_M; ComboTracker, CrossfireRule, SynchronizedStrikeRule)
 ---
 
-# ONE MORE TIME | Combate
+# BILU'S INVASION | Combate
 
 O que a nave do jogador faz, os tipos de dano, os combos temporais e o que a pontuação premia.
 

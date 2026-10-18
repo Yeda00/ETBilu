@@ -7,7 +7,7 @@ updated: 2026-10-17
 source: GDD v0.1 (PDF) §1, §2 e §17 — docs/source/GDD_One_More_Time_v0.1.pdf
 ---
 
-# ONE MORE TIME | Visão geral
+# BILU'S INVASION | Visão geral
 
 O que o jogo é, qual é a fantasia do jogador, os pilares que orientam cada decisão e o formato do protótipo.
 
@@ -21,6 +21,9 @@ temporais para derrotar chefes.
 
 O tema central é *One More Time*: cada tentativa deixa para trás ações que podem ser reproduzidas
 para criar novas estratégias.
+
+O jogo se chama **Bilu's Invasion**. *One More Time* foi o nome inicial e ficou como o tema do design; o código mantém o nome
+`OneMoreTime` nos namespaces e nos menus do Editor.
 
 | | |
 |---|---|

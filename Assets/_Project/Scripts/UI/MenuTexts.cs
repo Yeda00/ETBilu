@@ -11,17 +11,18 @@ namespace OneMoreTime.UI
     public sealed class MenuTexts : ScriptableObject
     {
         [Serializable]
-        public struct ControlEntry
+        public struct ControlLabel
         {
-            public string action;
-            public string keys;
+            [Tooltip("Key of the line of the controls screen, like Move.up or Fire.")]
+            public string key;
+            public string label;
         }
 
         [Header("Title screen")]
-        public string logoTop = "ONE MORE";
-        public string logoBottom = "TIME";
+        public string logoTop = "BILU'S";
+        public string logoBottom = "INVASION";
         public string tagline = "O PASSADO CONTINUA LUTANDO";
-        public string pressStart = "PRESSIONE ENTER";
+        public string pressStart = "PRESSIONE ENTER / START";
 
         [Header("Main menu")]
         public string playLabel = "JOGO PRINCIPAL";
@@ -37,15 +38,22 @@ namespace OneMoreTime.UI
 
         [Header("Controls screen")]
         public string controlsTitle = "CONTROLES";
-        public ControlEntry[] controls =
+        public string keyboardHeader = "TECLADO";
+        public string gamepadHeader = "CONTROLE";
+        public string resetLabel = "RESTAURAR PADRÃO";
+        public string waitingLabel = "PRESSIONE…";
+        public ControlLabel[] controlLabels =
         {
-            new() { action = "MOVER A NAVE", keys = "W A S D  ou  SETAS" },
-            new() { action = "MIRAR", keys = "MOUSE" },
-            new() { action = "ATIRAR", keys = "ESPAÇO  ou  BOTÃO ESQUERDO" },
-            new() { action = "GRAVAR O ECO", keys = "SEGURAR SHIFT" },
-            new() { action = "INVOCAR O ECO", keys = "E" },
-            new() { action = "MINA TEMPORAL", keys = "Q" },
-            new() { action = "PAUSAR", keys = "ESC" },
+            new() { key = "Move.up", label = "MOVER PARA CIMA" },
+            new() { key = "Move.down", label = "MOVER PARA BAIXO" },
+            new() { key = "Move.left", label = "MOVER PARA A ESQUERDA" },
+            new() { key = "Move.right", label = "MOVER PARA A DIREITA" },
+            new() { key = "Aim", label = "MIRAR" },
+            new() { key = "Fire", label = "ATIRAR" },
+            new() { key = "Record", label = "GRAVAR O ECO (SEGURAR)" },
+            new() { key = "InvokeEcho", label = "INVOCAR O ECO" },
+            new() { key = "Gadget", label = "MINA TEMPORAL" },
+            new() { key = "Pause", label = "PAUSAR" },
         };
 
         [Header("Credits screen")]
@@ -73,12 +81,24 @@ namespace OneMoreTime.UI
         public string lockedHint = "AINDA NÃO DISPONÍVEL";
 
         [Header("Story screen")]
-        public string introHint = "ENTER PULA  ·  ↓ ACELERA";
+        public string introHint = "ENTER OU A PULA  ·  ↓ ACELERA";
 
         [Header("Hints at the foot of each screen")]
-        public string listHint = "↑ ↓ ESCOLHE  ·  ENTER CONFIRMA  ·  ESC VOLTA";
-        public string soundHint = "↑ ↓ ESCOLHE  ·  ← → AJUSTA  ·  ESC VOLTA";
-        public string mapHint = "← → ESCOLHE  ·  ENTER CONFIRMA  ·  ESC VOLTA";
-        public string backHint = "ESC VOLTA";
+        public string listHint = "↑ ↓ ESCOLHE  ·  ENTER OU A CONFIRMA  ·  ESC OU B VOLTA";
+        public string soundHint = "↑ ↓ ESCOLHE  ·  ← → AJUSTA  ·  ESC OU B VOLTA";
+        public string mapHint = "← → ESCOLHE  ·  ENTER OU A CONFIRMA  ·  ESC OU B VOLTA";
+        public string backHint = "ESC OU B VOLTA";
+        public string controlsHint = "↑ ↓ ← → ESCOLHE  ·  ENTER OU A MUDA  ·  ESC OU B VOLTA";
+        public string waitingHint = "APERTE O NOVO BOTÃO  ·  ESC CANCELA";
+        public string fixedControlHint = "ESTE CONTROLE NÃO MUDA";
+
+        public string LabelFor(string key)
+        {
+            if (controlLabels != null)
+                foreach (var entry in controlLabels)
+                    if (entry.key == key)
+                        return entry.label;
+            return key;
+        }
     }
 }

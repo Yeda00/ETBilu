@@ -7,7 +7,7 @@ updated: 2026-10-18
 source: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker; modelo Art/Ships/Enemie_Boss_BlockOut.fbx)
 ---
 
-# ONE MORE TIME | Chefe e estrutura das runs
+# BILU'S INVASION | Chefe e estrutura das runs
 
 O chefe do protótipo, fase a fase, e como os encontros de uma run ensinam e combinam as mecânicas.
 

@@ -23,7 +23,7 @@
 
         <ui:VisualElement name="screen-controls" class="screen hidden">
             <ui:Label name="controls-title" class="bar title-bar" />
-            <ui:VisualElement name="controls-rows" class="panel" />
+            <ui:VisualElement name="controls-grid" class="panel ctl-grid" />
             <ui:Label name="controls-hint" class="hint" />
         </ui:VisualElement>
 

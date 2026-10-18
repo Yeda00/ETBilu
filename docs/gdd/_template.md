@@ -7,7 +7,7 @@ updated: AAAA-MM-DD
 source: de onde este capítulo foi escrito (seção do GDD v0.1, commit, reunião, pedido)
 ---
 
-# ONE MORE TIME | Nome do capítulo
+# BILU'S INVASION | Nome do capítulo
 
 Uma frase: o que este capítulo contém — para que quem lê, pessoa ou agente de IA, saiba se deve continuar.
 

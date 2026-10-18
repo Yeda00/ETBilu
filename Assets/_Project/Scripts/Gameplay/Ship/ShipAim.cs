@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 namespace OneMoreTime.Gameplay.Ship
 {
     /// <summary>
-    /// Projects the pointer onto the playfield, turns the ship visual toward it and draws a compact
+    /// Aims with the pointer projected onto the playfield, or with the gamepad's right stick; turns the ship visual toward it and draws a compact
     /// world-space direction indicator. Physics and the ship root stay axis-aligned on the 2D plane.
     /// </summary>
     [DefaultExecutionOrder(5)]
@@ -25,6 +25,7 @@ namespace OneMoreTime.Gameplay.Ship
         [SerializeField, Min(0f)] float shotPulseDecay = 14f;
 
         const float MinAimDistance = 0.08f;
+        const float StickAimThreshold = 0.3f;
         const int RingSegments = 20;
 
         Vector2 direction = Vector2.right;
@@ -62,14 +63,24 @@ namespace OneMoreTime.Gameplay.Ship
             if (input == null || playfield == null || view == null)
                 return;
 
-            var plane = new Plane(playfield.transform.forward, playfield.transform.position);
-            var ray = view.ScreenPointToRay(input.AimScreenPosition);
-            if (plane.Raycast(ray, out float enter))
+            if (input.UsingGamepad)
             {
-                Vector2 target = playfield.WorldToLocal(ray.GetPoint(enter));
-                Vector2 delta = target - motor.LocalPosition;
-                if (delta.sqrMagnitude >= MinAimDistance * MinAimDistance)
-                    direction = delta.normalized;
+                // The right stick gives the direction; released, the ship keeps the last one.
+                Vector2 stick = input.AimStick;
+                if (stick.sqrMagnitude > StickAimThreshold * StickAimThreshold)
+                    direction = stick.normalized;
+            }
+            else
+            {
+                var plane = new Plane(playfield.transform.forward, playfield.transform.position);
+                var ray = view.ScreenPointToRay(input.AimScreenPosition);
+                if (plane.Raycast(ray, out float enter))
+                {
+                    Vector2 target = playfield.WorldToLocal(ray.GetPoint(enter));
+                    Vector2 delta = target - motor.LocalPosition;
+                    if (delta.sqrMagnitude >= MinAimDistance * MinAimDistance)
+                        direction = delta.normalized;
+                }
             }
 
             float targetAngle = Angle;

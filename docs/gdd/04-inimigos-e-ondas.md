@@ -7,7 +7,7 @@ updated: 2026-10-18
 source: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project (Enemy_S, Enemy_W, Enemy_M, Enemy, EnemyGun, ModelVariants, SwoopMotion, SerpentineMotion, HoverMotion, FireCycle; Data/Waves/Encounter01_PrimeiroCiclo.asset)
 ---
 
-# ONE MORE TIME | Inimigos e ondas
+# BILU'S INVASION | Inimigos e ondas
 
 Quem a nave enfrenta, como cada inimigo conversa com o eco, e como as ondas entram na tela.
 

@@ -7,7 +7,7 @@ updated: 2026-10-17
 source: GDD v0.1 (PDF) §6, §7 e §8 — docs/source/GDD_One_More_Time_v0.1.pdf; protótipo em Assets/_Project (TrapSection, LaserGate, MovingBarrier, SwitchPad, ShipGadget, TimeMine)
 ---
 
-# ONE MORE TIME | Armadilhas, gadgets e puzzles
+# BILU'S INVASION | Armadilhas, gadgets e puzzles
 
 O cenário que desafia o movimento, as ferramentas que a nave carrega e os puzzles que só se resolvem com o eco.
 

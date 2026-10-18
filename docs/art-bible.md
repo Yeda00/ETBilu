@@ -1,4 +1,4 @@
-# ONE MORE TIME | Bíblia de arte
+# BILU'S INVASION | Bíblia de arte
 
 Como o jogo se parece. Só o que já está decidido; cresce conforme as [specs de arte](specs/art/art.md) fecham decisões.
 Mecânica e regras de jogo ficam no [GDD](gdd.md).

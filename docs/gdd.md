@@ -7,7 +7,7 @@ updated: 2026-10-18
 source: GDD v0.1 em PDF (docs/source/GDD_One_More_Time_v0.1.pdf), reorganizado em capítulos em 2026-10-17
 ---
 
-# ONE MORE TIME | GDD de uma página
+# BILU'S INVASION | GDD de uma página
 
 O jogo inteiro numa página. A versão visual, [`gdd.html`](gdd.html), é gerada a partir deste arquivo.
 Cada bloco aponta para o capítulo do GDD completo, em [`gdd/`](gdd/), que guarda os detalhes.
@@ -78,6 +78,7 @@ padrões a cada fase.
 ## Controles e HUD → [07](gdd/07-controles-e-interface.md)
 
 WASD/setas movem · mouse mira · Espaço/clique atira · **Shift** grava · **E** invoca · **Q** gadget · Esc pausa.
+Com controle: stick esquerdo move · stick direito mira · RT atira · **LT** grava · **RB** invoca · **LB** gadget · Start pausa. A tela de controles troca qualquer tecla ou botão.
 O jogo abre num menu inspirado no *Star Fox 64*: título, menu (jogo, controles, som, créditos), mapa de missões, história que sobe pela tela e, na arena, o cartão "Missão Nº 1".
 O HUD mostra integridade, memória temporal, ecos ativos, gadget, vida do chefe e combos.
 

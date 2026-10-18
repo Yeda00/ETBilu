@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ONE MORE TIME — GDD completo</title>
+<title>BILU'S INVASION — GDD completo</title>
 <meta name="description" content="Os dez capítulos do GDD numa página: eco temporal, combate, inimigos, armadilhas, chefe, controles, direção, arquitetura e produção.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,6 +56,7 @@
   <section class="part"><h3>High concept</h3>
     <p>Um shooter de nave em que o jogador <strong>grava e reproduz suas próprias ações passadas</strong> para lutar ao mesmo tempo com versões anteriores de si mesmo, desviar de armadilhas e explorar combinações temporais para derrotar chefes.</p>
     <p>O tema central é <em>One More Time</em>: cada tentativa deixa para trás ações que podem ser reproduzidas para criar novas estratégias.</p>
+    <p>O jogo se chama <strong>Bilu's Invasion</strong>. <em>One More Time</em> foi o nome inicial e ficou como o tema do design; o código mantém o nome <code>OneMoreTime</code> nos namespaces e nos menus do Editor.</p>
     <div class="scroll"><table class="kv"><tbody>
       <tr><th scope="row">Pilar de design</th><td>Cada tentativa deve ensinar algo e criar uma nova possibilidade</td></tr>
       <tr><th scope="row">Fantasia do jogador</th><td>Ser um piloto preso num ciclo temporal que transforma cada movimento, esquiva e disparo em parte de uma estratégia maior</td></tr>
@@ -521,21 +522,23 @@
   <p class="summary">Como o jogador pilota, grava e invoca ecos sem parar de desviar — e o que o HUD precisa mostrar.</p>
   <section class="part"><h3>Controles propostos</h3>
     <figure><img src="img/controls.svg" alt="Mapa de teclas proposto." width="800" height="270" loading="lazy"></figure>
-    <div class="scroll"><table><thead><tr><th>Ação</th><th>Entrada</th></tr></thead><tbody>
-      <tr><th scope="row">Movimentar nave</th><td><kbd class="you">W</kbd> <kbd class="you">A</kbd> <kbd class="you">S</kbd> <kbd class="you">D</kbd> ou setas</td></tr>
-      <tr><th scope="row">Mirar</th><td>Mover o mouse; a linha e o retículo ciano mostram a direção do próximo tiro</td></tr>
-      <tr><th scope="row">Disparo principal</th><td><kbd class="you">Espaço</kbd> ou botão esquerdo do mouse</td></tr>
-      <tr><th scope="row">Gravar sequência</th><td>Segurar <kbd class="rec">Shift</kbd></td></tr>
-      <tr><th scope="row">Invocar eco</th><td><kbd class="echo">E</kbd></td></tr>
-      <tr><th scope="row">Usar gadget</th><td><kbd class="gadget">Q</kbd></td></tr>
-      <tr><th scope="row">Pausar</th><td><kbd>Esc</kbd></td></tr>
+    <figure><img src="img/controls-gamepad.svg" alt="Mapa do controle (gamepad)." width="800" height="270" loading="lazy"></figure>
+    <div class="scroll"><table><thead><tr><th>Ação</th><th>Teclado e mouse</th><th>Controle</th></tr></thead><tbody>
+      <tr><th scope="row">Movimentar nave</th><td><kbd class="you">W</kbd> <kbd class="you">A</kbd> <kbd class="you">S</kbd> <kbd class="you">D</kbd> ou setas</td><td>Stick esquerdo</td></tr>
+      <tr><th scope="row">Mirar</th><td>Mover o mouse; a linha e o retículo ciano mostram a direção do próximo tiro</td><td>Stick direito (solto, a nave mantém a última mira)</td></tr>
+      <tr><th scope="row">Disparo principal</th><td><kbd class="you">Espaço</kbd> ou botão esquerdo do mouse</td><td><kbd class="you">RT</kbd></td></tr>
+      <tr><th scope="row">Gravar sequência</th><td>Segurar <kbd class="rec">Shift</kbd></td><td>Segurar <kbd class="rec">LT</kbd></td></tr>
+      <tr><th scope="row">Invocar eco</th><td><kbd class="echo">E</kbd></td><td><kbd class="echo">RB</kbd></td></tr>
+      <tr><th scope="row">Usar gadget</th><td><kbd class="gadget">Q</kbd></td><td><kbd class="gadget">LB</kbd></td></tr>
+      <tr><th scope="row">Pausar</th><td><kbd>Esc</kbd></td><td><kbd>Start</kbd></td></tr>
     </tbody></table></div>
-    <p class="why"><em>Por quê:</em> os atalhos são provisórios. O que importa é <strong>separar a gravação da reprodução</strong>, para o jogador não invocar o eco sem querer enquanto tenta desviar de uma armadilha.</p>
-    <p class="muted small">No protótipo, estas ações estão em <code>Assets/_Project/Input/OneMoreTimeControls.inputactions</code> (mapa <code>Gameplay</code>), lidas só pelo <code>PlayerInputReader</code>. A ação <code>Aim</code> lê a posição do ponteiro e o <code>ShipAim</code> a projeta no plano de jogo; o movimento continua independente da mira. Q solta a mina temporal → <a href="#c05">05</a>.</p>
+    <p class="why"><em>Por quê:</em> os atalhos são provisórios, e o jogador pode trocá-los na tela de controles (abaixo). O que importa é <strong>separar a gravação da reprodução</strong>, para o jogador não invocar o eco sem querer enquanto tenta desviar de uma armadilha.</p>
+    <p class="muted small">No protótipo, estas ações estão em <code>Assets/_Project/Input/OneMoreTimeControls.inputactions</code> (mapa <code>Gameplay</code>), lidas só pelo <code>PlayerInputReader</code>. A ação <code>Aim</code> lê a posição do ponteiro e o <code>ShipAim</code> a projeta no plano de jogo; o movimento continua independente da mira. Com um controle, a ação <code>AimStick</code> (stick direito) dá a direção da mira. O leitor sabe qual dispositivo o jogador usou por último (<code>UsingGamepad</code>): é ele que decide se a mira vem do mouse ou do stick e quais dicas aparecem no HUD. Q solta a mina temporal → <a href="#c05">05</a>.</p>
   </section>
   <section class="part"><h3>HUD</h3>
     <figure><img src="img/hud.svg" alt="Mockup conceitual do HUD." width="800" height="250" loading="lazy"><figcaption>Mockup conceitual — não representa uma interface implementada.</figcaption></figure>
-    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s") e as mensagens de pausa, derrota e vitória ("GUARDIÃO DERROTADO", com pontuação, abates e combos). Com o Guardião em cena, um painel no topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo: blindado, protegido pelos geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta.</p>
+    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s") e as mensagens de pausa, derrota ("TENTE NOVAMENTE", e o encontro recomeça) e vitória ("GUARDIÃO DERROTADO", com pontuação, abates e combos). Com o Guardião em cena, um painel no topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo: blindado, protegido pelos geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta.</p>
+    <p>A linha de dicas no pé da tela mostra os controles do dispositivo usado por último (teclado ou controle), com as teclas como estão agora.</p>
     <p>O <strong>aviso de combo</strong> aparece no alto da tela, no centro, por 1,4 s, como no mockup: o nome do combo e o que o causou, com os pontos → <a href="#c03">03</a>.</p>
     <div class="scroll"><table><thead><tr><th>Combo</th><th>Aviso</th></tr></thead><tbody>
       <tr><th scope="row">Crossfire</th><td>"CROSSFIRE" · "NAVE + ECO NO MESMO ALVO · +100"</td></tr>
@@ -554,21 +557,31 @@
   <section class="part"><h3>Telas do jogo</h3>
     <p>O jogo abre no menu e só depois vai para a arena. O estilo é inspirado nos menus de <em>Star Fox 64</em>: fundo preto com estrelas, barras de aço com texto azul-escuro, um mapa de missões e uma história que sobe pela tela. A nave Bilu aparece em 3D atrás do título e do menu.</p>
     <div class="scroll"><table><thead><tr><th>Tela</th><th>O que tem</th><th>Como sai</th></tr></thead><tbody>
-      <tr><th scope="row">Título</th><td>"ONE MORE TIME", "O PASSADO CONTINUA LUTANDO" e "PRESSIONE ENTER" piscando; música do título</td><td>Qualquer tecla ou clique: menu principal</td></tr>
+      <tr><th scope="row">Título</th><td>"BILU'S INVASION", "O PASSADO CONTINUA LUTANDO" e "PRESSIONE ENTER / START" piscando; música do título</td><td>Qualquer tecla, botão do controle ou clique: menu principal</td></tr>
       <tr><th scope="row">Menu principal</th><td>JOGO PRINCIPAL · CONTROLES · SOM · CRÉDITOS · SAIR</td><td>Esc volta ao título</td></tr>
       <tr><th scope="row">Som</th><td>Barras de MÚSICA e EFEITOS de 0 a 10, salvas entre partidas; o ajuste vale na hora</td><td>Esc ou Enter volta</td></tr>
-      <tr><th scope="row">Controles</th><td>A lista de teclas da tabela acima</td><td>Esc volta</td></tr>
+      <tr><th scope="row">Controles</th><td>Uma linha por ação, com uma célula para o teclado e outra para o controle; Enter (ou A) numa célula espera a nova tecla ou botão, Esc cancela. "RESTAURAR PADRÃO" volta tudo ao original</td><td>Esc volta</td></tr>
       <tr><th scope="row">Créditos</th><td>Os créditos de áudio (tudo CC0). A equipe é _TBD_</td><td>Esc volta</td></tr>
       <tr><th scope="row">Mapa de missões</th><td>Sete casas ligadas por uma linha; só a primeira (Missão Nº 1) existe, as outras são "?" bloqueadas e respondem com um som de negação</td><td>Enter abre a história; Esc volta</td></tr>
       <tr><th scope="row">História</th><td>Imagem pequena no alto e o texto da missão subindo, com música de abertura</td><td>Enter pula, ↓ acelera, Esc volta; no fim, a arena</td></tr>
       <tr><th scope="row">Cartão de missão</th><td>Na arena, tela preta com "MISSÃO Nº 1", o local e o nome da missão, por cerca de 3 s; a fase só começa quando ele some</td><td>Sozinho. Não volta depois de uma morte</td></tr>
     </tbody></table></div>
-    <p>Teclas do menu: ↑ ↓ ← → ou W A S D movem (repetem se a tecla ficar apertada), Enter ou Espaço confirmam, Esc ou Backspace voltam. O mouse também funciona: passar sobre uma barra a seleciona e clicar confirma.</p>
+    <p>Teclas do menu: ↑ ↓ ← → ou W A S D movem (repetem se a tecla ficar apertada), Enter ou Espaço confirmam, Esc ou Backspace voltam. No controle: D-pad ou stick esquerdo movem, A ou Start confirmam, B volta. O mouse também funciona: passar sobre uma barra a seleciona e clicar confirma.</p>
     <p>A ordem das telas, o cursor, a rolagem do texto e os volumes são regras do Core, com testes (<code>ScreenFlow</code>, <code>MenuCursor</code>, <code>CrawlScroll</code>, <code>SoundLevels</code>). Os textos ficam em dois assets, para editar sem mexer em código: <code>Data/Menu/MenuTexts</code> (as palavras de todas as telas) e <code>Data/Missions/Mission_01</code> (<code>MissionData</code>: número, local, nome, texto da história, imagem e cena). O layout e o visual ficam em <code>UI/Menu.uxml</code>, <code>Menu.uss</code>, <code>MissionCard.uxml</code> e <code>MissionCard.uss</code>.</p>
     <div class="rule"><span class="osd">Q · proposta</span>O texto da história e o nome da Missão Nº 1 ("Terra · Sertão Seco", "Derrubar o Império") são rascunho, escritos a partir da premissa da bíblia de arte. O dono precisa aprovar ou reescrever. A imagem da história é um recorte da arena, só para ocupar o lugar da arte final.</div>
   </section>
+  <section class="part"><h3>Trocar os controles</h3>
+    <p>Na tela de controles, o jogador troca a tecla de cada ação (e o botão do controle). Valem as regras:</p>
+    <ul>
+      <li><strong>Só o que faz sentido trocar.</strong> As quatro direções (a primeira composição, WASD), atirar, gravar, invocar, mina e pausar. A mira (mouse e stick direito) e o movimento do controle (stick esquerdo) são fixos, e aparecem apagados. As setas e o clique esquerdo continuam valendo como segunda opção.</li>
+      <li><strong>Nenhum botão faz duas coisas.</strong> Se o jogador escolhe uma tecla que já era de outra ação, as duas trocam de lugar.</li>
+      <li><strong>Ficam salvos</strong> entre partidas (<code>ControlsStore</code>, em <code>PlayerPrefs</code>), e o jogo e o menu leem as mesmas teclas. A dica no pé do HUD acompanha.</li>
+      <li>Esc (teclado) e Start (controle) cancelam a escolha; por isso não dá para trocar uma ação para esses botões pela tela, só voltando ao padrão.</li>
+    </ul>
+    <p>As linhas da tela, os nomes dos botões em português e a regra de conflito são do Core, com testes (<code>ControlLayout</code>, <code>BindingLabels</code>, <code>BindingConflicts</code>); <code>ControlsCatalog</code> e <code>ControlsStore</code> ficam em <code>Gameplay/Input</code>.</p>
+  </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>Suporte a controle: "pode vir depois" — entra na jam?</span></li>
+    <li><span>Remapear também o movimento do controle e a mira (mouse e stick): hoje são fixos.</span></li>
     <li><span>Mapeamento definitivo das teclas no Input System.</span></li>
     <li><span>Fonte pixelada para os menus e o HUD: o protótipo usa a fonte padrão do Unity.</span></li>
     <li><span>Tela de título definitiva: o protótipo mostra a nave de blockout.</span></li>
@@ -711,7 +724,7 @@
       <tr><td><code>OneMoreTime.Editor</code></td><td>A ferramenta que monta o conteúdo placeholder (menu <em>One More Time › Bootstrap</em>)</td></tr>
     </tbody></table></div>
     <div class="scroll"><table><thead><tr><th>Sugerido no GDD</th><th>No protótipo</th><th>Nota</th></tr></thead><tbody>
-      <tr><td><code>PlayerController</code></td><td><code>PlayerInputReader</code> + <code>ShipMotor</code> + <code>ShipAim</code></td><td>Input separado do movimento; <code>ShipAim</code> projeta o ponteiro no plano, orienta apenas o visual e desenha o indicador</td></tr>
+      <tr><td><code>PlayerController</code></td><td><code>PlayerInputReader</code> + <code>ShipMotor</code> + <code>ShipAim</code></td><td>Input separado do movimento; <code>ShipAim</code> projeta o ponteiro no plano (ou segue o stick direito, quando o último dispositivo foi o controle), orienta apenas o visual e desenha o indicador</td></tr>
       <tr><td><code>TemporalRecorder</code></td><td><code>EchoRecorder</code> (Core) + <code>EchoAbility</code></td><td><code>EchoAbility</code> liga input, nave e arma ao gravador</td></tr>
       <tr><td><code>TemporalRecording</code></td><td><code>EchoRecording</code> (Core)</td><td></td></tr>
       <tr><td><code>EchoPlayback</code></td><td><code>EchoPlayback</code> (Core) + <code>EchoGhost</code></td><td><code>EchoGhost</code> é a nave fantasma na cena</td></tr>
@@ -726,6 +739,7 @@
       <tr><td>—</td><td><code>PixelView</code></td><td>O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → <a href="#c08">08</a></td></tr>
       <tr><td>—</td><td><code>StageDirector</code> + <code>RunCheckpoint</code></td><td>Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte</td></tr>
       <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota</td></tr>
+      <tr><td><code>ControlsSystem</code></td><td><code>ControlsCatalog</code> + <code>ControlsStore</code> (+ <code>ControlLayout</code>, <code>BindingLabels</code>, <code>BindingConflicts</code> no Core)</td><td>Os controles que o jogador pode trocar. O Core diz quais linhas existem, como se escreve cada botão e quando dois conflitam; o <code>ControlsCatalog</code> acha o binding certo no mapa <code>Gameplay</code> e diz o que está ligado agora; o <code>ControlsStore</code> guarda as trocas (overrides do Input System) em <code>PlayerPrefs</code>, e os dois leitores de input as aplicam ao acordar → <a href="#c07">07</a></td></tr>
       <tr><td><code>MenuSystem</code></td><td><code>MenuController</code> + <code>MenuInputReader</code> + <code>StarfieldView</code> + <code>ShowcaseSpin</code> (+ <code>ScreenFlow</code>, <code>MenuCursor</code>, <code>CrawlScroll</code>, <code>SoundLevels</code> no Core)</td><td>A cena <code>Menu</code> (índice 0 do build). A ordem das telas, o cursor, a rolagem da história e os volumes são regras do Core; o <code>MenuController</code> desenha as telas em UI Toolkit (<code>Menu.uxml</code>), toca os sons e carrega a fase. O <code>MenuInputReader</code> lê o mapa <code>Menu</code> do mesmo asset de input → <a href="#c07">07</a></td></tr>
       <tr><td><code>MissionSystem</code></td><td><code>MissionData</code> + <code>MenuTexts</code> + <code>MissionSelection</code> + <code>MissionCardController</code> + <code>StageGate</code></td><td>Os textos são ScriptableObjects. A missão escolhida no mapa chega à arena por <code>MissionSelection</code>; o cartão de missão é um <code>StageGate</code>: o <code>StageDirector</code> espera ele abrir antes do primeiro encontro, e o cartão não volta depois de uma morte (<code>RunCheckpoint.HasSaved</code>)</td></tr>
       <tr><td><code>AudioSystem</code></td><td><code>AudioDirector</code> + <code>SfxPlayer</code> + <code>MusicPlayer</code> + <code>AudioLibrary</code> (+ <code>SoundCue</code>, <code>CueThrottle</code>, <code>RecordPulse</code>, <code>VolumeFader</code> no Core)</td><td>O <code>AudioDirector</code> traduz eventos de tiro, dano, morte, eco, combo, chefe, armadilha e pausa em cues; tiros e minas chegam por <code>ProjectilePool.CueRaised</code>. O <code>SfxPlayer</code> toca numa reserva fixa de <code>AudioSource</code> (escolhe clipe, tom, pan e abafamento) e o <code>MusicPlayer</code> encadeia intro e loop por encontro. Os clipes de cada cue ficam no <code>AudioLibrary</code> (asset em <code>Data/</code>); o menu <em>One More Time › Bootstrap › Build Audio</em> cria o asset e liga o áudio na cena → <a href="#c08">08</a></td></tr>
@@ -798,6 +812,7 @@
       <tr><th scope="row">Um gadget funcional</th><td><span class="chip ok">feito</span> mina temporal, na tecla Q, reproduzida pelo eco → <a href="#c05">05</a></td></tr>
       <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, fases 1 a 3 → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = derrotar o Guardião; derrota recomeça o encontro atual</td></tr>
+      <tr><th scope="row">Suporte a controle e remapeamento</th><td><span class="chip ok">feito</span> gamepad no jogo e no menu; o jogador troca teclas e botões na tela de controles → <a href="#c07">07</a></td></tr>
       <tr><th scope="row">Fluxo de telas</th><td><span class="chip ok">feito</span> título, menu, som, controles, créditos, mapa de missões, história e cartão de missão, na cena <code>Menu</code> → <a href="#c07">07</a></td></tr>
     </tbody></table></div>
     <p>Dos opcionais, já entraram <strong>dois combos temporais com aviso no HUD</strong> (Crossfire e Synchronized Strike) e a <strong>pontuação por combos</strong> → <a href="#c03">03</a>, e o <strong>áudio</strong>: efeitos e música CC0 ligados ao jogo → <a href="#c08">08</a>.</p>
@@ -836,7 +851,7 @@
 </div>
 
 <footer class="foot">
-  <span>ONE MORE TIME · GDD completo v0.1 · gerado de <code>docs/gdd/*.md</code></span>
+  <span>BILU'S INVASION · GDD completo v0.1 · gerado de <code>docs/gdd/*.md</code></span>
   <span>atualizado 2026-10-18 · draft</span>
 </footer>
 </main>

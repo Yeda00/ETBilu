@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using OneMoreTime.Core.Audio;
+using OneMoreTime.Core.Controls;
 using OneMoreTime.Core.Menu;
 using OneMoreTime.Gameplay.Audio;
 using OneMoreTime.Gameplay.Input;
 using OneMoreTime.Gameplay.Session;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -15,7 +17,8 @@ namespace OneMoreTime.UI
     /// scrolls before the stage. The order of screens and the highlighted entries live in Core (ScreenFlow,
     /// MenuCursor, CrawlScroll, SoundLevels); this component draws them with UI Toolkit (UI/Menu.uxml and
     /// Menu.uss), plays the sounds and loads the stage. Words come from <see cref="MenuTexts"/> and
-    /// <see cref="MissionData"/>. Works with keyboard (MenuInputReader) and mouse.
+    /// <see cref="MissionData"/>. Works with keyboard and gamepad (MenuInputReader) and mouse. The controls
+    /// screen lets the player change the keys and buttons of the game (the Input System's interactive rebinding).
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
     public sealed class MenuController : MonoBehaviour
@@ -43,9 +46,14 @@ namespace OneMoreTime.UI
         readonly List<VisualElement[]> soundCells = new();
         readonly List<VisualElement> slots = new();
         readonly List<VisualElement> links = new();
+        readonly List<Label[]> controlCells = new();
 
         ScreenFlow flow;
-        MenuCursor mainCursor, soundCursor, missionCursor;
+        MenuCursor mainCursor, soundCursor, missionCursor, controlsCursor;
+        int controlsColumn;   // 0 keyboard, 1 gamepad
+        InputActionRebindingExtensions.RebindingOperation rebinding;
+        bool waitingForKey;
+        Label resetBar, controlsHint;
         SoundLevels levels;
         CrawlScroll crawl;
         MissionData chosen;
@@ -61,6 +69,9 @@ namespace OneMoreTime.UI
         void OnEnable()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
+            controlsCursor = new MenuCursor(ControlLayout.Rows.Count + 1);
+            controlsColumn = 0;
+            waitingForKey = false;
             levels = SoundLevelsStore.Load();
             flow = new ScreenFlow(MenuScreen.Title);
             mainCursor = new MenuCursor(MainItems.Length);
@@ -80,6 +91,12 @@ namespace OneMoreTime.UI
         }
 
         void Start() => music?.Play(MusicTrack.Title);
+
+        void OnDisable()
+        {
+            rebinding?.Dispose();
+            rebinding = null;
+        }
 
         // ---------------------------------------------------------------- building the screens
 
@@ -104,7 +121,8 @@ namespace OneMoreTime.UI
             pressStart.text = Texts.pressStart;
             root.Q<Label>("main-hint").text = Texts.listHint;
             root.Q<Label>("sound-hint").text = Texts.soundHint;
-            root.Q<Label>("controls-hint").text = Texts.backHint;
+            controlsHint = root.Q<Label>("controls-hint");
+            controlsHint.text = Texts.controlsHint;
             root.Q<Label>("credits-hint").text = Texts.backHint;
             root.Q<Label>("missions-hint").text = Texts.mapHint;
             root.Q<Label>("intro-hint").text = Texts.introHint;
@@ -169,18 +187,43 @@ namespace OneMoreTime.UI
 
         void BuildControlsScreen()
         {
-            var rows = root.Q("controls-rows");
-            rows.Clear();
-            if (Texts.controls == null)
-                return;
-            foreach (var entry in Texts.controls)
+            var grid = root.Q("controls-grid");
+            grid.Clear();
+            controlCells.Clear();
+
+            var head = new VisualElement();
+            head.AddToClassList("ctl-row");
+            head.Add(new Label("").WithClass("ctl-label"));
+            head.Add(new Label(Texts.keyboardHeader).WithClass("ctl-head"));
+            head.Add(new Label(Texts.gamepadHeader).WithClass("ctl-head"));
+            grid.Add(head);
+
+            for (int r = 0; r < ControlLayout.Rows.Count; r++)
             {
-                var row = new VisualElement();
-                row.AddToClassList("control-row");
-                row.Add(new Label(entry.action).WithClass("control-action"));
-                row.Add(new Label(entry.keys).WithClass("control-keys"));
-                rows.Add(row);
+                int row = r;
+                var line = new VisualElement();
+                line.AddToClassList("ctl-row");
+                line.Add(new Label(Texts.LabelFor(ControlLayout.Rows[r].Key)).WithClass("ctl-label"));
+                var cells = new Label[2];
+                for (int c = 0; c < 2; c++)
+                {
+                    int column = c;
+                    var cell = new Label().WithClass("ctl-cell");
+                    cell.RegisterCallback<PointerEnterEvent>(_ => HoverControl(row, column));
+                    cell.RegisterCallback<ClickEvent>(_ => { HoverControl(row, column); ActivateControl(); });
+                    line.Add(cell);
+                    cells[c] = cell;
+                }
+                controlCells.Add(cells);
+                grid.Add(line);
             }
+
+            resetBar = new Label(Texts.resetLabel).WithClass("ctl-reset");
+            int resetRow = ControlLayout.Rows.Count;
+            resetBar.RegisterCallback<PointerEnterEvent>(_ => HoverControl(resetRow, controlsColumn));
+            resetBar.RegisterCallback<ClickEvent>(_ => { HoverControl(resetRow, controlsColumn); ActivateControl(); });
+            grid.Add(resetBar);
+            RefreshControls();
         }
 
         void BuildCreditsScreen() => root.Q<Label>("credits-body").text = Texts.credits;
@@ -221,7 +264,7 @@ namespace OneMoreTime.UI
         {
             UpdateFade();
             UpdateBlink();
-            if (loading || fadeValue > 0.6f)
+            if (loading || fadeValue > 0.6f || waitingForKey)
                 return;
 
             switch (flow.Current)
@@ -237,6 +280,8 @@ namespace OneMoreTime.UI
                     UpdateSound();
                     break;
                 case MenuScreen.Controls:
+                    UpdateControls();
+                    break;
                 case MenuScreen.Credits:
                     if (input != null && (input.CancelPressed || input.SubmitPressed))
                         GoBack();
@@ -289,6 +334,9 @@ namespace OneMoreTime.UI
                     break;
                 case MenuScreen.Sound:
                     RefreshSound();
+                    break;
+                case MenuScreen.Controls:
+                    RefreshControls();
                     break;
                 case MenuScreen.Missions:
                     RefreshMissions();
@@ -437,6 +485,142 @@ namespace OneMoreTime.UI
                 for (int c = 0; c < soundCells[r].Length; c++)
                     soundCells[r][c].EnableInClassList("on", c < value);
             }
+        }
+
+        // ---------------------------------------------------------------- controls
+
+        ControlDevice Device => controlsColumn == 0 ? ControlDevice.Keyboard : ControlDevice.Gamepad;
+        bool OnResetRow => controlsCursor.Index >= ControlLayout.Rows.Count;
+
+        void UpdateControls()
+        {
+            if (input == null)
+                return;
+            if (input.Up || input.Down)
+            {
+                controlsCursor.Move(input.Up ? -1 : 1);
+                Play(SoundCue.MenuMove);
+                RefreshControls();
+            }
+            if ((input.Left || input.Right) && !OnResetRow)
+            {
+                controlsColumn = input.Left ? 0 : 1;
+                Play(SoundCue.MenuMove);
+                RefreshControls();
+            }
+            if (input.SubmitPressed) ActivateControl();
+            if (input.CancelPressed) GoBack();
+        }
+
+        void HoverControl(int row, int column)
+        {
+            if (flow.Current != MenuScreen.Controls || waitingForKey || (controlsCursor.Index == row && controlsColumn == column))
+                return;
+            controlsCursor.Set(row);
+            controlsColumn = column;
+            Play(SoundCue.MenuMove);
+            RefreshControls();
+        }
+
+        void RefreshControls()
+        {
+            if (controlCells.Count == 0)
+                return;
+            var asset = input != null ? input.Controls : null;
+            for (int r = 0; r < controlCells.Count; r++)
+            {
+                var row = ControlLayout.Rows[r];
+                for (int c = 0; c < 2; c++)
+                {
+                    var device = c == 0 ? ControlDevice.Keyboard : ControlDevice.Gamepad;
+                    bool selected = r == controlsCursor.Index && c == controlsColumn;
+                    var cell = controlCells[r][c];
+                    cell.text = selected && waitingForKey ? Texts.waitingLabel : ControlsCatalog.Describe(asset, row, device);
+                    cell.EnableInClassList("fixed", !row.IsEditable(device));
+                    cell.EnableInClassList("selected", selected);
+                    cell.EnableInClassList("waiting", selected && waitingForKey);
+                }
+            }
+            resetBar.EnableInClassList("selected", OnResetRow);
+            controlsHint.text = waitingForKey ? Texts.waitingHint : Texts.controlsHint;
+        }
+
+        void ActivateControl()
+        {
+            if (waitingForKey || input == null)
+                return;
+            var asset = input.Controls;
+            if (OnResetRow)
+            {
+                ControlsStore.ResetAll(asset);
+                Play(SoundCue.MenuSelect);
+                RefreshControls();
+                return;
+            }
+
+            var row = ControlLayout.Rows[controlsCursor.Index];
+            if (!row.IsEditable(Device))
+            {
+                Play(SoundCue.MenuDenied);
+                controlsHint.text = Texts.fixedControlHint;
+                return;
+            }
+            BeginRebind(asset, row, controlsCursor.Index, Device);
+        }
+
+        void BeginRebind(InputActionAsset asset, ControlRow row, int rowIndex, ControlDevice device)
+        {
+            var action = ControlsCatalog.FindAction(asset, row);
+            int bindingIndex = ControlsCatalog.FindBindingIndex(action, row, device);
+            if (bindingIndex < 0)
+            {
+                Play(SoundCue.MenuDenied);
+                return;
+            }
+
+            string previousPath = action.bindings[bindingIndex].effectivePath;
+            bool keyboard = device == ControlDevice.Keyboard;
+            if (action.enabled)
+                action.Disable();
+            Play(SoundCue.MenuSelect);
+            waitingForKey = true;
+            RefreshControls();
+
+            rebinding = action.PerformInteractiveRebinding(bindingIndex)
+                .WithControlsHavingToMatchPath(keyboard ? "<Keyboard>" : "<Gamepad>")
+                .WithControlsExcluding("<Keyboard>/anyKey")
+                .WithCancelingThrough(keyboard ? "<Keyboard>/escape" : "<Gamepad>/start")
+                .WithExpectedControlType("Button")
+                .OnComplete(_ => FinishRebind(asset, action, bindingIndex, previousPath, rowIndex, device))
+                .OnCancel(_ => EndRebind(asset, saved: false))
+                .Start();
+        }
+
+        // If another line of the same device already had the control, the two swap, so no control does two things.
+        void FinishRebind(InputActionAsset asset, InputAction action, int bindingIndex, string previousPath, int rowIndex, ControlDevice device)
+        {
+            string chosen = action.bindings[bindingIndex].effectivePath;
+            int other = BindingConflicts.Find(ControlsCatalog.EffectivePaths(asset, device), rowIndex, chosen);
+            if (other >= 0)
+            {
+                var otherRow = ControlLayout.Rows[other];
+                var otherAction = ControlsCatalog.FindAction(asset, otherRow);
+                int otherIndex = ControlsCatalog.FindBindingIndex(otherAction, otherRow, device);
+                if (otherIndex >= 0)
+                    otherAction.ApplyBindingOverride(otherIndex, previousPath);
+            }
+            EndRebind(asset, saved: true);
+        }
+
+        void EndRebind(InputActionAsset asset, bool saved)
+        {
+            rebinding?.Dispose();
+            rebinding = null;
+            waitingForKey = false;
+            if (saved)
+                ControlsStore.Save(asset);
+            Play(saved ? SoundCue.MenuStart : SoundCue.MenuBack);
+            RefreshControls();
         }
 
         // ---------------------------------------------------------------- mission map

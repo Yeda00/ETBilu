@@ -3,7 +3,8 @@
     "rootNamespace": "OneMoreTime.UI",
     "references": [
         "OneMoreTime.Core",
-        "OneMoreTime.Gameplay"
+        "OneMoreTime.Gameplay",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

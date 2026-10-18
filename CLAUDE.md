@@ -2,7 +2,7 @@
 
 Antes de trabalhar, leia [`docs/specs/README.md`](docs/specs/README.md).
 
-ONE MORE TIME é um protótipo de game jam em Unity 6 (6000.3.25f1), URP, Input System.
+BILU'S INVASION é um protótipo de game jam em Unity 6 (6000.3.25f1), URP, Input System. O nome do jogo era *One More Time*, que ficou como o tema do design; o código mantém o nome `OneMoreTime` nos namespaces e nos menus do Editor.
 Antes de qualquer mudança, leia [`docs/gdd.md`](docs/gdd.md) — o GDD de uma página — e,
 se a tarefa tocar uma área específica, o capítulo correspondente em [`docs/gdd/`](docs/gdd/).
 
@@ -63,7 +63,7 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 Convenções:
 - **Nada de lógica nova em MonoBehaviour se ela cabe no Core.** Regra testável vai para `Core` com teste.
 - **Referências por `[SerializeField]`, não por busca** (`Find*`) nem singletons. O `Playfield` e o `ProjectilePool` chegam a quem precisa pela cena ou por injeção.
-- **Só o `PlayerInputReader` (jogo) e o `MenuInputReader` (menus) leem o Input System.** Os dois usam o mesmo asset, em mapas diferentes (`Gameplay` e `Menu`).
+- **Só o `PlayerInputReader` (jogo) e o `MenuInputReader` (menus) leem o Input System.** Os dois usam o mesmo asset, em mapas diferentes (`Gameplay` e `Menu`). O jogador pode trocar teclas e botões pela tela de controles (`ControlsStore`, `ControlsCatalog`): leia sempre a ação pelo asset, nunca uma tecla fixa. Gamepad e teclado têm bindings separados no asset (grupos `Gamepad` e `Keyboard&Mouse`).
 - **Arte troca sem tocar no código:** cada prefab tem um filho `Visual`; substitua o que está dentro dele.
   Na nave, no eco e nos inimigos o `Visual` é o pivô da inclinação (o código reescreve a rotação dele): o modelo fica em
   `Visual/Model`, que guarda a rotação, a escala e o centro (no Guardião também). Os colisores ficam no plano de jogo

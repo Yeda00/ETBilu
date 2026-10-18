@@ -925,6 +925,7 @@ namespace OneMoreTime.EditorTools
             changed |= SetIfNull(hud, "stage", stage);
             changed |= SetIfNull(session, "combos", combos);
             changed |= SetIfNull(hud, "combos", combos);
+            changed |= SetIfNull(hud, "input", input);
 
             if (!changed)
                 return;

@@ -7,7 +7,7 @@ updated: 2026-10-18
 source: GDD v0.1 (PDF) §13; código em Assets/_Project/Scripts
 ---
 
-# ONE MORE TIME | Arquitetura técnica
+# BILU'S INVASION | Arquitetura técnica
 
 A arquitetura sugerida para Unity: quem grava, quem reproduz, e como o eco conversa com os outros sistemas.
 
@@ -47,7 +47,7 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 
 | Sugerido no GDD | No protótipo | Nota |
 |---|---|---|
-| `PlayerController` | `PlayerInputReader` + `ShipMotor` + `ShipAim` | Input separado do movimento; `ShipAim` projeta o ponteiro no plano, orienta apenas o visual e desenha o indicador |
+| `PlayerController` | `PlayerInputReader` + `ShipMotor` + `ShipAim` | Input separado do movimento; `ShipAim` projeta o ponteiro no plano (ou segue o stick direito, quando o último dispositivo foi o controle), orienta apenas o visual e desenha o indicador |
 | `TemporalRecorder` | `EchoRecorder` (Core) + `EchoAbility` | `EchoAbility` liga input, nave e arma ao gravador |
 | `TemporalRecording` | `EchoRecording` (Core) | |
 | `EchoPlayback` | `EchoPlayback` (Core) + `EchoGhost` | `EchoGhost` é a nave fantasma na cena |
@@ -62,6 +62,7 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | — | `PixelView` | O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → [08](08-direcao-visual-e-sonora.md) |
 | — | `StageDirector` + `RunCheckpoint` | Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte |
 | — | `GameSession` | Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota |
+| `ControlsSystem` | `ControlsCatalog` + `ControlsStore` (+ `ControlLayout`, `BindingLabels`, `BindingConflicts` no Core) | Os controles que o jogador pode trocar. O Core diz quais linhas existem, como se escreve cada botão e quando dois conflitam; o `ControlsCatalog` acha o binding certo no mapa `Gameplay` e diz o que está ligado agora; o `ControlsStore` guarda as trocas (overrides do Input System) em `PlayerPrefs`, e os dois leitores de input as aplicam ao acordar → [07](07-controles-e-interface.md) |
 | `MenuSystem` | `MenuController` + `MenuInputReader` + `StarfieldView` + `ShowcaseSpin` (+ `ScreenFlow`, `MenuCursor`, `CrawlScroll`, `SoundLevels` no Core) | A cena `Menu` (índice 0 do build). A ordem das telas, o cursor, a rolagem da história e os volumes são regras do Core; o `MenuController` desenha as telas em UI Toolkit (`Menu.uxml`), toca os sons e carrega a fase. O `MenuInputReader` lê o mapa `Menu` do mesmo asset de input → [07](07-controles-e-interface.md) |
 | `MissionSystem` | `MissionData` + `MenuTexts` + `MissionSelection` + `MissionCardController` + `StageGate` | Os textos são ScriptableObjects. A missão escolhida no mapa chega à arena por `MissionSelection`; o cartão de missão é um `StageGate`: o `StageDirector` espera ele abrir antes do primeiro encontro, e o cartão não volta depois de uma morte (`RunCheckpoint.HasSaved`) |
 | `AudioSystem` | `AudioDirector` + `SfxPlayer` + `MusicPlayer` + `AudioLibrary` (+ `SoundCue`, `CueThrottle`, `RecordPulse`, `VolumeFader` no Core) | O `AudioDirector` traduz eventos de tiro, dano, morte, eco, combo, chefe, armadilha e pausa em cues; tiros e minas chegam por `ProjectilePool.CueRaised`. O `SfxPlayer` toca numa reserva fixa de `AudioSource` (escolhe clipe, tom, pan e abafamento) e o `MusicPlayer` encadeia intro e loop por encontro. Os clipes de cada cue ficam no `AudioLibrary` (asset em `Data/`); o menu *One More Time › Bootstrap › Build Audio* cria o asset e liga o áudio na cena → [08](08-direcao-visual-e-sonora.md) |

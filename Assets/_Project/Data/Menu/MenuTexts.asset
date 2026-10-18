@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fb42388a59254628b82c68a55dc9681, type: 3}
   m_Name: MenuTexts
   m_EditorClassIdentifier: OneMoreTime.UI::OneMoreTime.UI.MenuTexts
-  logoTop: ONE MORE
-  logoBottom: TIME
+  logoTop: BILU'S
+  logoBottom: INVASION
   tagline: O PASSADO CONTINUA LUTANDO
-  pressStart: PRESSIONE ENTER
+  pressStart: PRESSIONE ENTER / START
   playLabel: JOGO PRINCIPAL
   controlsLabel: CONTROLES
   soundLabel: SOM
@@ -25,21 +25,31 @@ MonoBehaviour:
   musicLabel: "M\xDASICA"
   effectsLabel: EFEITOS
   controlsTitle: CONTROLES
-  controls:
-  - action: MOVER A NAVE
-    keys: W A S D  ou  SETAS
-  - action: MIRAR
-    keys: MOUSE
-  - action: ATIRAR
-    keys: "ESPA\xC7O  ou  BOT\xC3O ESQUERDO"
-  - action: GRAVAR O ECO
-    keys: SEGURAR SHIFT
-  - action: INVOCAR O ECO
-    keys: E
-  - action: MINA TEMPORAL
-    keys: Q
-  - action: PAUSAR
-    keys: ESC
+  keyboardHeader: TECLADO
+  gamepadHeader: CONTROLE
+  resetLabel: "RESTAURAR PADR\xC3O"
+  waitingLabel: "PRESSIONE\u2026"
+  controlLabels:
+  - key: Move.up
+    label: MOVER PARA CIMA
+  - key: Move.down
+    label: MOVER PARA BAIXO
+  - key: Move.left
+    label: MOVER PARA A ESQUERDA
+  - key: Move.right
+    label: MOVER PARA A DIREITA
+  - key: Aim
+    label: MIRAR
+  - key: Fire
+    label: ATIRAR
+  - key: Record
+    label: GRAVAR O ECO (SEGURAR)
+  - key: InvokeEcho
+    label: INVOCAR O ECO
+  - key: Gadget
+    label: MINA TEMPORAL
+  - key: Pause
+    label: PAUSAR
   creditsTitle: "CR\xC9DITOS"
   credits: "M\xDASICA\nNES Shooter Music \xB7 SketchyLogic\n8-bit Epic Space Shooter
     \xB7 HydroGene\nPulsar \xB7 celestialghost8\n4 Chiptunes (Adventure) \xB7 Juhani
@@ -50,8 +60,12 @@ MonoBehaviour:
   missionNumberFormat: "MISS\xC3O N\xBA {0}"
   lockedLabel: BLOQUEADA
   lockedHint: "AINDA N\xC3O DISPON\xCDVEL"
-  introHint: "ENTER PULA  \xB7  \u2193 ACELERA"
-  listHint: "\u2191 \u2193 ESCOLHE  \xB7  ENTER CONFIRMA  \xB7  ESC VOLTA"
-  soundHint: "\u2191 \u2193 ESCOLHE  \xB7  \u2190 \u2192 AJUSTA  \xB7  ESC VOLTA"
-  mapHint: "\u2190 \u2192 ESCOLHE  \xB7  ENTER CONFIRMA  \xB7  ESC VOLTA"
-  backHint: ESC VOLTA
+  introHint: "ENTER OU A PULA  \xB7  \u2193 ACELERA"
+  listHint: "\u2191 \u2193 ESCOLHE  \xB7  ENTER OU A CONFIRMA  \xB7  ESC OU B VOLTA"
+  soundHint: "\u2191 \u2193 ESCOLHE  \xB7  \u2190 \u2192 AJUSTA  \xB7  ESC OU B VOLTA"
+  mapHint: "\u2190 \u2192 ESCOLHE  \xB7  ENTER OU A CONFIRMA  \xB7  ESC OU B VOLTA"
+  backHint: ESC OU B VOLTA
+  controlsHint: "\u2191 \u2193 \u2190 \u2192 ESCOLHE  \xB7  ENTER OU A MUDA  \xB7 
+    ESC OU B VOLTA"
+  waitingHint: "APERTE O NOVO BOT\xC3O  \xB7  ESC CANCELA"
+  fixedControlHint: "ESTE CONTROLE N\xC3O MUDA"

@@ -617,6 +617,7 @@ MonoBehaviour:
   gadget: {fileID: 567245532}
   stage: {fileID: 1943902051}
   combos: {fileID: 1205768502}
+  input: {fileID: 1401411813}
   comboNoticeSeconds: 1.4
 --- !u!114 &567456075
 MonoBehaviour:

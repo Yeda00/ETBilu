@@ -1,0 +1,60 @@
+using System.Collections.Generic;
+
+namespace OneMoreTime.Core.Controls
+{
+    public enum ControlDevice
+    {
+        Keyboard = 0,
+        Gamepad = 1,
+    }
+
+    /// <summary>
+    /// One line of the controls screen: an action of the Gameplay map, and which of its two bindings (keyboard
+    /// and gamepad) the player may change. <see cref="Part"/> names the direction of the movement keys.
+    /// </summary>
+    public sealed class ControlRow
+    {
+        /// <summary>Stable key of the row; the words for it live in MenuTexts.</summary>
+        public string Key { get; }
+        public string Action { get; }
+        /// <summary>For the movement keys: "up", "down", "left" or "right". Empty for the other actions.</summary>
+        public string Part { get; }
+        public bool KeyboardEditable { get; }
+        public bool GamepadEditable { get; }
+        /// <summary>Shown beside the binding when it is fixed or has a fixed alternative ("MOUSE", "+ SETAS").</summary>
+        public string KeyboardNote { get; }
+        public string GamepadNote { get; }
+
+        public ControlRow(string key, string action, string part, bool keyboardEditable, bool gamepadEditable, string keyboardNote = "", string gamepadNote = "")
+        {
+            Key = key;
+            Action = action;
+            Part = part ?? "";
+            KeyboardEditable = keyboardEditable;
+            GamepadEditable = gamepadEditable;
+            KeyboardNote = keyboardNote ?? "";
+            GamepadNote = gamepadNote ?? "";
+        }
+
+        public bool IsEditable(ControlDevice device) => device == ControlDevice.Keyboard ? KeyboardEditable : GamepadEditable;
+        public string Note(ControlDevice device) => device == ControlDevice.Keyboard ? KeyboardNote : GamepadNote;
+    }
+
+    /// <summary>The lines of the controls screen, top to bottom (GDD 07).</summary>
+    public static class ControlLayout
+    {
+        public static readonly IReadOnlyList<ControlRow> Rows = new[]
+        {
+            new ControlRow("Move.up", "Move", "up", true, false, "+ ↑", "STICK ESQ."),
+            new ControlRow("Move.down", "Move", "down", true, false, "+ ↓", "STICK ESQ."),
+            new ControlRow("Move.left", "Move", "left", true, false, "+ ←", "STICK ESQ."),
+            new ControlRow("Move.right", "Move", "right", true, false, "+ →", "STICK ESQ."),
+            new ControlRow("Aim", "Aim", "", false, false, "MOUSE", "STICK DIR."),
+            new ControlRow("Fire", "Fire", "", true, true, "+ CLIQUE"),
+            new ControlRow("Record", "Record", "", true, true),
+            new ControlRow("InvokeEcho", "InvokeEcho", "", true, true),
+            new ControlRow("Gadget", "Gadget", "", true, true),
+            new ControlRow("Pause", "Pause", "", true, true),
+        };
+    }
+}

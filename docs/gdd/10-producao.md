@@ -7,7 +7,7 @@ updated: 2026-10-18
 source: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (armadilhas, gadget, chefe e os dois primeiros combos)
 ---
 
-# ONE MORE TIME | Produção — escopo da jam
+# BILU'S INVASION | Produção — escopo da jam
 
 O que entra na jam, o que fica de fora, quando o protótipo está pronto para teste e o que pode dar errado.
 
@@ -40,6 +40,7 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Um gadget funcional | ✅ mina temporal, na tecla Q, reproduzida pelo eco → [05](05-armadilhas-gadgets-puzzles.md) |
 | Um chefe com janela de vulnerabilidade temporal | ✅ Guardião do Ciclo, fases 1 a 3 → [06](06-chefe-e-runs.md) |
 | Interface mínima e condição de vitória e derrota | ✅ vitória = derrotar o Guardião; derrota recomeça o encontro atual |
+| Suporte a controle e remapeamento | ✅ gamepad no jogo e no menu; o jogador troca teclas e botões na tela de controles → [07](07-controles-e-interface.md) |
 | Fluxo de telas | ✅ título, menu, som, controles, créditos, mapa de missões, história e cartão de missão, na cena `Menu` → [07](07-controles-e-interface.md) |
 
 Dos opcionais, já entraram **dois combos temporais com aviso no HUD** (Crossfire e Synchronized Strike) e a

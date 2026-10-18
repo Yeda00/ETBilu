@@ -100,9 +100,33 @@
     border-top-color: rgb(196, 200, 222);
     border-bottom-color: rgb(46, 48, 66);
 }
-.control-row { flex-direction: row; justify-content: space-between; margin: 7px 0; }
-.control-action { color: rgb(255, 226, 70); font-size: 28px; letter-spacing: 3px; }
-.control-keys { color: rgb(220, 228, 255); font-size: 28px; letter-spacing: 3px; -unity-font-style: normal; }
+/* Controls screen: one line per action, a cell for the keyboard and one for the gamepad. */
+.ctl-grid { min-width: 1180px; padding: 18px 30px; }
+.ctl-row { flex-direction: row; align-items: center; height: 46px; margin: 2px 0; }
+.ctl-label { width: 430px; color: rgb(255, 226, 70); font-size: 24px; letter-spacing: 2px; }
+.ctl-head { width: 310px; margin-left: 12px; color: rgb(150, 190, 255); font-size: 22px; letter-spacing: 4px; -unity-text-align: middle-center; }
+.ctl-cell {
+    width: 310px; height: 40px; margin-left: 12px;
+    background-color: rgb(30, 34, 76);
+    border-width: 2px; border-color: rgb(70, 72, 96);
+    color: rgb(230, 236, 255);
+    font-size: 22px; letter-spacing: 2px;
+    -unity-text-align: middle-center;
+    -unity-font-style: normal;
+}
+.ctl-cell.fixed { background-color: rgba(30, 34, 76, 0.35); color: rgb(120, 126, 170); }
+.ctl-cell.selected { border-color: rgb(255, 226, 70); background-color: rgb(46, 116, 230); color: rgb(255, 255, 255); }
+.ctl-cell.fixed.selected { background-color: rgba(46, 116, 230, 0.35); }
+.ctl-cell.waiting { background-color: rgb(200, 30, 50); border-color: rgb(255, 255, 255); }
+.ctl-reset {
+    min-width: 320px; height: 44px; margin: 14px 0 0 0; align-self: center;
+    background-color: rgb(120, 124, 148);
+    border-width: 3px; border-top-color: rgb(196, 200, 222); border-left-color: rgb(160, 164, 188);
+    border-right-color: rgb(70, 72, 96); border-bottom-color: rgb(46, 48, 66);
+    color: rgb(34, 26, 104);
+    font-size: 24px; letter-spacing: 4px; -unity-text-align: middle-center;
+}
+.ctl-reset.selected { background-color: rgb(46, 116, 230); color: rgb(255, 226, 70); }
 .credits-body {
     color: rgb(220, 228, 255);
     font-size: 24px;

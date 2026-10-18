@@ -73,6 +73,6 @@
             <ui:Label name="message-hint" text="" class="message-hint" />
         </ui:VisualElement>
 
-        <ui:Label text="WASD mover · MOUSE mirar · ESPAÇO/CLIQUE atirar · SHIFT gravar · E invocar eco · Q mina · ESC pausar" class="hint" />
+        <ui:Label name="controls-hint" text="WASD mover · MOUSE mirar · ESPAÇO/CLIQUE atirar · SHIFT gravar · E invocar eco · Q mina · ESC pausar" class="hint" />
     </ui:VisualElement>
 </ui:UXML>

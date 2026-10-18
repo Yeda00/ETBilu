@@ -1,9 +1,11 @@
 using System.Globalization;
 using OneMoreTime.Core.Boss;
+using OneMoreTime.Core.Controls;
 using OneMoreTime.Core.Combos;
 using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Echo;
+using OneMoreTime.Gameplay.Input;
 using OneMoreTime.Gameplay.Session;
 using OneMoreTime.Gameplay.Ship;
 using UnityEngine;
@@ -25,12 +27,17 @@ namespace OneMoreTime.UI
         [SerializeField] ShipGadget gadget;
         [SerializeField] StageDirector stage;
         [SerializeField] ComboTracker combos;
+        [Tooltip("Gives the controls for the hint line at the foot of the screen, keyboard or gamepad. Optional.")]
+        [SerializeField] PlayerInputReader input;
         [Tooltip("Seconds the combo notice stays on screen.")]
         [SerializeField, Min(0.1f)] float comboNoticeSeconds = 1.4f;
 
         static readonly CultureInfo PtBr = CultureInfo.GetCultureInfo("pt-BR");
 
         VisualElement integrityFill, memoryFill, recDot, message, gadgetFill, bossPanel, bossFill, comboNotice;
+        Label controlsHint;
+        bool hintShown;
+        ControlDevice hintDevice;
         Label memoryValue, memoryState, score, messageTitle, messageHint, gadgetState, bossState, bossPhase, comboTitle, comboHint;
         VisualElement[] generatorPips;
         VisualElement[] slots;
@@ -61,6 +68,8 @@ namespace OneMoreTime.UI
             comboNotice = root.Q("combo");
             comboTitle = root.Q<Label>("combo-title");
             comboHint = root.Q<Label>("combo-hint");
+            controlsHint = root.Q<Label>("controls-hint");
+            hintShown = false;
             comboTimer = 0f;
 
             slots = new VisualElement[3];
@@ -101,6 +110,8 @@ namespace OneMoreTime.UI
             if (session != null)
                 UpdateSession();
 
+            UpdateControlsHint();
+
             if (comboTimer > 0f)
             {
                 comboTimer -= Time.deltaTime;
@@ -127,6 +138,19 @@ namespace OneMoreTime.UI
             comboHint.text = combo.Points > 0 ? $"{hint} · +{combo.Points}" : hint;
             comboNotice.EnableInClassList("strike", combo.Type == ComboType.SynchronizedStrike);
             comboNotice.RemoveFromClassList("hidden");
+        }
+
+        // The hint line follows the device the player last used, with the keys as they are set now.
+        void UpdateControlsHint()
+        {
+            if (input == null || controlsHint == null)
+                return;
+            var device = input.UsingGamepad ? ControlDevice.Gamepad : ControlDevice.Keyboard;
+            if (hintShown && device == hintDevice)
+                return;
+            hintShown = true;
+            hintDevice = device;
+            controlsHint.text = ControlsCatalog.HintLine(input.Controls, device);
         }
 
         void UpdateEcho()
@@ -203,7 +227,7 @@ namespace OneMoreTime.UI
                     ShowMessage("PAUSA", "Esc para continuar");
                     break;
                 case SessionState.Defeated:
-                    ShowMessage("ONE MORE TIME", "o encontro recomeça…");
+                    ShowMessage("TENTE NOVAMENTE", "o encontro recomeça…");
                     break;
                 case SessionState.Cleared:
                     ShowMessage("GUARDIÃO DERROTADO", $"pontuação {session.Score:000000} · {session.Kills} abates · {session.ComboCount} combo{(session.ComboCount == 1 ? "" : "s")}");

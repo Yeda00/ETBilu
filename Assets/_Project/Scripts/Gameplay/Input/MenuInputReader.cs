@@ -58,6 +58,9 @@ namespace OneMoreTime.Gameplay.Input
         public bool AnyKeyPressed => anyKey != null && anyKey.WasPressedThisFrame();
         public bool FastHeld => fast != null && fast.IsPressed();
 
+        /// <summary>The asset with the bindings, which the controls screen changes.</summary>
+        public InputActionAsset Controls => controls;
+
         void Awake()
         {
             if (controls == null)
@@ -67,6 +70,7 @@ namespace OneMoreTime.Gameplay.Input
                 return;
             }
 
+            ControlsStore.Load(controls);
             var map = controls.FindActionMap(actionMap, throwIfNotFound: true);
             up = new Repeater { Action = map.FindAction("Up", true) };
             down = new Repeater { Action = map.FindAction("Down", true) };
