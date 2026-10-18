@@ -27,7 +27,7 @@ se a tarefa tocar uma área específica, o capítulo correspondente em [`docs/gd
 5. **Ilustrações acompanham a mecânica.** Se a mudança alterar algo que uma ilustração
    mostra (ex.: teclas, HUD, ondas, combos), atualize o SVG correspondente em `docs/img/`.
 
-6. **Texto de jogo em português brasileiro,** como aparece no jogo. Nomes de código em inglês.
+6. **O jogo é em inglês por padrão e tem português brasileiro** (Unity Localization). Todo texto de jogo vai para a tabela `Game` (`Assets/_Project/Localization`), com a chave nos dois idiomas, nunca como literal no código. A documentação e os nomes de código seguem como estão: docs em português, código em inglês.
 
 7. **Novo capítulo** começa de [`docs/gdd/_template.md`](docs/gdd/_template.md).
 
@@ -52,7 +52,8 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 | `Scripts/UI` | HUD, menus e cartão de missão (`OneMoreTime.UI`); layout e estilo em `UI/Hud.*`, `UI/Menu.*` e `UI/MissionCard.*` |
 | `Scripts/Editor` | Ferramentas de Editor (`OneMoreTime.Editor`) |
 | `Tests/EditMode` | Testes do Core |
-| `Data` | ScriptableObjects de ajuste: `EchoConfig`, `AudioLibrary` (qual clipe toca em cada cue e qual música em cada tela e encontro), `Menu/MenuTexts` (as palavras do menu), `Missions/Mission_01` (cartão, mapa e história da missão), ondas em `Data/Waves` |
+| `Data` | ScriptableObjects de ajuste: `EchoConfig`, `AudioLibrary` (qual clipe toca em cada cue e qual música em cada tela e encontro), `Missions/Mission_01` (cartão, mapa e história da missão), ondas em `Data/Waves` |
+| `Localization` | Unity Localization: `Localization Settings`, os `Locales` (inglês e português do Brasil) e a tabela de strings `Game` (`Tables/`), com todo o texto do jogo. A tabela é a fonte; o código lê por `L10n.Get("chave")` |
 | `Audio` | Clipes CC0 do OpenGameArt: `SFX/`, `UI/`, `Music/`. Fontes e licenças em `Audio/CREDITS.md`; ao trocar ou somar um pack, atualize o arquivo |
 | `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
@@ -81,7 +82,9 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
 
 - **Testes:** `unity command run_tests --mode editor`.
 - **Áudio:** o menu *One More Time › Bootstrap › Build Audio* (`unity command menu --path "One More Time/Bootstrap/Build Audio"`) cria o `AudioLibrary`, ajusta a importação da música (Streaming) e liga o grupo `Systems/Audio` na cena. Não sobrescreve nada que exista: para refazer o mapeamento, apague `Data/AudioLibrary.asset`. Som novo = um `SoundCue` no Core, um pedido no `AudioDirector` (ou `ProjectilePool.Raise`) e o clipe no asset.
-- **Menu e missões:** o menu *One More Time › Bootstrap › Build Menu* (`unity command menu --path "One More Time/Bootstrap/Build Menu"`) cria `MenuTexts`, `Mission_01`, a cena `Menu`, põe o cartão de missão na arena e deixa o build em Menu → Arena. Rode *Build Audio* antes. Não sobrescreve: para refazer a cena, apague `Scenes/Menu.unity`. Para testar o menu em Play, abra a cena `Menu` (`unity command open_scene --path ...`); o editor precisa estar em primeiro plano para o tempo e as teclas andarem.
+- **Textos e idiomas:** o menu *One More Time › Bootstrap › Build Localization* (`unity command menu --path "One More Time/Bootstrap/Build Localization"`) cria os locales, a tabela `Game` e as chaves que faltam, a partir de `Scripts/Editor/LocalizationStrings.cs`, e põe as chaves no `Mission_01`. Não sobrescreve valores que já estão na tabela: para mudar um texto, edite a tabela (janela *Localization Tables*) e, para uma chave nova, some-a também ao `LocalizationStrings.cs`. O inglês é o padrão (`SpecificLocaleSelector`); o idioma escolhido fica em `PlayerPrefs`. `MenuTexts` não é mais lido por nada.
+- **Menu e missões:** o menu *One More Time › Bootstrap › Build Menu* (`unity command menu --path "One More Time/Bootstrap/Build Menu"`) cria `Mission_01`, a cena `Menu`, põe o cartão de missão na arena e deixa o build em Menu → Arena. Rode *Build Audio* antes. Não sobrescreve: para refazer a cena, apague `Scenes/Menu.unity`. Para testar o menu em Play, abra a cena `Menu` (`unity command open_scene --path ...`); o editor precisa estar em primeiro plano para o tempo e as teclas andarem.
+- **Inimigos e chefe:** o menu *One More Time › Bootstrap › Build Enemy Variants* (`unity command menu --path "One More Time/Bootstrap/Build Enemy Variants"`) grava os perfis de `Enemy_S`/`Enemy_M` (um por modelo), cria os prefabs de tiro `Shot_Enemy_*` e põe o modelo de cada onda do encontro 1. Só escreve onde falta: para refazer os perfis, esvazie `profiles` no prefab. As peças do `Guardian` (antena, olhos, canhões, dentes) são filhos com `Health`, ligados em `GuardianBoss` → `parts`; o bootstrap de primitivas monta a mesma estrutura.
 - **Conteúdo placeholder:** o menu *One More Time › Bootstrap › Build Placeholder Content* (`unity command menu --path "One More Time/Bootstrap/Build Placeholder Content"`) recria o que faltar — materiais, prefabs, dados, painel de UI e a cena. Não sobrescreve nada que exista; apague um asset para ele ser refeito.
   Os inimigos `Enemy_S` e `Enemy_M` saem do bootstrap já com as três variações de modelo (prefabs antigos, de um modelo só,
   ganham as variações no lugar, sem perder as referências das ondas). Atenção: apagar `PlayerShip`, `EchoGhost` ou `Guardian`

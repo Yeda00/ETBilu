@@ -31,3 +31,4 @@ Horários de partida; ajuste no registro se mudarem.
 
 - 2026-10-18 · Fluxo spec-driven criado; trabalho direto na main durante a jam · velocidade.
 - 2026-10-18 · Perguntas de design em aberto (ver GDD) ficam para durante ou depois da demo · não travar a produção.
+- 2026-10-18 · O jogo passa a ser em inglês por padrão, com português brasileiro escolhido no menu (Unity Localization, tabela `Game`) · pedido do dono; o português continua no jogo como segundo idioma.

@@ -79,20 +79,21 @@ Bilu aparece em 3D atrás do título e do menu.
 | Tela | O que tem | Como sai |
 |---|---|---|
 | Título | "BILU'S INVASION", "O PASSADO CONTINUA LUTANDO" e "PRESSIONE ENTER / START" piscando; música do título | Qualquer tecla, botão do controle ou clique: menu principal |
-| Menu principal | JOGO PRINCIPAL · CONTROLES · SOM · CRÉDITOS · SAIR | Esc volta ao título |
+| Menu principal | JOGO PRINCIPAL · CONTROLES · SOM · IDIOMA · CRÉDITOS · SAIR | Esc volta ao título |
 | Som | Barras de MÚSICA e EFEITOS de 0 a 10, salvas entre partidas; o ajuste vale na hora | Esc ou Enter volta |
 | Controles | Uma linha por ação, com uma célula para o teclado e outra para o controle; Enter (ou A) numa célula espera a nova tecla ou botão, Esc cancela. "RESTAURAR PADRÃO" volta tudo ao original | Esc volta |
 | Créditos | Os créditos de áudio (tudo CC0). A equipe é _TBD_ | Esc volta |
 | Mapa de missões | Sete casas ligadas por uma linha; só a primeira (Missão Nº 1) existe, as outras são "?" bloqueadas e respondem com um som de negação | Enter abre a história; Esc volta |
 | História | Imagem pequena no alto e o texto da missão subindo, com música de abertura | Enter pula, ↓ acelera, Esc volta; no fim, a arena |
 | Cartão de missão | Na arena, tela preta com "MISSÃO Nº 1", o local e o nome da missão, por cerca de 3 s; a fase só começa quando ele some | Sozinho. Não volta depois de uma morte |
+| Idioma | Uma barra por idioma, cada um com o próprio nome (ENGLISH, PORTUGUÊS (BRASIL)); escolher troca as palavras de todas as telas na hora, e a escolha fica salva entre partidas. A barra do idioma em uso tem a borda amarela | Esc volta |
 
 Teclas do menu: ↑ ↓ ← → ou W A S D movem (repetem se a tecla ficar apertada), Enter ou Espaço confirmam, Esc ou
 Backspace voltam. No controle: D-pad ou stick esquerdo movem, A ou Start confirmam, B volta. O mouse também funciona: passar sobre uma barra a seleciona e clicar confirma.
 
 A ordem das telas, o cursor, a rolagem do texto e os volumes são regras do Core, com testes (`ScreenFlow`,
-`MenuCursor`, `CrawlScroll`, `SoundLevels`). Os textos ficam em dois assets, para editar sem mexer em código:
-`Data/Menu/MenuTexts` (as palavras de todas as telas) e `Data/Missions/Mission_01` (`MissionData`: número, local,
+`MenuCursor`, `CrawlScroll`, `SoundLevels`). As palavras de todas as telas e do HUD ficam na tabela de strings `Game`
+(Unity Localization, em `Assets/_Project/Localization`), em inglês e em português, para editar sem mexer em código; o
 nome, texto da história, imagem e cena). O layout e o visual ficam em `UI/Menu.uxml`, `Menu.uss`,
 `MissionCard.uxml` e `MissionCard.uss`.
 
@@ -100,7 +101,7 @@ O texto da história é o do dono: em outubro de 2010 Bilu trouxe à Terra a men
 42 anos depois, com a Terra seca e saqueada por um império decadente, ele volta para entregá-la mais uma vez,
 à força. O texto fecha no tema do design: "Uma vez não bastou. Então, mais uma vez: BUSQUEM CONHECIMENTO!!!!".
 
-> **Q:** o nome da Missão Nº 1 ("Terra · Sertão Seco", "Derrubar o Império") é rascunho, escrito a partir da
+> **Q:** o nome da Missão Nº 1 ("Terra · Sertão Seco", "Derrubar o Império"; em inglês, "Earth · Dry Backlands", "Overthrow the Empire") é rascunho, escrito a partir da
 > premissa da [bíblia de arte](../art-bible.md). O dono precisa aprovar ou reescrever. A imagem da história é
 > um recorte da arena, só para ocupar o lugar da arte final.
 
@@ -108,12 +109,27 @@ O texto da história é o do dono: em outubro de 2010 Bilu trouxe à Terra a men
 
 Na tela de controles, o jogador troca a tecla de cada ação (e o botão do controle). Valem as regras:
 
+### Idioma
+
+O jogo é em **inglês por padrão**, qualquer que seja o idioma do sistema, e tem **português brasileiro** como segundo idioma. O
+jogador troca na tela Idioma do menu. Valem as regras:
+
+- **A escolha fica salva** entre partidas (`PlayerPrefs`, pela chave do `PlayerPrefLocaleSelector` do pacote). Sem escolha salva, o jogo abre em inglês.
+- **Todas as palavras ficam numa tabela** (`Game`, Unity Localization): menu, HUD, nomes das ações, nomes de teclas e botões (os tokens `bind.*`, como ESPAÇO ou CLIQUE ESQ.), créditos e o texto da missão. O que o português ainda não tem cai para o inglês.
+- **A tela troca na hora.** O `MenuController` redesenha as palavras quando o idioma muda; o HUD e o cartão de missão leem o idioma ao abrir a arena. Os números do HUD seguem a cultura do idioma (1.5 s em inglês, 1,5 s em português).
+- **Mais um idioma** é um `Locale` novo na janela *Localization Tables*, com a coluna preenchida; a tela Idioma lista todo `Locale` do projeto, cada um pelo próprio nome. O menu *One More Time › Bootstrap › Build Localization* cria os locales, a tabela e as chaves que faltam, sem sobrescrever nada.
+- **Nomes de combos e do jogo não mudam** (CROSSFIRE, SYNCHRONIZED STRIKE, BILU'S INVASION). As notas de designer do editor (notas das ondas, nomes de assets) ficam em português e não são texto de jogo.
+
+Os textos deste GDD aparecem em português, como o jogo é descrito; a versão em inglês está na tabela. Os nomes dos botões vêm do Core
+(`BindingLabels`, com o inglês como padrão); a leitura da tabela e a troca de idioma ficam em `Gameplay/Language` (`L10n`).
+Há testes da tabela completa (`LocalizationTests`): toda chave tem texto nos dois idiomas, e o inglês é o idioma de partida.
+
 - **Só o que faz sentido trocar.** As quatro direções (a primeira composição, WASD), atirar, âncora/retorno, mina e pausar. A mira (mouse e stick direito) e o movimento do controle (stick esquerdo) são fixos, e aparecem apagados. As setas e o clique esquerdo continuam valendo como segunda opção.
 - **Nenhum botão faz duas coisas.** Se o jogador escolhe uma tecla que já era de outra ação, as duas trocam de lugar.
 - **Ficam salvos** entre partidas (`ControlsStore`, em `PlayerPrefs`), e o jogo e o menu leem as mesmas teclas. A dica no pé do HUD acompanha.
 - Esc (teclado) e Start (controle) cancelam a escolha; por isso não dá para trocar uma ação para esses botões pela tela, só voltando ao padrão.
 
-As linhas da tela, os nomes dos botões em português e a regra de conflito são do Core, com testes (`ControlLayout`,
+As linhas da tela, os nomes dos botões (em inglês por padrão, traduzíveis pelos tokens `bind.*`) e a regra de conflito são do Core, com testes (`ControlLayout`,
 `BindingLabels`, `BindingConflicts`); `ControlsCatalog` e `ControlsStore` ficam em `Gameplay/Input`.
 
 ## Perguntas em aberto
@@ -124,3 +140,4 @@ As linhas da tela, os nomes dos botões em português e a regra de conflito são
 - [ ] Fonte pixelada para os menus e o HUD: o protótipo usa a fonte padrão do Unity.
 - [ ] Tela de título definitiva: o protótipo mostra a nave de blockout.
 - [ ] O aviso de combo usa laranja, como o mockup; laranja também é a cor de perigo → [08](08-direcao-visual-e-sonora.md). Fica assim, ou o combo ganha uma cor própria?
+- [ ] Revisar os textos do jogo, em inglês e em português, com um falante de cada idioma: os dois são rascunho.
