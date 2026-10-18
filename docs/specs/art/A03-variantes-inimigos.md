@@ -29,3 +29,4 @@
 - 2026-10-18 · spec criada
 - 2026-10-18 · variantes são inimigos novos; implementação com o Yeda
 - 2026-10-18 · Yeda implementou como variações de modelo sorteadas dentro dos tipos S e M (`ModelVariants`), não como tipos novos (`bb5fa22`). `Enemie_M_BlockOut` ficou sem uso (igual ao `M_2`). Artista confirma se é isso.
+- 2026-10-18 · A pedido do designer, cada modelo ganhou comportamento próprio (S_1 kamikaze, S_2 veloz, S_3 rajada curta, M_1 tanque, M_2 rajada, M_3 escopeta) e as ondas escolhem o modelo → [GDD 04](../../gdd/04-inimigos-e-ondas.md). A forma de cada modelo agora é o que o jogador usa para reconhecer o que ele faz: não trocar a silhueta sem avisar.

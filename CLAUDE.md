@@ -70,7 +70,8 @@ Convenções:
   `Visual/Model`, que guarda a rotação, a escala e o centro (no Guardião também). Os colisores ficam no plano de jogo
   (z = 0), não no modelo; no Guardião, onde cada peça aparece pela câmera.
   Os inimigos têm um pivô por variação (`Visual/Model_1` a `Model_3`); o `ModelVariants` liga um ao surgir e ajusta a
-  hitbox e a boca do tiro ao modelo ligado.
+  hitbox e a boca do tiro ao modelo ligado. O modelo também decide o comportamento: o `Enemy` guarda um `EnemyProfile` por
+  modelo (caminho, vida, tiro, explosão, esquiva) e as ondas escolhem o modelo (`variant` no `WaveSchedule`).
 - **A cena tem grupos fixos na raiz:** `Systems`, `Lighting`, `Playfield` (câmera, nave, ecos), `World` (cenário), `UI`.
 - **Physics layers** (8–12): Player, PlayerProjectile, Enemy, EnemyProjectile, Echo. A matriz de colisão só deixa tiro acertar o outro lado e inimigo bater na nave; o eco não colide com nada.
   Os tiros e o laser do chefe ficam em EnemyProjectile (só ferem a nave). A mina não usa colisão: ela faz consultas de física.

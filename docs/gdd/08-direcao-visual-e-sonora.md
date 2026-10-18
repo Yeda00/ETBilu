@@ -82,7 +82,9 @@ O feedback segue uma hierarquia para preservar a leitura do bullet hell:
 | Tiro bloqueado | Faíscas da origem e anel azul de deflexão; não dispara efeito de dano |
 | Dano na nave | Flash vermelho, faíscas ciano, anel de alerta e shake mais claro com pequeno pulso de lente |
 | Inimigo destruído | Explosão de partículas e anel expansivo que persistem depois que o inimigo some |
-| Artilheiro, gerador ou núcleo destruído | Mesma composição em escala, densidade e shake progressivamente maiores |
+| Artilheiro, peça ou dentes do Guardião destruídos | Mesma composição em escala, densidade e shake progressivamente maiores |
+| Kamikaze ou tanque explode | O brilho amarelo pisca cada vez mais rápido; o anel laranja mostra o raio da explosão e a câmera dá um impulso |
+| Esquiva e retorno | A nave faz um giro completo em volta do nariz; o eco repete o giro. O escopeteiro inimigo também gira ao desviar |
 | Combo temporal | **Convergência Temporal**: faíscas violetas e dois anéis ciano/violeta no ponto do combo |
 | Âncora plantada | Faíscas ciano e dois anéis curtos marcam o ponto fixo antes do rastro aparecer |
 | Retorno temporal | Explosão violeta no ponto abandonado, convergência ciano/violeta na âncora, limpeza local de projéteis e impulso de câmera/lente mais forte |
@@ -118,11 +120,11 @@ nome dos arquivos, e precisam de ajuste de ouvido.
 | Tiro de inimigo e do chefe | Lasers retrô da Kenney |
 | Acerto, escudo | *Hit* do Deva; impacto metálico da Kenney |
 | Dano na nave | *Ouch* do Mini pack |
-| Inimigo, gerador, núcleo e nave destruídos | Explosões em escala crescente (Deva e Kenney) |
+| Inimigo, peça do Guardião, dentes e nave destruídos | Explosões em escala crescente (Deva e Kenney) |
 | Mina solta e detonada | *Powerup* do Deva; explosão grave da Kenney |
-| Plantar âncora (Shift) | Bipe existente mais uma trava ascendente gerada em código; faíscas e anéis confirmam o ponto |
+| Plantar âncora (segurar Shift) | Bipe existente mais uma trava ascendente gerada em código; faíscas e anéis confirmam o ponto |
 | Rota ativa | Pulso gerado em código que acelera, sobe de tom, abre o filtro e alterna discretamente no estéreo até 3,5 s |
-| Retorno (Shift) | Loop de reversão, sweep procedural com impacto grave, impacto metálico e shimmer filtrado; a música sofre um duck curto para o efeito atravessar a mixagem |
+| Retorno (soltar Shift) | Loop de reversão, sweep procedural com impacto grave, impacto metálico e shimmer filtrado; a música sofre um duck curto para o efeito atravessar a mixagem |
 | Combo temporal | *Starpower* do Mini pack, curto |
 | Chefe vulnerável, nova fase | Campo de força da Kenney; rugido do Mini pack |
 | Pausa e vitória | Bipes e jingles curtos (*Pickup*, *Powerup*, menu, *Win Jingle*) |
@@ -136,8 +138,8 @@ Shooter Music* (intro e loop). A música abaixa na pausa e some na vitória e na
 lugar é uma escolha pelo nome dos arquivos: falta ouvir e ajustar no `AudioLibrary`. O controle de MÚSICA e
 EFEITOS da tela de som ([07](07-controles-e-interface.md)) multiplica o volume de tudo.
 
-Ainda sem som: o laser giratório do Guardião e a fase 4 do chefe (que não
-existe). O pulso de interferência também não existe ainda.
+Ainda sem som: o laser giratório do Guardião, a esquiva e a explosão do kamikaze e do tanque (que só
+tocam a morte comum do inimigo). O pulso de interferência também não existe ainda.
 
 Os clipes ficam em `Assets/_Project/Audio`. Todos são CC0, do OpenGameArt (fontes e licenças em `Audio/CREDITS.md`):
 

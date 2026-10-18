@@ -28,3 +28,4 @@
 ## Registro
 - 2026-10-18 · spec criada
 - 2026-10-18 · Yeda trocou o modelo e passou o Guardião para vista lateral (`bb5fa22`). Falta o artista conferir em jogo.
+- 2026-10-18 · O Guardião agora tem peças destrutíveis (antena, olhos, dois canhões e dois conjuntos de dentes), pedidas pelo designer → [GDD 06](../../gdd/06-chefe-e-runs.md). Os colisores e marcadores são placeholder: a malha `Teeth` é uma só, e a `metalHair` é a antena. Pedido para a arte: separar dentes de cima e de baixo, antena e olhos, para trocarmos os marcadores pela arte.

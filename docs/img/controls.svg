@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 270" role="img" aria-labelledby="t d">
   <title id="t">Mapa de teclas proposto</title>
-  <desc id="d">WASD ou setas movimentam a nave. O mouse mira; Espaço ou botão esquerdo atira na direção indicada. Segurar Shift grava. E invoca o eco. Q usa o gadget. Esc pausa.</desc>
+  <desc id="d">WASD ou setas movimentam a nave. O mouse mira; Espaço ou botão esquerdo atira na direção indicada. Segurar Shift grava; soltar volta à âncora. F ou o botão direito do mouse esquiva. E invoca o eco. Q usa o gadget. Esc pausa.</desc>
   <style>
     .k{font:700 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
     .ks{font:700 10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -28,6 +28,7 @@
   <rect x="82" y="130" width="44" height="44" rx="7" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5"/><text x="104" y="157" class="k" fill="#36e2ff" text-anchor="middle">A</text>
   <rect x="132" y="130" width="44" height="44" rx="7" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5"/><text x="154" y="157" class="k" fill="#36e2ff" text-anchor="middle">S</text>
   <rect x="182" y="130" width="44" height="44" rx="7" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5"/><text x="204" y="157" class="k" fill="#36e2ff" text-anchor="middle">D</text>
+  <rect x="232" y="130" width="44" height="44" rx="7" fill="#102a20" stroke="#6ee7b7" stroke-width="1.5"/><text x="254" y="157" class="k" fill="#6ee7b7" text-anchor="middle">F</text>
   <!-- Shift + Space -->
   <rect x="24" y="180" width="96" height="44" rx="7" fill="#2a1016" stroke="#ff4d6d" stroke-width="1.5"/>
   <circle cx="40" cy="202" r="4" fill="#ff4d6d"/><text x="80" y="207" class="ks" fill="#ff8fa3" text-anchor="middle">SHIFT</text>
@@ -49,8 +50,9 @@
     <rect x="0" y="0" width="64" height="104" rx="32" fill="#111a33" stroke="#24345f"/>
     <path d="M32 0 V44 M0 44 H64" stroke="#24345f"/>
     <path d="M32 0 A32 32 0 0 0 0 32 V44 H32 Z" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5" stroke-dasharray="5 3"/>
+    <path d="M32 0 A32 32 0 0 1 64 32 V44 H32 Z" fill="#102a20" stroke="#6ee7b7" stroke-width="1.5" stroke-dasharray="5 3"/>
   </g>
-  <text x="572" y="108" class="n" text-anchor="middle">MIRAR · CLICAR</text>
+  <text x="572" y="108" class="n" text-anchor="middle">CLICAR · ESQUIVAR</text>
 
   <!-- legend -->
   <g transform="translate(250 30)">
@@ -60,6 +62,7 @@
     <rect x="160" y="12" width="12" height="12" rx="3" fill="#b18cff"/><text x="180" y="22" class="s">E: invocar o eco</text>
     <rect x="160" y="34" width="12" height="12" rx="3" fill="#ffc94d"/><text x="180" y="44" class="s">Q: usar o gadget</text>
     <rect x="320" y="12" width="12" height="12" rx="3" fill="#8a9bc4"/><text x="340" y="22" class="s">Esc: pausar</text>
+    <rect x="320" y="34" width="12" height="12" rx="3" fill="#6ee7b7"/><text x="340" y="44" class="s">F · botão dir.: esquiva</text>
   </g>
-  <text x="776" y="254" class="n" text-anchor="end">ATALHOS PROVISÓRIOS · GRAVAR E INVOCAR EM TECLAS SEPARADAS</text>
+  <text x="776" y="254" class="n" text-anchor="end">ATALHOS PROVISÓRIOS · GRAVAR, ESQUIVAR E INVOCAR EM TECLAS SEPARADAS</text>
 </svg>

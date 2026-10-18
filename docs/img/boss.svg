@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-labelledby="t d">
-  <title id="t">O Guardião do Ciclo e suas quatro fases</title>
-  <desc id="d">O chefe é uma máquina com um núcleo blindado, dois geradores que o protegem e um laser. Fase 1, sobrevivência; fase 2, preparação; fase 3, sincronização, quando os dois geradores caem numa janela curta e o núcleo fica exposto; fase 4, última chance.</desc>
+  <title id="t">O Guardião do Ciclo e suas peças</title>
+  <desc id="d">O chefe é uma máquina com antena, olhos, dois canhões e dois conjuntos de dentes, e um laser. Fase 1, sobrevivência, tudo blindado; fase 2, desmonte: as peças caem em qualquer ordem e cada uma muda a luta. A antena chama caças, os olhos chamam artilheiros e abrem os dentes de cima, os dois canhões abrem os dentes de baixo; os dois conjuntos de dentes caindo derrotam o chefe.</desc>
   <style>
     .h{font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.06em}
     .s{font:400 11.5px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#c9d4f2}
@@ -18,23 +18,29 @@
   <text x="24" y="32" class="h" fill="#ff8a3d">O GUARDIÃO DO CICLO</text>
   <text x="24" y="47" class="n">NOME PROVISÓRIO</text>
   <path d="M290 64 H200 Q150 64 130 100 L110 136 Q104 150 110 164 L130 200 Q150 236 200 236 H290 Z" fill="#22140f" stroke="#ff8a3d" stroke-width="1.5"/>
-  <!-- generators -->
+  <!-- cannons -->
   <rect x="228" y="76" width="30" height="26" rx="4" fill="#2a1016" stroke="#ffc94d"/>
   <rect x="228" y="198" width="30" height="26" rx="4" fill="#2a1016" stroke="#ffc94d"/>
-  <path d="M243 102 V122 M243 198 V178" stroke="#ffc94d" stroke-width="2" stroke-dasharray="3 3"/>
-  <text x="264" y="93" class="n" fill="#ffc94d">G1</text><text x="264" y="215" class="n" fill="#ffc94d">G2</text>
-  <!-- core + shield -->
-  <circle cx="218" cy="150" r="40" fill="none" stroke="#ffc94d" stroke-width="3" stroke-opacity=".7"/>
-  <circle cx="218" cy="150" r="22" fill="url(#core)"/>
-  <text x="222" y="206" class="n" fill="#ffc94d" text-anchor="end">NÚCLEO</text>
+  <path d="M243 102 V118 M243 198 V176" stroke="#ffc94d" stroke-width="2" stroke-dasharray="3 3"/>
+  <text x="264" y="93" class="n" fill="#ffc94d">CANHÃO</text><text x="264" y="215" class="n" fill="#ffc94d">CANHÃO</text>
+  <!-- antenna -->
+  <path d="M262 64 V40" stroke="#ff8a3d" stroke-width="2"/><circle cx="262" cy="38" r="5" fill="#ffc94d"/>
+  <text x="272" y="42" class="n" fill="#ffc94d">ANTENA</text>
+  <!-- eyes -->
+  <circle cx="226" cy="120" r="15" fill="url(#core)"/>
+  <text x="250" y="124" class="n" fill="#ffc94d">OLHOS</text>
+  <!-- teeth: upper (after the eyes) and lower (after the cannons) -->
+  <rect x="204" y="144" width="44" height="9" rx="2" fill="#ffe3b8" stroke="#ffc94d"/>
+  <rect x="204" y="162" width="44" height="9" rx="2" fill="#ffe3b8" stroke="#ffc94d"/>
+  <text x="254" y="152" class="n" fill="#ffc94d">DENTES</text><text x="254" y="170" class="n" fill="#ffc94d">DENTES</text>
   <!-- laser emitter + beam -->
   <circle cx="122" cy="150" r="8" fill="#2a1016" stroke="#ff4d6d" stroke-width="2"/>
   <path d="M112 150 H24" stroke="#ff4d6d" stroke-width="3" stroke-opacity=".6"/>
   <text x="26" y="142" class="n" fill="#ff4d6d">LASER</text>
   <!-- projectiles -->
   <g fill="#ff8a3d"><circle cx="70" cy="96" r="4"/><circle cx="50" cy="82" r="4"/><circle cx="76" cy="206" r="4"/><circle cx="54" cy="222" r="4"/><circle cx="92" cy="118" r="3"/><circle cx="96" cy="184" r="3"/></g>
-  <text x="24" y="262" class="s" fill="#8a9bc4">Blindado na maior parte do encontro.</text>
-  <text x="24" y="278" class="s" fill="#8a9bc4">Protege uma passagem temporal.</text>
+  <text x="24" y="262" class="s" fill="#8a9bc4">Desmonta-se peça por peça.</text>
+  <text x="24" y="278" class="s" fill="#8a9bc4">Os dentes são o ponto fraco.</text>
 
   <!-- phase cards 2x2 -->
   <g>
@@ -54,29 +60,29 @@
   </g>
   <!-- 2 -->
   <g transform="translate(551 10)">
-    <text x="14" y="26" class="h" fill="#5d6f9e">FASE 2</text><text x="70" y="26" class="h" fill="#ff8a3d">PREPARAÇÃO</text>
-    <rect x="14" y="38" width="200" height="5" rx="2.5" fill="#1e2b52"/><rect x="14" y="38" width="160" height="5" rx="2.5" fill="#ff8a3d"/>
-    <text x="14" y="66" class="s">Dois geradores laterais</text>
-    <text x="14" y="82" class="s">protegem o núcleo.</text>
-    <text x="14" y="110" class="r">→ gravar tiros contra um gerador</text>
-    <text x="14" y="126" class="r">   e atacar o outro</text>
+    <text x="14" y="26" class="h" fill="#5d6f9e">FASE 2</text><text x="70" y="26" class="h" fill="#ff8a3d">DESMONTE</text>
+    <rect x="14" y="38" width="200" height="5" rx="2.5" fill="#1e2b52"/><rect x="14" y="38" width="130" height="5" rx="2.5" fill="#ff8a3d"/>
+    <text x="14" y="66" class="s">As peças caem em qualquer</text>
+    <text x="14" y="82" class="s">ordem; cada uma muda a luta.</text>
+    <text x="14" y="110" class="r">→ nave e eco atacando duas</text>
+    <text x="14" y="126" class="r">   peças ao mesmo tempo</text>
   </g>
   <!-- 3 -->
   <g transform="translate(316 155)">
-    <text x="14" y="26" class="h" fill="#5d6f9e">FASE 3</text><text x="70" y="26" class="h" fill="#ff8a3d">SINCRONIZAÇÃO</text>
-    <rect x="14" y="38" width="200" height="5" rx="2.5" fill="#1e2b52"/><rect x="14" y="38" width="110" height="5" rx="2.5" fill="#ff8a3d"/>
-    <text x="14" y="66" class="s">Os dois geradores caem numa</text>
-    <text x="14" y="82" class="s">janela curta: núcleo exposto.</text>
-    <text x="14" y="110" class="r">→ nave e eco atirando juntos,</text>
-    <text x="14" y="126" class="r">   vivo durante os projéteis</text>
+    <text x="14" y="26" class="h" fill="#ffc94d">ANTENA E OLHOS</text>
+    <text x="14" y="52" class="s">Chamam caças (S) e artilheiros (M).</text>
+    <text x="14" y="70" class="s">Sem a antena: atira mais rápido.</text>
+    <text x="14" y="88" class="s">Sem os olhos: espiral de tiros e</text>
+    <text x="14" y="104" class="s">dentes de cima expostos.</text>
+    <text x="14" y="126" class="r">→ cortar o reforço ou abrir os dentes</text>
   </g>
   <!-- 4 -->
   <g transform="translate(551 155)">
-    <text x="14" y="26" class="h" fill="#5d6f9e">FASE 4</text><text x="70" y="26" class="h" fill="#ff4d6d">ÚLTIMA CHANCE</text>
-    <rect x="14" y="38" width="200" height="5" rx="2.5" fill="#1e2b52"/><rect x="14" y="38" width="44" height="5" rx="2.5" fill="#ff4d6d"/>
-    <text x="14" y="66" class="s">Mais ataques, janelas de</text>
-    <text x="14" y="82" class="s">vulnerabilidade menores.</text>
-    <text x="14" y="110" class="r">→ aproveitar os ecos já criados</text>
-    <text x="14" y="126" class="r">   para fechar o combate</text>
+    <text x="14" y="26" class="h" fill="#ff4d6d">CANHÕES E DENTES</text>
+    <text x="14" y="52" class="s">Cada canhão caído: mais rápido e</text>
+    <text x="14" y="70" class="s">mais agressivo. Os dois abrem os</text>
+    <text x="14" y="88" class="s">dentes de baixo.</text>
+    <text x="14" y="104" class="s">Os dois dentes caindo vencem.</text>
+    <text x="14" y="126" class="r">→ escolher o que custa menos caro</text>
   </g>
 </svg>

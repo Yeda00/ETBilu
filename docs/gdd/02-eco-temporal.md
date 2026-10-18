@@ -4,7 +4,7 @@ chapter: "02"
 status: draft
 owner: _TBD_
 updated: 2026-10-18
-source: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost)
+source: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost, EchoConfig, DodgeModel)
 ---
 
 # BILU'S INVASION | Loop e eco temporal
@@ -20,8 +20,8 @@ O jogo gira em torno de aprender os padrões, gravar ações úteis e usá-las p
 | Passo | O jogador… |
 |---|---|
 | **Avançar** | desvia, atira e lê os inimigos |
-| **Plantar âncora** | marca o retorno e registra movimento, tiros e gadgets |
-| **Retornar** | leva a nave à âncora e solta o eco para reproduzir as ações |
+| **Plantar âncora** | segura o botão: marca o retorno e registra movimento, tiros, gadgets e esquivas |
+| **Retornar** | solta o botão: leva a nave à âncora e solta o eco para reproduzir as ações |
 | **Criar combos** | combina nave + eco + gadget |
 | **Derrotar o chefe** | usa o conhecimento adquirido |
 
@@ -35,6 +35,7 @@ O sistema registra uma sequência de ações da nave numa janela de **até 3,5 s
 | Mira e inclinação | A direção apontada pelo mouse e a inclinação visual da nave |
 | Disparos | Instante, tipo e direção de cada tiro |
 | Gadgets | Momento e direção de uso |
+| Esquivas | Instante e direção de cada esquiva; o eco repete o giro → [03](03-combate.md) |
 | Duração | Até 3,5 segundos por gravação |
 | Reprodução | Uma cópia independente repete a sequência |
 | Limite | 1 eco ativo nesta primeira versão |
@@ -46,16 +47,21 @@ A gravação **não é um replay de vídeo**: é uma lista de dados que permite 
 
 ![Linha do tempo de uma gravação e sua reprodução](../img/echo-recording.svg)
 
-1. O jogador **toca Shift**: planta a âncora e a gravação começa.
+1. O jogador **segura Shift**: planta a âncora e a gravação começa.
 2. Uma sombra violeta segue a nave com pequeno atraso. Ela é somente uma prévia visual: não atira e não colide.
-3. O jogo armazena até 3,5 segundos de movimento, mira, tiros e gadgets; a rota fica desenhada no campo.
-4. O jogador **toca Shift novamente**, ou o tempo se esgota.
-5. A nave retorna instantaneamente à âncora e a sombra volta para o início da rota.
+3. O jogo armazena até 3,5 segundos de movimento, mira, tiros, gadgets e esquivas; a rota fica desenhada no campo.
+4. O jogador **solta Shift**, ou o tempo se esgota. É ele quem decide quando encerrar: gravar mais é arriscar mais longe da âncora.
+5. A nave retorna instantaneamente à âncora, **faz o giro da esquiva e fica 0,4 s sem tomar dano**, e a sombra volta para o início da rota.
 6. O eco executa a sequência na mesma ordem enquanto o jogador age livremente a partir da âncora.
 7. Depois da reprodução o eco desaparece e a habilidade respeita 2 segundos de recarga.
 
+Soltar Shift antes de 0,25 s cancela a gravação: sem eco e sem recarga.
+
 Durante a reprodução o jogador continua controlando a nave atual, mas só planta outra âncora quando o eco
 termina e a recarga está pronta.
+
+*Por quê:* segurar o botão dá ao jogador o controle de quando voltar. A volta é também uma esquiva: o mesmo giro
+e a mesma janela sem dano da esquiva comum, para ele sair do aperto com a gravação.
 
 A gravação tem um **indicador visual de tempo restante**, para o jogador planejar sem olhar o tempo
 todo para a interface → [07](07-controles-e-interface.md).
@@ -84,9 +90,9 @@ todo para a interface → [07](07-controles-e-interface.md).
 | Regra | Como está implementado |
 |---|---|
 | Espaço da gravação | Posições relativas à **tela** (o playfield que rola), não ao mundo: o eco refaz o mesmo trajeto na tela mesmo com a câmera avançando |
-| Um botão | Shift planta a âncora; o próximo toque retorna. E fica apenas como alias temporário de compatibilidade durante a gravação e não aparece no HUD |
-| Retorno | Volta só a posição da nave; não cura e não restaura o mundo. Concede 0,2 s de invulnerabilidade e apaga projéteis inimigos num raio de 1,6 unidade ao redor da âncora |
-| Limite de 3,5 s | Ao completar a janela, o retorno acontece automaticamente |
+| Um botão | Shift **segurado** planta a âncora e grava; soltar retorna. Soltar antes de 0,25 s (`EchoConfig.minRecordSeconds`) cancela, sem eco e sem recarga. E fica apenas como alias temporário de compatibilidade durante a gravação e não aparece no HUD |
+| Retorno | Volta só a posição da nave; não cura e não restaura o mundo. Concede **0,4 s de invulnerabilidade**, com o giro da esquiva (`ShipMotor.PlayRoll`), e apaga projéteis inimigos num raio de 1,6 unidade ao redor da âncora |
+| Limite de 3,5 s | Ao completar a janela, o retorno acontece automaticamente, como se o botão fosse solto |
 | Prévia | Uma cópia inofensiva segue a nave com 0,18 s de atraso, acompanhada por âncora pulsante e rastro da rota |
 | Ecos ao mesmo tempo | 1 (`EchoConfig.maxActiveEchoes`), para o sincronismo ficar legível |
 | Recarga | 2 s a partir do retorno; uma nova âncora também espera o eco atual terminar |
@@ -94,6 +100,7 @@ todo para a interface → [07](07-controles-e-interface.md).
 | Entrada e saída | O eco aparece e some com um fade de 0,2 s |
 | Mira | A direção é amostrada junto da pose; o eco gira para a mira gravada e cada tiro usa sua direção registrada |
 | Gadget | O uso da mina temporal entra na gravação (`EchoEventType.Gadget`); o eco solta a mina no mesmo ponto e instante → [05](05-gadgets.md) |
+| Esquiva | A esquiva entra na gravação (`EchoEventType.Dodge`): o eco gira, no mesmo instante e pelo mesmo tempo, enquanto o deslocamento vem das poses gravadas. O giro é só visual; o eco continua sem colisor |
 
 *Por quê:* num side-scroller a tela anda o tempo todo; gravar em coordenadas do mundo deixaria o eco
 para trás, fora da tela, poucos segundos depois.
@@ -101,5 +108,6 @@ para trás, fora da tela, poucos segundos depois.
 ## Perguntas em aberto
 
 - [ ] O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".
+- [ ] Soltar o botão volta a nave sem custo além da recarga de 2 s: o mínimo de 0,25 s e os 0,4 s sem dano do retorno são valores de partida.
 - [x] Ecos simultâneos no MVP: a primeira versão usa um eco ativo para privilegiar leitura e intenção. Mais ecos ficam como expansão → [10](10-producao.md).
 - [x] A rota é consumida no retorno; cada eco exige uma nova âncora e uma nova rota.

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 250" role="img" aria-labelledby="t d">
   <title id="t">Os tipos de inimigo</title>
-  <desc id="d">Caça mergulha e atira; interceptador cruza em senoide; artilheiro oscila e dispara leques de cinco; torreta é planejada.</desc>
+  <desc id="d">Caça mergulha, com três modelos: kamikaze, veloz e rajada curta; interceptador cruza em senoide; artilheiro segura uma posição, com três modelos: tanque, rajada e escopeta; torreta é planejada.</desc>
   <style>
     .h{font:700 10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.05em}.s{font:400 11px ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#c9d4f2}.r{font:600 11px ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#b18cff}.n{font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#5d6f9e}
   </style>
@@ -12,10 +12,10 @@
   <rect width="800" height="250" rx="14" fill="#0a0f1f"/>
   <g fill="#0f1830" stroke="#1e2b52"><rect x="10" y="10" width="185" height="230" rx="10"/><rect x="205" y="10" width="185" height="230" rx="10"/><rect x="400" y="10" width="185" height="230" rx="10"/><rect x="595" y="10" width="195" height="230" rx="10"/></g>
   <g transform="translate(10 10)">
-    <text x="12" y="25" class="h" fill="#ff8a3d">CAÇA · S</text><text x="173" y="25" class="n" text-anchor="end">MERGULHA</text>
+    <text x="12" y="25" class="h" fill="#ff8a3d">CAÇA · S</text><text x="173" y="25" class="n" text-anchor="end">3 MODELOS</text>
     <rect x="10" y="37" width="165" height="112" rx="6" fill="#0a0f1f"/><path d="M166 56h-47c-22 0-29 56-63 56H27" fill="none" stroke="#ff8a3d" stroke-opacity=".55" stroke-dasharray="4 5" marker-end="url(#a)"/>
     <g fill="#ff8a3d" stroke="#ffd2a8"><use href="#fighter" x="150" y="56"/><use href="#fighter" x="118" y="65"/></g><circle cx="99" cy="76" r="4" fill="#ffc94d"/><path d="M94 80L48 109" stroke="#ff4d6d" stroke-dasharray="2 5"/><use href="#ship" transform="translate(34 115)" fill="#36e2ff"/>
-    <text x="12" y="173" class="s">Investe na altura da nave.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">puxe a fila para o fogo</text>
+    <text x="12" y="173" class="s">Kamikaze, veloz ou rajada curta.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">puxe a fila para o fogo</text>
   </g>
   <g transform="translate(205 10)">
     <text x="12" y="25" class="h" fill="#ffb347">INTERCEPTADOR · W</text><text x="173" y="25" class="n" text-anchor="end">SENOIDE</text>
@@ -24,10 +24,10 @@
     <text x="12" y="173" class="s">Ocupa alturas em movimento.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">cubra a faixa oposta</text>
   </g>
   <g transform="translate(400 10)">
-    <text x="12" y="25" class="h" fill="#ff4d6d">ARTILHEIRO · M</text><text x="173" y="25" class="n" text-anchor="end">LEQUE ×5</text>
+    <text x="12" y="25" class="h" fill="#ff4d6d">ARTILHEIRO · M</text><text x="173" y="25" class="n" text-anchor="end">3 MODELOS</text>
     <rect x="10" y="37" width="165" height="112" rx="6" fill="#0a0f1f"/><path d="M155 58v68" stroke="#5d6f9e" stroke-dasharray="3 3"/><use href="#gunship" x="154" y="92" fill="#ff4d6d" stroke="#ffb3c0"/>
     <g stroke="#ff4d6d" stroke-opacity=".5" stroke-dasharray="2 5"><path d="M135 92L36 53"/><path d="M135 92L36 72"/><path d="M135 92L36 92"/><path d="M135 92L36 112"/><path d="M135 92L36 131"/></g><use href="#ship" transform="translate(29 92)" fill="#36e2ff"/>
-    <text x="12" y="173" class="s">Sustenta pressão e oscila.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">alvo de Crossfire</text>
+    <text x="12" y="173" class="s">Tanque, rajada ou escopeta.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">alvo de Crossfire</text>
   </g>
   <g transform="translate(595 10)" opacity=".82">
     <text x="12" y="25" class="h" fill="#8a9bc4">TORRETA</text><text x="183" y="25" class="n" text-anchor="end">PLANEJADA</text>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 330" role="img" aria-labelledby="t d">
   <title id="t">Ciclo de gravação e reprodução</title>
-  <desc id="d">Linha do tempo de cinco segundos. Enquanto Shift está pressionado, o jogo grava 20 amostras de posição e rotação por segundo e uma lista de eventos: tiros, mina e pulso. Ao apertar E, o eco reproduz os mesmos eventos na mesma ordem.</desc>
+  <desc id="d">Linha do tempo de cinco segundos. Enquanto Shift está pressionado, o jogo grava 20 amostras de posição e rotação por segundo e uma lista de eventos: tiros, mina, pulso e esquivas. Ao soltar Shift, a nave volta à âncora e o eco reproduz os mesmos eventos na mesma ordem.</desc>
   <style>
     .h{font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em}
     .m{font:400 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#5d6f9e}
@@ -29,7 +29,7 @@
   <text x="24" y="112" class="h" fill="#36e2ff">AMOSTRAS</text>
   <text x="24" y="126" class="m">posição, rotação</text>
   <text x="24" y="158" class="h" fill="#36e2ff">EVENTOS</text>
-  <text x="24" y="172" class="m">tiros, gadgets</text>
+  <text x="24" y="172" class="m">tiros, gadgets, esquivas</text>
 
   <!-- Shift bar -->
   <rect x="150" y="54" width="580" height="26" rx="6" fill="#36e2ff" fill-opacity=".14" stroke="#36e2ff"/>
@@ -59,7 +59,7 @@
   <!-- release + invoke -->
   <path d="M24 210H776" stroke="#1e2b52"/>
   <rect x="300" y="200" width="200" height="20" rx="10" fill="#0a0f1f" stroke="#2a3a63"/>
-  <text x="400" y="214" class="m" text-anchor="middle" fill="#8a9bc4">soltar Shift · apertar E</text>
+  <text x="400" y="214" class="m" text-anchor="middle" fill="#8a9bc4">soltar Shift</text>
 
   <text x="24" y="246" class="h" fill="#b18cff">ECO</text>
   <text x="24" y="260" class="m">reprodução</text>

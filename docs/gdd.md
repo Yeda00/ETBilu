@@ -34,31 +34,33 @@ derrotar chefes. Cada tentativa deixa para trás ações que viram estratégia: 
 
 ![Core loop](img/loop.svg)
 
-**Avançar** (desviar, atirar, ler inimigos) → **Plantar âncora** (gravar movimento, tiros, gadgets) → **Retornar e soltar o eco**
+**Avançar** (desviar, atirar, ler inimigos) → **Plantar âncora** (gravar movimento, tiros, gadgets, esquivas) → **Retornar e soltar o eco**
 → **Criar combos** (nave + eco + gadget) → **Derrotar o chefe**.
 
 ## O eco temporal → [02](gdd/02-eco-temporal.md)
 
-Toque **Shift** para plantar uma âncora e gravar até **3,5 s** de posição, mira, inclinação, tiros e gadgets.
-Toque **Shift** novamente — ou deixe o tempo acabar — para voltar ao ponto plantado. A sombra que seguia a
-nave volta à âncora e repete a rota enquanto você continua pilotando. Há **um eco ativo** nessa primeira versão.
+**Segure Shift** para plantar uma âncora e gravar até **3,5 s** de posição, mira, inclinação, tiros, gadgets e esquivas.
+**Solte Shift** — ou deixe o tempo acabar — para voltar ao ponto plantado: você decide quando encerrar. A volta é
+uma esquiva (um giro e **0,4 s sem tomar dano**). A sombra que seguia a nave volta à âncora e repete a rota enquanto você
+continua pilotando. Há **um eco ativo** nessa primeira versão.
 
 **Regra fundamental:** o eco reproduz as ações, mas não rebobina o mundo. O que morreu continua morto.
 
 ## Combate → [03](gdd/03-combate.md)
 
-Movimento em 8 direções independente da mira, disparo contínuo na direção do mouse, retículo pulsante, recoil, flash e squash a cada tiro, além de um gadget. Acertos piscam e soltam faíscas; escudos defletem; destruições deixam explosão, anel e impulso de câmera proporcionais. Três tipos de dano: direto, de gadget e combinado.
+Movimento em 8 direções independente da mira, disparo contínuo na direção do mouse, retículo pulsante, recoil, flash e squash a cada tiro, além de um gadget e de uma **esquiva** (um giro com rajada de velocidade e 0,4 s sem dano, recarga de 0,8 s). Acertos piscam e soltam faíscas; escudos defletem; destruições deixam explosão, anel e impulso de câmera proporcionais. Três tipos de dano: direto, de gadget e combinado.
 Três combos temporais: **Crossfire**, **Reflect Chain**, **Synchronized Strike**.
 No protótipo, os dois primeiros a existir: **Crossfire** (nave e eco acertam o mesmo alvo em até 1 s: dano
-combinado) e **Synchronized Strike** (um gerador do Guardião pela nave, o outro pelo eco, em até 2,5 s: o
-escudo do núcleo cai). Janelas generosas, valores de partida.
+combinado) e **Synchronized Strike** (um canhão do Guardião pela nave, o outro pelo eco, em até 2,5 s: aviso e
+pontos). Janelas generosas, valores de partida.
 
 ## Inimigos → [04](gdd/04-inimigos-e-ondas.md)
 
-**Caça** (S: entra em fila, mergulha e dispara), **Interceptador** (W: cruza em senoide com rajadas de 2),
-**Artilheiro** (M: oscila à direita e dispara leques de 5) e **Torreta** (planejada). Ondas por script,
-nunca aleatórias: o encontro atual comprime 15 entradas e 66 inimigos em 54 s, com pressão crescente e
-sobreposições legíveis. Cada família sorteia um de três modelos; só o visual muda.
+**Caça** (S), **Interceptador** (W: cruza em senoide com rajadas de 2), **Artilheiro** (M) e **Torreta** (planejada).
+**O modelo decide o comportamento**: S_1 **kamikaze** (persegue e explode), S_2 **veloz** (tiro pequeno e raro), S_3 **rajada
+curta** (3 tiros); M_1 **tanque** (parado como obstáculo, explode quando a nave chega perto), M_2 **rajada** de 4 tiros pesados,
+M_3 **escopeta** (7 tiros em leque; esquiva dos tiros). Ondas por script, nunca aleatórias: o encontro atual comprime 15
+entradas e 64 inimigos em 54 s, escolhendo o modelo de cada onda, com pressão crescente e sobreposições legíveis.
 
 ## Gadgets → [05](gdd/05-gadgets.md)
 
@@ -68,19 +70,18 @@ ficam para depois.
 
 ## O chefe → [06](gdd/06-chefe-e-runs.md)
 
-**O Guardião do Ciclo** (provisório): Sobrevivência → Preparação → Sincronização → Última chance.
-Vencível com boa sequência temporal, nunca pixel-perfect. No protótipo, as fases 1 a 3: os dois
-geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, visto
-de lado como as naves, ele aponta dois braços-canhão para a nave, em alturas diferentes, com um gerador na
-ponta de cada um; o visor, no alto, é o núcleo. Durante o combate ele deriva numa faixa curta e acelera os
-padrões a cada fase.
+**O Guardião do Ciclo** (provisório): Sobrevivência (tudo blindado) → Desmonte. Ele se desmonta **peça por peça, na ordem que
+o jogador escolher**: a **antena** chama caças de reforço (sem ela, atira mais rápido); os **olhos** chamam artilheiros (sem
+eles, ganha uma espiral de tiros e abre os **dentes de cima**); os **canhões** o deixam mais rápido e agressivo a cada queda,
+e os dois abrem os **dentes de baixo**. Os dois conjuntos de dentes são o ponto fraco: caindo os dois, ele cai. Nada volta.
+Vencível com boa sequência temporal, nunca pixel-perfect: o eco ataca uma peça enquanto a nave ataca outra.
 
 ## Controles e HUD → [07](gdd/07-controles-e-interface.md)
 
-WASD/setas movem · mouse mira · Espaço/clique atira · **Shift** grava · **E** invoca · **Q** gadget · Esc pausa.
-Com controle: stick esquerdo move · stick direito mira · RT atira · **LT** grava · **RB** invoca · **LB** gadget · Start pausa. A tela de controles troca qualquer tecla ou botão.
+WASD/setas movem · mouse mira · Espaço/clique atira · **Shift** (segurar) grava · **F**/botão direito esquiva · **E** invoca · **Q** gadget · Esc pausa.
+Com controle: stick esquerdo move · stick direito mira · RT atira · **LT** (segurar) grava · **A** esquiva · **RB** invoca · **LB** gadget · Start pausa. A tela de controles troca qualquer tecla ou botão.
 O jogo abre num menu inspirado no *Star Fox 64*: título, menu (jogo, controles, som, idioma, créditos), mapa de missões, história que sobe pela tela e, na arena, o cartão "Missão Nº 1". O jogo é em **inglês por padrão** e o jogador pode trocar para **português brasileiro** na tela Idioma (Unity Localization).
-O HUD mostra integridade, memória temporal, ecos ativos, gadget, vida do chefe e combos.
+O HUD mostra integridade, memória temporal, ecos ativos, gadget, a vida dos dentes e as peças do chefe, e combos.
 
 ## Visual e som → [08](gdd/08-direcao-visual-e-sonora.md)
 
@@ -98,18 +99,20 @@ explicação e descobre sozinho para que serve o eco.
 
 Jogável em `Assets/_Project/Scenes/Arena_01.unity`. Nave, eco, inimigos e chefe usam os modelos 3D de
 blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
-âncora temporal com retorno e eco que repete movimento, tiros e gadget, caças, interceptadores e artilheiros que atiram, em ondas por script,
+âncora temporal gravada segurando o botão, com retorno e eco que repete movimento, tiros, esquivas e gadget, esquiva da nave,
+caças, interceptadores e artilheiros com um comportamento por modelo (kamikaze, tanque, escopeta…), em ondas por script,
 mina temporal, o Guardião do Ciclo
-(fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
+(peças destrutíveis, reforços e dentes como ponto fraco), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
 atual recomeça), vitória (derrotar o Guardião), o fluxo de menus (título, menu, idioma em inglês ou português, mapa de missões, história e cartão de missão) e som: efeitos e música CC0 ligados ao jogo, com os valores ainda por ajustar de ouvido.
-Faltam torreta, o combo Reflect Chain, o pulso de interferência, a fase 4 do chefe e o encontro de Combinação.
+Faltam torreta, o combo Reflect Chain, o pulso de interferência e o encontro de Combinação.
 
 ## Perguntas em aberto
 
-- Chefe com quatro fases ou duas? → [06](gdd/06-chefe-e-runs.md)
+- Os dois conjuntos de dentes precisam cair para vencer, ou um basta? Qual é a "nova mecânica de ataque" dos olhos? → [06](gdd/06-chefe-e-runs.md)
 - Um ou dois gadgets no MVP? → [05](gdd/05-gadgets.md)
 - Um ou até três ecos no MVP? → [02](gdd/02-eco-temporal.md)
-- Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração e tamanho sugerido pelo designer → [06](gdd/06-chefe-e-runs.md)
+- Vida das peças, reforços e frenesi do Guardião, o que o Synchronized Strike deveria fazer agora, e o chefe grande demais para a tela → [06](gdd/06-chefe-e-runs.md)
+- Esquiva: tempo, recarga e teclas; kamikaze, tanque e escopeteiro (explosões, tempo parado, esquiva) → [03](gdd/03-combate.md), [04](gdd/04-inimigos-e-ondas.md)
 - Janelas dos combos (1 s e 2,5 s) e se só o Synchronized Strike deve abrir o núcleo → [03](gdd/03-combate.md)
 - Quais elementos são modelos 3D e quais são sprites 2D; lente de 300 mm sugerida pelo designer → [08](gdd/08-direcao-visual-e-sonora.md)
 - Donos de cada capítulo, datas e equipe da jam → [10](gdd/10-producao.md)

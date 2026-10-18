@@ -4,7 +4,7 @@ chapter: "03"
 status: draft
 owner: _TBD_
 updated: 2026-10-18
-source: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Enemy_S, Enemy_M; ComboTracker, CrossfireRule, SynchronizedStrikeRule)
+source: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Enemy_S, Enemy_M; ShipMotor, DodgeModel; ComboTracker, CrossfireRule, SynchronizedStrikeRule)
 ---
 
 # BILU'S INVASION | Combate
@@ -18,6 +18,7 @@ A nave começa com um conjunto pequeno de ações:
 - Movimento em **oito direções** dentro da área jogável, independente da mira.
 - **Mira livre com o mouse**: a nave aponta para o cursor e mostra uma linha curta com retículo na direção do tiro.
 - **Disparo principal** contínuo na direção da mira.
+- **Esquiva**: uma rajada de velocidade na direção do movimento (parada, a nave gira no lugar), com um giro completo em volta do nariz. Dura **0,4 s**, cobre 3,6 u e deixa a nave **sem tomar dano** enquanto dura (`DodgeModel`). O comando segue guiando de leve durante o giro, e há **0,8 s de recarga** depois. O retorno do eco termina com o mesmo giro e a mesma janela sem dano → [02](02-eco-temporal.md).
 - Um **gadget** equipado → [05](05-gadgets.md).
 - A habilidade de **gravação e reprodução** temporal → [02](02-eco-temporal.md).
 - Vida limitada e **invulnerabilidade breve** depois de receber dano.
@@ -36,8 +37,8 @@ usando a mira exata. O eco repete a rotação gravada, o recoil e o flash para p
 
 Acertos aceitos piscam rapidamente o alvo e soltam faíscas na cor da origem: ciano para a nave e violeta
 para o eco. Escudos respondem com uma deflexão azul mesmo quando bloqueiam todo o dano. A destruição deixa
-uma explosão e um anel expansivo depois que o objeto sai da cena; inimigos resistentes, geradores, núcleo
-e nave usam escalas progressivamente maiores. A câmera recebe impulsos curtos e limitados por importância:
+uma explosão e um anel expansivo depois que o objeto sai da cena; inimigos resistentes, peças e dentes do
+Guardião e nave usam escalas progressivamente maiores. Um inimigo que explode mostra o raio da explosão num anel laranja. A câmera recebe impulsos curtos e limitados por importância:
 quase imperceptíveis no tiro comum, claros ao sofrer dano e fortes só em destruições relevantes.
 
 ## Valores de partida no protótipo
@@ -49,14 +50,17 @@ quase imperceptíveis no tiro comum, claros ao sofrer dano e fortes só em destr
 | Velocidade da nave | 9 u/s | `PlayerShip` → `ShipMotor` |
 | Disparo principal | 10 tiros/s, dano 1; segue a mira livre, com pulso do retículo, recoil, flash e squash | `PlayerShip` → `ShipWeapon`, `ShipAim`, `ShipFireFeedback`, `Shot_Ship` |
 | Hitbox da nave | caixa de 1,4 × 0,9 u no plano de jogo, em volta do disco e da cabine; menor que a arte (aletas, ponta da cúpula e canhões ficam de fora) | `PlayerShip` → `BoxCollider` |
-| Caça (S) | 1 de vida, 100 pontos; 1 tiro mirado | `Enemy_S` → [04](04-inimigos-e-ondas.md) |
-| Artilheiro (M) | 20 de vida, 300 pontos; leques de 3 tiros | `Enemy_M` → [04](04-inimigos-e-ondas.md) |
+| Esquiva | 0,4 s sem dano, 3,6 u, recarga de 0,8 s; 30% do comando ainda guia a nave durante o giro | `PlayerShip` → `ShipMotor` |
+| Caça (S) | 2 a 3 de vida, 100 a 150 pontos; um comportamento por modelo (kamikaze, veloz, rajada curta) | `Enemy_S` → [04](04-inimigos-e-ondas.md) |
+| Artilheiro (M) | 18 a 30 de vida, 250 a 350 pontos; um comportamento por modelo (tanque, rajada, escopeta) | `Enemy_M` → [04](04-inimigos-e-ondas.md) |
 | Inimigo que bate na nave | 1 de dano | `ContactDamage` |
+| Explosão de kamikaze e de tanque | 1 e 2 de dano num raio de 1,7 e 3,8 u; a esquiva atravessa | `Enemy` → [04](04-inimigos-e-ondas.md) |
 | Mina temporal | 4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s | `TimeMine_Ship`, `TimeMine_Echo`, `PlayerShip` → `ShipGadget` |
-| Tiros inimigos (caça, interceptador, artilheiro, Guardião) | 1 de dano, 9,5 u/s | `Shot_Enemy` |
-| Guardião | núcleo 120 de vida, geradores 12 | `Guardian` → [06](06-chefe-e-runs.md) |
+| Tiros inimigos (interceptador, Guardião) | 1 de dano, 9,5 u/s | `Shot_Enemy` |
+| Tiros dos modelos de caça e artilheiro | 1 de dano; tamanho e velocidade próprios (8 a 12,5 u/s) | `Shot_Enemy_Fast`, `_Slow`, `_Heavy`, `_Pellet` |
+| Guardião | antena 14, olhos 24, canhões 20, dentes 45 de vida | `Guardian` → [06](06-chefe-e-runs.md) |
 | Crossfire | janela de 1 s entre o acerto da nave e o do eco; +3 de dano combinado; o mesmo alvo só dá outro Crossfire depois de 1 s | `ComboTracker` (cena, em `Systems`) |
-| Synchronized Strike | janela de 2,5 s entre a queda dos dois geradores | `ComboTracker` |
+| Synchronized Strike | janela de 2,5 s entre a queda dos dois canhões | `ComboTracker` |
 
 Valores para testar, não definitivos.
 
@@ -85,7 +89,7 @@ Os combos são **eventos específicos** que o jogo reconhece, não multiplicador
 |---|---|---|
 | **Crossfire** | Nave atual e eco acertam o mesmo alvo numa janela curta | Dano adicional |
 | **Reflect Chain** | Um projétil ricocheteia em escudos posicionados em sequência | Dano elevado ao alvo |
-| **Synchronized Strike** | Dois pontos fracos são atingidos quase ao mesmo tempo | Escudo do chefe desativado |
+| **Synchronized Strike** | Dois pontos fracos são atingidos quase ao mesmo tempo | Escudo do chefe desativado (v0.1; no protótipo, só pontos e aviso) |
 
 **Trap Bait** (o eco atrai inimigos para uma armadilha) e **Double Pulse** (dois pulsos em mecanismos conectados)
 saíram junto com as armadilhas e os mecanismos do cenário.
@@ -101,8 +105,8 @@ nave e do eco: um tiro ou uma mina conta para quem o disparou, a nave atual ou u
 
 | Combo | Como o jogo reconhece | Resultado |
 |---|---|---|
-| **Crossfire** | A nave e um eco acertam o **mesmo alvo** (inimigo, gerador ou núcleo do Guardião) com até **1 s** de diferença. Dois acertos da mesma fonte não contam. Cada par de acertos dá um combo só, e o mesmo alvo só dá outro depois de 1 s | **+3 de dano combinado** no alvo, se ele ainda estiver vivo, e **100 pontos** |
-| **Synchronized Strike** | Os dois geradores do Guardião caem com até **2,5 s** de diferença, **um derrubado pela nave e o outro por um eco**, e o núcleo fica vulnerável | O **escudo do núcleo cai**, pela regra do próprio Guardião → [06](06-chefe-e-runs.md), e **1000 pontos** |
+| **Crossfire** | A nave e um eco acertam o **mesmo alvo** (inimigo ou peça do Guardião) com até **1 s** de diferença. Dois acertos da mesma fonte não contam. Cada par de acertos dá um combo só, e o mesmo alvo só dá outro depois de 1 s | **+3 de dano combinado** no alvo, se ele ainda estiver vivo, e **100 pontos** |
+| **Synchronized Strike** | Os dois canhões do Guardião caem com até **2,5 s** de diferença, **um derrubado pela nave e o outro por um eco** | **1000 pontos** e o aviso no HUD. O que os canhões caídos abrem (os dentes de baixo) é regra do próprio Guardião → [06](06-chefe-e-runs.md) |
 
 Os dois ficam no `ComboTracker`; as regras, em `CrossfireRule` e `SynchronizedStrikeRule` (Core, com testes).
 Além do aviso no HUD → [07](07-controles-e-interface.md), ambos acionam **Convergência Temporal** no ponto
@@ -110,12 +114,10 @@ do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso c
 toca um efeito sonoro curto próprio → [08](08-direcao-visual-e-sonora.md).
 
 Os tamanhos das janelas são **valores de partida**, generosos de propósito (o §16 pede janelas de
-sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike, o mesmo da
-janela curta da fase 3 do Guardião. Falta validar jogando.
+sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike. Falta validar jogando.
 
-*Por quê:* derrubar os geradores sem o eco ainda abre o núcleo, se o jogador for rápido o bastante
-(pergunta em aberto em [06](06-chefe-e-runs.md)). O Synchronized Strike não muda essa regra: ele reconhece e
-premia quando a abertura veio da nave e do eco juntos.
+*Por quê:* derrubar os dois canhões só com a nave abre os dentes de baixo do mesmo jeito. O Synchronized Strike não muda
+essa regra: ele reconhece e premia quando as duas quedas vieram da nave e do eco juntos.
 
 ## Pontuação por habilidade
 
@@ -127,8 +129,9 @@ O jogo pode premiar:
 
 A pontuação **não é necessária** para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.
 
-No protótipo atual a pontuação é **100 por inimigo abatido**, **250 por gerador do Guardião**, **5000 pelo núcleo**,
-**100 por Crossfire** e **1000 por Synchronized Strike**, como placeholder. Dos prêmios acima, só os combos temporais
+No protótipo atual a pontuação é o valor de cada inimigo abatido (**100 a 350**; quem explode sozinho não paga), **150 pela antena**,
+**250 pelos olhos e por cada canhão** e **2500 por cada conjunto de dentes** do Guardião, **100 por Crossfire** e
+**1000 por Synchronized Strike**, como placeholder. Dos prêmios acima, só os combos temporais
 existem. A tela de vitória mostra quantos combos o jogador fez.
 
 ## Perguntas em aberto
@@ -138,6 +141,7 @@ existem. A tela de vitória mostra quantos combos o jogador fez.
 - [ ] Combos temporais: Crossfire e Synchronized Strike implementados; falta Reflect Chain, que depende do escudo refletor (expansão). Trap Bait e Double Pulse saíram com as armadilhas.
 - [ ] Tamanho da "janela curta" de Crossfire e Synchronized Strike: o protótipo usa 1 s e 2,5 s como valores de partida (§16 pede janelas generosas no começo). Falta validar jogando.
 - [ ] Crossfire: o bônus (+3 de dano combinado) e o intervalo de 1 s antes de o mesmo alvo dar outro combo são valores de partida, não vêm do v0.1.
-- [ ] Synchronized Strike: deve ser a **única** forma de abrir o núcleo (o que responderia à pergunta dos geradores sem regeneração em [06](06-chefe-e-runs.md)), ou continua só reconhecendo e premiando a abertura feita com o eco?
+- [ ] Synchronized Strike: hoje só avisa e premia, porque as peças do Guardião não têm mais janela. Ele deveria fazer algo na luta (por exemplo, dano nos dentes de baixo)?
+- [ ] Esquiva: 0,4 s, 3,6 u, recarga de 0,8 s e as teclas (F, botão direito do mouse, A) são valores de partida. Falta um indicador da recarga no HUD.
 - [ ] Hitbox da nave menor que a arte, como é comum em shmups: confirmar o tamanho jogando.
 - [ ] Feedback próprio de cada combo: o protótipo só tem o aviso no HUD; faltam o som exclusivo e um efeito no mundo → [08](08-direcao-visual-e-sonora.md).

@@ -110,39 +110,51 @@
   <header>
     <h2 id="h02"><span class="n">02</span>Loop e eco temporal</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost) · <code>docs/gdd/02-eco-temporal.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost, EchoConfig, DodgeModel) · <code>docs/gdd/02-eco-temporal.md</code></p>
   </header>
   <p class="summary">O loop central do jogo e o sistema que o sustenta: o que é gravado, como o eco nasce e as regras que o mantêm previsível.</p>
   <section class="part"><h3>Core gameplay loop</h3>
     <p>O jogo gira em torno de aprender os padrões, gravar ações úteis e usá-las para criar oportunidades de ataque.</p>
-    <figure><img src="img/loop.svg" alt="Avançar, gravar, invocar o eco, criar combos, derrotar o chefe." width="800" height="260" loading="lazy"></figure>
+    <figure><img src="img/loop.svg" alt="Core loop: avançar, plantar a âncora, retornar com o eco, criar combos, derrotar o chefe" width="800" height="260" loading="lazy"></figure>
+    <div class="scroll"><table><thead><tr><th>Passo</th><th>O jogador…</th></tr></thead><tbody>
+      <tr><th scope="row"><strong>Avançar</strong></th><td>desvia, atira e lê os inimigos</td></tr>
+      <tr><th scope="row"><strong>Plantar âncora</strong></th><td>segura o botão: marca o retorno e registra movimento, tiros, gadgets e esquivas</td></tr>
+      <tr><th scope="row"><strong>Retornar</strong></th><td>solta o botão: leva a nave à âncora e solta o eco para reproduzir as ações</td></tr>
+      <tr><th scope="row"><strong>Criar combos</strong></th><td>combina nave + eco + gadget</td></tr>
+      <tr><th scope="row"><strong>Derrotar o chefe</strong></th><td>usa o conhecimento adquirido</td></tr>
+</tbody></table></div>
   </section>
   <section class="part"><h3>O que o jogador grava</h3>
-    <p>O sistema registra uma sequência de ações da nave numa janela de <strong>cinco segundos</strong>.</p>
+    <p>O sistema registra uma sequência de ações da nave numa janela de <strong>até 3,5 segundos</strong>.</p>
     <div class="scroll"><table><thead><tr><th>Dado</th><th>Comportamento</th></tr></thead><tbody>
       <tr><th scope="row">Posição</th><td>A posição da nave ao longo do tempo</td></tr>
       <tr><th scope="row">Mira e inclinação</th><td>A direção apontada pelo mouse e a inclinação visual da nave</td></tr>
       <tr><th scope="row">Disparos</th><td>Instante, tipo e direção de cada tiro</td></tr>
       <tr><th scope="row">Gadgets</th><td>Momento e direção de uso</td></tr>
-      <tr><th scope="row">Duração</th><td>5 segundos por gravação</td></tr>
+      <tr><th scope="row">Esquivas</th><td>Instante e direção de cada esquiva; o eco repete o giro → <a href="#c03">03</a></td></tr>
+      <tr><th scope="row">Duração</th><td>Até 3,5 segundos por gravação</td></tr>
       <tr><th scope="row">Reprodução</th><td>Uma cópia independente repete a sequência</td></tr>
-      <tr><th scope="row">Limite</th><td>Até 3 ecos ativos no protótipo</td></tr>
-    </tbody></table></div>
+      <tr><th scope="row">Limite</th><td>1 eco ativo nesta primeira versão</td></tr>
+</tbody></table></div>
     <p>A gravação <strong>não é um replay de vídeo</strong>: é uma lista de dados que permite reproduzir os eventos da nave → <a href="#c09">09</a>.</p>
   </section>
   <section class="part"><h3>Ciclo de gravação</h3>
-    <figure><img src="img/echo-recording.svg" alt="Linha do tempo de uma gravação de 5 segundos e sua reprodução." width="800" height="330" loading="lazy"></figure>
+    <figure><img src="img/echo-recording.svg" alt="Linha do tempo de uma gravação e sua reprodução" width="800" height="330" loading="lazy"></figure>
     <ol class="steps">
-      <li><span>O jogador <strong>segura <kbd class="rec">Shift</kbd></strong>: a gravação começa.</span></li>
-      <li><span>O jogo armazena até 5 segundos de movimento e eventos.</span></li>
-      <li><span>Ao <strong>soltar</strong>, a sequência fica pronta.</span></li>
-      <li><span>O jogador <strong>aperta <kbd class="echo">E</kbd></strong> para invocar o eco.</span></li>
-      <li><span>O eco é uma nave fantasma que começa no ponto inicial gravado e executa a sequência na mesma ordem.</span></li>
-      <li><span>Depois da reprodução o eco desaparece — a menos que uma habilidade permita mantê-lo ativo.</span></li>
+      <li><span>O jogador <strong>segura Shift</strong>: planta a âncora e a gravação começa.</span></li>
+      <li><span>Uma sombra violeta segue a nave com pequeno atraso. Ela é somente uma prévia visual: não atira e não colide.</span></li>
+      <li><span>O jogo armazena até 3,5 segundos de movimento, mira, tiros, gadgets e esquivas; a rota fica desenhada no campo.</span></li>
+      <li><span>O jogador <strong>solta Shift</strong>, ou o tempo se esgota. É ele quem decide quando encerrar: gravar mais é arriscar mais longe da âncora.</span></li>
+      <li><span>A nave retorna instantaneamente à âncora, <strong>faz o giro da esquiva e fica 0,4 s sem tomar dano</strong>, e a sombra volta para o início da rota.</span></li>
+      <li><span>O eco executa a sequência na mesma ordem enquanto o jogador age livremente a partir da âncora.</span></li>
+      <li><span>Depois da reprodução o eco desaparece e a habilidade respeita 2 segundos de recarga.</span></li>
     </ol>
-    <p style="margin-top:14px">Durante a reprodução o jogador continua controlando a nave atual e pode gravar uma nova sequência. A gravação tem um <strong>indicador visual de tempo restante</strong>, para o jogador planejar sem olhar o tempo todo para a interface → <a href="#c07">07</a>.</p>
+    <p>Soltar Shift antes de 0,25 s cancela a gravação: sem eco e sem recarga.</p>
+    <p>Durante a reprodução o jogador continua controlando a nave atual, mas só planta outra âncora quando o eco termina e a recarga está pronta.</p>
+    <p class="why"><em>Por quê:</em> segurar o botão dá ao jogador o controle de quando voltar. A volta é também uma esquiva: o mesmo giro e a mesma janela sem dano da esquiva comum, para ele sair do aperto com a gravação.</p>
+    <p>A gravação tem um <strong>indicador visual de tempo restante</strong>, para o jogador planejar sem olhar o tempo todo para a interface → <a href="#c07">07</a>.</p>
   </section>
-  <section class="part" id="regra-fundamental"><h3>Regra fundamental</h3>
+  <section class="part"><h3>Regra fundamental</h3>
     <div class="rule"><span class="osd">O mundo não rebobina</span>O eco <strong>reproduz as ações, mas não restaura o estado do mundo.</strong> Inimigos mortos não voltam, projéteis destruídos não reaparecem.</div>
     <p class="why"><em>Por quê:</em> evita a complexidade de rebobinar a simulação inteira e torna o sistema mais previsível.</p>
   </section>
@@ -155,25 +167,30 @@
       <tr><th scope="row">Recebe dano?</th><td>Não, de projéteis comuns (no protótipo)</td></tr>
       <tr><th scope="row">Usa gadgets?</th><td>Sim, e obedece às regras de cada gadget</td></tr>
       <tr><th scope="row">Quantos ao mesmo tempo?</th><td>Limitado, para a tela não ficar ilegível</td></tr>
-    </tbody></table></div>
+</tbody></table></div>
   </section>
   <section class="part"><h3>No protótipo atual</h3>
     <div class="scroll"><table><thead><tr><th>Regra</th><th>Como está implementado</th></tr></thead><tbody>
       <tr><th scope="row">Espaço da gravação</th><td>Posições relativas à <strong>tela</strong> (o playfield que rola), não ao mundo: o eco refaz o mesmo trajeto na tela mesmo com a câmera avançando</td></tr>
-      <tr><th scope="row">Uma gravação por eco</th><td>Invocar consome a gravação; para outro eco, grave de novo (<code>EchoConfig.consumeRecordingOnInvoke</code>, ligado)</td></tr>
-      <tr><th scope="row">Limite de 5 s</th><td>A gravação para sozinha em 5 s; para começar outra é preciso soltar Shift</td></tr>
-      <tr><th scope="row">Ecos ao mesmo tempo</th><td>Até 3 (<code>EchoConfig.maxActiveEchoes</code>)</td></tr>
+      <tr><th scope="row">Um botão</th><td>Shift <strong>segurado</strong> planta a âncora e grava; soltar retorna. Soltar antes de 0,25 s (<code>EchoConfig.minRecordSeconds</code>) cancela, sem eco e sem recarga. E fica apenas como alias temporário de compatibilidade durante a gravação e não aparece no HUD</td></tr>
+      <tr><th scope="row">Retorno</th><td>Volta só a posição da nave; não cura e não restaura o mundo. Concede <strong>0,4 s de invulnerabilidade</strong>, com o giro da esquiva (<code>ShipMotor.PlayRoll</code>), e apaga projéteis inimigos num raio de 1,6 unidade ao redor da âncora</td></tr>
+      <tr><th scope="row">Limite de 3,5 s</th><td>Ao completar a janela, o retorno acontece automaticamente, como se o botão fosse solto</td></tr>
+      <tr><th scope="row">Prévia</th><td>Uma cópia inofensiva segue a nave com 0,18 s de atraso, acompanhada por âncora pulsante e rastro da rota</td></tr>
+      <tr><th scope="row">Ecos ao mesmo tempo</th><td>1 (<code>EchoConfig.maxActiveEchoes</code>), para o sincronismo ficar legível</td></tr>
+      <tr><th scope="row">Recarga</th><td>2 s a partir do retorno; uma nova âncora também espera o eco atual terminar</td></tr>
       <tr><th scope="row">Corpo do eco</th><td>Sem colisor e sem vida: não bloqueia a nave nem recebe dano</td></tr>
       <tr><th scope="row">Entrada e saída</th><td>O eco aparece e some com um fade de 0,2 s</td></tr>
       <tr><th scope="row">Mira</th><td>A direção é amostrada junto da pose; o eco gira para a mira gravada e cada tiro usa sua direção registrada</td></tr>
       <tr><th scope="row">Gadget</th><td>O uso da mina temporal entra na gravação (<code>EchoEventType.Gadget</code>); o eco solta a mina no mesmo ponto e instante → <a href="#c05">05</a></td></tr>
-    </tbody></table></div>
+      <tr><th scope="row">Esquiva</th><td>A esquiva entra na gravação (<code>EchoEventType.Dodge</code>): o eco gira, no mesmo instante e pelo mesmo tempo, enquanto o deslocamento vem das poses gravadas. O giro é só visual; o eco continua sem colisor</td></tr>
+</tbody></table></div>
     <p class="why"><em>Por quê:</em> num side-scroller a tela anda o tempo todo; gravar em coordenadas do mundo deixaria o eco para trás, fora da tela, poucos segundos depois.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".</span></li>
-    <li><span>Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional. O protótipo já suporta 3. <a href="#c10">→ 10</a></span></li>
-    <li><span>Manter a gravação consumida a cada invocação, ou permitir reinvocar a mesma gravação?</span></li>
+    <li><span>Soltar o botão volta a nave sem custo além da recarga de 2 s: o mínimo de 0,25 s e os 0,4 s sem dano do retorno são valores de partida.</span></li>
+    <li class="done"><span>Ecos simultâneos no MVP: a primeira versão usa um eco ativo para privilegiar leitura e intenção. Mais ecos ficam como expansão → <a href="#c10">10</a>.</span></li>
+    <li class="done"><span>A rota é consumida no retorno; cada eco exige uma nova âncora e uma nova rota.</span></li>
   </ul></div>
 </section>
 
@@ -182,22 +199,16 @@
   <header>
     <h2 id="h03"><span class="n">03</span>Combate</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Enemy_S, Enemy_M; ComboTracker, CrossfireRule, SynchronizedStrikeRule) · <code>docs/gdd/03-combate.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Enemy_S, Enemy_M; ShipMotor, DodgeModel; ComboTracker, CrossfireRule, SynchronizedStrikeRule) · <code>docs/gdd/03-combate.md</code></p>
   </header>
   <p class="summary">O que a nave do jogador faz, os tipos de dano, os combos temporais e o que a pontuação premia.</p>
   <section class="part"><h3>Nave do jogador</h3>
-    <ul class="clean">
-      <li>Movimento em <strong>oito direções</strong> dentro da área jogável, independente da mira.</li>
-      <li><strong>Mira livre com o mouse</strong>: a nave aponta para o cursor e mostra uma linha curta com retículo na direção do tiro.</li>
-      <li><strong>Disparo principal</strong> contínuo na direção da mira.</li>
-      <li>Um <strong>gadget</strong> equipado → <a href="#c05">05</a>.</li>
-      <li>A habilidade de <strong>gravação e reprodução</strong> temporal → <a href="#c02">02</a>.</li>
-      <li>Vida limitada e <strong>invulnerabilidade breve</strong> depois de receber dano.</li>
-    </ul>
+    <p>A nave começa com um conjunto pequeno de ações:</p>
+    <ul class="clean"><li>Movimento em <strong>oito direções</strong> dentro da área jogável, independente da mira.</li><li><strong>Mira livre com o mouse</strong>: a nave aponta para o cursor e mostra uma linha curta com retículo na direção do tiro.</li><li><strong>Disparo principal</strong> contínuo na direção da mira.</li><li><strong>Esquiva</strong>: uma rajada de velocidade na direção do movimento (parada, a nave gira no lugar), com um giro completo em volta do nariz. Dura <strong>0,4 s</strong>, cobre 3,6 u e deixa a nave <strong>sem tomar dano</strong> enquanto dura (<code>DodgeModel</code>). O comando segue guiando de leve durante o giro, e há <strong>0,8 s de recarga</strong> depois. O retorno do eco termina com o mesmo giro e a mesma janela sem dano → <a href="#c02">02</a>.</li><li>Um <strong>gadget</strong> equipado → <a href="#c05">05</a>.</li><li>A habilidade de <strong>gravação e reprodução</strong> temporal → <a href="#c02">02</a>.</li><li>Vida limitada e <strong>invulnerabilidade breve</strong> depois de receber dano.</li></ul>
     <p>O jogador atira enquanto se move. O foco é esquivar e se posicionar, não alternar o tempo todo entre movimento e ataque.</p>
     <p>A rotação acontece apenas no filho visual: o collider e o movimento continuam alinhados ao plano de jogo. O tiro usa a direção exata do cursor; a suavização curta afeta somente a apresentação da nave, para não adicionar atraso à resposta do disparo.</p>
     <p>Cada tiro confirma a ação em quatro camadas curtas: o retículo pulsa e avança, o pivô visual recua sem mover a hitbox, o canhão solta um flash ciano reutilizável e o Feel aplica squash-and-stretch na nave. O retículo tem uma respiração discreta e segue a direção com suavização visual, mas a trajetória continua usando a mira exata. O eco repete a rotação gravada, o recoil e o flash para preservar a leitura temporal.</p>
-    <p>Acertos aceitos piscam rapidamente o alvo e soltam faíscas na cor da origem: ciano para a nave e violeta para o eco. Escudos respondem com uma deflexão azul mesmo quando bloqueiam todo o dano. A destruição deixa uma explosão e um anel expansivo depois que o objeto sai da cena; inimigos resistentes, geradores, núcleo e nave usam escalas progressivamente maiores. A câmera recebe impulsos curtos e limitados por importância: quase imperceptíveis no tiro comum, claros ao sofrer dano e fortes só em destruições relevantes.</p>
+    <p>Acertos aceitos piscam rapidamente o alvo e soltam faíscas na cor da origem: ciano para a nave e violeta para o eco. Escudos respondem com uma deflexão azul mesmo quando bloqueiam todo o dano. A destruição deixa uma explosão e um anel expansivo depois que o objeto sai da cena; inimigos resistentes, peças e dentes do Guardião e nave usam escalas progressivamente maiores. Um inimigo que explode mostra o raio da explosão num anel laranja. A câmera recebe impulsos curtos e limitados por importância: quase imperceptíveis no tiro comum, claros ao sofrer dano e fortes só em destruições relevantes.</p>
   </section>
   <section class="part"><h3>Valores de partida no protótipo</h3>
     <div class="scroll"><table><thead><tr><th>Item</th><th>Valor</th><th>Onde mudar</th></tr></thead><tbody>
@@ -206,50 +217,55 @@
       <tr><th scope="row">Velocidade da nave</th><td>9 u/s</td><td><code>PlayerShip</code> → <code>ShipMotor</code></td></tr>
       <tr><th scope="row">Disparo principal</th><td>10 tiros/s, dano 1; segue a mira livre, com pulso do retículo, recoil, flash e squash</td><td><code>PlayerShip</code> → <code>ShipWeapon</code>, <code>ShipAim</code>, <code>ShipFireFeedback</code>, <code>Shot_Ship</code></td></tr>
       <tr><th scope="row">Hitbox da nave</th><td>caixa de 1,4 × 0,9 u no plano de jogo, em volta do disco e da cabine; menor que a arte (aletas, ponta da cúpula e canhões ficam de fora)</td><td><code>PlayerShip</code> → <code>BoxCollider</code></td></tr>
-      <tr><th scope="row">Caça (S)</th><td>1 de vida, 100 pontos; 1 tiro mirado</td><td><code>Enemy_S</code> → <a href="#c04">04</a></td></tr>
-      <tr><th scope="row">Artilheiro (M)</th><td>20 de vida, 300 pontos; leques de 3 tiros</td><td><code>Enemy_M</code> → <a href="#c04">04</a></td></tr>
+      <tr><th scope="row">Esquiva</th><td>0,4 s sem dano, 3,6 u, recarga de 0,8 s; 30% do comando ainda guia a nave durante o giro</td><td><code>PlayerShip</code> → <code>ShipMotor</code></td></tr>
+      <tr><th scope="row">Caça (S)</th><td>2 a 3 de vida, 100 a 150 pontos; um comportamento por modelo (kamikaze, veloz, rajada curta)</td><td><code>Enemy_S</code> → <a href="#c04">04</a></td></tr>
+      <tr><th scope="row">Artilheiro (M)</th><td>18 a 30 de vida, 250 a 350 pontos; um comportamento por modelo (tanque, rajada, escopeta)</td><td><code>Enemy_M</code> → <a href="#c04">04</a></td></tr>
       <tr><th scope="row">Inimigo que bate na nave</th><td>1 de dano</td><td><code>ContactDamage</code></td></tr>
+      <tr><th scope="row">Explosão de kamikaze e de tanque</th><td>1 e 2 de dano num raio de 1,7 e 3,8 u; a esquiva atravessa</td><td><code>Enemy</code> → <a href="#c04">04</a></td></tr>
       <tr><th scope="row">Mina temporal</th><td>4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s</td><td><code>TimeMine_Ship</code>, <code>TimeMine_Echo</code>, <code>PlayerShip</code> → <code>ShipGadget</code></td></tr>
-      <tr><th scope="row">Tiros inimigos (caça, interceptador, artilheiro, Guardião)</th><td>1 de dano, 9,5 u/s</td><td><code>Shot_Enemy</code></td></tr>
-      <tr><th scope="row">Guardião</th><td>núcleo 120 de vida, geradores 12</td><td><code>Guardian</code> → <a href="#c06">06</a></td></tr>
+      <tr><th scope="row">Tiros inimigos (interceptador, Guardião)</th><td>1 de dano, 9,5 u/s</td><td><code>Shot_Enemy</code></td></tr>
+      <tr><th scope="row">Tiros dos modelos de caça e artilheiro</th><td>1 de dano; tamanho e velocidade próprios (8 a 12,5 u/s)</td><td><code>Shot_Enemy_Fast</code>, <code>_Slow</code>, <code>_Heavy</code>, <code>_Pellet</code></td></tr>
+      <tr><th scope="row">Guardião</th><td>antena 14, olhos 24, canhões 20, dentes 45 de vida</td><td><code>Guardian</code> → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Crossfire</th><td>janela de 1 s entre o acerto da nave e o do eco; +3 de dano combinado; o mesmo alvo só dá outro Crossfire depois de 1 s</td><td><code>ComboTracker</code> (cena, em <code>Systems</code>)</td></tr>
-      <tr><th scope="row">Synchronized Strike</th><td>janela de 2,5 s entre a queda dos dois geradores</td><td><code>ComboTracker</code></td></tr>
-    </tbody></table></div>
+      <tr><th scope="row">Synchronized Strike</th><td>janela de 2,5 s entre a queda dos dois canhões</td><td><code>ComboTracker</code></td></tr>
+</tbody></table></div>
     <p class="muted small">Valores para testar, não definitivos.</p>
   </section>
   <section class="part"><h3>Tipos de dano</h3>
     <div class="scroll"><table><thead><tr><th>Tipo</th><th>Origem</th></tr></thead><tbody>
-      <tr><th scope="row"><span class="chip you">Direto</span></th><td>Tiros convencionais da nave</td></tr>
-      <tr><th scope="row"><span class="chip st">De gadget</span></th><td>Minas, pulsos ou ataques especiais</td></tr>
-      <tr><th scope="row"><span class="chip echo">Combinado</span></th><td>Efeitos especiais ativados quando as ações da nave atual e do eco coincidem</td></tr>
-    </tbody></table></div>
-    <p>O código também marca o dano de <strong>contato</strong> (um inimigo que bate na nave), que o GDD v0.1 não lista. O protótipo separa os tiros da nave dos tiros do eco (<code>ShotSource</code>), e é isso que os combos usam. O dano de gadget é o da mina temporal → <a href="#c05">05</a>. O dano combinado é o bônus do Crossfire.</p>
+      <tr><th scope="row"><strong>Direto</strong></th><td>Tiros convencionais da nave</td></tr>
+      <tr><th scope="row"><strong>De gadget</strong></th><td>Minas, pulsos ou ataques especiais</td></tr>
+      <tr><th scope="row"><strong>Combinado</strong></th><td>Efeitos especiais ativados quando as ações da nave atual e do eco coincidem</td></tr>
+</tbody></table></div>
+    <p>Só três categorias, para simplificar o protótipo. O código também marca o dano de <strong>contato</strong> (um inimigo que bate na nave), que o GDD v0.1 não lista.</p>
+    <p>O protótipo separa os tiros da nave dos tiros do eco (<code>ShotSource</code>), e é isso que os combos usam. O dano de gadget é o da mina temporal → <a href="#c05">05</a>. O dano combinado é o bônus do Crossfire.</p>
   </section>
   <section class="part"><h3>Combos temporais</h3>
     <p>Os combos são <strong>eventos específicos</strong> que o jogo reconhece, não multiplicadores genéricos.</p>
-    <figure><img src="img/combos.svg" alt="Os três combos temporais." width="800" height="300" loading="lazy"></figure>
+    <figure><img src="img/combos.svg" alt="Os três combos temporais" width="800" height="300" loading="lazy"></figure>
     <div class="scroll"><table><thead><tr><th>Combo</th><th>Condição</th><th>Resultado</th></tr></thead><tbody>
-      <tr><th scope="row">Crossfire</th><td>Nave atual e eco acertam o mesmo alvo numa janela curta</td><td>Dano adicional</td></tr>
-      <tr><th scope="row">Reflect Chain</th><td>Um projétil ricocheteia em escudos posicionados em sequência</td><td>Dano elevado ao alvo</td></tr>
-      <tr><th scope="row">Synchronized Strike</th><td>Dois pontos fracos são atingidos quase ao mesmo tempo</td><td>Escudo do chefe desativado</td></tr>
-    </tbody></table></div>
+      <tr><th scope="row"><strong>Crossfire</strong></th><td>Nave atual e eco acertam o mesmo alvo numa janela curta</td><td>Dano adicional</td></tr>
+      <tr><th scope="row"><strong>Reflect Chain</strong></th><td>Um projétil ricocheteia em escudos posicionados em sequência</td><td>Dano elevado ao alvo</td></tr>
+      <tr><th scope="row"><strong>Synchronized Strike</strong></th><td>Dois pontos fracos são atingidos quase ao mesmo tempo</td><td>Escudo do chefe desativado (v0.1; no protótipo, só pontos e aviso)</td></tr>
+</tbody></table></div>
     <p class="muted small"><strong>Trap Bait</strong> (o eco atrai inimigos para uma armadilha) e <strong>Double Pulse</strong> (dois pulsos em mecanismos conectados) saíram junto com as armadilhas e os mecanismos do cenário.</p>
     <p>Cada combo tem <strong>feedback visual e sonoro próprio</strong> → <a href="#c08">08</a>.</p>
     <p class="why"><em>Por quê:</em> o jogador precisa entender por que a combinação funcionou — é assim que ele aprende a repeti-la.</p>
     <h4>No protótipo atual</h4>
     <p>Dois dos três combos existem: <strong>Crossfire</strong> e <strong>Synchronized Strike</strong>. Os dois partem de acertos reais da nave e do eco: um tiro ou uma mina conta para quem o disparou, a nave atual ou um eco.</p>
     <div class="scroll"><table><thead><tr><th>Combo</th><th>Como o jogo reconhece</th><th>Resultado</th></tr></thead><tbody>
-      <tr><th scope="row">Crossfire</th><td>A nave e um eco acertam o <strong>mesmo alvo</strong> (inimigo, gerador ou núcleo do Guardião) com até <strong>1 s</strong> de diferença. Dois acertos da mesma fonte não contam. Cada par de acertos dá um combo só, e o mesmo alvo só dá outro depois de 1 s</td><td><strong>+3 de dano combinado</strong> no alvo, se ele ainda estiver vivo, e <strong>100 pontos</strong></td></tr>
-      <tr><th scope="row">Synchronized Strike</th><td>Os dois geradores do Guardião caem com até <strong>2,5 s</strong> de diferença, <strong>um derrubado pela nave e o outro por um eco</strong>, e o núcleo fica vulnerável</td><td>O <strong>escudo do núcleo cai</strong>, pela regra do próprio Guardião → <a href="#c06">06</a>, e <strong>1000 pontos</strong></td></tr>
-    </tbody></table></div>
+      <tr><th scope="row"><strong>Crossfire</strong></th><td>A nave e um eco acertam o <strong>mesmo alvo</strong> (inimigo ou peça do Guardião) com até <strong>1 s</strong> de diferença. Dois acertos da mesma fonte não contam. Cada par de acertos dá um combo só, e o mesmo alvo só dá outro depois de 1 s</td><td><strong>+3 de dano combinado</strong> no alvo, se ele ainda estiver vivo, e <strong>100 pontos</strong></td></tr>
+      <tr><th scope="row"><strong>Synchronized Strike</strong></th><td>Os dois canhões do Guardião caem com até <strong>2,5 s</strong> de diferença, <strong>um derrubado pela nave e o outro por um eco</strong></td><td><strong>1000 pontos</strong> e o aviso no HUD. O que os canhões caídos abrem (os dentes de baixo) é regra do próprio Guardião → <a href="#c06">06</a></td></tr>
+</tbody></table></div>
     <p>Os dois ficam no <code>ComboTracker</code>; as regras, em <code>CrossfireRule</code> e <code>SynchronizedStrikeRule</code> (Core, com testes). Além do aviso no HUD → <a href="#c07">07</a>, ambos acionam <strong>Convergência Temporal</strong> no ponto do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso curto de câmera. Cada combo toca um efeito sonoro curto próprio → <a href="#c08">08</a>.</p>
-    <p>Os tamanhos das janelas são <strong>valores de partida</strong>, generosos de propósito (o §16 pede janelas de sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike, o mesmo da janela curta da fase 3 do Guardião. Falta validar jogando.</p>
-    <p class="why"><em>Por quê:</em> derrubar os geradores sem o eco ainda abre o núcleo, se o jogador for rápido o bastante (pergunta em aberto em <a href="#c06">06</a>). O Synchronized Strike não muda essa regra: ele reconhece e premia quando a abertura veio da nave e do eco juntos.</p>
+    <p>Os tamanhos das janelas são <strong>valores de partida</strong>, generosos de propósito (o §16 pede janelas de sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike. Falta validar jogando.</p>
+    <p class="why"><em>Por quê:</em> derrubar os dois canhões só com a nave abre os dentes de baixo do mesmo jeito. O Synchronized Strike não muda essa regra: ele reconhece e premia quando as duas quedas vieram da nave e do eco juntos.</p>
   </section>
   <section class="part"><h3>Pontuação por habilidade</h3>
+    <p>O jogo pode premiar:</p>
     <ul class="clean"><li>Combos temporais.</li><li>Sequências sem sofrer dano.</li><li>Sincronizações precisas.</li></ul>
     <p>A pontuação <strong>não é necessária</strong> para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.</p>
-    <p class="muted small">No protótipo atual a pontuação é <strong>100 por inimigo abatido</strong>, <strong>250 por gerador do Guardião</strong>, <strong>5000 pelo núcleo</strong>, <strong>100 por Crossfire</strong> e <strong>1000 por Synchronized Strike</strong>, como placeholder. Dos prêmios acima, só os combos temporais existem. A tela de vitória mostra quantos combos o jogador fez.</p>
+    <p class="muted small">No protótipo atual a pontuação é o valor de cada inimigo abatido (<strong>100 a 350</strong>; quem explode sozinho não paga), <strong>150 pela antena</strong>, <strong>250 pelos olhos e por cada canhão</strong> e <strong>2500 por cada conjunto de dentes</strong> do Guardião, <strong>100 por Crossfire</strong> e <strong>1000 por Synchronized Strike</strong>, como placeholder. Dos prêmios acima, só os combos temporais existem. A tela de vitória mostra quantos combos o jogador fez.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Valores de vida, dano e invulnerabilidade: os de partida estão na tabela acima; falta validar jogando.</span></li>
@@ -257,7 +273,8 @@
     <li><span>Combos temporais: Crossfire e Synchronized Strike implementados; falta Reflect Chain, que depende do escudo refletor (expansão). Trap Bait e Double Pulse saíram com as armadilhas.</span></li>
     <li><span>Tamanho da "janela curta" de Crossfire e Synchronized Strike: o protótipo usa 1 s e 2,5 s como valores de partida (§16 pede janelas generosas no começo). Falta validar jogando.</span></li>
     <li><span>Crossfire: o bônus (+3 de dano combinado) e o intervalo de 1 s antes de o mesmo alvo dar outro combo são valores de partida, não vêm do v0.1.</span></li>
-    <li><span>Synchronized Strike: deve ser a <strong>única</strong> forma de abrir o núcleo (o que responderia à pergunta dos geradores sem regeneração em <a href="#c06">06</a>), ou continua só reconhecendo e premiando a abertura feita com o eco?</span></li>
+    <li><span>Synchronized Strike: hoje só avisa e premia, porque as peças do Guardião não têm mais janela. Ele deveria fazer algo na luta (por exemplo, dano nos dentes de baixo)?</span></li>
+    <li><span>Esquiva: 0,4 s, 3,6 u, recarga de 0,8 s e as teclas (F, botão direito do mouse, A) são valores de partida. Falta um indicador da recarga no HUD.</span></li>
     <li><span>Hitbox da nave menor que a arte, como é comum em shmups: confirmar o tamanho jogando.</span></li>
     <li><span>Feedback próprio de cada combo: o protótipo só tem o aviso no HUD; faltam o som exclusivo e um efeito no mundo → <a href="#c08">08</a>.</span></li>
   </ul></div>
@@ -268,66 +285,71 @@
   <header>
     <h2 id="h04"><span class="n">04</span>Inimigos e ondas</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project (Enemy_S, Enemy_W, Enemy_M, Enemy, EnemyGun, ModelVariants, SwoopMotion, SerpentineMotion, HoverMotion, FireCycle; Data/Waves/Encounter01_PrimeiroCiclo.asset) · <code>docs/gdd/04-inimigos-e-ondas.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project (Enemy_S, Enemy_W, Enemy_M, Enemy, EnemyProfile, EnemyGun, ModelVariants, SwoopMotion, SerpentineMotion, HoverMotion, ChaseMotion, BlastFuse, Interception, FireCycle; Data/Waves/Encounter01_PrimeiroCiclo.asset) · <code>docs/gdd/04-inimigos-e-ondas.md</code></p>
   </header>
   <p class="summary">Quem a nave enfrenta, como cada inimigo conversa com o eco, e como as ondas entram na tela.</p>
   <p>Os inimigos surgem durante o avanço da fase, entrando pela direita (e às vezes por cima ou por baixo). Em vez de spawn aleatório, cada encontro segue uma <strong>lista de ondas com tempo e posição definidos</strong>.</p>
   <p class="why"><em>Por quê:</em> o jogador aprende o padrão e consegue planejar o que gravar no eco.</p>
   <section class="part"><h3>Tipos de inimigo</h3>
-    <figure><img src="img/enemies.svg" alt="Caça mergulhando, interceptador em senoide, artilheiro disparando leques e torreta planejada." width="800" height="250" loading="lazy"></figure>
+    <figure><img src="img/enemies.svg" alt="Os tipos de inimigo e seus movimentos" width="800" height="250" loading="lazy"></figure>
     <div class="scroll"><table><thead><tr><th>Inimigo</th><th>Comportamento</th><th>Papel com o eco</th></tr></thead><tbody>
-      <tr><th scope="row">Caça (S, pequeno)</th><td>Entra em fila pela direita, em linha reta. Num ponto da tela mergulha para a altura em que a nave está naquele momento, avisa com um brilho e dispara <strong>um</strong> tiro mirado; depois segue e sai pela esquerda</td><td>Como mergulha atrás da nave, dá para puxar a fila para a linha de tiro do eco</td></tr>
-      <tr><th scope="row">Interceptador (W, pequeno)</th><td>Cruza a arena numa senoide, alternando a altura dos membros da formação. Atira rajadas de <strong>2 tiros</strong> enquanto atravessa</td><td>Fecha corredores retos e obriga a nave a reposicionar a mira; o eco consegue cobrir a faixa oposta</td></tr>
-      <tr><th scope="row">Artilheiro (M, médio)</th><td>Entra, freia e segura uma posição à direita, oscilando de forma ampla. A cada rajada avisa com um brilho e dispara um <strong>leque de 5 tiros</strong> mirados; depois de um tempo acelera e sai pela esquerda</td><td>Resistente e móvel: alvo natural de Crossfire enquanto sustenta pressão na tela</td></tr>
-      <tr><th scope="row">Torreta <em>(planejada)</em></th><td>Parada no cenário, atira na direção da nave</td><td>Exige que nave e eco ataquem de posições diferentes</td></tr>
-    </tbody></table></div>
+      <tr><th scope="row"><strong>Caça</strong> (S, pequeno)</th><td>Entra em fila pela direita, em linha reta. Num ponto da tela mergulha para a altura em que a nave está naquele momento, avisa com um brilho e atira; depois segue e sai pela esquerda. <strong>Cada um dos três modelos é um comportamento diferente</strong> (abaixo)</td><td>Como mergulha atrás da nave, dá para puxar a fila para a linha de tiro do eco</td></tr>
+      <tr><th scope="row"><strong>Interceptador</strong> (W, pequeno)</th><td>Cruza a arena numa senoide, alternando a altura dos membros da formação. Atira rajadas de <strong>2 tiros</strong> enquanto atravessa. Usa só os modelos 2 e 3 do caça, nunca o do kamikaze</td><td>Fecha corredores retos e obriga a nave a reposicionar a mira; o eco consegue cobrir a faixa oposta</td></tr>
+      <tr><th scope="row"><strong>Artilheiro</strong> (M, médio)</th><td>Entra, freia e segura uma posição à direita; depois de um tempo acelera e sai pela esquerda. <strong>Cada um dos três modelos é um comportamento diferente</strong> (abaixo)</td><td>Resistente e móvel: alvo natural de Crossfire (nave e eco no mesmo alvo) enquanto sustenta pressão na tela</td></tr>
+      <tr><th scope="row"><strong>Torreta</strong> <em>(planejada)</em></th><td>Parada no cenário, atira na direção da nave</td><td>Exige que nave e eco ataquem de posições diferentes</td></tr>
+</tbody></table></div>
     <p>O GDD v0.1 previa um <strong>drone</strong> (linha reta, sem atirar) e um <strong>ondulante</strong> (zigue-zague em grupos). Em 2026-10-18 o time pediu inimigos melhores e depois uma curva mais frenética. O caça substituiu o drone; o interceptador recuperou o papel ondulante com tiro; e o artilheiro cria pressão persistente, todos com os modelos de blockout do designer → <a href="#c08">08</a>.</p>
-    <p>Cada família visual tem <strong>três variações de modelo</strong>, e cada inimigo sorteia uma ao surgir. Caça e interceptador compartilham a família pequena. A variação muda só o visual: caminho, tiro, vida e pontos são os do tipo, e as ondas continuam por script. A hitbox e o ponto de onde sai o tiro acompanham o modelo sorteado.</p>
-    <p class="why"><em>Por quê:</em> uma fila de caças iguais parece um carimbo; com peças e cabeças diferentes, a onda parece um esquadrão, sem mudar o que o jogador aprende sobre cada tipo.</p>
-    <p>Para a jam, a recomendação do v0.1 era <strong>começar com um tipo</strong> e adicionar os outros só se o núcleo já estivesse divertido; o protótipo tem três.</p>
-    <p class="why"><em>Por quê:</em> os três cobrem pressões complementares: o caça investe contra a linha atual da nave, o interceptador ocupa alturas em movimento e o artilheiro sustenta projéteis enquanto os outros cruzam a tela.</p>
+  </section>
+  <section class="part"><h3>Um comportamento por modelo</h3>
+    <p>Cada família visual tem <strong>três modelos</strong>, e <strong>o modelo decide o que o inimigo faz</strong>: o jogador reconhece a variação pela forma e aprende o que esperar dela. Em 2026-10-18 o designer pediu isso para aumentar a dinâmica dos inimigos e fazer o jogador reconhecer a variação de mecânica. As ondas escolhem o modelo de cada onda (a coluna <code>variant</code> do <code>WaveSchedule</code>; 0 sorteia um por inimigo), e a hitbox e o ponto de onde sai o tiro acompanham o modelo. Cada modelo guarda seu perfil em <code>Enemy</code> → <code>profiles</code> (<code>EnemyProfile</code>), na mesma ordem de <code>ModelVariants</code>.</p>
+    <div class="scroll"><table><thead><tr><th>Modelo</th><th>Nome</th><th>O que faz</th><th>Tiro</th></tr></thead><tbody>
+      <tr><th scope="row"><strong>S_1</strong></th><td><strong>Kamikaze</strong></td><td>Vai atrás da nave a 6,4 u/s, virando no máximo 85°/s, então quem se mexe o faz errar. <strong>Explode</strong> a 1 u da nave ou sozinho 5,5 s depois de entrar; antes disso o brilho pisca. 2 de vida</td><td>Não atira</td></tr>
+      <tr><th scope="row"><strong>S_2</strong></th><td><strong>Veloz</strong></td><td>O mais rápido: mergulha a 9,8 u/s. 2 de vida</td><td>1 tiro <strong>pequeno e rápido</strong> (12,5 u/s) a cada 2,6 s</td></tr>
+      <tr><th scope="row"><strong>S_3</strong></th><td><strong>Rajada curta</strong></td><td>Um pouco mais lento (6,8 u/s). 3 de vida</td><td><strong>Rajada de 3 tiros</strong>, 0,26 s entre eles, a cada 1,7 s, mais cadenciada que a do S_2</td></tr>
+      <tr><th scope="row"><strong>M_1</strong></th><td><strong>Tanque</strong></td><td>Entra e <strong>fica parado como um obstáculo</strong> por 11 s, quase sem oscilar. 30 de vida. Quando a nave chega a 3,4 u, o brilho acende por 0,9 s e ele <strong>explode</strong>: 2 de dano num raio de 3,8 u</td><td>Não atira</td></tr>
+      <tr><th scope="row"><strong>M_2</strong></th><td><strong>Rajada</strong></td><td>Menos veloz que o S_3 e mais que o M_3: oscila 1,4 u a 0,5 Hz. 18 de vida</td><td><strong>Rajadas de 4 tiros pesados</strong>, 0,13 s entre eles, a cada 1,7 s</td></tr>
+      <tr><th scope="row"><strong>M_3</strong></th><td><strong>Escopeta</strong></td><td>O mais lento: oscila 0,7 u a 0,3 Hz. 18 de vida. <strong>Esquiva</strong>: se um tiro da nave ou do eco vai acertá-lo, desvia 2,4 u girando (recarga de 2,2 s)</td><td><strong>Escopeta</strong>: 7 tiros em leque (7° entre eles) de uma vez, a cada 2,3 s</td></tr>
+</tbody></table></div>
+    <p>A ordem de velocidade é S_2 &gt; S_3 &gt; M_2 &gt; M_3. Os tiros ganham tamanho e cor próprios: amarelo e pequeno (S_2), laranja e lento (S_3), vermelho e grande (M_2), magenta e curto (M_3). Todos tiram 1 de vida; a diferença está na cadência, no padrão e na leitura. Uma explosão que pega a nave tira 1 (kamikaze) ou 2 (tanque), e <strong>a esquiva atravessa</strong>; quem explode sozinho não conta como abate nem dá pontos. Matar o tanque de longe é a forma segura de passar.</p>
+    <p class="why"><em>Por quê:</em> uma fila de caças iguais parece um carimbo; com comportamentos diferentes, a onda vira um esquadrão a ser lido, e cada família ensina uma pergunta ao jogador: fugir (kamikaze), atravessar (tanque), desviar (rajada e escopeta). O que o jogador aprende sobre cada modelo vale em toda a fase, e no chefe → <a href="#c06">06</a>.</p>
+    <p>Para a jam, a recomendação do v0.1 era <strong>começar com um tipo</strong> e adicionar os outros só se o núcleo já estivesse divertido; o protótipo tem três famílias e seis comportamentos.</p>
+    <p class="why"><em>Por quê:</em> as famílias cobrem pressões complementares: o caça investe contra a linha atual da nave, o interceptador ocupa alturas em movimento e o artilheiro sustenta projéteis enquanto os outros cruzam a tela.</p>
   </section>
   <section class="part"><h3>Valores de partida no protótipo</h3>
-    <div class="scroll"><table><thead><tr><th></th><th>Caça (S)</th><th>Interceptador (W)</th><th>Artilheiro (M)</th><th>Onde mudar</th></tr></thead><tbody>
-      <tr><th scope="row">Vida</th><td>2</td><td>3</td><td>18</td><td>prefab → <code>Health</code></td></tr>
-      <tr><th scope="row">Pontos</th><td>100</td><td>150</td><td>300</td><td>prefab → <code>Enemy</code></td></tr>
-      <tr><th scope="row">Modelo</th><td>sorteado entre 3 variações pequenas</td><td>sorteado entre as mesmas 3 variações pequenas</td><td>sorteado entre 3 variações médias</td><td>prefab → <code>ModelVariants</code></td></tr>
-      <tr><th scope="row">Movimento</th><td>7,2 u/s; mergulha a 30% da meia largura à direita do centro, em 0,75 s, no máximo 5 u para cima ou para baixo</td><td>5,8 u/s; senoide com deslocamento vertical máximo de 1,4 u a 0,55 Hz; cada membro recebe uma fase diferente</td><td>entra em 1,25 s até 4,5 u da borda direita; segura 6,5 s oscilando 0,8 u (0,45 Hz); sai acelerando a 6 u/s²</td><td>prefab → <code>Enemy</code></td></tr>
-      <tr><th scope="row">Tiro</th><td>1 tiro mirado, 0,28 s depois do início do mergulho</td><td>rajada de 2 tiros, 0,12 s entre eles e 8° de abertura; primeira em 0,55 s, depois a cada 1,35 s</td><td>leque de 5 tiros mirados, 10° entre eles; primeira rajada 0,65 s depois de parar, depois a cada 1,45 s</td><td>prefab → <code>EnemyGun</code></td></tr>
-      <tr><th scope="row">Aviso antes do tiro</th><td>0,28 s</td><td>0,35 s</td><td>0,4 s</td><td>prefab → <code>EnemyGun</code></td></tr>
-      <tr><th scope="row">Tiro inimigo</th><td colspan="3">9,5 u/s, 1 de dano (o mesmo do Guardião)</td><td><code>Shot_Enemy</code></td></tr>
-      <tr><th scope="row">Encostar na nave</th><td>1 de dano</td><td>1 de dano</td><td>1 de dano</td><td><code>ContactDamage</code></td></tr>
-    </tbody></table></div>
-    <p class="muted small">Valores para testar, não definitivos. As regras dos caminhos e do tiro ficam no Core (<code>SwoopMotion</code>, <code>SerpentineMotion</code>, <code>HoverMotion</code>, <code>FireCycle</code>), com testes.</p>
+    <div class="scroll"><table><thead><tr><th></th><th>S_1 Kamikaze</th><th>S_2 Veloz</th><th>S_3 Rajada curta</th><th>Interceptador (W)</th><th>M_1 Tanque</th><th>M_2 Rajada</th><th>M_3 Escopeta</th></tr></thead><tbody>
+      <tr><th scope="row">Vida</th><td>2</td><td>2</td><td>3</td><td>3</td><td>30</td><td>18</td><td>18</td></tr>
+      <tr><th scope="row">Pontos</th><td>120</td><td>100</td><td>150</td><td>150</td><td>250</td><td>300</td><td>350</td></tr>
+      <tr><th scope="row">Movimento</th><td>persegue a 6,4 u/s, vira 85°/s</td><td>mergulha a 9,8 u/s em 0,6 s</td><td>mergulha a 6,8 u/s em 0,9 s</td><td>senoide de 1,4 u a 0,55 Hz, 5,8 u/s</td><td>entra em 1,4 s a 5,5 u da borda; fica 11 s</td><td>entra em 1,25 s; fica 6,5 s; oscila 1,4 u a 0,5 Hz</td><td>entra em 1,6 s; fica 7,5 s; oscila 0,7 u a 0,3 Hz</td></tr>
+      <tr><th scope="row">Tiro</th><td>—</td><td>1 tiro, 2,6 s</td><td>3 tiros a cada 0,26 s, 1,7 s</td><td>2 tiros, 8°</td><td>—</td><td>4 tiros a cada 0,13 s, 1,7 s</td><td>7 tiros em leque de 7°, 2,3 s</td></tr>
+      <tr><th scope="row">Aviso antes do tiro</th><td>—</td><td>0,25 s</td><td>0,4 s</td><td>0,35 s</td><td>0,9 s (a explosão)</td><td>0,45 s</td><td>0,55 s</td></tr>
+      <tr><th scope="row">Explosão</th><td>1 de dano, raio 1,7 u</td><td>—</td><td>—</td><td>—</td><td>2 de dano, raio 3,8 u</td><td>—</td><td>—</td></tr>
+      <tr><th scope="row">Onde mudar</th><td><code>Enemy_S</code> → <code>Enemy</code> → <code>profiles[0]</code></td><td><code>profiles[1]</code></td><td><code>profiles[2]</code></td><td><code>Enemy_W</code> → <code>Enemy</code></td><td><code>Enemy_M</code> → <code>profiles[0]</code></td><td><code>profiles[1]</code></td><td><code>profiles[2]</code></td></tr>
+</tbody></table></div>
+    <p class="muted small">Valores para testar, não definitivos. O menu <em>One More Time › Bootstrap › Build Enemy Variants</em> escreve esses perfis, os quatro prefabs de tiro (<code>Shot_Enemy_Fast</code>, <code>_Slow</code>, <code>_Heavy</code>, <code>_Pellet</code>) e o modelo de cada onda do encontro 1; não sobrescreve o que já existe. As regras dos caminhos, do tiro, da explosão e da esquiva ficam no Core (<code>SwoopMotion</code>, <code>SerpentineMotion</code>, <code>HoverMotion</code>, <code>ChaseMotion</code>, <code>FireCycle</code>, <code>BlastFuse</code>, <code>Interception</code>), com testes. O tiro dos demais (interceptador, Guardião) é o <code>Shot_Enemy</code>: 9,5 u/s, 1 de dano. Encostar numa nave que não explode tira 1 de dano (<code>ContactDamage</code>).</p>
   </section>
   <section class="part"><h3>Regras de surgimento</h3>
-    <ul class="clean">
-      <li>As ondas são definidas por script: tempo de entrada, ponto de entrada, tipo e quantidade.</li>
-      <li>Cada onda <strong>sinaliza a entrada</strong> com um aviso visual curto (no protótipo, um marcador piscando na borda direita, 0,9 s antes).</li>
-      <li>Cada rajada inimiga é <strong>avisada</strong>: um brilho amarelo pisca na ponta do inimigo antes do tiro.</li>
-      <li>Inimigo só atira com a ponta <strong>dentro da tela</strong>: nada atira de onde o jogador não vê.</li>
-      <li>Inimigos que saem pela esquerda são removidos <strong>sem penalidade</strong>.</li>
-      <li>A composição autoral controla a densidade: as sobreposições mais fortes combinam no máximo dois papéis de pressão por vez. Um limite técnico rígido ainda é futuro.</li>
-      <li>Matar inimigos <strong>nunca é obrigatório</strong> para avançar; o scroll continua.</li>
-    </ul>
+    <ul class="clean"><li>As ondas são definidas por script: tempo de entrada, ponto de entrada, tipo e quantidade.</li><li>Cada onda <strong>sinaliza a entrada</strong> com um aviso visual curto (no protótipo, um marcador piscando na borda direita, 0,9 s antes).</li><li>Cada rajada inimiga é <strong>avisada</strong>: um brilho amarelo pisca na ponta do inimigo antes do tiro.</li><li>Inimigo só atira com a ponta <strong>dentro da tela</strong>: nada atira de onde o jogador não vê.</li><li>Inimigos que saem pela esquerda são removidos <strong>sem penalidade</strong>.</li><li>A composição autoral controla a densidade: as sobreposições mais fortes combinam no máximo dois papéis de pressão por vez. Um limite técnico rígido ainda é futuro.</li><li>Matar inimigos <strong>nunca é obrigatório</strong> para avançar; o scroll continua.</li></ul>
     <p>Dois artilheiros na mesma onda ficam em alturas diferentes (duas fileiras); se a onda tiver mais de um na mesma fileira, cada um para mais à direita que o anterior, mantendo a distância com que entrou.</p>
   </section>
   <section class="part"><h3>Exemplo — Encontro 1 (primeiro ciclo)</h3>
-    <figure><img src="img/wave-timeline.svg" alt="Linha do tempo das ondas do encontro 1, de 0:00 a 0:54: caças, interceptadores, artilheiros e sobreposições." width="800" height="230" loading="lazy"></figure>
+    <figure><img src="img/wave-timeline.svg" alt="Linha do tempo das ondas do encontro 1" width="800" height="230" loading="lazy"></figure>
     <div class="scroll"><table><thead><tr><th>Tempo</th><th>Onda</th><th>Objetivo de design</th></tr></thead><tbody>
-      <tr><td><code>0:00–0:15</code></td><td>Caças no alto (0:03), embaixo (0:07), interceptadores (0:11) e primeiro cerco em dois níveis (0:15)</td><td>Entrar em ação rápido e ensinar os três vetores de movimento sem misturá-los de imediato</td></tr>
-      <tr><td><code>0:19–0:29</code></td><td>Primeiro artilheiro (0:19), interceptadores por baixo (0:22), caças no alto (0:26) e dupla de artilheiros (0:29)</td><td>Começar a sobrepor alvo resistente com ameaça móvel; criar alvos para Crossfire</td></tr>
-      <tr><td><code>0:33–0:43</code></td><td>Tesoura de interceptadores (0:33), artilheiro de contenção (0:37), escolta sobreposta (0:38,5) e parede móvel (0:43)</td><td>Cobrar leitura de prioridade, mudança de altura e uso do eco para cobrir outra faixa</td></tr>
-      <tr><td><code>0:47–0:54</code></td><td>Artilheiros em pinça (0:47), caças em duas linhas (0:49) e clímax de interceptadores em duas linhas (0:54)</td><td>Pico de densidade antes do Guardião, sem remover os avisos de entrada e de rajada</td></tr>
-    </tbody></table></div>
-    <p>Está em <code>Encounter01_PrimeiroCiclo.asset</code>: <strong>15 entradas e 66 inimigos em 54 s</strong> (antes eram 9 entradas e 35 inimigos em 73 s). O encontro termina 2,5 s depois da última onda, quando não resta inimigo vivo; depois de 2 s de respiro entra o Guardião → <a href="#c06">06</a>. A torreta ainda não entra.</p>
+      <tr><th scope="row">0:00 – 0:15</th><td>Caças rápidos (S_2) no alto (0:03) e embaixo (0:07), interceptadores (0:11) e primeiro cerco de caças de rajada (S_3) em dois níveis (0:15)</td><td>Entrar em ação rápido e ensinar os três vetores de movimento sem misturá-los de imediato</td></tr>
+      <tr><th scope="row">0:19 – 0:29</th><td>Primeiro artilheiro de rajada (M_2, 0:19), interceptadores por baixo (0:22), <strong>kamikazes (S_1)</strong> no alto (0:26) e dupla de <strong>escopeteiros (M_3)</strong> (0:29)</td><td>Começar a sobrepor alvo resistente com ameaça móvel; ensinar a fugir do kamikaze e a atirar no escopeteiro quando ele não pode desviar; criar alvos para Crossfire</td></tr>
+      <tr><th scope="row">0:33 – 0:43</th><td>Tesoura de interceptadores (0:33), <strong>tanque (M_1)</strong> de contenção (0:37), escolta de caças rápidos (0:38,5) e parede móvel (0:43)</td><td>Cobrar leitura de prioridade, mudança de altura e uso do eco para cobrir outra faixa; o tanque é o obstáculo que explode</td></tr>
+      <tr><th scope="row">0:47 – 0:54</th><td>Artilheiros de rajada em pinça (0:47), kamikazes em duas linhas (0:49) e clímax de interceptadores em duas linhas (0:54)</td><td>Pico de densidade antes do Guardião, sem remover os avisos de entrada e de rajada</td></tr>
+</tbody></table></div>
+    <p>Está em <code>Encounter01_PrimeiroCiclo.asset</code>: <strong>15 entradas e 64 inimigos em 54 s</strong> (o último cerco de caças virou 3 kamikazes por linha). O encontro termina 2,5 s depois da última onda, quando não resta inimigo vivo; depois de 2 s de respiro entra o Guardião → <a href="#c06">06</a>. A torreta ainda não entra.</p>
     <p class="muted small">Os tempos são valores de partida para testar. Um encontro de Combinação, se entrar, deve reaproveitar os mesmos inimigos, combinados com o gadget → <a href="#c06">06</a>.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>Limite rígido de inimigos simultâneos: <span class="tbd">_TBD_</span>; hoje a densidade é controlada pela timeline autoral.</span></li>
+    <li><span>Limite rígido de inimigos simultâneos: <code>_TBD_</code>; hoje a densidade é controlada pela timeline autoral.</span></li>
     <li><span>Torreta: falta implementar.</span></li>
     <li><span>O caça mira e mergulha para onde a nave está: as ondas continuam por script, mas parte do movimento responde ao jogador. Isso combina com "o jogador aprende o padrão e planeja o que gravar", ou o mergulho deve ir para alturas fixas?</span></li>
-    <li><span>Vida, pontos, tempos de tiro e de aviso: primeira rodada frenética validada tecnicamente; falta playtest externo.</span></li>
+    <li><span>Vida, pontos, tempos de tiro, de aviso e de explosão: primeira rodada validada tecnicamente; falta playtest externo.</span></li>
+    <li><span>Kamikaze: o raio da explosão (1,7 u) e o tempo de 5,5 s até explodir sozinho são valores de partida. Ele deve poder ser desviado só com a esquiva, ou também por quem se mexe bem?</span></li>
+    <li><span>Tanque: ele explode quando a nave chega perto, mas fica 11 s na tela. É obstáculo demais para o corredor de tiro, ou entra como aposta (matar de longe ou passar longe)?</span></li>
+    <li><span>Escopeteiro: só a nave e o eco o fazem esquivar. A esquiva dele (2,4 u, recarga de 2,2 s) deixa a janela generosa o bastante para o eco acertá-lo?</span></li>
     <li><span>Ondas de um encontro de Combinação, se entrar: só o encontro 1 tem linha do tempo.</span></li>
   </ul></div>
 </section>
@@ -376,80 +398,84 @@
   <header>
     <h2 id="h06"><span class="n">06</span>Chefe e estrutura das runs</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker; modelo Art/Ships/Enemie_Boss_BlockOut.fbx) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10, reescrito com as peças pedidas pelo designer em 2026-10-18; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker; modelo Art/Ships/Enemie_Boss_BlockOut.fbx) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
   </header>
   <p class="summary">O chefe do protótipo, fase a fase, e como os encontros de uma run ensinam e combinam as mecânicas.</p>
   <section class="part"><h3>O Guardião do Ciclo <span class="muted small">(nome provisório)</span></h3>
-    <p>O protótipo tem <strong>um único chefe</strong>, desenhado para mostrar o potencial da mecânica temporal: uma máquina de combate que protege uma passagem temporal. O núcleo fica blindado durante a maior parte do encontro.</p>
-    <figure><img src="img/boss.svg" alt="O Guardião do Ciclo e suas quatro fases." width="800" height="300" loading="lazy"></figure>
-    <div class="scroll"><table><thead><tr><th>Fase</th><th>O que acontece</th><th>O jogador aprende</th></tr></thead><tbody>
-      <tr><th scope="row">1 · Sobrevivência</th><td>Projéteis em padrões simples; um laser varre a tela</td><td>Mover-se, achar janelas seguras e gravar uma rota</td></tr>
-      <tr><th scope="row">2 · Preparação</th><td>Dois geradores laterais protegem o núcleo</td><td>Gravar tiros contra um gerador e atacar o outro enquanto o eco repete</td></tr>
-      <tr><th scope="row">3 · Sincronização</th><td>Os dois geradores precisam cair numa janela curta; aí o núcleo fica vulnerável</td><td>Coordenar os disparos da nave com os do eco, vivo durante o padrão de projéteis</td></tr>
-      <tr><th scope="row">4 · Última chance</th><td>Com pouca vida, mais ataques e janelas de vulnerabilidade menores</td><td>Aproveitar os ecos já criados para fechar o combate</td></tr>
-    </tbody></table></div>
-    <div class="rule ok"><span class="osd">Critério de sucesso</span>O chefe é vencível com uma boa sequência temporal, mas <strong>não exige combinação pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</div>
+    <p>O protótipo tem <strong>um único chefe</strong>, desenhado para mostrar o potencial da mecânica temporal: uma máquina de combate que protege uma passagem temporal e que <strong>se desmonta peça por peça</strong>. Cada peça derrubada muda a luta, e o jogador escolhe a ordem. Os dentes, o ponto fraco, só ficam à mostra quando as peças que os guardam caem.</p>
+    <figure><img src="img/boss.svg" alt="O Guardião do Ciclo, suas peças e o que cada uma muda" width="800" height="300" loading="lazy"></figure>
+    <div class="scroll"><table><thead><tr><th>Fase</th><th>Nome</th><th>O que acontece</th><th>O jogador aprende</th></tr></thead><tbody>
+      <tr><th scope="row">1</th><td><strong>Sobrevivência</strong></td><td>Tudo blindado. Projéteis em padrões simples e um laser varre a tela</td><td>Mover-se, achar janelas seguras e gravar uma rota</td></tr>
+      <tr><th scope="row">2</th><td><strong>Desmonte</strong></td><td>As peças ficam expostas e saem uma a uma, em qualquer ordem; cada uma muda como o Guardião luta. Os dentes acabam com ele</td><td>Escolher o que derrubar primeiro, e usar o eco para atacar duas peças ao mesmo tempo</td></tr>
+</tbody></table></div>
+    <div class="rule ok"><span class="osd">Critério de sucesso</span>o chefe é vencível com uma boa sequência temporal, mas <strong>não exige combinação pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</div>
+    <p>Em 2026-10-18 o designer trocou o desenho anterior (dois geradores que abriam o núcleo numa janela, quatro fases) por este: peças destrutíveis que mudam a luta e dois pontos fixos de dano para finalizar. Os geradores, o núcleo, as janelas e a fase 4 saíram.</p>
     <h4>No protótipo atual</h4>
-    <p>Uma versão mínima com as <strong>fases 1 a 3</strong> (prefab <code>Guardian</code>, regras em <code>GuardianModel</code>). A fase 4 não existe. O Guardião entra pela direita em 2,5 s, com a tela parada, e luta na borda direita, ocupando a metade direita da tela. Depois da entrada, deriva 0,8 u na vertical (0,18 Hz) e 0,25 u na horizontal: as partes fracas continuam legíveis, mas deixam de ser alvos totalmente estáticos.</p>
-    <p>Ele usa o modelo de blockout do designer (<code>Enemie_Boss_BlockOut</code>), <strong>visto de lado</strong>, como as naves e os inimigos: virado para a nave, com o topo inclinado 25° para a câmera e o rosto virado 15° para ela. A cabeça, com o <strong>visor</strong> vermelho, fica no alto; os dois <strong>braços-canhão</strong> apontam para a nave em alturas diferentes (o de trás aparece mais alto e um pouco mais à frente); o corpo desce numa cauda. Em 2026-10-18 o designer pediu essa vista, a mesma das naves, e mandou o modelo em tamanho menor.</p>
-    <div class="scroll"><table><thead><tr><th>Peça do modelo</th><th>No combate</th></tr></thead><tbody>
-      <tr><th scope="row">Ponta de cada canhão</th><td>Um <strong>gerador</strong> (losango laranja): o de cima (canhão de trás) e o de baixo (canhão da frente)</td></tr>
-      <tr><th scope="row">Visor</th><td>O <strong>núcleo</strong>, no alto, acima dos canhões</td></tr>
-      <tr><th scope="row">Boca</th><td>De onde saem os tiros das fases</td></tr>
-      <tr><th scope="row">Corpo e canhões</th><td><strong>Blindagem</strong></td></tr>
-    </tbody></table></div>
-    <p>Para tudo bater com o que aparece na tela, os colisores ficam no plano de jogo, na posição em que cada peça é vista pela câmera; o modelo fica logo atrás desse plano. A blindagem é feita de faixas que seguem o contorno do corpo e dos canhões. Os geradores ficam 1,7 u um acima do outro, e o núcleo 3 u acima do centro do Guardião.</p>
-    <div class="scroll"><table><thead><tr><th>Parte</th><th>Como funciona</th></tr></thead><tbody>
-      <tr><th scope="row">Blindagem (corpo e canhões)</th><td>Absorve todos os tiros e fere a nave que encostar nela</td></tr>
-      <tr><th scope="row">Núcleo</th><td>120 de vida. Absorve os tiros enquanto o escudo âmbar está à vista; só toma dano quando fica vulnerável</td></tr>
-      <tr><th scope="row">Geradores (cima e baixo)</th><td>12 de vida cada. Derrubar o primeiro abre uma <strong>janela</strong>; se o segundo cai dentro dela, o núcleo fica <strong>vulnerável por 4 s</strong>. Se a janela fecha com um gerador de pé, o que caiu volta com a vida cheia</td></tr>
-      <tr><th scope="row">Volta dos geradores</th><td>Quando a vulnerabilidade acaba, os dois geradores voltam com a vida cheia</td></tr>
-    </tbody></table></div>
+    <p>O Guardião entra pela direita em 2,5 s e passa a lutar entre três estações na borda direita: alta, central e baixa. Cada investida tem antecipação visual e sonora, deslocamento rápido e recuperação.</p>
+    <p>Ele usa o modelo de blockout do designer (<code>Enemie_Boss_BlockOut</code>), <strong>visto de lado</strong>, como as naves e os inimigos: virado para a nave, com o topo inclinado 25° para a câmera e o rosto virado 15° para ela. O modelo traz a cabeça com o visor, a antena (<code>metalHair</code>), os dentes (<code>Teeth</code>) e os braços-canhão (<code>Canon</code>); as peças de jogo são <strong>colisores com marcadores</strong> postos onde cada uma aparece pela câmera, no plano de jogo (o modelo fica logo atrás), porque o modelo ainda não separa os dentes de cima dos de baixo.</p>
+    <div class="scroll"><table><thead><tr><th>Peça</th><th>Vida</th><th>Enquanto está de pé</th><th>Quando cai</th></tr></thead><tbody>
+      <tr><th scope="row"><strong>Antena</strong> (no alto da cabeça)</th><td>14</td><td><strong>Chama caças</strong> (S) de reforço: 2 a cada 8 s, no máximo 4 vivos</td><td>Não chama mais caças, e o Guardião <strong>atira com mais frenesi</strong>: o tempo entre os ataques cai 28%</td></tr>
+      <tr><th scope="row"><strong>Olhos</strong> (visor)</th><td>24</td><td><strong>Chamam artilheiros</strong> (M): 1 a cada 15 s, um vivo por vez</td><td>Não chamam mais artilheiros; o Guardião ganha um <strong>ataque novo</strong> (a cada quatro ataques, uma espiral de tiros girando que sai das órbitas dos olhos); os <strong>dentes de cima</strong> ficam expostos</td></tr>
+      <tr><th scope="row"><strong>Canhões</strong> (pontas dos dois braços)</th><td>20 cada</td><td>Os dois braços-canhão, ligados aos olhos por cabos de energia</td><td>Cada canhão derrubado faz o Guardião <strong>se mover 40% mais rápido</strong> e usar <strong>padrões mais densos</strong>. Com os <strong>dois</strong> caídos, os <strong>dentes de baixo</strong> ficam expostos</td></tr>
+      <tr><th scope="row"><strong>Dentes de cima</strong></th><td>45</td><td>Blindados enquanto os olhos estiverem de pé</td><td>Ponto fraco</td></tr>
+      <tr><th scope="row"><strong>Dentes de baixo</strong></th><td>45</td><td>Blindados enquanto algum canhão estiver de pé</td><td>Ponto fraco</td></tr>
+</tbody></table></div>
+    <p><strong>Os dois conjuntos de dentes caindo derrota o Guardião</strong>, e essa é a vitória do encontro. A blindagem (corpo e braços) absorve todos os tiros e fere a nave que encostar nela. Nada volta depois de cair. Os reforços que o Guardião chamou somem quando ele é derrotado.</p>
     <div class="scroll"><table><thead><tr><th>Fase</th><th>No protótipo</th></tr></thead><tbody>
-      <tr><th scope="row">1 · Sobrevivência</th><td>10 s com tudo blindado. Leque de 7 tiros mirados na nave a cada 1,1 s. O laser varre de uma borda até perto do meio da tela, alternando a metade de cima e a de baixo: aviso de 0,9 s, varredura de 2,2 s, pausa de 1,15 s</td></tr>
-      <tr><th scope="row">2 · Preparação</th><td>Geradores expostos, janela <strong>generosa de 5 s</strong>. Rajada de 5 tiros mirados a cada 1 s. A primeira vez que o núcleo fica vulnerável encerra a fase: quando a vulnerabilidade acaba, começa a fase 3</td></tr>
-      <tr><th scope="row">3 · Sincronização</th><td>A mesma regra com janela <strong>curta de 2,5 s</strong>. Um anel de 18 tiros a cada 1,1 s, que gira um pouco a cada anel. Repete até o núcleo cair</td></tr>
-    </tbody></table></div>
-    <p>O núcleo destruído derrota o Guardião, e <strong>essa é a vitória do encontro</strong>. Pontuação: 250 por gerador derrubado e 5000 pelo núcleo. O HUD mostra a vida do núcleo, os dois geradores, a fase, a janela e o tempo de vulnerabilidade → <a href="#c07">07</a>.</p>
+      <tr><th scope="row">1 · Sobrevivência</th><td>10 s com tudo blindado. Alterna leque de 7 tiros e parede com corredor seguro a cada 1,1 s. O laser varre a tela com aviso de 0,9 s</td></tr>
+      <tr><th scope="row">2 · Desmonte, sem canhão caído</th><td>Alterna rajadas de leque e paredes a cada 0,95 s</td></tr>
+      <tr><th scope="row">2 · com um canhão caído</th><td>Alterna anéis com corredor seguro, leques e paredes a cada 1 s; o Guardião se move 40% mais rápido</td></tr>
+      <tr><th scope="row">2 · com os dois canhões caídos</th><td>As versões mais densas dos três padrões a cada 0,78 s, o laser volta, e ele se move 80% mais rápido</td></tr>
+</tbody></table></div>
+    <p>A antena e os olhos mexem em <strong>quem ele chama</strong> e em <strong>como atira</strong>; os canhões mexem em <strong>onde e quão depressa ele vai</strong> e em <strong>quão denso é o ataque</strong>. A espiral dos olhos entra em qualquer das linhas acima.</p>
+    <p><strong>Os reforços.</strong> Os caças do Guardião entram como os das ondas, com os modelos S_2, S_3 e S_1 (kamikaze) em rodízio; os artilheiros entram por M_2 e M_3 e param no meio da tela, longe do corpo do Guardião → <a href="#c04">04</a>. Contam como inimigos comuns: vida, pontos e combos. Mantê-los em cima do jogador enquanto ele mira nas peças é a pressão da antena e dos olhos; derrubá-las é tirar essa pressão.</p>
+    <p>O HUD mostra a vida dos dois conjuntos de dentes juntos, os seis marcadores (antena, olhos, canhões e dentes) e o estado: tudo blindado, os dentes que estão expostos, ou o que derrubar para abri-los → <a href="#c07">07</a>. Pontuação: 150 pela antena, 250 pelos olhos e por cada canhão e 2500 por cada conjunto de dentes.</p>
     <p><strong>Combos no Guardião</strong> → <a href="#c03">03</a>:</p>
     <div class="scroll"><table><thead><tr><th>Combo</th><th>No Guardião</th></tr></thead><tbody>
-      <tr><th scope="row">Synchronized Strike</th><td>Um gerador cai pela nave e o outro por um eco, com até 2,5 s entre as quedas, e o núcleo abre. O escudo cai pela regra de sempre; o combo dá o aviso "SYNCHRONIZED STRIKE" no HUD e 1000 pontos. Na fase 3 a janela do Guardião também é de 2,5 s, então toda abertura feita com nave e eco conta; na fase 2 (janela de 5 s) as quedas precisam estar mais próximas</td></tr>
-      <tr><th scope="row">Crossfire</th><td>A nave e um eco acertando o mesmo gerador, ou o núcleo vulnerável, com até 1 s de diferença: +3 de dano combinado</td></tr>
-    </tbody></table></div>
-    <p>Derrubar os dois geradores só com a nave ainda abre o núcleo, mas não é Synchronized Strike.</p>
-    <p class="muted small">Todos os números são valores de partida para testar, no prefab <code>Guardian</code>.</p>
-    <p class="why"><em>Por quê:</em> a janela é o que pede o eco. Grave os tiros contra um gerador (a fase 1, com tudo blindado, é um bom momento) e invoque o eco quando os geradores abrirem, atacando o outro com a nave.</p>
+      <tr><th scope="row"><strong>Synchronized Strike</strong></th><td>Um canhão cai pela nave e o outro por um eco, com até 2,5 s entre as quedas: aviso "SYNCHRONIZED STRIKE" no HUD e 1000 pontos. Os dentes de baixo abririam de qualquer jeito</td></tr>
+      <tr><th scope="row"><strong>Crossfire</strong></th><td>A nave e um eco acertando a mesma peça com até 1 s de diferença: +3 de dano combinado</td></tr>
+</tbody></table></div>
+    <p class="muted small">Todos os números são valores de partida para testar, no prefab <code>Guardian</code> (<code>GuardianBoss</code>, <code>PartRef</code>) e em <code>GuardianModel</code>.</p>
+    <p class="why"><em>Por quê:</em> o eco pede o ataque simultâneo. Grave os tiros contra uma peça (a fase 1, com tudo blindado, é um bom momento), solte quando as peças abrirem e derrube outra com a nave. E cada peça é uma decisão: a antena tira pressão de caças, os olhos abrem os dentes de cima, os canhões abrem os de baixo, e todos tornam o Guardião mais perigoso em troca.</p>
   </section>
   <section class="part"><h3>Estrutura das runs</h3>
+    <p>Runs curtas, com encontros que introduzem e depois combinam as mecânicas.</p>
     <div class="scroll"><table><thead><tr><th>Encontro</th><th>Conteúdo</th><th>Objetivo de design</th></tr></thead><tbody>
-      <tr><th scope="row">1 · Primeiro ciclo</th><td>Inimigos simples → <a href="#c04">04</a></td><td>Ensinar movimento, tiro e gravação</td></tr>
-      <tr><th scope="row">2 · Combinação</th><td>Inimigos e gadget</td><td>Ensinar combos temporais</td></tr>
-      <tr><th scope="row">3 · Guardião</th><td>O chefe</td><td>Testar o domínio da mecânica</td></tr>
-    </tbody></table></div>
-    <p class="muted small">No protótipo, os encontros podem ser segmentos de uma única fase, sem mapa de progressão.</p>
+      <tr><th scope="row">1. <strong>Primeiro ciclo</strong></th><td>Inimigos simples → <a href="#c04">04</a></td><td>Ensinar movimento, tiro e gravação</td></tr>
+      <tr><th scope="row">2. <strong>Combinação</strong></th><td>Inimigos e gadget</td><td>Ensinar combos temporais</td></tr>
+      <tr><th scope="row">3. <strong>Guardião</strong></th><td>O chefe</td><td>Testar o domínio da mecânica</td></tr>
+</tbody></table></div>
+    <p class="muted small">No protótipo, os encontros podem ser segmentos de <strong>uma única fase</strong>, sem mapa de progressão.</p>
     <p><strong>No protótipo atual</strong>, a cena <code>Arena_01</code> encadeia dois encontros (<code>StageDirector</code>):</p>
     <div class="scroll"><table><thead><tr><th>Ordem</th><th>Encontro</th><th>Começa quando</th><th>Termina quando</th></tr></thead><tbody>
-      <tr><td>1</td><th scope="row">Primeiro ciclo — ondas → <a href="#c04">04</a></th><td>A cena carrega</td><td>2,5 s depois da última onda, sem inimigo vivo na tela</td></tr>
-      <tr><td>2</td><th scope="row">Guardião</th><td>2 s depois do fim das ondas (<code>bossDelaySeconds</code>, valor de partida); a rolagem para</td><td>O núcleo é destruído: vitória</td></tr>
-    </tbody></table></div>
+      <tr><td>1</td><th scope="row"><strong>Primeiro ciclo</strong> — ondas → <a href="#c04">04</a></th><td>A cena carrega</td><td>2,5 s depois da última onda, sem inimigo vivo na tela</td></tr>
+      <tr><td>2</td><th scope="row"><strong>Guardião</strong></th><td>2 s depois do fim das ondas (<code>bossDelaySeconds</code>, valor de partida); a rolagem para</td><td>Os dois conjuntos de dentes são destruídos: vitória</td></tr>
+</tbody></table></div>
     <p class="muted small">O encontro de <strong>Combinação</strong> (inimigos e gadget) ainda não existe. O <code>StageDirector</code> tem um campo <code>startAt</code> para começar direto no Guardião ao testar.</p>
   </section>
   <section class="part"><h3>Progressão entre tentativas</h3>
     <p>A repetição deve reforçar o tema <em>One More Time</em>. Dois modelos estão em jogo:</p>
-    <figure><img src="img/progression.svg" alt="Modelo A, eco durante a vida, e modelo B, ciclos acumulados." width="800" height="250" loading="lazy"></figure>
+    <figure><img src="img/progression.svg" alt="Os dois modelos de progressão entre tentativas" width="800" height="250" loading="lazy"></figure>
+    <div class="scroll"><table><thead><tr><th>Modelo</th><th>Como funciona</th><th>Situação</th></tr></thead><tbody>
+      <tr><th scope="row"><strong>A — Eco durante a vida</strong></th><td>O jogador grava e reproduz enquanto está vivo. A morte reinicia o encontro</td><td><strong>Recomendado para o protótipo</strong></td></tr>
+      <tr><th scope="row"><strong>B — Ciclos acumulados</strong></th><td>Ao reiniciar, o jogador deixa um eco persistente da tentativa anterior</td><td>Evolução futura</td></tr>
+</tbody></table></div>
     <p><strong>No protótipo atual</strong> o modelo A está implementado: ao morrer, a cena recarrega depois de 2 s <strong>no encontro em que a morte aconteceu</strong> (ondas ou Guardião), sem ecos e com a pontuação zerada (<code>RunCheckpoint</code>). Derrotar o Guardião é a vitória.</p>
     <p class="why"><em>Por quê:</em> o modelo A é mais previsível e mais fácil de balancear. O modelo B pode entrar depois, se "tentar mais uma vez" também virar a estrutura narrativa do jogo.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>O chefe tem quatro fases (§9) ou duas (tabela do §10, "chefe com duas fases de combate")? O protótipo tem as fases 1 a 3; a fase 4, Última chance, não está implementada.</span></li>
+    <li><span>Os dois conjuntos de dentes precisam cair para vencer (como está), ou um só basta? O designer falou em "pontos fixos de dano para finalização", os de cima e os de baixo.</span></li>
     <li><span>Nome definitivo do chefe — "O Guardião do Ciclo" é provisório.</span></li>
     <li><span>Confirmar o modelo A como sistema do protótipo (é o que está implementado).</span></li>
-    <li class="done"><span>O Guardião do Ciclo: versão mínima implementada (fases 1 a 3).</span></li>
-    <li><span>Na fase 2 o núcleo também fica vulnerável quando os dois geradores caem; o v0.1 só fala de núcleo exposto na fase 3. Manter assim?</span></li>
-    <li><span>Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar? (Outra saída: só o Synchronized Strike abrir o núcleo → <a href="#c03">03</a>.)</span></li>
+    <li><span>Peças no modelo: o <code>Enemie_Boss_BlockOut</code> tem a antena, o visor e os dentes (de cima e de baixo juntos) numa mesma malha. Os colisores e marcadores das peças são placeholder até a arte separar cada uma → <a href="specs/art/A01-modelo-guardiao.md">A01</a>.</span></li>
+    <li><span>Vida das peças, intervalo dos reforços (8 s e 15 s), tetos de reforços vivos, 28% de frenesi e 40% de aceleração por canhão: valores de partida, sem teste de jogo.</span></li>
+    <li><span>A espiral dos olhos é a "nova mecânica de ataque" do designer, escolhida por nós (uma espiral de tiros). Ele aprova, ou prefere outra?</span></li>
+    <li><span>Os canhões "mudam o padrão de ataque": hoje cada canhão sobe um nível de densidade (leques e anéis, depois as versões densas e o laser). É isso?</span></li>
+    <li><span>O Synchronized Strike hoje só avisa e premia → <a href="#c03">03</a>.</span></li>
     <li><span>O Guardião entrando fere a nave que estiver no caminho (dano de contato da blindagem). É justo, ou a blindagem só fere depois que ele para?</span></li>
     <li class="done"><span>Movimento do Guardião: deriva curta vertical e horizontal implementada, mantendo os pontos fracos dentro de uma faixa legível.</span></li>
-    <li><span>O designer também sugeriu um chefe grande o bastante para não caber na tela, com a peça grande dividida em partes. Hoje ele cabe na tela, e as partes são só os dois geradores e o núcleo.</span></li>
+    <li class="done"><span>Chefe com quatro fases ou duas? Ficam duas: Sobrevivência e Desmonte, com a luta mudando pelas peças que caem.</span></li>
+    <li><span>O designer também sugeriu um chefe grande o bastante para não caber na tela, com a peça grande dividida em partes. Hoje ele cabe na tela, e as partes são as seis peças da tabela.</span></li>
   </ul></div>
 </section>
 
@@ -462,38 +488,42 @@
   </header>
   <p class="summary">Como o jogador pilota, grava e invoca ecos sem parar de desviar — e o que o HUD precisa mostrar.</p>
   <section class="part"><h3>Controles propostos</h3>
-    <figure><img src="img/controls.svg" alt="Mapa de teclas proposto." width="800" height="270" loading="lazy"></figure>
-    <figure><img src="img/controls-gamepad.svg" alt="Mapa do controle (gamepad)." width="800" height="270" loading="lazy"></figure>
+    <figure><img src="img/controls.svg" alt="Mapa de teclas proposto" width="800" height="270" loading="lazy"></figure>
+    <figure><img src="img/controls-gamepad.svg" alt="Mapa do controle (gamepad)" width="800" height="270" loading="lazy"></figure>
     <div class="scroll"><table><thead><tr><th>Ação</th><th>Teclado e mouse</th><th>Controle</th></tr></thead><tbody>
-      <tr><th scope="row">Movimentar nave</th><td><kbd class="you">W</kbd> <kbd class="you">A</kbd> <kbd class="you">S</kbd> <kbd class="you">D</kbd> ou setas</td><td>Stick esquerdo</td></tr>
+      <tr><th scope="row">Movimentar nave</th><td>WASD ou setas</td><td>Stick esquerdo</td></tr>
       <tr><th scope="row">Mirar</th><td>Mover o mouse; a linha e o retículo ciano mostram a direção do próximo tiro</td><td>Stick direito (solto, a nave mantém a última mira)</td></tr>
-      <tr><th scope="row">Disparo principal</th><td><kbd class="you">Espaço</kbd> ou botão esquerdo do mouse</td><td><kbd class="you">RT</kbd></td></tr>
-      <tr><th scope="row">Gravar sequência</th><td>Segurar <kbd class="rec">Shift</kbd></td><td>Segurar <kbd class="rec">LT</kbd></td></tr>
-      <tr><th scope="row">Invocar eco</th><td><kbd class="echo">E</kbd></td><td><kbd class="echo">RB</kbd></td></tr>
-      <tr><th scope="row">Usar gadget</th><td><kbd class="gadget">Q</kbd></td><td><kbd class="gadget">LB</kbd></td></tr>
-      <tr><th scope="row">Pausar</th><td><kbd>Esc</kbd></td><td><kbd>Start</kbd></td></tr>
-    </tbody></table></div>
-    <p class="why"><em>Por quê:</em> os atalhos são provisórios, e o jogador pode trocá-los na tela de controles (abaixo). O que importa é <strong>separar a gravação da reprodução</strong>, para o jogador não invocar o eco sem querer enquanto tenta desviar dos tiros.</p>
-    <p class="muted small">No protótipo, estas ações estão em <code>Assets/_Project/Input/OneMoreTimeControls.inputactions</code> (mapa <code>Gameplay</code>), lidas só pelo <code>PlayerInputReader</code>. A ação <code>Aim</code> lê a posição do ponteiro e o <code>ShipAim</code> a projeta no plano de jogo; o movimento continua independente da mira. Com um controle, a ação <code>AimStick</code> (stick direito) dá a direção da mira. O leitor sabe qual dispositivo o jogador usou por último (<code>UsingGamepad</code>): é ele que decide se a mira vem do mouse ou do stick e quais dicas aparecem no HUD. Q solta a mina temporal → <a href="#c05">05</a>.</p>
+      <tr><th scope="row">Disparo principal</th><td>Espaço ou botão esquerdo do mouse</td><td>RT</td></tr>
+      <tr><th scope="row">Gravar sequência (soltar volta à âncora)</th><td>Segurar Shift</td><td>Segurar LT</td></tr>
+      <tr><th scope="row">Esquiva</th><td>F ou botão direito do mouse</td><td>A</td></tr>
+      <tr><th scope="row">Invocar eco</th><td>E</td><td>RB</td></tr>
+      <tr><th scope="row">Usar gadget</th><td>Q</td><td>LB</td></tr>
+      <tr><th scope="row">Pausar</th><td>Esc</td><td>Start</td></tr>
+</tbody></table></div>
+    <p>Os atalhos são provisórios, e o jogador pode trocá-los na tela de controles (abaixo).</p>
+    <p class="why"><em>Por quê:</em> o que importa é <strong>separar a gravação da reprodução</strong>, para o jogador não invocar o eco sem querer enquanto tenta desviar dos tiros. Segurar o botão dá ao jogador o controle de quando voltar à âncora → <a href="#c02">02</a>. A esquiva fica numa tecla à parte, perto do movimento, para ser usada em cima do tiro.</p>
+    <p>No protótipo, estas ações estão em <code>Assets/_Project/Input/OneMoreTimeControls.inputactions</code> (mapa <code>Gameplay</code>), lidas só pelo <code>PlayerInputReader</code>. A ação <code>Aim</code> lê a posição do ponteiro e o <code>ShipAim</code> a projeta no plano de jogo; o movimento continua independente da mira. Com um controle, a ação <code>AimStick</code> (stick direito) dá a direção da mira. O leitor sabe qual dispositivo o jogador usou por último (<code>UsingGamepad</code>): é ele que decide se a mira vem do mouse ou do stick e quais dicas aparecem no HUD. Q solta a mina temporal → <a href="#c05">05</a>. A ação <code>Dodge</code> (F, botão direito, A) pede a esquiva → <a href="#c03">03</a>; o E continua como atalho temporário de retorno. Os menus usam o mapa <code>Menu</code> do mesmo asset, lido só pelo <code>MenuInputReader</code>.</p>
   </section>
   <section class="part"><h3>HUD</h3>
-    <figure><img src="img/hud.svg" alt="Mockup conceitual do HUD." width="800" height="250" loading="lazy"><figcaption>Mockup conceitual — não representa uma interface implementada.</figcaption></figure>
-    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s") e as mensagens de pausa, derrota ("TENTE NOVAMENTE", e o encontro recomeça) e vitória ("GUARDIÃO DERROTADO", com pontuação, abates e combos). Com o Guardião em cena, um painel no topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo: blindado, protegido pelos geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta.</p>
+    <figure><img src="img/hud.svg" alt="Mockup conceitual do HUD" width="800" height="250" loading="lazy"></figure>
+    <p><em>Mockup conceitual — não representa uma interface implementada.</em></p>
+    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s") e as mensagens de pausa, derrota ("TENTE NOVAMENTE", e o encontro recomeça) e vitória ("GUARDIÃO DERROTADO", com pontuação, abates e combos). Com o Guardião em cena, um painel no topo mostra a vida dos dois conjuntos de dentes juntos, seis marcadores (antena, olhos, os dois canhões e os dois conjuntos de dentes; apagados quando caem, esmaecidos enquanto estão blindados), a fase e o estado: tudo blindado, quais dentes estão expostos, ou o que derrubar para abri-los. A memória temporal diz "segure SHIFT · gravar eco" e, durante a gravação, "solte SHIFT · retornar à âncora".</p>
     <p>A linha de dicas no pé da tela mostra os controles do dispositivo usado por último (teclado ou controle), com as teclas como estão agora.</p>
     <p>O <strong>aviso de combo</strong> aparece no alto da tela, no centro, por 1,4 s, como no mockup: o nome do combo e o que o causou, com os pontos → <a href="#c03">03</a>.</p>
     <div class="scroll"><table><thead><tr><th>Combo</th><th>Aviso</th></tr></thead><tbody>
       <tr><th scope="row">Crossfire</th><td>"CROSSFIRE" · "NAVE + ECO NO MESMO ALVO · +100"</td></tr>
-      <tr><th scope="row">Synchronized Strike</th><td>"SYNCHRONIZED STRIKE" · "NAVE + ECO NOS GERADORES · ESCUDO DESATIVADO · +1000"</td></tr>
-    </tbody></table></div>
+      <tr><th scope="row">Synchronized Strike</th><td>"SYNCHRONIZED STRIKE" · "NAVE + ECO NOS CANHÕES · +1000"</td></tr>
+</tbody></table></div>
     <p>O mesmo combo de novo enquanto o aviso está na tela conta "×2", "×3"; um Crossfire não cobre um Synchronized Strike que ainda está à vista. A duração fica em <code>HUD</code> → <code>HudController</code>.</p>
+    <p>O HUD mostra com clareza:</p>
     <div class="scroll"><table><thead><tr><th>Elemento</th><th>Por que o jogador precisa</th></tr></thead><tbody>
       <tr><th scope="row">Vida restante (integridade)</th><td>Saber quanto risco ainda pode correr</td></tr>
-      <tr><th scope="row">Gravação (memória temporal)</th><td>Planejar a sequência sem olhar o relógio</td></tr>
-      <tr><th scope="row">Ecos ativos</th><td>Saber o que já está trabalhando por ele</td></tr>
-      <tr><th scope="row">Gadget e recarga</th><td>Saber quando pode usar de novo</td></tr>
-      <tr><th scope="row">Vida do chefe e vulnerabilidade</th><td>Saber quando atacar</td></tr>
-      <tr><th scope="row">Feedback de combo</th><td>Entender o que funcionou → <a href="#c03">03</a></td></tr>
-    </tbody></table></div>
+      <tr><th scope="row">Estado e duração da gravação (memória temporal)</th><td>Planejar a sequência sem olhar o relógio</td></tr>
+      <tr><th scope="row">Quantidade de ecos ativos</th><td>Saber o que já está trabalhando por ele</td></tr>
+      <tr><th scope="row">Gadget equipado e recarga</th><td>Saber quando pode usar de novo</td></tr>
+      <tr><th scope="row">Vida do chefe (os dentes), peças caídas e o que está exposto</th><td>Saber o que atacar</td></tr>
+      <tr><th scope="row">Feedback de combo temporal ativado</th><td>Entender o que funcionou → <a href="#c03">03</a></td></tr>
+</tbody></table></div>
   </section>
   <section class="part"><h3>Telas do jogo</h3>
     <p>O jogo abre no menu e só depois vai para a arena. O estilo é inspirado nos menus de <em>Star Fox 64</em>: fundo preto com estrelas, barras de aço com texto azul-escuro, um mapa de missões e uma história que sobe pela tela. A nave Bilu aparece em 3D atrás do título e do menu.</p>
@@ -507,7 +537,7 @@
       <tr><th scope="row">Mapa de missões</th><td>Sete casas ligadas por uma linha; só a primeira (Missão Nº 1) existe, as outras são "?" bloqueadas e respondem com um som de negação</td><td>Enter abre a história; Esc volta</td></tr>
       <tr><th scope="row">História</th><td>Imagem pequena no alto e o texto da missão subindo, com música de abertura</td><td>Enter pula, ↓ acelera, Esc volta; no fim, a arena</td></tr>
       <tr><th scope="row">Cartão de missão</th><td>Na arena, tela preta com "MISSÃO Nº 1", o local e o nome da missão, por cerca de 3 s; a fase só começa quando ele some</td><td>Sozinho. Não volta depois de uma morte</td></tr>
-    </tbody></table></div>
+</tbody></table></div>
     <p>Teclas do menu: ↑ ↓ ← → ou W A S D movem (repetem se a tecla ficar apertada), Enter ou Espaço confirmam, Esc ou Backspace voltam. No controle: D-pad ou stick esquerdo movem, A ou Start confirmam, B volta. O mouse também funciona: passar sobre uma barra a seleciona e clicar confirma.</p>
     <p>A ordem das telas, o cursor, a rolagem do texto e os volumes são regras do Core, com testes (<code>ScreenFlow</code>, <code>MenuCursor</code>, <code>CrawlScroll</code>, <code>SoundLevels</code>). As palavras de todas as telas e do HUD ficam na tabela de strings <code>Game</code> (Unity Localization, em <code>Assets/_Project/Localization</code>), em inglês e em português, para editar sem mexer em código; o <code>Data/Missions/Mission_01</code> (<code>MissionData</code>) guarda o número, as chaves do local, do nome e da história, a imagem e a cena. O layout e o visual ficam em <code>UI/Menu.uxml</code>, <code>Menu.uss</code>, <code>MissionCard.uxml</code> e <code>MissionCard.uss</code>.</p>
     <p>O texto da história é o do dono: em outubro de 2010 Bilu trouxe à Terra a mensagem "busquem conhecimento"; 42 anos depois, com a Terra seca e saqueada por um império decadente, ele volta para entregá-la mais uma vez, à força. O texto fecha no tema do design: "Uma vez não bastou. Então, mais uma vez: BUSQUEM CONHECIMENTO!!!!".</p>
@@ -523,9 +553,12 @@
     <p>As linhas da tela, os nomes dos botões (em inglês por padrão, traduzíveis pelos tokens <code>bind.*</code>) e a regra de conflito são do Core, com testes (<code>ControlLayout</code>, <code>BindingLabels</code>, <code>BindingConflicts</code>); <code>ControlsCatalog</code> e <code>ControlsStore</code> ficam em <code>Gameplay/Input</code>.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
+    <li class="done"><span>Suporte a controle (gamepad): entrou no protótipo, com os botões da tabela acima e remapeamento.</span></li>
     <li><span>Remapear também o movimento do controle e a mira (mouse e stick): hoje são fixos.</span></li>
-    <li><span>Mapeamento definitivo das teclas no Input System.</span></li>
+    <li><span>Mapeamento definitivo das teclas no Input System. A esquiva em F e no botão direito, e A no controle, são de partida.</span></li>
+    <li><span>Indicador da recarga da esquiva no HUD: hoje só a nave gira.</span></li>
     <li><span>Fonte pixelada para os menus e o HUD: o protótipo usa a fonte padrão do Unity.</span></li>
+    <li><span>Revisar os textos do jogo, em inglês e em português, com um falante de cada idioma: os dois são rascunho.</span></li>
     <li><span>Tela de título definitiva: o protótipo mostra a nave de blockout.</span></li>
     <li><span>O aviso de combo usa laranja, como o mockup; laranja também é a cor de perigo → <a href="#c08">08</a>. Fica assim, ou o combo ganha uma cor própria?</span></li>
   </ul></div>
@@ -558,7 +591,6 @@
     <p>Inimigos e chefe seguem a regra de cor: laranja e vermelho são perigo. O resto — tiros e cenário — ainda é placeholder feito de primitivas, até a arte chegar.</p>
     <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: projéteis, efeitos, cenário). Naves e chefe já são modelos 3D (blockout).</div>
     <h4>Visual pixelado</h4>
-    <li><span>Revisar os textos do jogo, em inglês e em português, com um falante de cada idioma: os dois são rascunho.</span></li>
     <p>O mundo 3D é desenhado numa <strong>altura baixa fixa</strong> e ampliado sem suavizar, então cada pixel vira um bloco visível — o visual do <em>Star Fox</em> do SNES, a referência pedida pelo time em 2026-10-18. O HUD é desenhado depois, em resolução cheia, e fica nítido.</p>
     <div class="scroll"><table><thead><tr><th></th><th>No protótipo</th></tr></thead><tbody>
       <tr><th scope="row">Altura do mundo</th><td>270 px (o <em>Star Fox</em> usa 224), arredondada para cada pixel ocupar um número inteiro de pixels da tela: em 1080p, blocos de 4 × 4</td></tr>
@@ -580,7 +612,9 @@
       <tr><th scope="row">Tiro bloqueado</th><td>Faíscas da origem e anel azul de deflexão; não dispara efeito de dano</td></tr>
       <tr><th scope="row">Dano na nave</th><td>Flash vermelho, faíscas ciano, anel de alerta e shake mais claro com pequeno pulso de lente</td></tr>
       <tr><th scope="row">Inimigo destruído</th><td>Explosão de partículas e anel expansivo que persistem depois que o inimigo some</td></tr>
-      <tr><th scope="row">Artilheiro, gerador ou núcleo destruído</th><td>Mesma composição em escala, densidade e shake progressivamente maiores</td></tr>
+      <tr><th scope="row">Artilheiro, peça ou dentes do Guardião destruídos</th><td>Mesma composição em escala, densidade e shake progressivamente maiores</td></tr>
+      <tr><th scope="row">Kamikaze ou tanque explode</th><td>O brilho amarelo pisca cada vez mais rápido; o anel laranja mostra o raio da explosão e a câmera dá um impulso</td></tr>
+      <tr><th scope="row">Esquiva e retorno</th><td>A nave faz um giro completo em volta do nariz; o eco repete o giro. O escopeteiro inimigo também gira ao desviar</td></tr>
       <tr><th scope="row">Combo temporal</th><td><strong>Convergência Temporal</strong>: faíscas violetas e dois anéis ciano/violeta no ponto do combo</td></tr>
     </tbody></table></div>
     <p><code>CameraImpact</code> usa trauma com limite de deslocamento e retorno rápido. Hits comuns não acumulam um tremor constante; dano do jogador, inimigos resistentes, partes do chefe e o núcleo recebem pesos diferentes. <code>CombatVfxPool</code> reaproveita sistemas de partículas e anéis, evitando criar e destruir objetos a cada tiro.</p>
@@ -600,7 +634,7 @@
       <tr><th scope="row">Tiro de inimigo e do chefe</th><td>Lasers retrô da Kenney</td></tr>
       <tr><th scope="row">Acerto, escudo</th><td><em>Hit</em> do Deva; impacto metálico da Kenney</td></tr>
       <tr><th scope="row">Dano na nave</th><td><em>Ouch</em> do Mini pack</td></tr>
-      <tr><th scope="row">Inimigo, gerador, núcleo e nave destruídos</th><td>Explosões em escala crescente (Deva e Kenney)</td></tr>
+      <tr><th scope="row">Inimigo, peça do Guardião, dentes e nave destruídos</th><td>Explosões em escala crescente (Deva e Kenney)</td></tr>
       <tr><th scope="row">Mina solta e detonada</th><td><em>Powerup</em> do Deva; explosão grave da Kenney</td></tr>
       <tr><th scope="row">Gravando (Shift)</th><td>Pulso gerado em código (onda quadrada) que acelera e sobe de tom até os 5 s; bipe ao começar e ao parar</td></tr>
       <tr><th scope="row">Invocação do eco (E)</th><td>Loop de reversão de tempo cortado em 0,7 s, depois um impacto 0,55 s mais tarde</td></tr>
@@ -610,7 +644,7 @@
       <tr><th scope="row">Menus e cartão de missão</th><td>Os dois bipes de menu, um som de negação (<em>Wrong</em>) e um campo de força curto no cartão</td></tr>
     </tbody></table></div>
     <p>A música muda a cada tela e a cada encontro. O título e o menu tocam <em>Venus</em>, do <em>NES Shooter Music</em>; o mapa de missões, <em>Map</em>; a história, <em>Stage 1</em>, de Juhani Junkala, uma faixa provisória de aventura (o time pediu o clima de abertura do <em>Overground</em>, de <em>Shovel Knight Dig</em>, que tem direitos autorais e não pode ser usado). Nas fases, as ondas tocam <em>8-bit Epic Space Shooter</em> e o Guardião a faixa <em>Boss</em> do <em>NES Shooter Music</em> (intro e loop). A música abaixa na pausa e some na vitória e na derrota. Qual faixa vai em cada lugar é uma escolha pelo nome dos arquivos: falta ouvir e ajustar no <code>AudioLibrary</code>. O controle de MÚSICA e EFEITOS da tela de som (<a href="#c07">07</a>) multiplica o volume de tudo.</p>
-    <p>Ainda sem som: o laser giratório do Guardião e a fase 4 do chefe (que não existe). O pulso de interferência também não existe ainda.</p>
+    <p>Ainda sem som: o laser giratório do Guardião, a esquiva e a explosão do kamikaze e do tanque (que só tocam a morte comum do inimigo). O pulso de interferência também não existe ainda.</p>
     <p>Os clipes ficam em <code>Assets/_Project/Audio</code>. Todos são CC0, do OpenGameArt (fontes e licenças em <code>Audio/CREDITS.md</code>):</p>
     <div class="scroll"><table><thead><tr><th>Pasta</th><th>Conteúdo</th></tr></thead><tbody>
       <tr><th scope="row"><code>SFX/Mini8bit</code></th><td>210 efeitos retrô em OGG: tiro (<em>Pew</em>), explosões, dano (<em>Ouch</em>), <em>Space</em>, <em>Teleport</em>, <em>Powerup</em>, <em>Pickup</em>, <em>Menu</em> e outros</td></tr>
@@ -653,7 +687,7 @@
       <tr><td><code>WeaponSystem</code></td><td>Gerencia disparos e projéteis</td></tr>
       <tr><td><code>GadgetSystem</code></td><td>Ativa e registra gadgets</td></tr>
       <tr><td><code>EnemyController</code></td><td>Movimento e comportamento dos inimigos</td></tr>
-      <tr><td><code>BossController</code></td><td>Fases, ataques e pontos fracos</td></tr>
+      <tr><td><code>BossController</code></td><td>Fases, ataques, peças e pontos fracos</td></tr>
       <tr><td><code>ComboEvaluator</code></td><td>Detecta as condições dos combos temporais</td></tr>
     </tbody></table></div>
   </section>
@@ -674,7 +708,7 @@
       <tr><td><code>DamageSystem</code></td><td><code>Health</code> (+ <code>HealthModel</code>) + <code>ContactDamage</code></td><td><code>Health</code> publica dano aceito, bloqueio por escudo e morte; invulnerabilidade repetida fica silenciosa para não gerar spam visual</td></tr>
       <tr><td><code>EnemyController</code></td><td><code>Enemy</code> + <code>EnemyGun</code> + <code>ModelVariants</code> + <code>WaveSpawner</code> + <code>WaveSchedule</code> (+ <code>SwoopMotion</code>, <code>HoverMotion</code>, <code>FireCycle</code> no Core)</td><td>Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (<code>Enemy_S</code>, <code>Enemy_M</code>). O <code>WaveSpawner</code> passa a nave e o pool de tiros aos inimigos. <code>ModelVariants</code> sorteia o modelo ao surgir e ajusta a hitbox e a boca do tiro a ele</td></tr>
       <tr><td><code>GadgetSystem</code></td><td><code>ShipGadget</code> + <code>TimeMine</code> (+ <code>Cooldown</code>, <code>TimeMineModel</code> no Core)</td><td>A nave solta a mina; o eco reproduz o evento <code>Gadget</code></td></tr>
-      <tr><td><code>BossController</code></td><td><code>GuardianBoss</code> + <code>SweepLaser</code> (+ <code>GuardianModel</code> no Core)</td><td>Fases, escudos, geradores e padrões de tiro</td></tr>
+      <tr><td><code>BossController</code></td><td><code>GuardianBoss</code> + <code>SweepLaser</code> (+ <code>GuardianModel</code> no Core)</td><td>Fases, peças (antena, olhos, canhões, dentes), escudos, reforços e padrões de tiro</td></tr>
       <tr><td><code>ComboEvaluator</code></td><td><code>ComboTracker</code> (+ <code>CrossfireRule</code>, <code>SynchronizedStrikeRule</code> no Core)</td><td>Uma regra por combo; só Crossfire e Synchronized Strike existem. O <code>ComboTracker</code> ouve o <code>Health.Damaged</code> dos inimigos que as ondas criam e das partes do Guardião, e o <code>GeneratorDestroyed</code> do Guardião; aplica o bônus e avisa o HUD e a sessão (<code>Triggered</code>)</td></tr>
       <tr><td>—</td><td><code>Playfield</code></td><td>O quadro que rola, com a câmera, a nave e os ecos</td></tr>
       <tr><td>—</td><td><code>PixelView</code></td><td>O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → <a href="#c08">08</a></td></tr>
@@ -749,9 +783,9 @@
       <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code> (a cena <code>Menu</code> vem antes no build); naves e chefe com os modelos de blockout, o resto em placeholder</td></tr>
       <tr><th scope="row">Gravação de cinco segundos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Reprodução de movimento e disparos</th><td><span class="chip ok">feito</span></td></tr>
-      <tr><th scope="row">Inimigos com ondas por script</th><td><span class="chip ok">feito</span> caça (S) e artilheiro (M), que atiram → <a href="#c04">04</a></td></tr>
+      <tr><th scope="row">Inimigos com ondas por script</th><td><span class="chip ok">feito</span> caça (S), interceptador (W) e artilheiro (M), com seis comportamentos por modelo → <a href="#c04">04</a></td></tr>
       <tr><th scope="row">Um gadget funcional</th><td><span class="chip ok">feito</span> mina temporal, na tecla Q, reproduzida pelo eco → <a href="#c05">05</a></td></tr>
-      <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, fases 1 a 3 → <a href="#c06">06</a></td></tr>
+      <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, com peças destrutíveis e dentes como ponto fraco → <a href="#c06">06</a>. Sem janela temporal: o eco serve para atacar duas peças ao mesmo tempo</td></tr>
       <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = derrotar o Guardião; derrota recomeça o encontro atual</td></tr>
       <tr><th scope="row">Suporte a controle e remapeamento</th><td><span class="chip ok">feito</span> gamepad no jogo e no menu; o jogador troca teclas e botões na tela de controles → <a href="#c07">07</a></td></tr>
       <tr><th scope="row">Fluxo de telas</th><td><span class="chip ok">feito</span> título, menu, som, controles, créditos, mapa de missões, história e cartão de missão, na cena <code>Menu</code> → <a href="#c07">07</a></td></tr>
@@ -765,8 +799,8 @@
       <li class="done"><span>O eco repete movimentos e disparos sem depender do controle atual.</span></li>
       <li class="done"><span>A reprodução continua funcionando quando os inimigos se movem ou morrem.</span></li>
       <li class="done"><span>Um gadget pode ser usado por uma ação registrada. (O eco solta a mina temporal no mesmo ponto e instante da gravação.)</span></li>
-      <li class="done"><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um gerador do Guardião pela nave e o outro pelo eco derrubam o escudo do núcleo. Os dois têm aviso no HUD → <a href="#c03">03</a>.)</span></li>
-      <li class="done"><span>O chefe pode ser derrotado usando a mecânica temporal. (O eco derruba um gerador enquanto a nave derruba o outro.)</span></li>
+      <li class="done"><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um canhão do Guardião pela nave e o outro pelo eco. Os dois têm aviso no HUD → <a href="#c03">03</a>.)</span></li>
+      <li class="done"><span>O chefe pode ser derrotado usando a mecânica temporal. (O eco ataca uma peça do Guardião enquanto a nave ataca outra; o Synchronized Strike dos dois canhões é o caso mais claro.)</span></li>
       <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (Com o modelo de blockout, a nave ciano e o eco violeta translúcido já se distinguem; falta testar com jogadores.)</span></li>
       <li><span>A mecânica continua legível nos momentos com mais projéteis.</span></li>
     </ul>

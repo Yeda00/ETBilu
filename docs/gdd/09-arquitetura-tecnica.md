@@ -54,7 +54,7 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | `DamageSystem` | `Health` (+ `HealthModel` no Core) + `ContactDamage` | `Health` publica dano aceito, bloqueio por escudo e morte; invulnerabilidade repetida fica silenciosa para não gerar spam visual |
 | `EnemyController` | `Enemy` + `EnemyGun` + `ModelVariants` + `WaveSpawner` + `WaveSchedule` (+ `SwoopMotion`, `HoverMotion`, `FireCycle` no Core) | Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (`Enemy_S`, `Enemy_M`). O `WaveSpawner` passa a nave e o pool de tiros aos inimigos. `ModelVariants` sorteia o modelo ao surgir e ajusta a hitbox e a boca do tiro a ele |
 | `GadgetSystem` | `ShipGadget` + `TimeMine` (+ `Cooldown`, `TimeMineModel` no Core) | A nave solta a mina; o eco reproduz o evento `Gadget` |
-| `BossController` | `GuardianBoss` + `SweepLaser` (+ `GuardianModel` no Core) | Fases, escudos, geradores e padrões de tiro |
+| `BossController` | `GuardianBoss` + `SweepLaser` (+ `GuardianModel` no Core) | Fases, peças (antena, olhos, canhões, dentes), escudos, reforços e padrões de tiro |
 | `ComboEvaluator` | `ComboTracker` (+ `CrossfireRule`, `SynchronizedStrikeRule` no Core) | Uma regra por combo; só Crossfire e Synchronized Strike existem. O `ComboTracker` ouve o `Health.Damaged` dos inimigos que as ondas criam e das partes do Guardião, e o `GeneratorDestroyed` do Guardião; aplica o bônus e avisa o HUD e a sessão (`Triggered`) |
 | — | `Playfield` | O quadro que rola, com a câmera, a nave e os ecos |
 | — | `PixelView` | O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → [08](08-direcao-visual-e-sonora.md) |

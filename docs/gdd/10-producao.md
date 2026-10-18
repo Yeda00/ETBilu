@@ -35,9 +35,9 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Uma arena side-scrolling 2.5D | ✅ cena `Arena_01` (a cena `Menu` vem antes no build); naves e chefe com os modelos de blockout, o resto em placeholder |
 | Gravação de cinco segundos | ✅ |
 | Reprodução de movimento e disparos | ✅ |
-| Inimigos com ondas por script | ✅ caça (S) e artilheiro (M), que atiram → [04](04-inimigos-e-ondas.md) |
+| Inimigos com ondas por script | ✅ caça (S), interceptador (W) e artilheiro (M), com seis comportamentos por modelo → [04](04-inimigos-e-ondas.md) |
 | Um gadget funcional | ✅ mina temporal, na tecla Q, reproduzida pelo eco → [05](05-gadgets.md) |
-| Um chefe com janela de vulnerabilidade temporal | ✅ Guardião do Ciclo, fases 1 a 3 → [06](06-chefe-e-runs.md) |
+| Um chefe com janela de vulnerabilidade temporal | ✅ Guardião do Ciclo, com peças destrutíveis e dentes como ponto fraco → [06](06-chefe-e-runs.md). Sem janela temporal: o eco serve para atacar duas peças ao mesmo tempo |
 | Interface mínima e condição de vitória e derrota | ✅ vitória = derrotar o Guardião; derrota recomeça o encontro atual |
 | Suporte a controle e remapeamento | ✅ gamepad no jogo e no menu; o jogador troca teclas e botões na tela de controles → [07](07-controles-e-interface.md) |
 | Fluxo de telas | ✅ título, menu, som, controles, créditos, mapa de missões, história e cartão de missão, na cena `Menu` → [07](07-controles-e-interface.md) |
@@ -53,8 +53,8 @@ O protótipo está pronto para teste quando:
 2. [x] O eco repete movimentos e disparos sem depender do controle atual.
 3. [x] A reprodução continua funcionando quando os inimigos se movem ou morrem.
 4. [x] Um gadget pode ser usado por uma ação registrada. (O eco solta a mina temporal no mesmo ponto e instante da gravação.)
-5. [x] O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um gerador do Guardião pela nave e o outro pelo eco derrubam o escudo do núcleo. Os dois têm aviso no HUD → [03](03-combate.md).)
-6. [x] O chefe pode ser derrotado usando a mecânica temporal. (O eco derruba um gerador enquanto a nave derruba o outro.)
+5. [x] O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um canhão do Guardião pela nave e o outro pelo eco. Os dois têm aviso no HUD → [03](03-combate.md).)
+6. [x] O chefe pode ser derrotado usando a mecânica temporal. (O eco ataca uma peça do Guardião enquanto a nave ataca outra; o Synchronized Strike dos dois canhões é o caso mais claro.)
 7. [ ] O jogador entende visualmente qual nave é a atual e qual é o eco. (Com o modelo de blockout, a nave ciano e o eco violeta translúcido já se distinguem; falta testar com jogadores.)
 8. [ ] A mecânica continua legível nos momentos com mais projéteis.
 

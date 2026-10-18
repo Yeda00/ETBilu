@@ -40,7 +40,7 @@
     <div><dt>Motor</dt><dd>Unity 6 (6000.3), URP, Input System</dd></div>
     <div><dt>Visual</dt><dd>Mundo e jogabilidade em 3D; alguns sprites 2D</dd></div>
     <div><dt>Estrutura</dt><dd>Runs curtas de 5–10 min, encontros + um chefe</dd></div>
-    <div><dt>Gravação</dt><dd>5 s por eco · até 3 ecos</dd></div>
+    <div><dt>Gravação</dt><dd>3,5 s por eco · um eco ativo</dd></div>
     <div><dt>Referência de câmera</dt><dd>As fases de avião de <em>Cuphead</em></dd></div>
     <div><dt>Referência de visual</dt><dd>O pixelado do <em>Star Fox</em> (SNES)</dd></div>
   </dl>
@@ -56,11 +56,11 @@
 
   <section class="plate" aria-labelledby="echo">
     <header><h2 id="echo">O eco temporal <a class="to" href="gdd-full.html#c02">→ 02</a></h2><span class="osd">sistema principal</span></header>
-    <figure><img src="img/echo-recording.svg" alt="Linha do tempo de 5 segundos: segurar Shift grava amostras e eventos; apertar E faz o eco repetir tudo na mesma ordem." width="800" height="330"></figure>
+    <figure><img src="img/echo-recording.svg" alt="Linha do tempo de gravação: segurar Shift grava amostras e eventos; soltar Shift volta à âncora e faz o eco repetir tudo na mesma ordem." width="800" height="330"></figure>
     <ol class="steps">
-      <li><span>Segure <kbd class="rec">Shift</kbd>: o jogo grava até <strong>5 s</strong> de posição, mira, inclinação, tiros e gadgets.</span></li>
-      <li><span>Solte: a sequência fica pronta. Aperte <kbd class="echo">E</kbd>: uma nave fantasma repete tudo, a partir do ponto inicial gravado.</span></li>
-      <li><span>Você continua pilotando — e pode gravar outra sequência enquanto o eco trabalha. Até <strong>3 ecos</strong> ativos.</span></li>
+      <li><span><strong>Segure</strong> <kbd class="rec">Shift</kbd>: o jogo planta uma âncora e grava até <strong>3,5 s</strong> de posição, mira, inclinação, tiros, gadgets e esquivas.</span></li>
+      <li><span><strong>Solte</strong>: a nave volta à âncora, com um giro de esquiva e <strong>0,4 s sem tomar dano</strong>, e uma nave fantasma repete tudo, a partir do ponto inicial gravado. Você decide quando encerrar.</span></li>
+      <li><span>Você continua pilotando enquanto o eco trabalha. Há <strong>um eco</strong> ativo nessa primeira versão.</span></li>
     </ol>
     <div class="rule"><span class="osd">Regra fundamental</span>O eco reproduz as ações, mas <strong>não rebobina o mundo</strong>. Inimigos mortos não voltam, projéteis destruídos não reaparecem.</div>
   </section>
@@ -68,22 +68,22 @@
   <section class="plate" aria-labelledby="combat">
     <header><h2 id="combat">Combate e combos <a class="to" href="gdd-full.html#c03">→ 03</a></h2><span class="osd">dano direto · de gadget · combinado</span></header>
     <figure><img src="img/combos.svg" alt="Os três combos: Crossfire, Reflect Chain e Synchronized Strike." width="800" height="300"></figure>
-    <p>Movimento em 8 direções independente da mira, disparo contínuo na direção do mouse e resposta em camadas a cada tiro: retículo pulsante, recoil, flash ciano e squash-and-stretch. Acertos piscam e soltam faíscas; escudos defletem; destruições deixam explosão, anel e impulso de câmera proporcionais. A nave ainda tem um gadget e invulnerabilidade breve após o dano. Os combos são <strong>eventos que o jogo reconhece</strong>, não multiplicadores — e cada um recebe feedback próprio para o jogador entender por que funcionou.</p>
-    <p>No protótipo, os dois primeiros a existir: <strong>Crossfire</strong> (nave e eco acertam o mesmo alvo em até 1 s: dano combinado) e <strong>Synchronized Strike</strong> (um gerador do Guardião pela nave, o outro pelo eco, em até 2,5 s: o escudo do núcleo cai). Janelas generosas, valores de partida.</p>
+    <p>Movimento em 8 direções independente da mira, disparo contínuo na direção do mouse e resposta em camadas a cada tiro: retículo pulsante, recoil, flash ciano e squash-and-stretch. Acertos piscam e soltam faíscas; escudos defletem; destruições deixam explosão, anel e impulso de câmera proporcionais. A nave ainda tem um gadget, uma <strong>esquiva</strong> (giro com rajada de velocidade e 0,4 s sem dano, recarga de 0,8 s) e invulnerabilidade breve após o dano. Os combos são <strong>eventos que o jogo reconhece</strong>, não multiplicadores — e cada um recebe feedback próprio para o jogador entender por que funcionou.</p>
+    <p>No protótipo, os dois primeiros a existir: <strong>Crossfire</strong> (nave e eco acertam o mesmo alvo em até 1 s: dano combinado) e <strong>Synchronized Strike</strong> (um canhão do Guardião pela nave, o outro pelo eco, em até 2,5 s: aviso e pontos). Janelas generosas, valores de partida.</p>
   </section>
 
   <section class="plate" aria-labelledby="foes">
     <header><h2 id="foes">Inimigos <a class="to" href="gdd-full.html#c04">→ 04</a></h2><span class="osd">ondas por script</span></header>
-    <figure><img src="img/enemies.svg" alt="Caça mergulhando, interceptador em senoide, artilheiro disparando leques e torreta planejada." width="800" height="250"></figure>
-    <p><strong>Caça</strong> (S: entra em fila, mergulha e dispara), <strong>Interceptador</strong> (W: cruza em senoide com rajadas de 2), <strong>Artilheiro</strong> (M: oscila à direita e dispara leques de 5) e <strong>Torreta</strong> (planejada). Cada família sorteia um de três modelos; só o visual muda.</p>
-    <p>Nada de spawn aleatório: cada encontro segue uma lista de ondas com tempo e posição. O encontro atual comprime <strong>15 entradas e 66 inimigos em 54 s</strong>, com pressão crescente e sobreposições legíveis. Matar inimigos nunca é obrigatório; o scroll continua.</p>
+    <figure><img src="img/enemies.svg" alt="Caça mergulhando, com três modelos; interceptador em senoide; artilheiro, com três modelos; e torreta planejada." width="800" height="250"></figure>
+    <p><strong>Caça</strong> (S), <strong>Interceptador</strong> (W: cruza em senoide com rajadas de 2), <strong>Artilheiro</strong> (M) e <strong>Torreta</strong> (planejada). <strong>O modelo decide o comportamento</strong>: S_1 <strong>kamikaze</strong> (persegue e explode), S_2 <strong>veloz</strong> (tiro pequeno e raro), S_3 <strong>rajada curta</strong> (3 tiros); M_1 <strong>tanque</strong> (parado como obstáculo, explode quando a nave chega perto), M_2 <strong>rajada</strong> de 4 tiros pesados, M_3 <strong>escopeta</strong> (7 tiros em leque; esquiva dos tiros).</p>
+    <p>Nada de spawn aleatório: cada encontro segue uma lista de ondas com tempo e posição. O encontro atual comprime <strong>15 entradas e 64 inimigos em 54 s</strong>, escolhendo o modelo de cada onda, com pressão crescente e sobreposições legíveis. Matar inimigos nunca é obrigatório; o scroll continua.</p>
   </section>
 
   <section class="plate" aria-labelledby="boss">
     <header><h2 id="boss">O chefe <a class="to" href="gdd-full.html#c06">→ 06</a></h2><span class="osd">nome provisório</span></header>
-    <figure><img src="img/boss.svg" alt="O Guardião do Ciclo: núcleo blindado, dois geradores, laser; quatro fases." width="800" height="300"></figure>
-    <p><strong>O Guardião do Ciclo</strong> protege uma passagem temporal. Vencível com uma boa sequência temporal — <strong>nunca pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</p>
-    <p class="muted">No protótipo, as fases 1 a 3: os dois geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, visto de lado como as naves, ele aponta dois braços-canhão para a nave, em alturas diferentes, com um gerador na ponta de cada um; o visor, no alto, é o núcleo. Durante o combate ele deriva numa faixa curta e acelera os padrões a cada fase.</p>
+    <figure><img src="img/boss.svg" alt="O Guardião do Ciclo: antena, olhos, dois canhões e dois conjuntos de dentes; fase 1 blindado, fase 2 desmonte." width="800" height="300"></figure>
+    <p><strong>O Guardião do Ciclo</strong> protege uma passagem temporal e <strong>se desmonta peça por peça, na ordem que o jogador escolher</strong>. Vencível com uma boa sequência temporal — <strong>nunca pixel-perfect</strong>: o eco ataca uma peça enquanto a nave ataca outra.</p>
+    <p class="muted">A <strong>antena</strong> chama caças de reforço (sem ela, atira mais rápido); os <strong>olhos</strong> chamam artilheiros (sem eles, ganha uma espiral de tiros e abre os <strong>dentes de cima</strong>); os <strong>canhões</strong> o deixam mais rápido e agressivo a cada queda, e os dois abrem os <strong>dentes de baixo</strong>. Os dois conjuntos de dentes são o ponto fraco: caindo os dois, ele cai. Nada volta. Com o modelo do designer, visto de lado como as naves, as peças são colisores com marcadores até a arte separar cada uma.</p>
   </section>
 
   <section class="plate" aria-labelledby="traps">
@@ -103,16 +103,16 @@
 
   <section class="plate" aria-labelledby="ctl">
     <header><h2 id="ctl">Controles <a class="to" href="gdd-full.html#c07">→ 07</a></h2><span class="osd">provisórios</span></header>
-    <figure><img src="img/controls.svg" alt="WASD ou setas movem; mouse mira; Espaço ou clique atiram; Shift grava; E invoca o eco; Q usa o gadget; Esc pausa." width="800" height="270"></figure>
-    <p>Gravar e invocar ficam em <strong>teclas separadas</strong>, para o jogador não soltar um eco sem querer enquanto desvia dos tiros.</p>
-    <p>Também dá para jogar com controle (stick esquerdo move, stick direito mira, RT atira, LT grava, RB invoca, LB gadget, Start pausa), e a tela de controles troca qualquer tecla ou botão.</p>
+    <figure><img src="img/controls.svg" alt="WASD ou setas movem; mouse mira; Espaço ou clique atiram; Shift segurado grava; F ou botão direito esquiva; E invoca o eco; Q usa o gadget; Esc pausa." width="800" height="270"></figure>
+    <p>Gravar, esquivar e invocar ficam em <strong>teclas separadas</strong>, para o jogador não soltar um eco sem querer enquanto desvia dos tiros. Segurar Shift grava; soltar volta à âncora.</p>
+    <p>Também dá para jogar com controle (stick esquerdo move, stick direito mira, RT atira, LT segurado grava, A esquiva, RB invoca, LB gadget, Start pausa), e a tela de controles troca qualquer tecla ou botão.</p>
     <p>O jogo abre num menu inspirado no <em>Star Fox 64</em>: título, menu (jogo, controles, som, idioma, créditos), mapa de missões, história que sobe pela tela e, na arena, o cartão "Missão Nº 1". O jogo é em <strong>inglês por padrão</strong> e o jogador pode trocar para <strong>português brasileiro</strong> na tela Idioma (Unity Localization).</p>
   </section>
 
   <section class="plate" aria-labelledby="hud">
     <header><h2 id="hud">HUD <a class="to" href="gdd-full.html#c07">→ 07</a></h2><span class="osd">mockup conceitual</span></header>
     <figure><img src="img/hud.svg" alt="Mockup do HUD: integridade, memória temporal, vida do chefe, pontuação, ecos ativos, gadget e aviso de combo." width="800" height="250"></figure>
-    <p>Integridade, memória temporal, ecos ativos, gadget e recarga, vida do chefe e vulnerabilidade, e o aviso de cada combo.</p>
+    <p>Integridade, memória temporal, ecos ativos, gadget e recarga, a vida dos dentes e as peças do chefe, e o aviso de cada combo.</p>
   </section>
 
   <section class="plate" aria-labelledby="look">
@@ -143,17 +143,17 @@
   <section class="plate" aria-labelledby="proto">
     <header><h2 id="proto">Protótipo — estado atual <a class="to" href="gdd-full.html#c10">→ 10</a></h2><span class="osd">Assets/_Project/Scenes/Arena_01.unity</span></header>
     <p>Jogável. Nave, eco, inimigos e chefe usam os modelos 3D de blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro, gravação de 3,5 s segurando o botão, eco que repete movimento, tiros, esquivas e gadget, esquiva da nave, caças, interceptadores e artilheiros com um comportamento por modelo, em ondas por script, mina temporal, o Guardião do Ciclo (peças destrutíveis, reforços e dentes como ponto fraco), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro atual recomeça) vitória (derrotar o Guardião), o fluxo de menus (título, menu, idioma em inglês ou português, mapa de missões, história e cartão de missão) e som: efeitos e música CC0 ligados ao jogo, com os valores ainda por ajustar de ouvido.</p>
-    <div class="rule warn"><span class="osd">Falta</span>Torreta, o combo Reflect Chain, o pulso de interferência, a fase 4 do chefe e o encontro de Combinação.</div>
+    <div class="rule warn"><span class="osd">Falta</span>Torreta, o combo Reflect Chain, o pulso de interferência e o encontro de Combinação.</div>
   </section>
 
   <section class="plate" aria-labelledby="open">
     <header><h2 id="open">Perguntas em aberto</h2><span class="osd">contradições e lacunas do v0.1</span></header>
     <ul class="q">
-      <li><span>O chefe tem quatro fases (§9) ou duas (§10)? <a href="gdd-full.html#c06">→ 06</a></span></li>
+      <li><span>Os dois conjuntos de dentes precisam cair para vencer, ou um basta? Qual é a "nova mecânica de ataque" dos olhos? <a href="gdd-full.html#c06">→ 06</a></span></li>
       <li><span>Um ou dois gadgets no MVP? §7 põe mina e pulso no escopo inicial; §14 pede um. <a href="gdd-full.html#c05">→ 05</a></span></li>
       <li><span>Um ou até três ecos no MVP? §2 diz até 3; §14 põe três ecos como opcional. <a href="gdd-full.html#c02">→ 02</a></span></li>
-      <li><span>Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração e tamanho sugerido pelo designer. <a href="gdd-full.html#c06">→ 06</a></span></li>
-      <li><span>Janelas dos combos (1 s e 2,5 s) e se só o Synchronized Strike deve abrir o núcleo. <a href="gdd-full.html#c03">→ 03</a></span></li>
+      <li><span>Vida das peças, reforços e frenesi do Guardião, o que o Synchronized Strike deveria fazer agora, e o chefe grande demais para a tela. <a href="gdd-full.html#c06">→ 06</a></span></li>
+      <li><span>Janelas dos combos (1 s e 2,5 s); esquiva (tempo, recarga e teclas); kamikaze, tanque e escopeteiro. <a href="gdd-full.html#c03">→ 03</a> <a href="gdd-full.html#c04">→ 04</a></span></li>
       <li><span>Quais elementos são modelos 3D e quais são sprites 2D; lente de 300 mm sugerida pelo designer. <a href="gdd-full.html#c08">→ 08</a></span></li>
       <li><span>Donos de cada capítulo, data da jam e equipe. <a href="gdd-full.html#c10">→ 10</a></span></li>
     </ul>
