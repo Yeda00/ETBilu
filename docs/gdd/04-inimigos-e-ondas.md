@@ -4,7 +4,7 @@ chapter: "04"
 status: draft
 owner: _TBD_
 updated: 2026-10-18
-source: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project (Enemy_S, Enemy_M, Enemy, EnemyGun, SwoopMotion, HoverMotion, FireCycle; Data/Waves/Encounter01_PrimeiroCiclo.asset)
+source: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project (Enemy_S, Enemy_M, Enemy, EnemyGun, ModelVariants, SwoopMotion, HoverMotion, FireCycle; Data/Waves/Encounter01_PrimeiroCiclo.asset)
 ---
 
 # ONE MORE TIME | Inimigos e ondas
@@ -28,7 +28,14 @@ Em vez de spawn aleatório, cada encontro segue uma **lista de ondas com tempo e
 
 O GDD v0.1 previa um **drone** (linha reta, sem atirar) e um **ondulante** (zigue-zague em grupos). Em
 2026-10-18 o time pediu inimigos melhores, que atirem; caça e artilheiro ocuparam esses dois lugares, com
-os modelos de blockout do designer (`Enemie_S_BlockOut` e `Enemie_M_BlockOut`) → [08](08-direcao-visual-e-sonora.md).
+os modelos de blockout do designer → [08](08-direcao-visual-e-sonora.md).
+
+Cada tipo tem **três variações de modelo**, e cada inimigo sorteia uma ao surgir. A variação muda só o
+visual: caminho, tiro, vida e pontos são os do tipo, e as ondas continuam por script. A hitbox e o ponto de
+onde sai o tiro acompanham o modelo sorteado.
+
+*Por quê:* uma fila de caças iguais parece um carimbo; com peças e cabeças diferentes, a onda parece um
+esquadrão, sem mudar o que o jogador aprende sobre cada tipo.
 
 Para a jam, a recomendação do v0.1 era **começar com um tipo** e adicionar os outros só se o núcleo já
 estivesse divertido; o protótipo tem dois.
@@ -43,6 +50,7 @@ o eco.
 |---|---|---|---|
 | Vida | 1 | 20 | prefab → `Health` |
 | Pontos | 100 | 300 | prefab → `Enemy` |
+| Modelo | sorteado entre 3 variações | sorteado entre 3 variações | prefab → `ModelVariants` |
 | Movimento | 6,5 u/s; mergulha a 30% da meia largura à direita do centro, em 1 s, no máximo 4,5 u para cima ou para baixo | entra em 1,6 s até 4,5 u da borda direita; segura 7 s balançando 0,5 u (0,3 Hz); sai acelerando a 5 u/s² | prefab → `Enemy` |
 | Tiro | 1 tiro mirado, 0,35 s depois do início do mergulho | leque de 3 tiros mirados, 12° entre eles; a primeira rajada 0,8 s depois de parar, depois a cada 1,8 s | prefab → `EnemyGun` |
 | Aviso antes do tiro | 0,35 s | 0,45 s | prefab → `EnemyGun` |

@@ -53,7 +53,7 @@ namespace OneMoreTime.EditorTools
             ConfigurePhysicsLayers();
             var m = BuildMaterials();
             var p = BuildPrefabs(m);
-            UpgradePrefabs(p);
+            UpgradePrefabs(m, p);
             var echoConfig = LoadOrCreate($"{DataDir}/EchoConfig.asset", () => ScriptableObject.CreateInstance<EchoConfig>());
             var schedule = LoadOrCreate($"{DataDir}/Waves/Encounter01_PrimeiroCiclo.asset", () => BuildEncounter01(p));
             UpgradeEncounter01(schedule, p);
@@ -186,8 +186,9 @@ namespace OneMoreTime.EditorTools
             return p;
         }
 
-        // Prefabs built before the gadget existed get it here, in place, so scene instances keep their links.
-        static void UpgradePrefabs(Prefabs p)
+        // Prefabs built before a feature existed get it here, in place, so scene instances and waves keep their links:
+        // the gadget on the ship, the model variants on the enemies.
+        static void UpgradePrefabs(Materials m, Prefabs p)
         {
             EditPrefab(AssetDatabase.GetAssetPath(p.Ship), root =>
             {
@@ -204,6 +205,16 @@ namespace OneMoreTime.EditorTools
             });
             EditPrefab(AssetDatabase.GetAssetPath(p.Echo), root =>
                 SetIfNull(root.GetComponent<EchoGhost>(), "mine", p.MineEcho.GetComponent<TimeMine>()));
+            EditPrefab(AssetDatabase.GetAssetPath(p.EnemyS), root => AddMissingVariants(root, EnemySModels, EnemySScale, m.Enemy));
+            EditPrefab(AssetDatabase.GetAssetPath(p.EnemyM), root => AddMissingVariants(root, EnemyMModels, EnemyMScale, m.EnemyMedium));
+        }
+
+        static bool AddMissingVariants(GameObject root, string[] modelPaths, float scale, Material mat)
+        {
+            if (root.GetComponent<ModelVariants>() != null)
+                return false;
+            ModelVariantsOf(root, modelPaths, scale, mat);
+            return true;
         }
 
         static GameObject BuildShip(Materials m, GameObject shot, GameObject echo)
@@ -260,10 +271,21 @@ namespace OneMoreTime.EditorTools
         // the ship (-X), with the same small roll toward the camera as the player ship.
         static readonly Quaternion EnemyFacing = Quaternion.AngleAxis(-15f, Vector3.right) * Quaternion.Euler(0f, 90f, 0f);
 
+        // The designer's variants of each enemy (GDD 04), in his numbering; the first S export is the S_2.
+        static readonly string[] EnemySModels =
+        {
+            $"{ShipArtDir}/Enemie_S_1_BlockOut.fbx", $"{ShipArtDir}/Enemie_S_BlockOut.fbx", $"{ShipArtDir}/Enemie_S_3_BlockOut.fbx",
+        };
+        static readonly string[] EnemyMModels =
+        {
+            $"{ShipArtDir}/Enemie_M_1_BlockOut.fbx", $"{ShipArtDir}/Enemie_M_2_BlockOut.fbx", $"{ShipArtDir}/Enemie_M_3_BlockOut.fbx",
+        };
+        const float EnemySScale = 0.9f, EnemyMScale = 1f;
+
         // Small fighter (GDD 04): comes in a line, swoops to the ship's height and fires one aimed shot.
         static GameObject BuildEnemyS(Materials m, GameObject shot)
         {
-            var root = BuildEnemy("Enemy_S", $"{ShipArtDir}/Enemie_S_BlockOut.fbx", 0.9f, m.Enemy, m.Warning,
+            var root = BuildEnemy("Enemy_S", EnemySModels, EnemySScale, m.Enemy, m.Warning,
                 MovementPattern.Swoop, hp: 1, score: 100, shot);
             var gun = root.GetComponent<EnemyGun>();
             SetFloat(gun, "firstDelay", 0.35f);
@@ -276,7 +298,7 @@ namespace OneMoreTime.EditorTools
         // Medium gunship (GDD 04): holds a column on the right and fires aimed fans of three.
         static GameObject BuildEnemyM(Materials m, GameObject shot)
         {
-            var root = BuildEnemy("Enemy_M", $"{ShipArtDir}/Enemie_M_BlockOut.fbx", 1f, m.EnemyMedium, m.Warning,
+            var root = BuildEnemy("Enemy_M", EnemyMModels, EnemyMScale, m.EnemyMedium, m.Warning,
                 MovementPattern.Hover, hp: 20, score: 300, shot);
             var gun = root.GetComponent<EnemyGun>();
             SetFloat(gun, "firstDelay", 0.8f);
@@ -287,17 +309,14 @@ namespace OneMoreTime.EditorTools
             return root;
         }
 
-        static GameObject BuildEnemy(string name, string modelPath, float scale, Material mat, Material warningMat,
+        static GameObject BuildEnemy(string name, string[] modelPaths, float scale, Material mat, Material warningMat,
             MovementPattern pattern, int hp, int score, GameObject shot)
         {
             var root = new GameObject(name);
             var visual = Visual(root.transform);
-            var art = Model(visual, modelPath, EnemyFacing, scale, mat);
             AddKinematicBody(root);
-            // A little smaller than the art, on the play plane.
             var col = root.AddComponent<BoxCollider>();
             col.isTrigger = true;
-            col.size = new Vector3(art.size.x * 0.85f, art.size.y * 0.85f, 1f);
 
             var health = root.AddComponent<Health>();
             SetEnum(health, "faction", (int)Faction.Enemy);
@@ -309,10 +328,9 @@ namespace OneMoreTime.EditorTools
             var contact = root.AddComponent<ContactDamage>();
             SetEnum(contact, "faction", (int)Faction.Enemy);
 
-            // The gun sits at the nose; the telegraph blinks there before each burst.
+            // The gun sits at the nose (placed per model below); the telegraph blinks there before each burst.
             var muzzle = new GameObject("Muzzle").transform;
             muzzle.SetParent(root.transform, false);
-            muzzle.localPosition = new Vector3(art.min.x - 0.1f, 0f, 0f);
             var telegraph = Part(muzzle, PrimitiveType.Sphere, "Telegraph", Vector3.zero, Vector3.zero, Vector3.one * 0.5f, warningMat, shadows: false);
             telegraph.AddComponent<Blinker>();
             var gun = root.AddComponent<EnemyGun>();
@@ -320,8 +338,45 @@ namespace OneMoreTime.EditorTools
             Set(gun, "muzzle", muzzle);
             Set(gun, "telegraph", telegraph);
 
+            ModelVariantsOf(root, modelPaths, scale, mat);
             SetLayer(root, LayerEnemy);
             return root;
+        }
+
+        // Builds Visual/Model_1..n, one per model, and the ModelVariants that picks one per spawn. Each variant's
+        // hitbox is a little smaller than its art, on the play plane; its muzzle sits just ahead of its nose.
+        // The prefab shows the first variant.
+        static void ModelVariantsOf(GameObject root, string[] modelPaths, float scale, Material mat)
+        {
+            var visual = root.transform.Find("Visual");
+            for (int i = visual.childCount - 1; i >= 0; i--)
+                Object.DestroyImmediate(visual.GetChild(i).gameObject);
+            var looks = root.GetComponent<ModelVariants>();
+            if (looks == null)
+                looks = root.AddComponent<ModelVariants>();
+            var so = new SerializedObject(looks);
+            var list = Prop(so, "variants");
+            list.arraySize = modelPaths.Length;
+            for (int i = 0; i < modelPaths.Length; i++)
+            {
+                var art = Model(visual, modelPaths[i], EnemyFacing, scale, mat);
+                var pivot = visual.GetChild(visual.childCount - 1);
+                pivot.name = $"Model_{i + 1}";
+                pivot.gameObject.SetActive(i == 0);
+                var entry = list.GetArrayElementAtIndex(i);
+                entry.FindPropertyRelative("model").objectReferenceValue = pivot.gameObject;
+                entry.FindPropertyRelative("hitbox").vector2Value = new Vector2(art.size.x * 0.85f, art.size.y * 0.85f);
+                entry.FindPropertyRelative("muzzleX").floatValue = art.min.x - 0.1f;
+            }
+            var hitbox = root.GetComponent<BoxCollider>();
+            var muzzle = root.transform.Find("Muzzle");
+            Prop(so, "hitbox").objectReferenceValue = hitbox;
+            Prop(so, "muzzle").objectReferenceValue = muzzle;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            var first = list.GetArrayElementAtIndex(0);
+            hitbox.size = new Vector3(first.FindPropertyRelative("hitbox").vector2Value.x, first.FindPropertyRelative("hitbox").vector2Value.y, 1f);
+            muzzle.localPosition = new Vector3(first.FindPropertyRelative("muzzleX").floatValue, 0f, 0f);
+            SetLayer(visual.gameObject, root.layer);
         }
 
         // Puts a model under "parent/Model" (the pivot keeps rotation, scale and the centring offset) and returns

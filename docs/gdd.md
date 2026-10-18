@@ -56,7 +56,8 @@ escudo do núcleo cai). Janelas generosas, valores de partida.
 
 **Caça** (S: entra em fila, mergulha na altura da nave e dispara um tiro mirado), **Artilheiro** (M: para à
 direita e dispara leques de 3) e **Torreta** (fixa, mira na nave; planejada). Ondas por script, nunca
-aleatórias — o jogador aprende o padrão e planeja o que gravar.
+aleatórias — o jogador aprende o padrão e planeja o que gravar. Cada caça e artilheiro sorteia um de três
+modelos do seu tipo; só o visual muda.
 
 ## Armadilhas, gadgets, puzzles → [05](gdd/05-armadilhas-gadgets-puzzles.md)
 
@@ -69,8 +70,9 @@ eco segura enquanto está sobre ele; a mina temporal (Q), que o eco também solt
 
 **O Guardião do Ciclo** (provisório): Sobrevivência → Preparação → Sincronização → Última chance.
 Vencível com boa sequência temporal, nunca pixel-perfect. No protótipo, as fases 1 a 3: os dois
-geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, ele é
-um portão de duas mandíbulas: um gerador na ponta de cada uma e o visor, entre elas, como núcleo.
+geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, visto
+de lado como as naves, ele aponta dois braços-canhão para a nave, em alturas diferentes, com um gerador na
+ponta de cada um; o visor, no alto, é o núcleo.
 
 ## Controles e HUD → [07](gdd/07-controles-e-interface.md)
 
@@ -106,9 +108,9 @@ Faltam torreta, os outros três combos, som, pulso de interferência, a fase 4 d
 - Um ou até três ecos no MVP? → [02](gdd/02-eco-temporal.md)
 - Regra do eco para dispositivos de presença contínua → [02](gdd/02-eco-temporal.md)
 - A gravação é relativa à tela: o protótipo para a rolagem nos puzzles; vira regra? → [02](gdd/02-eco-temporal.md)
-- Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração → [06](gdd/06-chefe-e-runs.md)
+- Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração; movimento e tamanho sugeridos pelo designer → [06](gdd/06-chefe-e-runs.md)
 - Janelas dos combos (1 s e 2,5 s) e se só o Synchronized Strike deve abrir o núcleo → [03](gdd/03-combate.md)
-- Quais elementos são modelos 3D e quais são sprites 2D → [08](gdd/08-direcao-visual-e-sonora.md)
+- Quais elementos são modelos 3D e quais são sprites 2D; lente de 300 mm sugerida pelo designer → [08](gdd/08-direcao-visual-e-sonora.md)
 - Donos de cada capítulo, datas e equipe da jam → [10](gdd/10-producao.md)
 
 ## O GDD completo

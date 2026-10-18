@@ -31,27 +31,29 @@ de combate que protege uma passagem temporal. O núcleo fica blindado durante a 
 ### No protótipo atual
 
 Uma versão mínima com as **fases 1 a 3** (prefab `Guardian`, regras em `GuardianModel`). A fase 4 não existe.
-O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda direita, ocupando o terço direito
-da tela.
+O Guardião entra pela direita em 2,5 s, com a tela parada, e fica parado na borda direita, ocupando a metade
+direita da tela.
 
-Ele usa o modelo de blockout do designer (`Enemie_Boss_BlockOut`), **visto de cima**: os dois braços-canhão
-viram duas **mandíbulas**, uma em cima e outra embaixo, apontadas para a nave; a cabeça fica entre elas, ao
-fundo, com o **visor** vermelho virado para a nave. A leitura é a de um portão com duas mandíbulas, a máquina
-que protege a passagem.
+Ele usa o modelo de blockout do designer (`Enemie_Boss_BlockOut`), **visto de lado**, como as naves e os
+inimigos: virado para a nave, com o topo inclinado 25° para a câmera e o rosto virado 15° para ela. A cabeça,
+com o **visor** vermelho, fica no alto; os dois **braços-canhão** apontam para a nave em alturas diferentes (o
+de trás aparece mais alto e um pouco mais à frente); o corpo desce numa cauda. Em 2026-10-18 o designer pediu
+essa vista, a mesma das naves, e mandou o modelo em tamanho menor.
 
 | Peça do modelo | No combate |
 |---|---|
-| Ponta de cada mandíbula | Um **gerador** (losango laranja): o de cima e o de baixo |
-| Visor | O **núcleo**, alcançável pelo vão entre as mandíbulas |
+| Ponta de cada canhão | Um **gerador** (losango laranja): o de cima (canhão de trás) e o de baixo (canhão da frente) |
+| Visor | O **núcleo**, no alto, acima dos canhões |
 | Boca | De onde saem os tiros das fases |
-| Corpo e mandíbulas | **Blindagem** |
+| Corpo e canhões | **Blindagem** |
 
 Para tudo bater com o que aparece na tela, os colisores ficam no plano de jogo, na posição em que cada peça é
-vista pela câmera; o modelo fica logo atrás desse plano. Os geradores ficam a 2,9 u acima e abaixo do centro.
+vista pela câmera; o modelo fica logo atrás desse plano. A blindagem é feita de faixas que seguem o contorno
+do corpo e dos canhões. Os geradores ficam 1,7 u um acima do outro, e o núcleo 3 u acima do centro do Guardião.
 
 | Parte | Como funciona |
 |---|---|
-| **Blindagem** (corpo e mandíbulas) | Absorve todos os tiros e fere a nave que encostar nela |
+| **Blindagem** (corpo e canhões) | Absorve todos os tiros e fere a nave que encostar nela |
 | **Núcleo** | 120 de vida. Absorve os tiros enquanto o escudo âmbar está à vista; só toma dano quando fica vulnerável |
 | **Geradores** (cima e baixo) | 12 de vida cada. Derrubar o primeiro abre uma **janela**; se o segundo cai dentro dela, o núcleo fica **vulnerável por 4 s**. Se a janela fecha com um gerador de pé, o que caiu volta com a vida cheia |
 | **Volta dos geradores** | Quando a vulnerabilidade acaba, os dois geradores voltam com a vida cheia |
@@ -129,3 +131,5 @@ A repetição deve reforçar o tema *One More Time*. Dois modelos estão em jogo
 - [ ] Na fase 2 o núcleo também fica vulnerável quando os dois geradores caem; o v0.1 só fala de núcleo exposto na fase 3. Manter assim?
 - [ ] Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar? (Outra saída: só o Synchronized Strike abrir o núcleo → [03](03-combate.md).)
 - [ ] O Guardião entrando fere a nave que estiver no caminho (dano de contato da blindagem). É justo, ou a blindagem só fere depois que ele para?
+- [ ] O designer sugeriu que o Guardião se mova de um lado para o outro. Hoje ele fica parado na borda direita; com movimento, as alturas dos geradores e do núcleo mudariam durante a luta.
+- [ ] O designer também sugeriu um chefe grande o bastante para não caber na tela, com a peça grande dividida em partes. Hoje ele cabe na tela, e as partes são só os dois geradores e o núcleo.

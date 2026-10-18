@@ -281,7 +281,9 @@
       <tr><th scope="row">Artilheiro (M, médio)</th><td>Entra, freia e segura uma posição à direita, balançando de leve. A cada rajada avisa com um brilho e dispara um <strong>leque de 3 tiros</strong> mirados; depois de um tempo acelera e sai pela esquerda</td><td>Resistente e parado: o alvo natural de Crossfire (nave e eco no mesmo alvo)</td></tr>
       <tr><th scope="row">Torreta <em>(planejada)</em></th><td>Parada no cenário, atira na direção da nave</td><td>Exige que nave e eco ataquem de posições diferentes</td></tr>
     </tbody></table></div>
-    <p>O GDD v0.1 previa um <strong>drone</strong> (linha reta, sem atirar) e um <strong>ondulante</strong> (zigue-zague em grupos). Em 2026-10-18 o time pediu inimigos melhores, que atirem; caça e artilheiro ocuparam esses dois lugares, com os modelos de blockout do designer (<code>Enemie_S_BlockOut</code> e <code>Enemie_M_BlockOut</code>) → <a href="#c08">08</a>.</p>
+    <p>O GDD v0.1 previa um <strong>drone</strong> (linha reta, sem atirar) e um <strong>ondulante</strong> (zigue-zague em grupos). Em 2026-10-18 o time pediu inimigos melhores, que atirem; caça e artilheiro ocuparam esses dois lugares, com os modelos de blockout do designer → <a href="#c08">08</a>.</p>
+    <p>Cada tipo tem <strong>três variações de modelo</strong>, e cada inimigo sorteia uma ao surgir. A variação muda só o visual: caminho, tiro, vida e pontos são os do tipo, e as ondas continuam por script. A hitbox e o ponto de onde sai o tiro acompanham o modelo sorteado.</p>
+    <p class="why"><em>Por quê:</em> uma fila de caças iguais parece um carimbo; com peças e cabeças diferentes, a onda parece um esquadrão, sem mudar o que o jogador aprende sobre cada tipo.</p>
     <p>Para a jam, a recomendação do v0.1 era <strong>começar com um tipo</strong> e adicionar os outros só se o núcleo já estivesse divertido; o protótipo tem dois.</p>
     <p class="why"><em>Por quê:</em> os dois cobrem as duas pressões clássicas de um shooter de nave — o caça é rápido e frágil e obriga a sair da linha do tiro; o artilheiro é lento e resistente e obriga a gastar tempo nele, o que pede o eco.</p>
   </section>
@@ -289,6 +291,7 @@
     <div class="scroll"><table><thead><tr><th></th><th>Caça (S)</th><th>Artilheiro (M)</th><th>Onde mudar</th></tr></thead><tbody>
       <tr><th scope="row">Vida</th><td>1</td><td>20</td><td>prefab → <code>Health</code></td></tr>
       <tr><th scope="row">Pontos</th><td>100</td><td>300</td><td>prefab → <code>Enemy</code></td></tr>
+      <tr><th scope="row">Modelo</th><td>sorteado entre 3 variações</td><td>sorteado entre 3 variações</td><td>prefab → <code>ModelVariants</code></td></tr>
       <tr><th scope="row">Movimento</th><td>6,5 u/s; mergulha a 30% da meia largura à direita do centro, em 1 s, no máximo 4,5 u para cima ou para baixo</td><td>entra em 1,6 s até 4,5 u da borda direita; segura 7 s balançando 0,5 u (0,3 Hz); sai acelerando a 5 u/s²</td><td>prefab → <code>Enemy</code></td></tr>
       <tr><th scope="row">Tiro</th><td>1 tiro mirado, 0,35 s depois do início do mergulho</td><td>leque de 3 tiros mirados, 12° entre eles; a primeira rajada 0,8 s depois de parar, depois a cada 1,8 s</td><td>prefab → <code>EnemyGun</code></td></tr>
       <tr><th scope="row">Aviso antes do tiro</th><td>0,35 s</td><td>0,45 s</td><td>prefab → <code>EnemyGun</code></td></tr>
@@ -440,17 +443,17 @@
     </tbody></table></div>
     <div class="rule ok"><span class="osd">Critério de sucesso</span>O chefe é vencível com uma boa sequência temporal, mas <strong>não exige combinação pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</div>
     <h4>No protótipo atual</h4>
-    <p>Uma versão mínima com as <strong>fases 1 a 3</strong> (prefab <code>Guardian</code>, regras em <code>GuardianModel</code>). A fase 4 não existe. O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda direita, ocupando o terço direito da tela.</p>
-    <p>Ele usa o modelo de blockout do designer (<code>Enemie_Boss_BlockOut</code>), <strong>visto de cima</strong>: os dois braços-canhão viram duas <strong>mandíbulas</strong>, uma em cima e outra embaixo, apontadas para a nave; a cabeça fica entre elas, ao fundo, com o <strong>visor</strong> vermelho virado para a nave. A leitura é a de um portão com duas mandíbulas, a máquina que protege a passagem.</p>
+    <p>Uma versão mínima com as <strong>fases 1 a 3</strong> (prefab <code>Guardian</code>, regras em <code>GuardianModel</code>). A fase 4 não existe. O Guardião entra pela direita em 2,5 s, com a tela parada, e fica parado na borda direita, ocupando a metade direita da tela.</p>
+    <p>Ele usa o modelo de blockout do designer (<code>Enemie_Boss_BlockOut</code>), <strong>visto de lado</strong>, como as naves e os inimigos: virado para a nave, com o topo inclinado 25° para a câmera e o rosto virado 15° para ela. A cabeça, com o <strong>visor</strong> vermelho, fica no alto; os dois <strong>braços-canhão</strong> apontam para a nave em alturas diferentes (o de trás aparece mais alto e um pouco mais à frente); o corpo desce numa cauda. Em 2026-10-18 o designer pediu essa vista, a mesma das naves, e mandou o modelo em tamanho menor.</p>
     <div class="scroll"><table><thead><tr><th>Peça do modelo</th><th>No combate</th></tr></thead><tbody>
-      <tr><th scope="row">Ponta de cada mandíbula</th><td>Um <strong>gerador</strong> (losango laranja): o de cima e o de baixo</td></tr>
-      <tr><th scope="row">Visor</th><td>O <strong>núcleo</strong>, alcançável pelo vão entre as mandíbulas</td></tr>
+      <tr><th scope="row">Ponta de cada canhão</th><td>Um <strong>gerador</strong> (losango laranja): o de cima (canhão de trás) e o de baixo (canhão da frente)</td></tr>
+      <tr><th scope="row">Visor</th><td>O <strong>núcleo</strong>, no alto, acima dos canhões</td></tr>
       <tr><th scope="row">Boca</th><td>De onde saem os tiros das fases</td></tr>
-      <tr><th scope="row">Corpo e mandíbulas</th><td><strong>Blindagem</strong></td></tr>
+      <tr><th scope="row">Corpo e canhões</th><td><strong>Blindagem</strong></td></tr>
     </tbody></table></div>
-    <p>Para tudo bater com o que aparece na tela, os colisores ficam no plano de jogo, na posição em que cada peça é vista pela câmera; o modelo fica logo atrás desse plano. Os geradores ficam a 2,9 u acima e abaixo do centro.</p>
+    <p>Para tudo bater com o que aparece na tela, os colisores ficam no plano de jogo, na posição em que cada peça é vista pela câmera; o modelo fica logo atrás desse plano. A blindagem é feita de faixas que seguem o contorno do corpo e dos canhões. Os geradores ficam 1,7 u um acima do outro, e o núcleo 3 u acima do centro do Guardião.</p>
     <div class="scroll"><table><thead><tr><th>Parte</th><th>Como funciona</th></tr></thead><tbody>
-      <tr><th scope="row">Blindagem (corpo e mandíbulas)</th><td>Absorve todos os tiros e fere a nave que encostar nela</td></tr>
+      <tr><th scope="row">Blindagem (corpo e canhões)</th><td>Absorve todos os tiros e fere a nave que encostar nela</td></tr>
       <tr><th scope="row">Núcleo</th><td>120 de vida. Absorve os tiros enquanto o escudo âmbar está à vista; só toma dano quando fica vulnerável</td></tr>
       <tr><th scope="row">Geradores (cima e baixo)</th><td>12 de vida cada. Derrubar o primeiro abre uma <strong>janela</strong>; se o segundo cai dentro dela, o núcleo fica <strong>vulnerável por 4 s</strong>. Se a janela fecha com um gerador de pé, o que caiu volta com a vida cheia</td></tr>
       <tr><th scope="row">Volta dos geradores</th><td>Quando a vulnerabilidade acaba, os dois geradores voltam com a vida cheia</td></tr>
@@ -500,6 +503,8 @@
     <li><span>Na fase 2 o núcleo também fica vulnerável quando os dois geradores caem; o v0.1 só fala de núcleo exposto na fase 3. Manter assim?</span></li>
     <li><span>Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar? (Outra saída: só o Synchronized Strike abrir o núcleo → <a href="#c03">03</a>.)</span></li>
     <li><span>O Guardião entrando fere a nave que estiver no caminho (dano de contato da blindagem). É justo, ou a blindagem só fere depois que ele para?</span></li>
+    <li><span>O designer sugeriu que o Guardião se mova de um lado para o outro. Hoje ele fica parado na borda direita; com movimento, as alturas dos geradores e do núcleo mudariam durante a luta.</span></li>
+    <li><span>O designer também sugeriu um chefe grande o bastante para não caber na tela, com a peça grande dividida em partes. Hoje ele cabe na tela, e as partes são só os dois geradores e o núcleo.</span></li>
   </ul></div>
 </section>
 
@@ -565,11 +570,13 @@
     <p><strong>No protótipo atual:</strong> câmera em <strong>perspectiva</strong> (campo de visão 40°, a 20 unidades do plano de jogo), a jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade.</p>
     <p>Naves e chefe usam os modelos 3D de blockout do designer, em <code>Art/Ships</code> (do arquivo <code>BI_Ships.blend</code>):</p>
     <div class="scroll"><table><thead><tr><th>Modelo</th><th>Quem usa</th><th>Como aparece</th></tr></thead><tbody>
-      <tr><td><code>BI_Ships_BlockOut</code> (<em>BiluShip</em>)</td><td>Nave e eco</td><td>Virado para a direita, topo do disco inclinado 15° para a câmera; ciano na nave, violeta translúcido no eco</td></tr>
-      <tr><td><code>Enemie_S_BlockOut</code></td><td>Caça (S)</td><td>Virado para a nave, com a mesma inclinação; laranja</td></tr>
-      <tr><td><code>Enemie_M_BlockOut</code></td><td>Artilheiro (M)</td><td>Virado para a nave, com a mesma inclinação; vermelho</td></tr>
-      <tr><td><code>Enemie_Boss_BlockOut</code></td><td>Guardião do Ciclo</td><td>Visto de cima, as mandíbulas apontadas para a nave; casco azul-escuro, visor vermelho → <a href="#c06">06</a></td></tr>
+      <tr><td><code>Bilu_BlockOut</code></td><td>Nave e eco</td><td>Virado para a direita, topo do disco inclinado 15° para a câmera; ciano na nave, violeta translúcido no eco</td></tr>
+      <tr><td><code>Enemie_S_1_BlockOut</code>, <code>Enemie_S_BlockOut</code>, <code>Enemie_S_3_BlockOut</code></td><td>Caça (S)</td><td>Três variações, uma sorteada por caça; viradas para a nave, com a mesma inclinação; laranja</td></tr>
+      <tr><td><code>Enemie_M_1_BlockOut</code>, <code>Enemie_M_2_BlockOut</code>, <code>Enemie_M_3_BlockOut</code></td><td>Artilheiro (M)</td><td>Três variações, sorteadas do mesmo jeito; vermelho</td></tr>
+      <tr><td><code>Enemie_Boss_BlockOut</code></td><td>Guardião do Ciclo</td><td>Visto de lado, virado para a nave, topo inclinado 25° e rosto 15° para a câmera; casco azul-escuro, visor vermelho → <a href="#c06">06</a></td></tr>
     </tbody></table></div>
+    <p>As variações misturam peças entre os inimigos e mudam a cabeça. No caça: só a cabine (<code>S_1</code>), a cabine com dois canhões longos (<code>S</code>, a primeira exportação; não há um <code>S_2</code>) e a cabine com garras (<code>S_3</code>). No artilheiro: só a cabeça (<code>M_1</code>), a cabeça com garras (<code>M_2</code>) e a cabeça com os canhões do caça (<code>M_3</code>) → <a href="#c04">04</a>.</p>
+    <p>Ao subir ou descer, nave, eco e inimigos inclinam até 25°: o topo vira para a câmera quando sobem e se afasta quando descem.</p>
     <p>Inimigos e chefe seguem a regra de cor: laranja e vermelho são perigo. O resto — tiros, armadilhas e cenário — ainda é placeholder feito de primitivas, até a arte chegar.</p>
     <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: projéteis, efeitos, cenário). Naves e chefe já são modelos 3D (blockout).</div>
     <h4>Visual pixelado</h4>
@@ -604,6 +611,7 @@
     <li><span>O HUD fica nítido, como hoje, ou também pixelado, como no <em>Star Fox</em>?</span></li>
     <li><span>Quais elementos são modelos 3D e quais são sprites 2D: <span class="tbd">_TBD_</span> (naves e chefe já são modelos 3D).</span></li>
     <li><span>A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? O protótipo usa perspectiva; falta confirmar.</span></li>
+    <li><span>O designer sugeriu uma lente de 300 mm: campo de visão bem estreito, com a câmera muito mais longe, o que deixa a perspectiva quase plana. O protótipo usa 40° a 20 u; falta testar e decidir.</span></li>
   </ul></div>
 </section>
 
@@ -646,7 +654,7 @@
       <tr><td><code>EchoPlayback</code></td><td><code>EchoPlayback</code> (Core) + <code>EchoGhost</code></td><td><code>EchoGhost</code> é a nave fantasma na cena</td></tr>
       <tr><td><code>WeaponSystem</code></td><td><code>ShipWeapon</code> + <code>Projectile</code> + <code>ProjectilePool</code></td><td>Tiros reaproveitados por pool</td></tr>
       <tr><td><code>DamageSystem</code></td><td><code>Health</code> (+ <code>HealthModel</code>) + <code>ContactDamage</code></td><td></td></tr>
-      <tr><td><code>EnemyController</code></td><td><code>Enemy</code> + <code>EnemyGun</code> + <code>WaveSpawner</code> + <code>WaveSchedule</code> (+ <code>SwoopMotion</code>, <code>HoverMotion</code>, <code>FireCycle</code> no Core)</td><td>Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (<code>Enemy_S</code>, <code>Enemy_M</code>). O <code>WaveSpawner</code> passa a nave e o pool de tiros aos inimigos</td></tr>
+      <tr><td><code>EnemyController</code></td><td><code>Enemy</code> + <code>EnemyGun</code> + <code>ModelVariants</code> + <code>WaveSpawner</code> + <code>WaveSchedule</code> (+ <code>SwoopMotion</code>, <code>HoverMotion</code>, <code>FireCycle</code> no Core)</td><td>Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (<code>Enemy_S</code>, <code>Enemy_M</code>). O <code>WaveSpawner</code> passa a nave e o pool de tiros aos inimigos. <code>ModelVariants</code> sorteia o modelo ao surgir e ajusta a hitbox e a boca do tiro a ele</td></tr>
       <tr><td><code>GadgetSystem</code></td><td><code>ShipGadget</code> + <code>TimeMine</code> (+ <code>Cooldown</code>, <code>TimeMineModel</code> no Core)</td><td>A nave solta a mina; o eco reproduz o evento <code>Gadget</code></td></tr>
       <tr><td><code>TrapController</code></td><td><code>TrapSection</code> + <code>LaserGate</code> + <code>MovingBarrier</code> + <code>SwitchPad</code> (+ <code>TrapCycle</code>, <code>ShutterCycle</code>, <code>PresenceSwitch</code>, <code>LaserGateModel</code> no Core)</td><td><code>TrapSection</code> para a rolagem no puzzle e encerra o encontro</td></tr>
       <tr><td><code>BossController</code></td><td><code>GuardianBoss</code> + <code>SweepLaser</code> (+ <code>GuardianModel</code> no Core)</td><td>Fases, escudos, geradores e padrões de tiro</td></tr>

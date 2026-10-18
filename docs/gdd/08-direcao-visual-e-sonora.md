@@ -28,10 +28,17 @@ Naves e chefe usam os modelos 3D de blockout do designer, em `Art/Ships` (do arq
 
 | Modelo | Quem usa | Como aparece |
 |---|---|---|
-| `BI_Ships_BlockOut` (*BiluShip*) | Nave e eco | Virado para a direita, topo do disco inclinado 15° para a câmera; ciano na nave, violeta translúcido no eco |
-| `Enemie_S_BlockOut` | Caça (S) | Virado para a nave, com a mesma inclinação; laranja |
-| `Enemie_M_BlockOut` | Artilheiro (M) | Virado para a nave, com a mesma inclinação; vermelho |
-| `Enemie_Boss_BlockOut` | Guardião do Ciclo | Visto de cima, as mandíbulas apontadas para a nave; casco azul-escuro, visor vermelho → [06](06-chefe-e-runs.md) |
+| `Bilu_BlockOut` | Nave e eco | Virado para a direita, topo do disco inclinado 15° para a câmera; ciano na nave, violeta translúcido no eco |
+| `Enemie_S_1_BlockOut`, `Enemie_S_BlockOut`, `Enemie_S_3_BlockOut` | Caça (S) | Três variações, uma sorteada por caça; viradas para a nave, com a mesma inclinação; laranja |
+| `Enemie_M_1_BlockOut`, `Enemie_M_2_BlockOut`, `Enemie_M_3_BlockOut` | Artilheiro (M) | Três variações, sorteadas do mesmo jeito; vermelho |
+| `Enemie_Boss_BlockOut` | Guardião do Ciclo | Visto de lado, virado para a nave, topo inclinado 25° e rosto 15° para a câmera; casco azul-escuro, visor vermelho → [06](06-chefe-e-runs.md) |
+
+As variações misturam peças entre os inimigos e mudam a cabeça. No caça: só a cabine (`S_1`), a cabine com
+dois canhões longos (`S`, a primeira exportação; não há um `S_2`) e a cabine com garras (`S_3`). No
+artilheiro: só a cabeça (`M_1`), a cabeça com garras (`M_2`) e a cabeça com os canhões do caça (`M_3`) → [04](04-inimigos-e-ondas.md).
+
+Ao subir ou descer, nave, eco e inimigos inclinam até 25°: o topo vira para a câmera quando sobem e se
+afasta quando descem.
 
 Inimigos e chefe seguem a regra de cor: laranja e vermelho são perigo. O resto — tiros, armadilhas e cenário —
 ainda é placeholder feito de primitivas, até a arte chegar.
@@ -84,3 +91,4 @@ O áudio também comunica a mecânica temporal.
 - [ ] O HUD fica nítido, como hoje, ou também pixelado, como no *Star Fox*?
 - [ ] Quais elementos são modelos 3D e quais são sprites 2D: `_TBD_` (naves e chefe já são modelos 3D).
 - [ ] A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? O protótipo usa perspectiva; falta confirmar.
+- [ ] O designer sugeriu uma lente de 300 mm: campo de visão bem estreito, com a câmera muito mais longe, o que deixa a perspectiva quase plana. O protótipo usa 40° a 20 u; falta testar e decidir.

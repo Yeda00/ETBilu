@@ -53,7 +53,7 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | `EchoPlayback` | `EchoPlayback` (Core) + `EchoGhost` | `EchoGhost` é a nave fantasma na cena |
 | `WeaponSystem` | `ShipWeapon` + `Projectile` + `ProjectilePool` | Tiros reaproveitados por pool |
 | `DamageSystem` | `Health` (+ `HealthModel` no Core) + `ContactDamage` | |
-| `EnemyController` | `Enemy` + `EnemyGun` + `WaveSpawner` + `WaveSchedule` (+ `SwoopMotion`, `HoverMotion`, `FireCycle` no Core) | Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (`Enemy_S`, `Enemy_M`). O `WaveSpawner` passa a nave e o pool de tiros aos inimigos |
+| `EnemyController` | `Enemy` + `EnemyGun` + `ModelVariants` + `WaveSpawner` + `WaveSchedule` (+ `SwoopMotion`, `HoverMotion`, `FireCycle` no Core) | Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (`Enemy_S`, `Enemy_M`). O `WaveSpawner` passa a nave e o pool de tiros aos inimigos. `ModelVariants` sorteia o modelo ao surgir e ajusta a hitbox e a boca do tiro a ele |
 | `GadgetSystem` | `ShipGadget` + `TimeMine` (+ `Cooldown`, `TimeMineModel` no Core) | A nave solta a mina; o eco reproduz o evento `Gadget` |
 | `TrapController` | `TrapSection` + `LaserGate` + `MovingBarrier` + `SwitchPad` (+ `TrapCycle`, `ShutterCycle`, `PresenceSwitch`, `LaserGateModel` no Core) | `TrapSection` para a rolagem no puzzle e encerra o encontro |
 | `BossController` | `GuardianBoss` + `SweepLaser` (+ `GuardianModel` no Core) | Fases, escudos, geradores e padrões de tiro |

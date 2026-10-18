@@ -53,7 +53,7 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 | `Data` | ScriptableObjects de ajuste: `EchoConfig`, ondas em `Data/Waves` |
 | `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Traps, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
-| `Art/Ships` | Modelos de blockout: `BI_Ships_BlockOut` (nave e eco), `Enemie_S_BlockOut` (caça), `Enemie_M_BlockOut` (artilheiro), `Enemie_Boss_BlockOut` (Guardião) |
+| `Art/Ships` | Modelos de blockout: `Bilu_BlockOut` (nave e eco), `Enemie_S_1`/`Enemie_S`/`Enemie_S_3_BlockOut` (caça), `Enemie_M_1`/`_2`/`_3_BlockOut` (artilheiro), `Enemie_Boss_BlockOut` (Guardião). `BI_Ships_BlockOut` e `Enemie_M_BlockOut` (igual ao `M_2`) estão sem uso |
 | `Scenes` | `Arena_01.unity`, a única cena no build por enquanto |
 | `Input` | `OneMoreTimeControls.inputactions` — o único asset de input do jogo |
 
@@ -65,6 +65,8 @@ Convenções:
   Na nave, no eco e nos inimigos o `Visual` é o pivô da inclinação (o código reescreve a rotação dele): o modelo fica em
   `Visual/Model`, que guarda a rotação, a escala e o centro (no Guardião também). Os colisores ficam no plano de jogo
   (z = 0), não no modelo; no Guardião, onde cada peça aparece pela câmera.
+  Os inimigos têm um pivô por variação (`Visual/Model_1` a `Model_3`); o `ModelVariants` liga um ao surgir e ajusta a
+  hitbox e a boca do tiro ao modelo ligado.
 - **A cena tem grupos fixos na raiz:** `Systems`, `Lighting`, `Playfield` (câmera, nave, ecos), `World` (cenário), `UI`.
 - **Physics layers** (8–12): Player, PlayerProjectile, Enemy, EnemyProjectile, Echo. A matriz de colisão só deixa tiro acertar o outro lado e inimigo bater na nave; o eco não colide com nada.
   Armadilhas e tiros do chefe ficam em EnemyProjectile (só ferem a nave). Mina e interruptor não usam colisão: a mina faz consultas de física, o interruptor compara posições.
@@ -76,8 +78,11 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
 
 - **Testes:** `unity command run_tests --mode editor`.
 - **Conteúdo placeholder:** o menu *One More Time › Bootstrap › Build Placeholder Content* (`unity command menu --path "One More Time/Bootstrap/Build Placeholder Content"`) recria o que faltar — materiais, prefabs, dados, painel de UI e a cena. Não sobrescreve nada que exista; apague um asset para ele ser refeito.
-  Os inimigos `Enemy_S` e `Enemy_M` saem do bootstrap já com os modelos. Atenção: apagar `PlayerShip`, `EchoGhost` ou `Guardian`
+  Os inimigos `Enemy_S` e `Enemy_M` saem do bootstrap já com as três variações de modelo (prefabs antigos, de um modelo só,
+  ganham as variações no lugar, sem perder as referências das ondas). Atenção: apagar `PlayerShip`, `EchoGhost` ou `Guardian`
   refaz a versão de primitivas, sem o modelo (o modelo foi posto neles depois, pelo CLI).
+- **Prefab aberto no Prefab Mode:** o Editor pode salvar a versão aberta por cima de uma edição feita pelo CLI (o `Guardian`
+  voltou à versão antiga depois de um `run_tests`). Feche o prefab antes de editá-lo pelo CLI e confira o `git status` depois.
 - **Play mode só anda com a janela do Unity em primeiro plano.** Em segundo plano o jogo fica parado no frame 1 e o teclado é ignorado. Rode `unity command editor_focus` depois de `editor_play`.
 - **Teclas simultâneas:** `simulate_key` troca o estado inteiro do teclado. Para segurar várias, enfileire um `KeyboardState` com `unity command eval` (`InputSystem.QueueStateEvent`).
   O teclado só chega ao jogo com a Game view em foco (`EditorWindow.GetWindow(GameView).Focus()` por eval); com a tela do Mac bloqueada, os eventos se perdem.
