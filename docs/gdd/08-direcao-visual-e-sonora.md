@@ -11,6 +11,8 @@ source: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01, model
 
 Como o jogo se parece e soa, com uma regra: a tela e o som têm que explicar a mecânica temporal.
 
+Paleta, assets e pipeline de arte ficam na [bíblia de arte](../art-bible.md).
+
 ## Direção visual
 
 Estética de **arcade sci-fi**: silhuetas legíveis, efeitos de energia e contrastes fortes.

@@ -1,5 +1,7 @@
 # Contexto para agentes de IA neste repositório
 
+Antes de trabalhar, leia [`docs/specs/README.md`](docs/specs/README.md).
+
 ONE MORE TIME é um protótipo de game jam em Unity 6 (6000.3.25f1), URP, Input System.
 Antes de qualquer mudança, leia [`docs/gdd.md`](docs/gdd.md) — o GDD de uma página — e,
 se a tarefa tocar uma área específica, o capítulo correspondente em [`docs/gdd/`](docs/gdd/).
