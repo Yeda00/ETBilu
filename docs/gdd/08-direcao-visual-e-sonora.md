@@ -101,8 +101,20 @@ O áudio também comunica a mecânica temporal.
 | Combo temporal | Efeito sonoro exclusivo e curto |
 | Chefe vulnerável | Mudança musical ou sinal sonoro marcante |
 
-O projeto ainda não contém clipes de áudio adequados para disparos, impactos ou destruição. A camada sonora
-da tabela continua planejada; os eventos de dano, morte e combo já estão separados para receber áudio sem
+Os clipes já estão no projeto, em `Assets/_Project/Audio`, mas **ainda não estão ligados ao jogo**: nenhum
+som toca. Todos são CC0, do OpenGameArt (fontes e licenças em `Audio/CREDITS.md`):
+
+| Pasta | Conteúdo |
+|---|---|
+| `SFX/Mini8bit` | 210 efeitos retrô em OGG: tiro (*Pew*), explosões, dano (*Ouch*), *Space*, *Teleport*, *Powerup*, *Pickup*, *Menu* e outros |
+| `SFX/Deva8bit` | 46 efeitos retrô em WAV: tiro, explosões, impactos, power-ups, erros |
+| `SFX/KenneySciFi` | 73 efeitos sci-fi em OGG: lasers, explosões, motores, campo de força |
+| `SFX/Time` | Loop de reversão de tempo, candidato à invocação do eco |
+| `UI` | Dois bipes de menu (seleção e destaque) |
+| `Music` | Quatro faixas chiptune em loop: *Stage 1*, *Stage 2*, *Boss Fight* e *Stage Select* |
+
+A camada sonora da tabela acima continua planejada: não há som de gravação nem de combo, e nenhum clipe foi
+escolhido para cada evento. Os eventos de dano, morte e combo já estão separados para receber áudio sem
 alterar as regras de combate.
 
 > **Q:** fazer os disparos do eco soarem levemente abafados, como se viessem de outra camada temporal.

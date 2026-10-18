@@ -248,7 +248,7 @@
       <tr><th scope="row">Crossfire</th><td>A nave e um eco acertam o <strong>mesmo alvo</strong> (inimigo, gerador ou núcleo do Guardião) com até <strong>1 s</strong> de diferença. Dois acertos da mesma fonte não contam. Cada par de acertos dá um combo só, e o mesmo alvo só dá outro depois de 1 s</td><td><strong>+3 de dano combinado</strong> no alvo, se ele ainda estiver vivo, e <strong>100 pontos</strong></td></tr>
       <tr><th scope="row">Synchronized Strike</th><td>Os dois geradores do Guardião caem com até <strong>2,5 s</strong> de diferença, <strong>um derrubado pela nave e o outro por um eco</strong>, e o núcleo fica vulnerável</td><td>O <strong>escudo do núcleo cai</strong>, pela regra do próprio Guardião → <a href="#c06">06</a>, e <strong>1000 pontos</strong></td></tr>
     </tbody></table></div>
-    <p>Os dois ficam no <code>ComboTracker</code>; as regras, em <code>CrossfireRule</code> e <code>SynchronizedStrikeRule</code> (Core, com testes). Além do aviso no HUD → <a href="#c07">07</a>, ambos acionam <strong>Convergência Temporal</strong> no ponto do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso curto de câmera. Ainda não há som exclusivo porque o projeto não possui clipes de áudio de combate.</p>
+    <p>Os dois ficam no <code>ComboTracker</code>; as regras, em <code>CrossfireRule</code> e <code>SynchronizedStrikeRule</code> (Core, com testes). Além do aviso no HUD → <a href="#c07">07</a>, ambos acionam <strong>Convergência Temporal</strong> no ponto do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso curto de câmera. Ainda não há som exclusivo: o projeto já tem clipes de áudio, mas nenhum está ligado ao jogo → <a href="#c08">08</a>.</p>
     <p>Os tamanhos das janelas são <strong>valores de partida</strong>, generosos de propósito (o §16 pede janelas de sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike, o mesmo da janela curta da fase 3 do Guardião. Falta validar jogando.</p>
     <p class="why"><em>Por quê:</em> derrubar os geradores sem o eco ainda abre o núcleo, se o jogador for rápido o bastante (pergunta em aberto em <a href="#c06">06</a>). O Synchronized Strike não muda essa regra: ele reconhece e premia quando a abertura veio da nave e do eco juntos.</p>
   </section>
@@ -619,7 +619,16 @@
       <tr><th scope="row">Combo temporal</th><td>Efeito sonoro exclusivo e curto</td></tr>
       <tr><th scope="row">Chefe vulnerável</th><td>Mudança musical ou sinal sonoro marcante</td></tr>
     </tbody></table></div>
-    <p>O projeto ainda não contém clipes de áudio adequados para disparos, impactos ou destruição. A camada sonora da tabela continua planejada; os eventos de dano, morte e combo já estão separados para receber áudio sem alterar as regras de combate.</p>
+    <p>Os clipes já estão no projeto, em <code>Assets/_Project/Audio</code>, mas <strong>ainda não estão ligados ao jogo</strong>: nenhum som toca. Todos são CC0, do OpenGameArt (fontes e licenças em <code>Audio/CREDITS.md</code>):</p>
+    <div class="scroll"><table><thead><tr><th>Pasta</th><th>Conteúdo</th></tr></thead><tbody>
+      <tr><th scope="row"><code>SFX/Mini8bit</code></th><td>210 efeitos retrô em OGG: tiro (<em>Pew</em>), explosões, dano (<em>Ouch</em>), <em>Space</em>, <em>Teleport</em>, <em>Powerup</em>, <em>Pickup</em>, <em>Menu</em> e outros</td></tr>
+      <tr><th scope="row"><code>SFX/Deva8bit</code></th><td>46 efeitos retrô em WAV: tiro, explosões, impactos, power-ups, erros</td></tr>
+      <tr><th scope="row"><code>SFX/KenneySciFi</code></th><td>73 efeitos sci-fi em OGG: lasers, explosões, motores, campo de força</td></tr>
+      <tr><th scope="row"><code>SFX/Time</code></th><td>Loop de reversão de tempo, candidato à invocação do eco</td></tr>
+      <tr><th scope="row"><code>UI</code></th><td>Dois bipes de menu (seleção e destaque)</td></tr>
+      <tr><th scope="row"><code>Music</code></th><td>Quatro faixas chiptune em loop: <em>Stage 1</em>, <em>Stage 2</em>, <em>Boss Fight</em> e <em>Stage Select</em></td></tr>
+    </tbody></table></div>
+    <p>A camada sonora da tabela acima continua planejada: não há som de gravação nem de combo, e nenhum clipe foi escolhido para cada evento. Os eventos de dano, morte e combo já estão separados para receber áudio sem alterar as regras de combate.</p>
     <div class="rule"><span class="osd">Q · proposta</span>Fazer os disparos do eco soarem levemente abafados, como se viessem de outra camada temporal.</div>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
