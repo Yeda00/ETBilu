@@ -3,8 +3,8 @@ title: Chefe e estrutura das runs
 chapter: "06"
 status: draft
 owner: _TBD_
-updated: 2026-10-17
-source: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker)
+updated: 2026-10-18
+source: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker; modelo Art/Ships/Enemie_Boss_BlockOut.fbx)
 ---
 
 # ONE MORE TIME | Chefe e estrutura das runs
@@ -31,11 +31,27 @@ de combate que protege uma passagem temporal. O núcleo fica blindado durante a 
 ### No protótipo atual
 
 Uma versão mínima com as **fases 1 a 3** (prefab `Guardian`, regras em `GuardianModel`). A fase 4 não existe.
-O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda direita.
+O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda direita, ocupando o terço direito
+da tela.
+
+Ele usa o modelo de blockout do designer (`Enemie_Boss_BlockOut`), **visto de cima**: os dois braços-canhão
+viram duas **mandíbulas**, uma em cima e outra embaixo, apontadas para a nave; a cabeça fica entre elas, ao
+fundo, com o **visor** vermelho virado para a nave. A leitura é a de um portão com duas mandíbulas, a máquina
+que protege a passagem.
+
+| Peça do modelo | No combate |
+|---|---|
+| Ponta de cada mandíbula | Um **gerador** (losango laranja): o de cima e o de baixo |
+| Visor | O **núcleo**, alcançável pelo vão entre as mandíbulas |
+| Boca | De onde saem os tiros das fases |
+| Corpo e mandíbulas | **Blindagem** |
+
+Para tudo bater com o que aparece na tela, os colisores ficam no plano de jogo, na posição em que cada peça é
+vista pela câmera; o modelo fica logo atrás desse plano. Os geradores ficam a 2,9 u acima e abaixo do centro.
 
 | Parte | Como funciona |
 |---|---|
-| **Blindagem** (casco) | Absorve todos os tiros e fere a nave que encostar nela |
+| **Blindagem** (corpo e mandíbulas) | Absorve todos os tiros e fere a nave que encostar nela |
 | **Núcleo** | 120 de vida. Absorve os tiros enquanto o escudo âmbar está à vista; só toma dano quando fica vulnerável |
 | **Geradores** (cima e baixo) | 12 de vida cada. Derrubar o primeiro abre uma **janela**; se o segundo cai dentro dela, o núcleo fica **vulnerável por 4 s**. Se a janela fecha com um gerador de pé, o que caiu volta com a vida cheia |
 | **Volta dos geradores** | Quando a vulnerabilidade acaba, os dois geradores voltam com a vida cheia |

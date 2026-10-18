@@ -3,8 +3,8 @@ title: Inimigos e ondas
 chapter: "04"
 status: draft
 owner: _TBD_
-updated: 2026-10-17
-source: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project/Data/Waves/Encounter01_PrimeiroCiclo.asset
+updated: 2026-10-18
+source: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project (Enemy_S, Enemy_M, Enemy, EnemyGun, SwoopMotion, HoverMotion, FireCycle; Data/Waves/Encounter01_PrimeiroCiclo.asset)
 ---
 
 # ONE MORE TIME | Inimigos e ondas
@@ -18,23 +18,52 @@ Em vez de spawn aleatório, cada encontro segue uma **lista de ondas com tempo e
 
 ## Tipos de inimigo
 
-![Os três tipos de inimigo e seus movimentos](../img/enemies.svg)
+![Os tipos de inimigo e seus movimentos](../img/enemies.svg)
 
 | Inimigo | Comportamento | Papel com o eco |
 |---|---|---|
-| **Drone** (reto) | Entra pela direita e voa em linha reta; não atira | Alvo fácil para Crossfire; ensina a gravação |
-| **Ondulante** | Zigue-zague senoidal, em grupos de 3 a 5 | Pode ser conduzido para armadilhas (Trap Bait) |
-| **Torreta** | Parada no cenário, atira na direção da nave | Exige que nave e eco ataquem de posições diferentes |
+| **Caça** (S, pequeno) | Entra em fila pela direita, em linha reta. Num ponto da tela mergulha para a altura em que a nave está naquele momento, avisa com um brilho e dispara **um** tiro mirado; depois segue e sai pela esquerda | Como mergulha atrás da nave, dá para puxar a fila para a linha de tiro do eco |
+| **Artilheiro** (M, médio) | Entra, freia e segura uma posição à direita, balançando de leve. A cada rajada avisa com um brilho e dispara um **leque de 3 tiros** mirados; depois de um tempo acelera e sai pela esquerda | Resistente e parado: o alvo natural de Crossfire (nave e eco no mesmo alvo) |
+| **Torreta** *(planejada)* | Parada no cenário, atira na direção da nave | Exige que nave e eco ataquem de posições diferentes |
 
-Para a jam, a recomendação é **começar com um tipo** e adicionar os outros dois só se o núcleo já estiver divertido.
+O GDD v0.1 previa um **drone** (linha reta, sem atirar) e um **ondulante** (zigue-zague em grupos). Em
+2026-10-18 o time pediu inimigos melhores, que atirem; caça e artilheiro ocuparam esses dois lugares, com
+os modelos de blockout do designer (`Enemie_S_BlockOut` e `Enemie_M_BlockOut`) → [08](08-direcao-visual-e-sonora.md).
+
+Para a jam, a recomendação do v0.1 era **começar com um tipo** e adicionar os outros só se o núcleo já
+estivesse divertido; o protótipo tem dois.
+
+*Por quê:* os dois cobrem as duas pressões clássicas de um shooter de nave — o caça é rápido e frágil e
+obriga a sair da linha do tiro; o artilheiro é lento e resistente e obriga a gastar tempo nele, o que pede
+o eco.
+
+## Valores de partida no protótipo
+
+| | Caça (S) | Artilheiro (M) | Onde mudar |
+|---|---|---|---|
+| Vida | 1 | 20 | prefab → `Health` |
+| Pontos | 100 | 300 | prefab → `Enemy` |
+| Movimento | 6,5 u/s; mergulha a 30% da meia largura à direita do centro, em 1 s, no máximo 4,5 u para cima ou para baixo | entra em 1,6 s até 4,5 u da borda direita; segura 7 s balançando 0,5 u (0,3 Hz); sai acelerando a 5 u/s² | prefab → `Enemy` |
+| Tiro | 1 tiro mirado, 0,35 s depois do início do mergulho | leque de 3 tiros mirados, 12° entre eles; a primeira rajada 0,8 s depois de parar, depois a cada 1,8 s | prefab → `EnemyGun` |
+| Aviso antes do tiro | 0,35 s | 0,45 s | prefab → `EnemyGun` |
+| Tiro inimigo | 8 u/s, 1 de dano (o mesmo do Guardião) | | `Shot_Enemy` |
+| Encostar na nave | 1 de dano | 1 de dano | `ContactDamage` |
+
+Valores para testar, não definitivos. As regras dos caminhos e do tiro ficam no Core (`SwoopMotion`,
+`HoverMotion`, `FireCycle`), com testes.
 
 ## Regras de surgimento
 
 - As ondas são definidas por script: tempo de entrada, ponto de entrada, tipo e quantidade.
-- Cada onda **sinaliza a entrada** com um aviso visual curto (seta ou brilho na borda da tela).
+- Cada onda **sinaliza a entrada** com um aviso visual curto (no protótipo, um marcador piscando na borda direita, 0,8 s antes).
+- Cada rajada inimiga é **avisada**: um brilho amarelo pisca na ponta do inimigo antes do tiro.
+- Inimigo só atira com a ponta **dentro da tela**: nada atira de onde o jogador não vê.
 - Inimigos que saem pela esquerda são removidos **sem penalidade**.
 - O número de inimigos simultâneos é limitado, para a tela continuar legível com os ecos ativos.
 - Matar inimigos **nunca é obrigatório** para avançar; o scroll continua.
+
+Dois artilheiros na mesma onda ficam em alturas diferentes (duas fileiras); se a onda tiver mais de um na
+mesma fileira, cada um para mais à direita que o anterior, mantendo a distância com que entrou.
 
 ## Exemplo — Encontro 1 (primeiro ciclo)
 
@@ -42,25 +71,24 @@ Para a jam, a recomendação é **começar com um tipo** e adicionar os outros d
 
 | Tempo | Onda | Objetivo de design |
 |---|---|---|
-| 0:00 – 0:10 | Sem inimigos; só obstáculos básicos | Aprender movimento e tiro |
-| 0:10 – 0:25 | 3 drones em fila, vindo do centro | Primeiros alvos, sem pressão |
-| 0:25 – 0:40 | Drones em dois níveis de altura | Incentivar gravar uma rota e deixar o eco cobrir um nível |
-| 0:40 – 1:00 | Primeiro grupo de ondulantes | Ler o padrão e atacar com nave e eco ao mesmo tempo |
-| 1:00 – 1:20 | Torreta + drones | Introduzir a ideia de dividir tarefas entre nave e eco |
+| 0:00 – 0:10 | Sem inimigos | Aprender movimento, tiro e gravação |
+| 0:10 – 0:25 | 4 caças em fila no alto (0:10) e 4 embaixo (0:17) | Primeiros alvos; aprender a sair da linha do tiro mirado |
+| 0:25 – 0:35 | O primeiro artilheiro, no meio da tela | Gravar o tiro e cruzar com o eco: o primeiro alvo para Crossfire |
+| 0:35 – 0:44 | Caças em dois níveis | Deixar o eco cobrir um nível |
+| 0:44 – 0:55 | Dois artilheiros, um em cima e outro embaixo | Dividir as tarefas entre nave e eco |
+| 0:55 – 1:10 | 5 caças pelo meio (0:55); um artilheiro com escolta de caças (1:02) | Ler e priorizar os alvos |
+| 1:10 – 1:20 | Caças finais em dois níveis (1:13) | Fechar antes do corredor |
 
-**No protótipo atual** o encontro 1 está em `Encounter01_PrimeiroCiclo.asset`, com estas diferenças:
+Está em `Encounter01_PrimeiroCiclo.asset`. O encontro termina 4 s depois da última onda, quando não resta
+inimigo vivo; aí começa o corredor de armadilhas → [06](06-chefe-e-runs.md). A torreta ainda não entra.
 
-- Drone e ondulante existem; a **torreta ainda não**, então 1:00–1:20 usa só drones.
-- Os primeiros 10 s não têm obstáculos (ainda não existem): é voo livre.
-- Há ondas extras em 0:33 (drones em dois níveis), 0:50 (ondulantes) e 1:10 (drones), para o encontro não ficar vazio.
-- O aviso de entrada é um marcador piscando na borda direita, 0,8 s antes da onda.
-- O encontro termina 4 s depois da última onda, quando não resta inimigo vivo; aí começa o corredor de armadilhas → [06](06-chefe-e-runs.md).
-
-Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 reaproveitam os mesmos
-três inimigos, combinados com as armadilhas e o gadget → [06](06-chefe-e-runs.md).
+Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 devem reaproveitar os mesmos
+inimigos, combinados com as armadilhas e o gadget → [06](06-chefe-e-runs.md).
 
 ## Perguntas em aberto
 
 - [ ] Limite de inimigos simultâneos na tela: `_TBD_` (o protótipo ainda não limita).
 - [ ] Torreta: falta implementar.
-- [ ] Ondas dos encontros 2 e 3: só o encontro 1 tem linha do tempo no v0.1.
+- [ ] O caça mira e mergulha para onde a nave está: as ondas continuam por script, mas parte do movimento responde ao jogador. Isso combina com "o jogador aprende o padrão e planeja o que gravar", ou o mergulho deve ir para alturas fixas?
+- [ ] Vida, pontos, tempos de tiro e de aviso: valores de partida; falta validar jogando.
+- [ ] Ondas dos encontros 2 e 3: só o encontro 1 tem linha do tempo.

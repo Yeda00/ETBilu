@@ -3,8 +3,8 @@ title: Combate
 chapter: "03"
 status: draft
 owner: _TBD_
-updated: 2026-10-17
-source: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Drone, Ondulante; ComboTracker, CrossfireRule, SynchronizedStrikeRule)
+updated: 2026-10-18
+source: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Enemy_S, Enemy_M; ComboTracker, CrossfireRule, SynchronizedStrikeRule)
 ---
 
 # ONE MORE TIME | Combate
@@ -33,12 +33,12 @@ movimento e ataque.
 | Velocidade da nave | 9 u/s | `PlayerShip` → `ShipMotor` |
 | Disparo principal | 10 tiros/s, dano 1; sai do canhão mais perto da câmera | `PlayerShip` → `ShipWeapon`, `Shot_Ship` |
 | Hitbox da nave | caixa de 1,4 × 0,9 u no plano de jogo, em volta do disco e da cabine; menor que a arte (aletas, ponta da cúpula e canhões ficam de fora) | `PlayerShip` → `BoxCollider` |
-| Drone | 2 de vida, 100 pontos | `Drone` |
-| Ondulante | 1 de vida, 100 pontos | `Ondulante` |
+| Caça (S) | 1 de vida, 100 pontos; 1 tiro mirado | `Enemy_S` → [04](04-inimigos-e-ondas.md) |
+| Artilheiro (M) | 20 de vida, 300 pontos; leques de 3 tiros | `Enemy_M` → [04](04-inimigos-e-ondas.md) |
 | Inimigo que bate na nave | 1 de dano | `ContactDamage` |
 | Mina temporal | 4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s | `TimeMine_Ship`, `TimeMine_Echo`, `PlayerShip` → `ShipGadget` |
 | Laser gate e barreira móvel | 1 de dano ao contato | prefabs em `Prefabs/Traps` |
-| Tiros do Guardião | 1 de dano | `Shot_Enemy` |
+| Tiros inimigos (caça, artilheiro, Guardião) | 1 de dano, 8 u/s | `Shot_Enemy` |
 | Guardião | núcleo 120 de vida, geradores 12 | `Guardian` → [06](06-chefe-e-runs.md) |
 | Crossfire | janela de 1 s entre o acerto da nave e o do eco; +3 de dano combinado; o mesmo alvo só dá outro Crossfire depois de 1 s | `ComboTracker` (cena, em `Systems`) |
 | Synchronized Strike | janela de 2,5 s entre a queda dos dois geradores | `ComboTracker` |

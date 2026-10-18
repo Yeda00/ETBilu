@@ -3,7 +3,7 @@ title: GDD de uma página
 chapter: "00"
 status: draft
 owner: _TBD_
-updated: 2026-10-17
+updated: 2026-10-18
 source: GDD v0.1 em PDF (docs/source/GDD_One_More_Time_v0.1.pdf), reorganizado em capítulos em 2026-10-17
 ---
 
@@ -26,7 +26,7 @@ derrotar chefes. Cada tentativa deixa para trás ações que viram estratégia: 
 | Modo | Single-player |
 | Plataforma | PC |
 | Motor | Unity 6 (6000.3), URP, Input System |
-| Visual | Mundo e jogabilidade em 3D; parte dos elementos serão sprites 2D → [08](gdd/08-direcao-visual-e-sonora.md) |
+| Visual | Mundo e jogabilidade em 3D; parte dos elementos serão sprites 2D; pixelado, como o *Star Fox* do SNES → [08](gdd/08-direcao-visual-e-sonora.md) |
 | Estrutura | Runs curtas de 5–10 min: encontros de combate e um chefe |
 | Contexto | Protótipo para game jam |
 
@@ -54,8 +54,9 @@ escudo do núcleo cai). Janelas generosas, valores de partida.
 
 ## Inimigos → [04](gdd/04-inimigos-e-ondas.md)
 
-**Drone** (reto), **Ondulante** (senoidal, em grupos) e **Torreta** (fixa, mira na nave). Ondas por
-script, nunca aleatórias — o jogador aprende o padrão e planeja o que gravar.
+**Caça** (S: entra em fila, mergulha na altura da nave e dispara um tiro mirado), **Artilheiro** (M: para à
+direita e dispara leques de 3) e **Torreta** (fixa, mira na nave; planejada). Ondas por script, nunca
+aleatórias — o jogador aprende o padrão e planeja o que gravar.
 
 ## Armadilhas, gadgets, puzzles → [05](gdd/05-armadilhas-gadgets-puzzles.md)
 
@@ -68,7 +69,8 @@ eco segura enquanto está sobre ele; a mina temporal (Q), que o eco também solt
 
 **O Guardião do Ciclo** (provisório): Sobrevivência → Preparação → Sincronização → Última chance.
 Vencível com boa sequência temporal, nunca pixel-perfect. No protótipo, as fases 1 a 3: os dois
-geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável.
+geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, ele é
+um portão de duas mandíbulas: um gerador na ponta de cada uma e o visor, entre elas, como núcleo.
 
 ## Controles e HUD → [07](gdd/07-controles-e-interface.md)
 
@@ -78,6 +80,7 @@ O HUD mostra integridade, memória temporal, ecos ativos, gadget, vida do chefe 
 ## Visual e som → [08](gdd/08-direcao-visual-e-sonora.md)
 
 2.5D: mundo 3D visto por câmera lateral, com alguns sprites 2D. Arcade sci-fi. **Ciano** é você, **eco translúcido** é o seu passado, **laranja e vermelho** é perigo.
+No protótipo, o mundo é desenhado em baixa resolução (270 px de altura) e ampliado sem suavizar, como no *Star Fox* do SNES; o HUD fica nítido.
 O som também explica: a gravação pulsa, a invocação reverte, o eco soa filtrado.
 
 ## Escopo da jam → [10](gdd/10-producao.md)
@@ -88,9 +91,9 @@ explicação e descobre sozinho para que serve o eco.
 
 ## Protótipo — estado atual → [10](gdd/10-producao.md)
 
-Jogável em `Assets/_Project/Scenes/Arena_01.unity`. A nave e o eco usam o modelo 3D de blockout da nave
-(*BiluShip*); o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
-gravação de 5 s, eco que repete movimento, tiros e gadget, drones e ondulantes em ondas por script,
+Jogável em `Assets/_Project/Scenes/Arena_01.unity`. Nave, eco, inimigos e chefe usam os modelos 3D de
+blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
+gravação de 5 s, eco que repete movimento, tiros e gadget, caças e artilheiros que atiram, em ondas por script,
 corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
 (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
 atual recomeça) e vitória (derrotar o Guardião).

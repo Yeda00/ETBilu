@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OneMoreTime.Core.Waves;
+using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.World;
 using UnityEngine;
 
@@ -15,6 +16,10 @@ namespace OneMoreTime.Gameplay.Enemies
     {
         [SerializeField] WaveSchedule schedule;
         [SerializeField] Playfield playfield;
+        [Tooltip("What the enemies aim at.")]
+        [SerializeField] Transform ship;
+        [Tooltip("Where enemy shots come from.")]
+        [SerializeField] ProjectilePool pool;
         [Tooltip("Marker shown at the right edge before a wave enters. Optional.")]
         [SerializeField] GameObject warningMarker;
         [SerializeField, Min(0f)] float spawnMarginX = 1.5f;
@@ -107,7 +112,7 @@ namespace OneMoreTime.Gameplay.Enemies
                 {
                     var local = new Vector2(h.x + spawnMarginX + n * wave.spacing, height * (h.y - 1f));
                     var enemy = Instantiate(wave.enemy, playfield.LocalToWorld(local), Quaternion.identity, transform);
-                    enemy.Spawn(playfield, wave.pattern, n * 0.15f + row * 0.5f);
+                    enemy.Spawn(playfield, ship, pool, n * wave.spacing, n * 0.9f + row * 1.7f);
                     enemy.Removed += OnEnemyRemoved;
                     alive.Add(enemy);
                     EnemySpawned?.Invoke(enemy);

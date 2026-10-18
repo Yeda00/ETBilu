@@ -15,66 +15,75 @@ MonoBehaviour:
   warningSeconds: 0.8
   clearDelay: 4
   waves:
-  - label: 3 drones em fila, vindo do centro
+  - label: "4 ca\xE7as em fila, no alto"
     time: 10
-    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
-    pattern: 0
-    count: 3
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
+    count: 4
+    height: 0.35
+    spacing: 1.6
+    secondRow: 0
+    secondRowHeight: 0.35
+  - label: "4 ca\xE7as em fila, embaixo"
+    time: 17
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
+    count: 4
+    height: -0.4
+    spacing: 1.6
+    secondRow: 0
+    secondRowHeight: -0.4
+  - label: "primeiro artilheiro: para \xE0 direita e dispara leques"
+    time: 25
+    enemy: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
+    count: 1
     height: 0
-    spacing: 2.2
+    spacing: 0
     secondRow: 0
     secondRowHeight: 0
-  - label: "drones em dois n\xEDveis de altura"
-    time: 25
-    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
-    pattern: 0
-    count: 3
-    height: 0.5
-    spacing: 2.2
-    secondRow: 1
-    secondRowHeight: -0.5
-  - label: "drones em dois n\xEDveis de altura (2)"
-    time: 33
-    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
-    pattern: 0
-    count: 3
-    height: 0.7
-    spacing: 2.2
-    secondRow: 1
-    secondRowHeight: -0.1
-  - label: primeiro grupo de ondulantes
-    time: 40
-    enemy: {fileID: 5020631678949466328, guid: 27646cbdb58c44fd7a09ba2f6cee2416, type: 3}
-    pattern: 1
-    count: 4
-    height: 0.2
-    spacing: 1.6
-    secondRow: 0
-    secondRowHeight: 0.2
-  - label: ondulantes (2)
-    time: 50
-    enemy: {fileID: 5020631678949466328, guid: 27646cbdb58c44fd7a09ba2f6cee2416, type: 3}
-    pattern: 1
-    count: 5
-    height: -0.3
-    spacing: 1.6
-    secondRow: 0
-    secondRowHeight: -0.3
-  - label: drones (torreta pendente)
-    time: 60
-    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
-    pattern: 0
+  - label: "ca\xE7as em dois n\xEDveis"
+    time: 35
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
     count: 3
     height: 0.6
-    spacing: 2.2
+    spacing: 1.6
     secondRow: 1
     secondRowHeight: -0.6
-  - label: drones finais
-    time: 70
-    enemy: {fileID: 8195062402247664555, guid: ace24e9a9b18d4d1f841f7a7e15389cb, type: 3}
-    pattern: 0
-    count: 4
+  - label: dois artilheiros, em cima e embaixo
+    time: 44
+    enemy: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
+    count: 1
+    height: 0.5
+    spacing: 0
+    secondRow: 1
+    secondRowHeight: -0.5
+  - label: "5 ca\xE7as pelo meio"
+    time: 55
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
+    count: 5
     height: 0
-    spacing: 2
+    spacing: 1.4
     secondRow: 0
     secondRowHeight: 0
+  - label: artilheiro com escolta
+    time: 62
+    enemy: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
+    count: 1
+    height: -0.35
+    spacing: 0
+    secondRow: 0
+    secondRowHeight: -0.35
+  - label: "escolta de ca\xE7as"
+    time: 63
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
+    count: 4
+    height: 0.6
+    spacing: 1.6
+    secondRow: 0
+    secondRowHeight: 0.6
+  - label: "ca\xE7as finais em dois n\xEDveis"
+    time: 73
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
+    count: 4
+    height: 0.5
+    spacing: 1.6
+    secondRow: 1
+    secondRowHeight: -0.5

@@ -3,8 +3,8 @@ title: Direção visual e sonora
 chapter: "08"
 status: draft
 owner: _TBD_
-updated: 2026-10-17
-source: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01, modelo Art/Ships/BI_Ships_BlockOut.fbx)
+updated: 2026-10-18
+source: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01, modelos em Art/Ships)
 ---
 
 # ONE MORE TIME | Direção visual e sonora
@@ -24,12 +24,33 @@ O jogo é um **side-scrolling 2.5D**: o mundo e a jogabilidade são 3D, vistos p
 **No protótipo atual:** câmera em **perspectiva** (campo de visão 40°, a 20 unidades do plano de jogo), a
 jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade.
 
-A **nave** e o **eco** usam o modelo 3D de blockout da nave, o *BiluShip* (`Art/Ships/BI_Ships_BlockOut.fbx`):
-virado para a direita, com o topo do disco inclinado 15° para a câmera, ciano na nave e violeta translúcido no
-eco. O resto — inimigos, tiros, armadilhas, chefe e cenário — ainda é placeholder feito de primitivas, até a
-arte chegar.
+Naves e chefe usam os modelos 3D de blockout do designer, em `Art/Ships` (do arquivo `BI_Ships.blend`):
 
-> **Q:** quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: inimigos, projéteis, efeitos, cenário). A nave já é um modelo 3D (blockout). Marcado como `_TBD_` até o dono decidir.
+| Modelo | Quem usa | Como aparece |
+|---|---|---|
+| `BI_Ships_BlockOut` (*BiluShip*) | Nave e eco | Virado para a direita, topo do disco inclinado 15° para a câmera; ciano na nave, violeta translúcido no eco |
+| `Enemie_S_BlockOut` | Caça (S) | Virado para a nave, com a mesma inclinação; laranja |
+| `Enemie_M_BlockOut` | Artilheiro (M) | Virado para a nave, com a mesma inclinação; vermelho |
+| `Enemie_Boss_BlockOut` | Guardião do Ciclo | Visto de cima, as mandíbulas apontadas para a nave; casco azul-escuro, visor vermelho → [06](06-chefe-e-runs.md) |
+
+Inimigos e chefe seguem a regra de cor: laranja e vermelho são perigo. O resto — tiros, armadilhas e cenário —
+ainda é placeholder feito de primitivas, até a arte chegar.
+
+> **Q:** quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: projéteis, efeitos, cenário). Naves e chefe já são modelos 3D (blockout). Marcado como `_TBD_` até o dono decidir.
+
+### Visual pixelado
+
+O mundo 3D é desenhado numa **altura baixa fixa** e ampliado sem suavizar, então cada pixel vira um bloco
+visível — o visual do *Star Fox* do SNES, a referência pedida pelo time em 2026-10-18. O HUD é desenhado depois,
+em resolução cheia, e fica nítido.
+
+| | No protótipo |
+|---|---|
+| Altura do mundo | 270 px (o *Star Fox* usa 224), arredondada para cada pixel ocupar um número inteiro de pixels da tela: em 1080p, blocos de 4 × 4 |
+| Onde mudar | Componente `PixelView` em `Systems` (cena `Arena_01`), campo *Target Height*: menor deixa mais pixelado. Dá para mexer durante o Play mode |
+| Desligar | Desmarcar o componente `PixelView` |
+
+Valor de partida, para testar.
 
 ### Cor
 
@@ -59,6 +80,7 @@ O áudio também comunica a mecânica temporal.
 ## Perguntas em aberto
 
 - [ ] Quem é dono da arte e do áudio?
-- [ ] Referências visuais além de *Cuphead* (câmera): `_TBD_`.
-- [ ] Quais elementos são modelos 3D e quais são sprites 2D: `_TBD_` (a nave já é um modelo 3D).
+- [ ] Referências visuais: *Cuphead* (câmera) e *Star Fox* do SNES (visual pixelado); outras `_TBD_`.
+- [ ] O HUD fica nítido, como hoje, ou também pixelado, como no *Star Fox*?
+- [ ] Quais elementos são modelos 3D e quais são sprites 2D: `_TBD_` (naves e chefe já são modelos 3D).
 - [ ] A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? O protótipo usa perspectiva; falta confirmar.

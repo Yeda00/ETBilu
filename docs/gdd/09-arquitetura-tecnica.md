@@ -3,7 +3,7 @@ title: Arquitetura técnica
 chapter: "09"
 status: draft
 owner: _TBD_
-updated: 2026-10-17
+updated: 2026-10-18
 source: GDD v0.1 (PDF) §13; código em Assets/_Project/Scripts
 ---
 
@@ -38,7 +38,7 @@ O código fica em `Assets/_Project/Scripts`, em quatro assemblies:
 
 | Assembly | Conteúdo |
 |---|---|
-| `OneMoreTime.Core` | Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião, combos temporais |
+| `OneMoreTime.Core` | Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião, combos temporais, caminhos e tiro dos inimigos |
 | `OneMoreTime.Gameplay` | Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros, combos e sessão |
 | `OneMoreTime.UI` | O HUD |
 | `OneMoreTime.Editor` | A ferramenta que monta o conteúdo placeholder (menu *One More Time › Bootstrap*) |
@@ -53,12 +53,13 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | `EchoPlayback` | `EchoPlayback` (Core) + `EchoGhost` | `EchoGhost` é a nave fantasma na cena |
 | `WeaponSystem` | `ShipWeapon` + `Projectile` + `ProjectilePool` | Tiros reaproveitados por pool |
 | `DamageSystem` | `Health` (+ `HealthModel` no Core) + `ContactDamage` | |
-| `EnemyController` | `Enemy` + `WaveSpawner` + `WaveSchedule` | Ondas são um asset de dados |
+| `EnemyController` | `Enemy` + `EnemyGun` + `WaveSpawner` + `WaveSchedule` (+ `SwoopMotion`, `HoverMotion`, `FireCycle` no Core) | Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (`Enemy_S`, `Enemy_M`). O `WaveSpawner` passa a nave e o pool de tiros aos inimigos |
 | `GadgetSystem` | `ShipGadget` + `TimeMine` (+ `Cooldown`, `TimeMineModel` no Core) | A nave solta a mina; o eco reproduz o evento `Gadget` |
 | `TrapController` | `TrapSection` + `LaserGate` + `MovingBarrier` + `SwitchPad` (+ `TrapCycle`, `ShutterCycle`, `PresenceSwitch`, `LaserGateModel` no Core) | `TrapSection` para a rolagem no puzzle e encerra o encontro |
 | `BossController` | `GuardianBoss` + `SweepLaser` (+ `GuardianModel` no Core) | Fases, escudos, geradores e padrões de tiro |
 | `ComboEvaluator` | `ComboTracker` (+ `CrossfireRule`, `SynchronizedStrikeRule` no Core) | Uma regra por combo; só Crossfire e Synchronized Strike existem. O `ComboTracker` ouve o `Health.Damaged` dos inimigos que as ondas criam e das partes do Guardião, e o `GeneratorDestroyed` do Guardião; aplica o bônus e avisa o HUD e a sessão (`Triggered`) |
 | — | `Playfield` | O quadro que rola, com a câmera, a nave e os ecos |
+| — | `PixelView` | O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → [08](08-direcao-visual-e-sonora.md) |
 | — | `StageDirector` + `RunCheckpoint` | Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte |
 | — | `GameSession` | Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota |
 

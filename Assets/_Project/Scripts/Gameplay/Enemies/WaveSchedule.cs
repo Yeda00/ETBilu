@@ -14,18 +14,18 @@ namespace OneMoreTime.Gameplay.Enemies
         [Serializable]
         public struct Wave
         {
-            [Tooltip("Note for designers, e.g. \"3 drones em fila\".")]
+            [Tooltip("Note for designers, e.g. \"4 caças em fila\".")]
             public string label;
             [Tooltip("Seconds from the start of the encounter.")]
             [Min(0f)] public float time;
+            [Tooltip("The enemy prefab; its own Enemy component says how it moves and shoots.")]
             public Enemy enemy;
-            public MovementPattern pattern;
             [Min(1)] public int count;
             [Tooltip("Entry height on screen: -1 bottom, 0 centre, 1 top.")]
             [Range(-1f, 1f)] public float height;
             [Tooltip("Distance between enemies of the wave, in units (along x).")]
             [Min(0f)] public float spacing;
-            [Tooltip("Spawn a second row of the same wave (\"drones em dois níveis de altura\").")]
+            [Tooltip("Spawn a second row of the same wave (\"caças em dois níveis de altura\").")]
             public bool secondRow;
             [Range(-1f, 1f)] public float secondRowHeight;
         }

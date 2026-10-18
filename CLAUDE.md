@@ -53,7 +53,7 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 | `Data` | ScriptableObjects de ajuste: `EchoConfig`, ondas em `Data/Waves` |
 | `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Traps, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
-| `Art/Ships` | Modelos das naves. `BI_Ships_BlockOut.fbx` (BiluShip, blockout) é a arte da nave e do eco |
+| `Art/Ships` | Modelos de blockout: `BI_Ships_BlockOut` (nave e eco), `Enemie_S_BlockOut` (caça), `Enemie_M_BlockOut` (artilheiro), `Enemie_Boss_BlockOut` (Guardião) |
 | `Scenes` | `Arena_01.unity`, a única cena no build por enquanto |
 | `Input` | `OneMoreTimeControls.inputactions` — o único asset de input do jogo |
 
@@ -62,8 +62,9 @@ Convenções:
 - **Referências por `[SerializeField]`, não por busca** (`Find*`) nem singletons. O `Playfield` e o `ProjectilePool` chegam a quem precisa pela cena ou por injeção.
 - **Só o `PlayerInputReader` lê o Input System.**
 - **Arte troca sem tocar no código:** cada prefab tem um filho `Visual`; substitua o que está dentro dele.
-  Na nave e no eco o `Visual` é o pivô da inclinação (o código reescreve a rotação dele): o modelo fica em `Visual/Model`,
-  que guarda a rotação, a escala e o centro. O hitbox da nave é o `BoxCollider` da raiz, no plano de jogo, não o modelo.
+  Na nave, no eco e nos inimigos o `Visual` é o pivô da inclinação (o código reescreve a rotação dele): o modelo fica em
+  `Visual/Model`, que guarda a rotação, a escala e o centro (no Guardião também). Os colisores ficam no plano de jogo
+  (z = 0), não no modelo; no Guardião, onde cada peça aparece pela câmera.
 - **A cena tem grupos fixos na raiz:** `Systems`, `Lighting`, `Playfield` (câmera, nave, ecos), `World` (cenário), `UI`.
 - **Physics layers** (8–12): Player, PlayerProjectile, Enemy, EnemyProjectile, Echo. A matriz de colisão só deixa tiro acertar o outro lado e inimigo bater na nave; o eco não colide com nada.
   Armadilhas e tiros do chefe ficam em EnemyProjectile (só ferem a nave). Mina e interruptor não usam colisão: a mina faz consultas de física, o interruptor compara posições.
@@ -75,7 +76,8 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
 
 - **Testes:** `unity command run_tests --mode editor`.
 - **Conteúdo placeholder:** o menu *One More Time › Bootstrap › Build Placeholder Content* (`unity command menu --path "One More Time/Bootstrap/Build Placeholder Content"`) recria o que faltar — materiais, prefabs, dados, painel de UI e a cena. Não sobrescreve nada que exista; apague um asset para ele ser refeito.
-  Atenção: apagar `PlayerShip` ou `EchoGhost` refaz a versão de primitivas, sem o modelo da nave.
+  Os inimigos `Enemy_S` e `Enemy_M` saem do bootstrap já com os modelos. Atenção: apagar `PlayerShip`, `EchoGhost` ou `Guardian`
+  refaz a versão de primitivas, sem o modelo (o modelo foi posto neles depois, pelo CLI).
 - **Play mode só anda com a janela do Unity em primeiro plano.** Em segundo plano o jogo fica parado no frame 1 e o teclado é ignorado. Rode `unity command editor_focus` depois de `editor_play`.
 - **Teclas simultâneas:** `simulate_key` troca o estado inteiro do teclado. Para segurar várias, enfileire um `KeyboardState` com `unity command eval` (`InputSystem.QueueStateEvent`).
   O teclado só chega ao jogo com a Game view em foco (`EditorWindow.GetWindow(GameView).Focus()` por eval); com a tela do Mac bloqueada, os eventos se perdem.
@@ -86,6 +88,8 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
 - **Comece de um teclado solto:** uma tecla que já está pressionada quando a cena recarrega não dispara a ação de botão
   (Fire, por exemplo) até ser solta e pressionada de novo. Enfileire um `KeyboardState()` vazio antes de uma sequência.
 - **`eval` roda dentro de um método:** sem `using`; escreva os nomes completos (`UnityEngine.Object.FindFirstObjectByType<...>`).
+- **Visual pixelado:** o `PixelView` (em `Systems`) muda a escala de render do `PC_RPAsset` durante o Play e devolve ao sair.
+  Se o Play travar ou o Editor fechar no meio, confira se o *Render Scale* do asset voltou a 1 e não commite essa mudança.
 - **Pular para um encontro no Play mode:** `RunCheckpoint.Save(StageSegment.Boss)` e `SceneManager.LoadScene(0)` por eval, o mesmo caminho de uma morte.
 - **Capturas** (`capture_game_view --save_path`) são relativas a `Assets/` e precisam ficar dentro do projeto: apague depois
   (`AssetDatabase.DeleteAsset` por eval), para não versionar.

@@ -36,6 +36,7 @@ namespace OneMoreTime.EditorTools
         const string PrefabDir = Root + "/Prefabs";
         const string DataDir = Root + "/Data";
         const string UiDir = Root + "/UI";
+        const string ShipArtDir = Root + "/Art/Ships";
         public const string ScenePath = Root + "/Scenes/Arena_01.unity";
 
         const int LayerPlayer = 8, LayerPlayerShot = 9, LayerEnemy = 10, LayerEnemyShot = 11, LayerEcho = 12;
@@ -55,6 +56,7 @@ namespace OneMoreTime.EditorTools
             UpgradePrefabs(p);
             var echoConfig = LoadOrCreate($"{DataDir}/EchoConfig.asset", () => ScriptableObject.CreateInstance<EchoConfig>());
             var schedule = LoadOrCreate($"{DataDir}/Waves/Encounter01_PrimeiroCiclo.asset", () => BuildEncounter01(p));
+            UpgradeEncounter01(schedule, p);
             var panel = BuildPanelSettings();
             BuildScene(m, p, echoConfig, schedule, panel);
             WireStage();
@@ -84,7 +86,7 @@ namespace OneMoreTime.EditorTools
 
         sealed class Materials
         {
-            public Material Ship, Echo, Enemy, Wave, ShotShip, ShotEcho, Warning, Rock, Ground;
+            public Material Ship, Echo, Enemy, EnemyMedium, ShotShip, ShotEcho, Warning, Rock, Ground;
             public Material ShotEnemy, Laser, TrapMetal, Barrier, Switch, Blast, BossHull, BossCore, Shield;
         }
 
@@ -97,7 +99,7 @@ namespace OneMoreTime.EditorTools
                 Ship = Mat("M_Ship_Cyan", lit, Cyan, emission: Cyan * 0.6f),
                 Echo = Mat("M_Echo_Violet", unlit, new Color(Violet.r, Violet.g, Violet.b, 0.45f), transparent: true),
                 Enemy = Mat("M_Enemy_Orange", lit, Orange, emission: Orange * 0.35f),
-                Wave = Mat("M_Enemy_Ondulante", lit, new Color(1f, 0.42f, 0.3f), emission: new Color(1f, 0.3f, 0.2f) * 0.35f),
+                EnemyMedium = Mat("M_Enemy_Medium", lit, new Color(0.86f, 0.22f, 0.3f), emission: new Color(0.9f, 0.15f, 0.2f) * 0.35f),
                 ShotShip = Mat("M_Shot_Ship", unlit, Cyan * 1.6f),
                 ShotEcho = Mat("M_Shot_Echo", unlit, Violet * 1.15f),
                 Warning = Mat("M_Warning", unlit, Amber * 1.3f),
@@ -157,7 +159,7 @@ namespace OneMoreTime.EditorTools
 
         sealed class Prefabs
         {
-            public GameObject Ship, Echo, Drone, Ondulante, ShotShip, ShotEcho, Warning, Pillar, Rock;
+            public GameObject Ship, Echo, EnemyS, EnemyM, ShotShip, ShotEcho, Warning, Pillar, Rock;
             public GameObject ShotEnemy, MineShip, MineEcho, LaserGate, Barrier, Switch, TrapSection, Guardian;
         }
 
@@ -168,12 +170,12 @@ namespace OneMoreTime.EditorTools
             p.ShotEcho = Prefab($"{PrefabDir}/Projectiles/Shot_Echo.prefab", () => BuildShot("Shot_Echo", m.ShotEcho));
             p.Echo = Prefab($"{PrefabDir}/Echo/EchoGhost.prefab", () => BuildEchoGhost(m, p.ShotEcho));
             p.Ship = Prefab($"{PrefabDir}/Ship/PlayerShip.prefab", () => BuildShip(m, p.ShotShip, p.Echo));
-            p.Drone = Prefab($"{PrefabDir}/Enemies/Drone.prefab", () => BuildEnemy("Drone", m.Enemy, MovementPattern.Straight, hp: 2, speed: 4f, diamond: false));
-            p.Ondulante = Prefab($"{PrefabDir}/Enemies/Ondulante.prefab", () => BuildEnemy("Ondulante", m.Wave, MovementPattern.Sine, hp: 1, speed: 3.5f, diamond: true));
             p.Warning = Prefab($"{PrefabDir}/World/WaveWarning.prefab", () => BuildWarning(m.Warning));
             p.Pillar = Prefab($"{PrefabDir}/World/Prop_Pillar.prefab", () => BuildProp("Prop_Pillar", PrimitiveType.Cube, m.Rock));
             p.Rock = Prefab($"{PrefabDir}/World/Prop_Rock.prefab", () => BuildProp("Prop_Rock", PrimitiveType.Sphere, m.Rock));
             p.ShotEnemy = Prefab($"{PrefabDir}/Projectiles/Shot_Enemy.prefab", () => BuildEnemyShot(m.ShotEnemy));
+            p.EnemyS = Prefab($"{PrefabDir}/Enemies/Enemy_S.prefab", () => BuildEnemyS(m, p.ShotEnemy));
+            p.EnemyM = Prefab($"{PrefabDir}/Enemies/Enemy_M.prefab", () => BuildEnemyM(m, p.ShotEnemy));
             p.MineShip = Prefab($"{PrefabDir}/Gadgets/TimeMine_Ship.prefab", () => BuildMine("TimeMine_Ship", m.Ship, m.Blast));
             p.MineEcho = Prefab($"{PrefabDir}/Gadgets/TimeMine_Echo.prefab", () => BuildMine("TimeMine_Echo", m.Echo, m.Blast));
             p.LaserGate = Prefab($"{PrefabDir}/Traps/LaserGate.prefab", () => BuildLaserGate(m));
@@ -254,34 +256,100 @@ namespace OneMoreTime.EditorTools
             return visual;
         }
 
-        static GameObject BuildEnemy(string name, Material mat, MovementPattern pattern, int hp, float speed, bool diamond)
+        // Enemies use the designer's blockout models (Art/Ships). Their nose points to -Z: turn them to face
+        // the ship (-X), with the same small roll toward the camera as the player ship.
+        static readonly Quaternion EnemyFacing = Quaternion.AngleAxis(-15f, Vector3.right) * Quaternion.Euler(0f, 90f, 0f);
+
+        // Small fighter (GDD 04): comes in a line, swoops to the ship's height and fires one aimed shot.
+        static GameObject BuildEnemyS(Materials m, GameObject shot)
+        {
+            var root = BuildEnemy("Enemy_S", $"{ShipArtDir}/Enemie_S_BlockOut.fbx", 0.9f, m.Enemy, m.Warning,
+                MovementPattern.Swoop, hp: 1, score: 100, shot);
+            var gun = root.GetComponent<EnemyGun>();
+            SetFloat(gun, "firstDelay", 0.35f);
+            SetFloat(gun, "windup", 0.35f);
+            SetInt(gun, "shotsPerBurst", 1);
+            SetInt(gun, "maxBursts", 1);
+            return root;
+        }
+
+        // Medium gunship (GDD 04): holds a column on the right and fires aimed fans of three.
+        static GameObject BuildEnemyM(Materials m, GameObject shot)
+        {
+            var root = BuildEnemy("Enemy_M", $"{ShipArtDir}/Enemie_M_BlockOut.fbx", 1f, m.EnemyMedium, m.Warning,
+                MovementPattern.Hover, hp: 20, score: 300, shot);
+            var gun = root.GetComponent<EnemyGun>();
+            SetFloat(gun, "firstDelay", 0.8f);
+            SetFloat(gun, "interval", 1.8f);
+            SetFloat(gun, "windup", 0.45f);
+            SetInt(gun, "shotsPerBurst", 3);
+            SetFloat(gun, "spread", 12f);
+            return root;
+        }
+
+        static GameObject BuildEnemy(string name, string modelPath, float scale, Material mat, Material warningMat,
+            MovementPattern pattern, int hp, int score, GameObject shot)
         {
             var root = new GameObject(name);
-            var visual = new GameObject("Visual").transform;
-            visual.SetParent(root.transform, false);
-            if (diamond)
-                Part(visual, PrimitiveType.Cube, "Body", Vector3.zero, new Vector3(45f, 45f, 0f), Vector3.one * 0.7f, mat);
-            else
-            {
-                Part(visual, PrimitiveType.Cube, "Body", Vector3.zero, new Vector3(0f, 0f, 45f), Vector3.one * 0.85f, mat);
-                Part(visual, PrimitiveType.Sphere, "Eye", new Vector3(-0.35f, 0f, -0.3f), Vector3.zero, Vector3.one * 0.35f, mat);
-            }
+            var visual = Visual(root.transform);
+            var art = Model(visual, modelPath, EnemyFacing, scale, mat);
             AddKinematicBody(root);
-            var col = root.AddComponent<SphereCollider>();
+            // A little smaller than the art, on the play plane.
+            var col = root.AddComponent<BoxCollider>();
             col.isTrigger = true;
-            col.radius = 0.6f;
+            col.size = new Vector3(art.size.x * 0.85f, art.size.y * 0.85f, 1f);
 
             var health = root.AddComponent<Health>();
             SetEnum(health, "faction", (int)Faction.Enemy);
             SetInt(health, "maxHealth", hp);
             var enemy = root.AddComponent<Enemy>();
             SetEnum(enemy, "pattern", (int)pattern);
-            SetFloat(enemy, "speed", speed);
+            Set(enemy, "visual", visual);
+            SetInt(enemy, "scoreValue", score);
             var contact = root.AddComponent<ContactDamage>();
             SetEnum(contact, "faction", (int)Faction.Enemy);
 
+            // The gun sits at the nose; the telegraph blinks there before each burst.
+            var muzzle = new GameObject("Muzzle").transform;
+            muzzle.SetParent(root.transform, false);
+            muzzle.localPosition = new Vector3(art.min.x - 0.1f, 0f, 0f);
+            var telegraph = Part(muzzle, PrimitiveType.Sphere, "Telegraph", Vector3.zero, Vector3.zero, Vector3.one * 0.5f, warningMat, shadows: false);
+            telegraph.AddComponent<Blinker>();
+            var gun = root.AddComponent<EnemyGun>();
+            Set(gun, "shot", shot.GetComponent<Projectile>());
+            Set(gun, "muzzle", muzzle);
+            Set(gun, "telegraph", telegraph);
+
             SetLayer(root, LayerEnemy);
             return root;
+        }
+
+        // Puts a model under "parent/Model" (the pivot keeps rotation, scale and the centring offset) and returns
+        // its bounds in the parent's space. The model stays a linked FBX instance, so re-exports update it.
+        // Falls back to a cube when the FBX is missing.
+        static Bounds Model(Transform parent, string modelPath, Quaternion rotation, float scale, Material mat)
+        {
+            var pivot = new GameObject("Model").transform;
+            pivot.SetParent(parent, false);
+            pivot.localRotation = rotation;
+            pivot.localScale = Vector3.one * scale;
+            var fbx = AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
+            if (fbx != null)
+                PrefabUtility.InstantiatePrefab(fbx, pivot);
+            else
+                Part(pivot, PrimitiveType.Cube, "Missing model", Vector3.zero, Vector3.zero, Vector3.one, mat);
+
+            var bounds = new Bounds();
+            bool first = true;
+            foreach (var r in pivot.GetComponentsInChildren<Renderer>(true))
+            {
+                r.sharedMaterial = mat;
+                if (first) { bounds = r.bounds; first = false; }
+                else bounds.Encapsulate(r.bounds);
+            }
+            var centre = parent.InverseTransformPoint(bounds.center);
+            pivot.localPosition -= centre;
+            return new Bounds(Vector3.zero, bounds.size);
         }
 
         static GameObject BuildShot(string name, Material mat)
@@ -543,31 +611,52 @@ namespace OneMoreTime.EditorTools
 
         static WaveSchedule BuildEncounter01(Prefabs p)
         {
-            var drone = p.Drone.GetComponent<Enemy>();
-            var wave = p.Ondulante.GetComponent<Enemy>();
             var s = ScriptableObject.CreateInstance<WaveSchedule>();
+            FillEncounter01(s, p);
+            return s;
+        }
+
+        // An encounter built before the S and M enemies existed (drones and ondulantes) is refilled in place.
+        static void UpgradeEncounter01(WaveSchedule s, Prefabs p)
+        {
+            var small = p.EnemyS.GetComponent<Enemy>();
+            var medium = p.EnemyM.GetComponent<Enemy>();
+            foreach (var w in s.waves)
+                if (w.enemy != small && w.enemy != medium)
+                {
+                    FillEncounter01(s, p);
+                    EditorUtility.SetDirty(s);
+                    Debug.Log("[One More Time] Encounter 1 rebuilt with the S and M enemies.");
+                    return;
+                }
+        }
+
+        static void FillEncounter01(WaveSchedule s, Prefabs p)
+        {
+            var small = p.EnemyS.GetComponent<Enemy>();
+            var medium = p.EnemyM.GetComponent<Enemy>();
             s.warningSeconds = 0.8f;
             s.clearDelay = 4f;
             s.waves = new List<WaveSchedule.Wave>
             {
-                // GDD 04, encounter 1. 0:00–0:10 is free flight (obstacles not built yet).
-                W("3 drones em fila, vindo do centro", 10f, drone, MovementPattern.Straight, 3, 0f, 2.2f),
-                W("drones em dois níveis de altura", 25f, drone, MovementPattern.Straight, 3, 0.5f, 2.2f, -0.5f),
-                W("drones em dois níveis de altura (2)", 33f, drone, MovementPattern.Straight, 3, 0.7f, 2.2f, -0.1f),
-                W("primeiro grupo de ondulantes", 40f, wave, MovementPattern.Sine, 4, 0.2f, 1.6f),
-                W("ondulantes (2)", 50f, wave, MovementPattern.Sine, 5, -0.3f, 1.6f),
-                // 1:00–1:20 asks for a turret + drones; the turret isn't built yet, so drones only.
-                W("drones (torreta pendente)", 60f, drone, MovementPattern.Straight, 3, 0.6f, 2.2f, -0.6f),
-                W("drones finais", 70f, drone, MovementPattern.Straight, 4, 0f, 2f),
+                // GDD 04, encounter 1. 0:00–0:10 is free flight, to learn moving and recording.
+                W("4 caças em fila, no alto", 10f, small, 4, 0.35f, 1.6f),
+                W("4 caças em fila, embaixo", 17f, small, 4, -0.4f, 1.6f),
+                W("primeiro artilheiro: para à direita e dispara leques", 25f, medium, 1, 0f, 0f),
+                W("caças em dois níveis", 35f, small, 3, 0.6f, 1.6f, -0.6f),
+                W("dois artilheiros, em cima e embaixo", 44f, medium, 1, 0.5f, 0f, -0.5f),
+                W("5 caças pelo meio", 55f, small, 5, 0f, 1.4f),
+                W("artilheiro com escolta", 62f, medium, 1, -0.35f, 0f),
+                W("escolta de caças", 63f, small, 4, 0.6f, 1.6f),
+                W("caças finais em dois níveis", 73f, small, 4, 0.5f, 1.6f, -0.5f),
             };
-            return s;
         }
 
-        static WaveSchedule.Wave W(string label, float time, Enemy enemy, MovementPattern pattern, int count, float height, float spacing, float? second = null)
+        static WaveSchedule.Wave W(string label, float time, Enemy enemy, int count, float height, float spacing, float? second = null)
         {
             return new WaveSchedule.Wave
             {
-                label = label, time = time, enemy = enemy, pattern = pattern, count = count,
+                label = label, time = time, enemy = enemy, count = count,
                 height = height, spacing = spacing,
                 secondRow = second.HasValue, secondRowHeight = second ?? height,
             };
@@ -710,8 +799,8 @@ namespace OneMoreTime.EditorTools
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
         }
 
-        // Adds the stage (waves → traps → Guardian), the combo tracker and the gadget links to the scene,
-        // only where missing.
+        // Adds the stage (waves → traps → Guardian), the combo tracker, the pixel view and the gadget links
+        // to the scene, only where missing.
         static void WireStage()
         {
             var scene = SceneManager.GetActiveScene();
@@ -751,6 +840,8 @@ namespace OneMoreTime.EditorTools
             changed |= SetIfNull(stage, "world", world);
             changed |= SetIfNull(stage, "trapSection", p.TrapSection.GetComponent<TrapSection>());
             changed |= SetIfNull(stage, "boss", p.Guardian.GetComponent<GuardianBoss>());
+            changed |= SetIfNull(spawner, "pool", pool);
+            changed |= SetIfNull(spawner, "ship", ability.transform);
 
             var combos = Object.FindFirstObjectByType<ComboTracker>();
             if (combos == null)
@@ -760,6 +851,13 @@ namespace OneMoreTime.EditorTools
             }
             changed |= SetIfNull(combos, "waves", spawner);
             changed |= SetIfNull(combos, "stage", stage);
+
+            // The low-resolution look is an experiment (GDD 08): untick the component to turn it off.
+            if (Object.FindFirstObjectByType<PixelView>() == null)
+            {
+                Child<PixelView>(systems, "PixelView");
+                changed = true;
+            }
 
             changed |= SetIfNull(gadget, "input", input);
             changed |= SetIfNull(gadget, "playfield", playfield);

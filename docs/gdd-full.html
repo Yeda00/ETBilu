@@ -184,8 +184,8 @@
 <section class="plate chapter" id="c03" aria-labelledby="h03">
   <header>
     <h2 id="h03"><span class="n">03</span>Combate</h2>
-    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Drone, Ondulante; ComboTracker, CrossfireRule, SynchronizedStrikeRule) · <code>docs/gdd/03-combate.md</code></p>
+    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
+    <p class="src">Fonte: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Enemy_S, Enemy_M; ComboTracker, CrossfireRule, SynchronizedStrikeRule) · <code>docs/gdd/03-combate.md</code></p>
   </header>
   <p class="summary">O que a nave do jogador faz, os tipos de dano, os combos temporais e o que a pontuação premia.</p>
   <section class="part"><h3>Nave do jogador</h3>
@@ -205,12 +205,12 @@
       <tr><th scope="row">Velocidade da nave</th><td>9 u/s</td><td><code>PlayerShip</code> → <code>ShipMotor</code></td></tr>
       <tr><th scope="row">Disparo principal</th><td>10 tiros/s, dano 1; sai do canhão mais perto da câmera</td><td><code>PlayerShip</code> → <code>ShipWeapon</code>, <code>Shot_Ship</code></td></tr>
       <tr><th scope="row">Hitbox da nave</th><td>caixa de 1,4 × 0,9 u no plano de jogo, em volta do disco e da cabine; menor que a arte (aletas, ponta da cúpula e canhões ficam de fora)</td><td><code>PlayerShip</code> → <code>BoxCollider</code></td></tr>
-      <tr><th scope="row">Drone</th><td>2 de vida, 100 pontos</td><td><code>Drone</code></td></tr>
-      <tr><th scope="row">Ondulante</th><td>1 de vida, 100 pontos</td><td><code>Ondulante</code></td></tr>
+      <tr><th scope="row">Caça (S)</th><td>1 de vida, 100 pontos; 1 tiro mirado</td><td><code>Enemy_S</code> → <a href="#c04">04</a></td></tr>
+      <tr><th scope="row">Artilheiro (M)</th><td>20 de vida, 300 pontos; leques de 3 tiros</td><td><code>Enemy_M</code> → <a href="#c04">04</a></td></tr>
       <tr><th scope="row">Inimigo que bate na nave</th><td>1 de dano</td><td><code>ContactDamage</code></td></tr>
       <tr><th scope="row">Mina temporal</th><td>4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s</td><td><code>TimeMine_Ship</code>, <code>TimeMine_Echo</code>, <code>PlayerShip</code> → <code>ShipGadget</code></td></tr>
       <tr><th scope="row">Laser gate e barreira móvel</th><td>1 de dano ao contato</td><td>prefabs em <code>Prefabs/Traps</code></td></tr>
-      <tr><th scope="row">Tiros do Guardião</th><td>1 de dano</td><td><code>Shot_Enemy</code></td></tr>
+      <tr><th scope="row">Tiros inimigos (caça, artilheiro, Guardião)</th><td>1 de dano, 8 u/s</td><td><code>Shot_Enemy</code></td></tr>
       <tr><th scope="row">Guardião</th><td>núcleo 120 de vida, geradores 12</td><td><code>Guardian</code> → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Crossfire</th><td>janela de 1 s entre o acerto da nave e o do eco; +3 de dano combinado; o mesmo alvo só dá outro Crossfire depois de 1 s</td><td><code>ComboTracker</code> (cena, em <code>Systems</code>)</td></tr>
       <tr><th scope="row">Synchronized Strike</th><td>janela de 2,5 s entre a queda dos dois geradores</td><td><code>ComboTracker</code></td></tr>
@@ -268,53 +268,67 @@
 <section class="plate chapter" id="c04" aria-labelledby="h04">
   <header>
     <h2 id="h04"><span class="n">04</span>Inimigos e ondas</h2>
-    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project/Data/Waves/Encounter01_PrimeiroCiclo.asset · <code>docs/gdd/04-inimigos-e-ondas.md</code></p>
+    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
+    <p class="src">Fonte: GDD v0.1 (PDF) §5.5; protótipo em Assets/_Project (Enemy_S, Enemy_M, Enemy, EnemyGun, SwoopMotion, HoverMotion, FireCycle; Data/Waves/Encounter01_PrimeiroCiclo.asset) · <code>docs/gdd/04-inimigos-e-ondas.md</code></p>
   </header>
   <p class="summary">Quem a nave enfrenta, como cada inimigo conversa com o eco, e como as ondas entram na tela.</p>
   <p>Os inimigos surgem durante o avanço da fase, entrando pela direita (e às vezes por cima ou por baixo). Em vez de spawn aleatório, cada encontro segue uma <strong>lista de ondas com tempo e posição definidos</strong>.</p>
   <p class="why"><em>Por quê:</em> o jogador aprende o padrão e consegue planejar o que gravar no eco.</p>
   <section class="part"><h3>Tipos de inimigo</h3>
-    <figure><img src="img/enemies.svg" alt="Drone, ondulante e torreta." width="800" height="250" loading="lazy"></figure>
+    <figure><img src="img/enemies.svg" alt="Caça mergulhando com um tiro mirado, artilheiro parado disparando leques de três, torreta planejada." width="800" height="250" loading="lazy"></figure>
     <div class="scroll"><table><thead><tr><th>Inimigo</th><th>Comportamento</th><th>Papel com o eco</th></tr></thead><tbody>
-      <tr><th scope="row">Drone (reto)</th><td>Entra pela direita e voa em linha reta; não atira</td><td>Alvo fácil para Crossfire; ensina a gravação</td></tr>
-      <tr><th scope="row">Ondulante</th><td>Zigue-zague senoidal, em grupos de 3 a 5</td><td>Pode ser conduzido para armadilhas (Trap Bait)</td></tr>
-      <tr><th scope="row">Torreta</th><td>Parada no cenário, atira na direção da nave</td><td>Exige que nave e eco ataquem de posições diferentes</td></tr>
+      <tr><th scope="row">Caça (S, pequeno)</th><td>Entra em fila pela direita, em linha reta. Num ponto da tela mergulha para a altura em que a nave está naquele momento, avisa com um brilho e dispara <strong>um</strong> tiro mirado; depois segue e sai pela esquerda</td><td>Como mergulha atrás da nave, dá para puxar a fila para a linha de tiro do eco</td></tr>
+      <tr><th scope="row">Artilheiro (M, médio)</th><td>Entra, freia e segura uma posição à direita, balançando de leve. A cada rajada avisa com um brilho e dispara um <strong>leque de 3 tiros</strong> mirados; depois de um tempo acelera e sai pela esquerda</td><td>Resistente e parado: o alvo natural de Crossfire (nave e eco no mesmo alvo)</td></tr>
+      <tr><th scope="row">Torreta <em>(planejada)</em></th><td>Parada no cenário, atira na direção da nave</td><td>Exige que nave e eco ataquem de posições diferentes</td></tr>
     </tbody></table></div>
-    <p>Para a jam, a recomendação é <strong>começar com um tipo</strong> e adicionar os outros dois só se o núcleo já estiver divertido.</p>
+    <p>O GDD v0.1 previa um <strong>drone</strong> (linha reta, sem atirar) e um <strong>ondulante</strong> (zigue-zague em grupos). Em 2026-10-18 o time pediu inimigos melhores, que atirem; caça e artilheiro ocuparam esses dois lugares, com os modelos de blockout do designer (<code>Enemie_S_BlockOut</code> e <code>Enemie_M_BlockOut</code>) → <a href="#c08">08</a>.</p>
+    <p>Para a jam, a recomendação do v0.1 era <strong>começar com um tipo</strong> e adicionar os outros só se o núcleo já estivesse divertido; o protótipo tem dois.</p>
+    <p class="why"><em>Por quê:</em> os dois cobrem as duas pressões clássicas de um shooter de nave — o caça é rápido e frágil e obriga a sair da linha do tiro; o artilheiro é lento e resistente e obriga a gastar tempo nele, o que pede o eco.</p>
+  </section>
+  <section class="part"><h3>Valores de partida no protótipo</h3>
+    <div class="scroll"><table><thead><tr><th></th><th>Caça (S)</th><th>Artilheiro (M)</th><th>Onde mudar</th></tr></thead><tbody>
+      <tr><th scope="row">Vida</th><td>1</td><td>20</td><td>prefab → <code>Health</code></td></tr>
+      <tr><th scope="row">Pontos</th><td>100</td><td>300</td><td>prefab → <code>Enemy</code></td></tr>
+      <tr><th scope="row">Movimento</th><td>6,5 u/s; mergulha a 30% da meia largura à direita do centro, em 1 s, no máximo 4,5 u para cima ou para baixo</td><td>entra em 1,6 s até 4,5 u da borda direita; segura 7 s balançando 0,5 u (0,3 Hz); sai acelerando a 5 u/s²</td><td>prefab → <code>Enemy</code></td></tr>
+      <tr><th scope="row">Tiro</th><td>1 tiro mirado, 0,35 s depois do início do mergulho</td><td>leque de 3 tiros mirados, 12° entre eles; a primeira rajada 0,8 s depois de parar, depois a cada 1,8 s</td><td>prefab → <code>EnemyGun</code></td></tr>
+      <tr><th scope="row">Aviso antes do tiro</th><td>0,35 s</td><td>0,45 s</td><td>prefab → <code>EnemyGun</code></td></tr>
+      <tr><th scope="row">Tiro inimigo</th><td colspan="2">8 u/s, 1 de dano (o mesmo do Guardião)</td><td><code>Shot_Enemy</code></td></tr>
+      <tr><th scope="row">Encostar na nave</th><td>1 de dano</td><td>1 de dano</td><td><code>ContactDamage</code></td></tr>
+    </tbody></table></div>
+    <p class="muted small">Valores para testar, não definitivos. As regras dos caminhos e do tiro ficam no Core (<code>SwoopMotion</code>, <code>HoverMotion</code>, <code>FireCycle</code>), com testes.</p>
   </section>
   <section class="part"><h3>Regras de surgimento</h3>
     <ul class="clean">
       <li>As ondas são definidas por script: tempo de entrada, ponto de entrada, tipo e quantidade.</li>
-      <li>Cada onda <strong>sinaliza a entrada</strong> com um aviso visual curto (seta ou brilho na borda da tela).</li>
+      <li>Cada onda <strong>sinaliza a entrada</strong> com um aviso visual curto (no protótipo, um marcador piscando na borda direita, 0,8 s antes).</li>
+      <li>Cada rajada inimiga é <strong>avisada</strong>: um brilho amarelo pisca na ponta do inimigo antes do tiro.</li>
+      <li>Inimigo só atira com a ponta <strong>dentro da tela</strong>: nada atira de onde o jogador não vê.</li>
       <li>Inimigos que saem pela esquerda são removidos <strong>sem penalidade</strong>.</li>
       <li>O número de inimigos simultâneos é limitado, para a tela continuar legível com os ecos ativos.</li>
       <li>Matar inimigos <strong>nunca é obrigatório</strong> para avançar; o scroll continua.</li>
     </ul>
+    <p>Dois artilheiros na mesma onda ficam em alturas diferentes (duas fileiras); se a onda tiver mais de um na mesma fileira, cada um para mais à direita que o anterior, mantendo a distância com que entrou.</p>
   </section>
   <section class="part"><h3>Exemplo — Encontro 1 (primeiro ciclo)</h3>
-    <figure><img src="img/wave-timeline.svg" alt="Linha do tempo das ondas do encontro 1, de 0:00 a 1:20." width="800" height="230" loading="lazy"></figure>
+    <figure><img src="img/wave-timeline.svg" alt="Linha do tempo das ondas do encontro 1, de 0:00 a 1:20: caças, artilheiros e escolta." width="800" height="230" loading="lazy"></figure>
     <div class="scroll"><table><thead><tr><th>Tempo</th><th>Onda</th><th>Objetivo de design</th></tr></thead><tbody>
-      <tr><td><code>0:00–0:10</code></td><td>Sem inimigos; só obstáculos básicos</td><td>Aprender movimento e tiro</td></tr>
-      <tr><td><code>0:10–0:25</code></td><td>3 drones em fila, vindo do centro</td><td>Primeiros alvos, sem pressão</td></tr>
-      <tr><td><code>0:25–0:40</code></td><td>Drones em dois níveis de altura</td><td>Incentivar gravar uma rota e deixar o eco cobrir um nível</td></tr>
-      <tr><td><code>0:40–1:00</code></td><td>Primeiro grupo de ondulantes</td><td>Ler o padrão e atacar com nave e eco ao mesmo tempo</td></tr>
-      <tr><td><code>1:00–1:20</code></td><td>Torreta + drones</td><td>Introduzir a ideia de dividir tarefas entre nave e eco</td></tr>
+      <tr><td><code>0:00–0:10</code></td><td>Sem inimigos</td><td>Aprender movimento, tiro e gravação</td></tr>
+      <tr><td><code>0:10–0:25</code></td><td>4 caças em fila no alto (0:10) e 4 embaixo (0:17)</td><td>Primeiros alvos; aprender a sair da linha do tiro mirado</td></tr>
+      <tr><td><code>0:25–0:35</code></td><td>O primeiro artilheiro, no meio da tela</td><td>Gravar o tiro e cruzar com o eco: o primeiro alvo para Crossfire</td></tr>
+      <tr><td><code>0:35–0:44</code></td><td>Caças em dois níveis</td><td>Deixar o eco cobrir um nível</td></tr>
+      <tr><td><code>0:44–0:55</code></td><td>Dois artilheiros, um em cima e outro embaixo</td><td>Dividir as tarefas entre nave e eco</td></tr>
+      <tr><td><code>0:55–1:10</code></td><td>5 caças pelo meio (0:55); um artilheiro com escolta de caças (1:02)</td><td>Ler e priorizar os alvos</td></tr>
+      <tr><td><code>1:10–1:20</code></td><td>Caças finais em dois níveis (1:13)</td><td>Fechar antes do corredor</td></tr>
     </tbody></table></div>
-    <p><strong>No protótipo atual</strong> o encontro 1 está em <code>Encounter01_PrimeiroCiclo.asset</code>, com estas diferenças:</p>
-    <ul class="clean">
-      <li>Drone e ondulante existem; a <strong>torreta ainda não</strong>, então 1:00–1:20 usa só drones.</li>
-      <li>Os primeiros 10 s não têm obstáculos (ainda não existem): é voo livre.</li>
-      <li>Há ondas extras em 0:33 (drones em dois níveis), 0:50 (ondulantes) e 1:10 (drones), para o encontro não ficar vazio.</li>
-      <li>O aviso de entrada é um marcador piscando na borda direita, 0,8 s antes da onda.</li>
-      <li>O encontro termina 4 s depois da última onda, quando não resta inimigo vivo; aí começa o corredor de armadilhas → <a href="#c06">06</a>.</li>
-    </ul>
-    <p class="muted small">Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 reaproveitam os mesmos três inimigos, combinados com as armadilhas e o gadget → <a href="#c06">06</a>.</p>
+    <p>Está em <code>Encounter01_PrimeiroCiclo.asset</code>. O encontro termina 4 s depois da última onda, quando não resta inimigo vivo; aí começa o corredor de armadilhas → <a href="#c06">06</a>. A torreta ainda não entra.</p>
+    <p class="muted small">Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 devem reaproveitar os mesmos inimigos, combinados com as armadilhas e o gadget → <a href="#c06">06</a>.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Limite de inimigos simultâneos na tela: <span class="tbd">_TBD_</span> (o protótipo ainda não limita).</span></li>
     <li><span>Torreta: falta implementar.</span></li>
-    <li><span>Ondas dos encontros 2 e 3: só o encontro 1 tem linha do tempo no v0.1.</span></li>
+    <li><span>O caça mira e mergulha para onde a nave está: as ondas continuam por script, mas parte do movimento responde ao jogador. Isso combina com "o jogador aprende o padrão e planeja o que gravar", ou o mergulho deve ir para alturas fixas?</span></li>
+    <li><span>Vida, pontos, tempos de tiro e de aviso: valores de partida; falta validar jogando.</span></li>
+    <li><span>Ondas dos encontros 2 e 3: só o encontro 1 tem linha do tempo.</span></li>
   </ul></div>
 </section>
 
@@ -411,8 +425,8 @@
 <section class="plate chapter" id="c06" aria-labelledby="h06">
   <header>
     <h2 id="h06"><span class="n">06</span>Chefe e estrutura das runs</h2>
-    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
+    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
+    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker; modelo Art/Ships/Enemie_Boss_BlockOut.fbx) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
   </header>
   <p class="summary">O chefe do protótipo, fase a fase, e como os encontros de uma run ensinam e combinam as mecânicas.</p>
   <section class="part"><h3>O Guardião do Ciclo <span class="muted small">(nome provisório)</span></h3>
@@ -426,9 +440,17 @@
     </tbody></table></div>
     <div class="rule ok"><span class="osd">Critério de sucesso</span>O chefe é vencível com uma boa sequência temporal, mas <strong>não exige combinação pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</div>
     <h4>No protótipo atual</h4>
-    <p>Uma versão mínima com as <strong>fases 1 a 3</strong> (prefab <code>Guardian</code>, regras em <code>GuardianModel</code>). A fase 4 não existe. O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda direita.</p>
+    <p>Uma versão mínima com as <strong>fases 1 a 3</strong> (prefab <code>Guardian</code>, regras em <code>GuardianModel</code>). A fase 4 não existe. O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda direita, ocupando o terço direito da tela.</p>
+    <p>Ele usa o modelo de blockout do designer (<code>Enemie_Boss_BlockOut</code>), <strong>visto de cima</strong>: os dois braços-canhão viram duas <strong>mandíbulas</strong>, uma em cima e outra embaixo, apontadas para a nave; a cabeça fica entre elas, ao fundo, com o <strong>visor</strong> vermelho virado para a nave. A leitura é a de um portão com duas mandíbulas, a máquina que protege a passagem.</p>
+    <div class="scroll"><table><thead><tr><th>Peça do modelo</th><th>No combate</th></tr></thead><tbody>
+      <tr><th scope="row">Ponta de cada mandíbula</th><td>Um <strong>gerador</strong> (losango laranja): o de cima e o de baixo</td></tr>
+      <tr><th scope="row">Visor</th><td>O <strong>núcleo</strong>, alcançável pelo vão entre as mandíbulas</td></tr>
+      <tr><th scope="row">Boca</th><td>De onde saem os tiros das fases</td></tr>
+      <tr><th scope="row">Corpo e mandíbulas</th><td><strong>Blindagem</strong></td></tr>
+    </tbody></table></div>
+    <p>Para tudo bater com o que aparece na tela, os colisores ficam no plano de jogo, na posição em que cada peça é vista pela câmera; o modelo fica logo atrás desse plano. Os geradores ficam a 2,9 u acima e abaixo do centro.</p>
     <div class="scroll"><table><thead><tr><th>Parte</th><th>Como funciona</th></tr></thead><tbody>
-      <tr><th scope="row">Blindagem (casco)</th><td>Absorve todos os tiros e fere a nave que encostar nela</td></tr>
+      <tr><th scope="row">Blindagem (corpo e mandíbulas)</th><td>Absorve todos os tiros e fere a nave que encostar nela</td></tr>
       <tr><th scope="row">Núcleo</th><td>120 de vida. Absorve os tiros enquanto o escudo âmbar está à vista; só toma dano quando fica vulnerável</td></tr>
       <tr><th scope="row">Geradores (cima e baixo)</th><td>12 de vida cada. Derrubar o primeiro abre uma <strong>janela</strong>; se o segundo cai dentro dela, o núcleo fica <strong>vulnerável por 4 s</strong>. Se a janela fecha com um gerador de pé, o que caiu volta com a vida cheia</td></tr>
       <tr><th scope="row">Volta dos geradores</th><td>Quando a vulnerabilidade acaba, os dois geradores voltam com a vida cheia</td></tr>
@@ -531,8 +553,8 @@
 <section class="plate chapter" id="c08" aria-labelledby="h08">
   <header>
     <h2 id="h08"><span class="n">08</span>Direção visual e sonora</h2>
-    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01, modelo Art/Ships/BI_Ships_BlockOut.fbx) · <code>docs/gdd/08-direcao-visual-e-sonora.md</code></p>
+    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
+    <p class="src">Fonte: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01, modelos em Art/Ships) · <code>docs/gdd/08-direcao-visual-e-sonora.md</code></p>
   </header>
   <p class="summary">Como o jogo se parece e soa, com uma regra: a tela e o som têm que explicar a mecânica temporal.</p>
   <section class="part"><h3>Direção visual</h3>
@@ -541,8 +563,23 @@
     <p>O jogo é um <strong>side-scrolling 2.5D</strong>: o mundo e a jogabilidade são 3D, vistos por uma câmera lateral que lê como 2D. <strong>Alguns elementos serão sprites 2D</strong>, misturados ao mundo 3D.</p>
     <p class="why"><em>Por quê:</em> a leitura lateral mantém o bullet hell legível, e o 3D dá profundidade, luz e efeitos de energia.</p>
     <p><strong>No protótipo atual:</strong> câmera em <strong>perspectiva</strong> (campo de visão 40°, a 20 unidades do plano de jogo), a jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade.</p>
-    <p>A <strong>nave</strong> e o <strong>eco</strong> usam o modelo 3D de blockout da nave, o <em>BiluShip</em> (<code>Art/Ships/BI_Ships_BlockOut.fbx</code>): virado para a direita, com o topo do disco inclinado 15° para a câmera, ciano na nave e violeta translúcido no eco. O resto — inimigos, tiros, armadilhas, chefe e cenário — ainda é placeholder feito de primitivas, até a arte chegar.</p>
-    <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: inimigos, projéteis, efeitos, cenário). A nave já é um modelo 3D (blockout).</div>
+    <p>Naves e chefe usam os modelos 3D de blockout do designer, em <code>Art/Ships</code> (do arquivo <code>BI_Ships.blend</code>):</p>
+    <div class="scroll"><table><thead><tr><th>Modelo</th><th>Quem usa</th><th>Como aparece</th></tr></thead><tbody>
+      <tr><td><code>BI_Ships_BlockOut</code> (<em>BiluShip</em>)</td><td>Nave e eco</td><td>Virado para a direita, topo do disco inclinado 15° para a câmera; ciano na nave, violeta translúcido no eco</td></tr>
+      <tr><td><code>Enemie_S_BlockOut</code></td><td>Caça (S)</td><td>Virado para a nave, com a mesma inclinação; laranja</td></tr>
+      <tr><td><code>Enemie_M_BlockOut</code></td><td>Artilheiro (M)</td><td>Virado para a nave, com a mesma inclinação; vermelho</td></tr>
+      <tr><td><code>Enemie_Boss_BlockOut</code></td><td>Guardião do Ciclo</td><td>Visto de cima, as mandíbulas apontadas para a nave; casco azul-escuro, visor vermelho → <a href="#c06">06</a></td></tr>
+    </tbody></table></div>
+    <p>Inimigos e chefe seguem a regra de cor: laranja e vermelho são perigo. O resto — tiros, armadilhas e cenário — ainda é placeholder feito de primitivas, até a arte chegar.</p>
+    <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: projéteis, efeitos, cenário). Naves e chefe já são modelos 3D (blockout).</div>
+    <h4>Visual pixelado</h4>
+    <p>O mundo 3D é desenhado numa <strong>altura baixa fixa</strong> e ampliado sem suavizar, então cada pixel vira um bloco visível — o visual do <em>Star Fox</em> do SNES, a referência pedida pelo time em 2026-10-18. O HUD é desenhado depois, em resolução cheia, e fica nítido.</p>
+    <div class="scroll"><table><thead><tr><th></th><th>No protótipo</th></tr></thead><tbody>
+      <tr><th scope="row">Altura do mundo</th><td>270 px (o <em>Star Fox</em> usa 224), arredondada para cada pixel ocupar um número inteiro de pixels da tela: em 1080p, blocos de 4 × 4</td></tr>
+      <tr><th scope="row">Onde mudar</th><td>Componente <code>PixelView</code> em <code>Systems</code> (cena <code>Arena_01</code>), campo <em>Target Height</em>: menor deixa mais pixelado. Dá para mexer durante o Play mode</td></tr>
+      <tr><th scope="row">Desligar</th><td>Desmarcar o componente <code>PixelView</code></td></tr>
+    </tbody></table></div>
+    <p class="muted small">Valor de partida, para testar.</p>
     <h4>Cor</h4>
     <div class="pillars">
       <div class="pillar"><span class="n">AZUL · CIANO</span><b>Nave atual</b><p>Contorno nítido e disparos bem visíveis.</p></div>
@@ -563,8 +600,9 @@
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Quem é dono da arte e do áudio?</span></li>
-    <li><span>Referências visuais além de <em>Cuphead</em> (câmera): <span class="tbd">_TBD_</span>.</span></li>
-    <li><span>Quais elementos são modelos 3D e quais são sprites 2D: <span class="tbd">_TBD_</span> (a nave já é um modelo 3D).</span></li>
+    <li><span>Referências visuais: <em>Cuphead</em> (câmera) e <em>Star Fox</em> do SNES (visual pixelado); outras <span class="tbd">_TBD_</span>.</span></li>
+    <li><span>O HUD fica nítido, como hoje, ou também pixelado, como no <em>Star Fox</em>?</span></li>
+    <li><span>Quais elementos são modelos 3D e quais são sprites 2D: <span class="tbd">_TBD_</span> (naves e chefe já são modelos 3D).</span></li>
     <li><span>A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? O protótipo usa perspectiva; falta confirmar.</span></li>
   </ul></div>
 </section>
@@ -573,7 +611,7 @@
 <section class="plate chapter" id="c09" aria-labelledby="h09">
   <header>
     <h2 id="h09"><span class="n">09</span>Arquitetura técnica</h2>
-    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
+    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
     <p class="src">Fonte: GDD v0.1 (PDF) §13; código em Assets/_Project/Scripts · <code>docs/gdd/09-arquitetura-tecnica.md</code></p>
   </header>
   <p class="summary">A arquitetura sugerida para Unity: quem grava, quem reproduz, e como o eco conversa com os outros sistemas.</p>
@@ -596,7 +634,7 @@
   <section class="part"><h3>Implementação atual</h3>
     <p>O código fica em <code>Assets/_Project/Scripts</code>, em quatro assemblies; os testes em <code>Assets/_Project/Tests/EditMode</code>.</p>
     <div class="scroll"><table><thead><tr><th>Assembly</th><th>Conteúdo</th></tr></thead><tbody>
-      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião, combos temporais</td></tr>
+      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião, combos temporais, caminhos e tiro dos inimigos</td></tr>
       <tr><td><code>OneMoreTime.Gameplay</code></td><td>Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros, combos e sessão</td></tr>
       <tr><td><code>OneMoreTime.UI</code></td><td>O HUD</td></tr>
       <tr><td><code>OneMoreTime.Editor</code></td><td>A ferramenta que monta o conteúdo placeholder (menu <em>One More Time › Bootstrap</em>)</td></tr>
@@ -608,12 +646,13 @@
       <tr><td><code>EchoPlayback</code></td><td><code>EchoPlayback</code> (Core) + <code>EchoGhost</code></td><td><code>EchoGhost</code> é a nave fantasma na cena</td></tr>
       <tr><td><code>WeaponSystem</code></td><td><code>ShipWeapon</code> + <code>Projectile</code> + <code>ProjectilePool</code></td><td>Tiros reaproveitados por pool</td></tr>
       <tr><td><code>DamageSystem</code></td><td><code>Health</code> (+ <code>HealthModel</code>) + <code>ContactDamage</code></td><td></td></tr>
-      <tr><td><code>EnemyController</code></td><td><code>Enemy</code> + <code>WaveSpawner</code> + <code>WaveSchedule</code></td><td>Ondas são um asset de dados</td></tr>
+      <tr><td><code>EnemyController</code></td><td><code>Enemy</code> + <code>EnemyGun</code> + <code>WaveSpawner</code> + <code>WaveSchedule</code> (+ <code>SwoopMotion</code>, <code>HoverMotion</code>, <code>FireCycle</code> no Core)</td><td>Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (<code>Enemy_S</code>, <code>Enemy_M</code>). O <code>WaveSpawner</code> passa a nave e o pool de tiros aos inimigos</td></tr>
       <tr><td><code>GadgetSystem</code></td><td><code>ShipGadget</code> + <code>TimeMine</code> (+ <code>Cooldown</code>, <code>TimeMineModel</code> no Core)</td><td>A nave solta a mina; o eco reproduz o evento <code>Gadget</code></td></tr>
       <tr><td><code>TrapController</code></td><td><code>TrapSection</code> + <code>LaserGate</code> + <code>MovingBarrier</code> + <code>SwitchPad</code> (+ <code>TrapCycle</code>, <code>ShutterCycle</code>, <code>PresenceSwitch</code>, <code>LaserGateModel</code> no Core)</td><td><code>TrapSection</code> para a rolagem no puzzle e encerra o encontro</td></tr>
       <tr><td><code>BossController</code></td><td><code>GuardianBoss</code> + <code>SweepLaser</code> (+ <code>GuardianModel</code> no Core)</td><td>Fases, escudos, geradores e padrões de tiro</td></tr>
       <tr><td><code>ComboEvaluator</code></td><td><code>ComboTracker</code> (+ <code>CrossfireRule</code>, <code>SynchronizedStrikeRule</code> no Core)</td><td>Uma regra por combo; só Crossfire e Synchronized Strike existem. O <code>ComboTracker</code> ouve o <code>Health.Damaged</code> dos inimigos que as ondas criam e das partes do Guardião, e o <code>GeneratorDestroyed</code> do Guardião; aplica o bônus e avisa o HUD e a sessão (<code>Triggered</code>)</td></tr>
       <tr><td>—</td><td><code>Playfield</code></td><td>O quadro que rola, com a câmera, a nave e os ecos</td></tr>
+      <tr><td>—</td><td><code>PixelView</code></td><td>O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → <a href="#c08">08</a></td></tr>
       <tr><td>—</td><td><code>StageDirector</code> + <code>RunCheckpoint</code></td><td>Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte</td></tr>
       <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota</td></tr>
     </tbody></table></div>
@@ -656,7 +695,7 @@
 <section class="plate chapter" id="c10" aria-labelledby="h10">
   <header>
     <h2 id="h10"><span class="n">10</span>Produção — escopo da jam</h2>
-    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
+    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
     <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (armadilhas, gadget, chefe e os dois primeiros combos) · <code>docs/gdd/10-producao.md</code></p>
   </header>
   <p class="summary">O que entra na jam, o que fica de fora, quando o protótipo está pronto para teste e o que pode dar errado.</p>
@@ -674,10 +713,10 @@
   <section class="part"><h3>Estado do MVP</h3>
     <div class="scroll"><table><thead><tr><th>Item do MVP</th><th>Estado</th></tr></thead><tbody>
       <tr><th scope="row">Nave com movimento e disparo</th><td><span class="chip ok">feito</span></td></tr>
-      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code>; nave e eco com o modelo de blockout da nave, o resto em placeholder</td></tr>
+      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code>; naves e chefe com os modelos de blockout, o resto em placeholder</td></tr>
       <tr><th scope="row">Gravação de cinco segundos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Reprodução de movimento e disparos</th><td><span class="chip ok">feito</span></td></tr>
-      <tr><th scope="row">Drone com ondas por script</th><td><span class="chip ok">feito</span> e o ondulante</td></tr>
+      <tr><th scope="row">Inimigos com ondas por script</th><td><span class="chip ok">feito</span> caça (S) e artilheiro (M), que atiram → <a href="#c04">04</a></td></tr>
       <tr><th scope="row">Duas armadilhas</th><td><span class="chip ok">feito</span> laser gate (com ciclo e preso a um interruptor) e barreira móvel → <a href="#c05">05</a></td></tr>
       <tr><th scope="row">Um gadget funcional</th><td><span class="chip ok">feito</span> mina temporal, na tecla Q, reproduzida pelo eco → <a href="#c05">05</a></td></tr>
       <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, fases 1 a 3 → <a href="#c06">06</a></td></tr>
@@ -720,7 +759,7 @@
 
 <footer class="foot">
   <span>ONE MORE TIME · GDD completo v0.1 · gerado de <code>docs/gdd/*.md</code></span>
-  <span>atualizado 2026-10-17 · draft</span>
+  <span>atualizado 2026-10-18 · draft</span>
 </footer>
 </main>
 </body>

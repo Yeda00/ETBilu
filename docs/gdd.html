@@ -42,6 +42,7 @@
     <div><dt>Estrutura</dt><dd>Runs curtas de 5–10 min, encontros + um chefe</dd></div>
     <div><dt>Gravação</dt><dd>5 s por eco · até 3 ecos</dd></div>
     <div><dt>Referência de câmera</dt><dd>As fases de avião de <em>Cuphead</em></dd></div>
+    <div><dt>Referência de visual</dt><dd>O pixelado do <em>Star Fox</em> (SNES)</dd></div>
   </dl>
 </section>
 
@@ -73,7 +74,8 @@
 
   <section class="plate" aria-labelledby="foes">
     <header><h2 id="foes">Inimigos <a class="to" href="gdd-full.html#c04">→ 04</a></h2><span class="osd">ondas por script</span></header>
-    <figure><img src="img/enemies.svg" alt="Drone em linha reta, ondulante em senoide, torreta fixa que mira na nave." width="800" height="250"></figure>
+    <figure><img src="img/enemies.svg" alt="Caça mergulhando com um tiro mirado, artilheiro parado disparando leques de três, torreta planejada." width="800" height="250"></figure>
+    <p><strong>Caça</strong> (S: entra em fila, mergulha na altura da nave e dispara um tiro mirado), <strong>Artilheiro</strong> (M: para à direita e dispara leques de 3) e <strong>Torreta</strong> (fixa, mira na nave; planejada).</p>
     <p>Nada de spawn aleatório: cada encontro segue uma lista de ondas com tempo e posição. O jogador aprende o padrão e planeja o que gravar. Matar inimigos nunca é obrigatório; o scroll continua.</p>
   </section>
 
@@ -81,7 +83,7 @@
     <header><h2 id="boss">O chefe <a class="to" href="gdd-full.html#c06">→ 06</a></h2><span class="osd">nome provisório</span></header>
     <figure><img src="img/boss.svg" alt="O Guardião do Ciclo: núcleo blindado, dois geradores, laser; quatro fases." width="800" height="300"></figure>
     <p><strong>O Guardião do Ciclo</strong> protege uma passagem temporal. Vencível com uma boa sequência temporal — <strong>nunca pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</p>
-    <p class="muted">No protótipo, as fases 1 a 3: os dois geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável.</p>
+    <p class="muted">No protótipo, as fases 1 a 3: os dois geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, ele é um portão de duas mandíbulas: um gerador na ponta de cada uma e o visor, entre elas, como núcleo.</p>
   </section>
 
   <section class="plate" aria-labelledby="traps">
@@ -116,6 +118,7 @@
   <section class="plate" aria-labelledby="look">
     <header><h2 id="look">Visual e som <a class="to" href="gdd-full.html#c08">→ 08</a></h2><span class="osd">2.5D · arcade sci-fi</span></header>
     <p>Mundo e jogabilidade em <strong>3D</strong>, vistos por uma câmera lateral que lê como 2D; <strong>alguns elementos serão sprites 2D</strong>.</p>
+    <p>No protótipo, o mundo é desenhado em <strong>baixa resolução</strong> (270 px de altura) e ampliado sem suavizar, como no <em>Star Fox</em> do SNES; o HUD fica nítido.</p>
     <div class="pillars">
       <div class="pillar"><span class="n">CIANO</span><b>A nave atual</b><p>Azul ou ciano intenso, contorno nítido, disparos bem visíveis.</p></div>
       <div class="pillar"><span class="n">TRANSLÚCIDO</span><b>O eco</b><p>Contorno luminoso e rastro de repetição; sempre distinguível, mesmo no meio dos projéteis.</p></div>
@@ -139,7 +142,7 @@
 
   <section class="plate" aria-labelledby="proto">
     <header><h2 id="proto">Protótipo — estado atual <a class="to" href="gdd-full.html#c10">→ 10</a></h2><span class="osd">Assets/_Project/Scenes/Arena_01.unity</span></header>
-    <p>Jogável. A nave e o eco usam o modelo 3D de blockout da nave (<em>BiluShip</em>); o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro, gravação de 5 s, eco que repete movimento, tiros e gadget, drones e ondulantes em ondas por script, corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro atual recomeça) e vitória (derrotar o Guardião).</p>
+    <p>Jogável. Nave, eco, inimigos e chefe usam os modelos 3D de blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro, gravação de 5 s, eco que repete movimento, tiros e gadget, caças e artilheiros que atiram, em ondas por script, corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro atual recomeça) e vitória (derrotar o Guardião).</p>
     <div class="rule warn"><span class="osd">Falta</span>Torreta, os outros três combos, som, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).</div>
   </section>
 
@@ -179,7 +182,7 @@
 
 <footer class="foot">
   <span>ONE MORE TIME · GDD v0.1 · gerado de <code>docs/gdd.md</code></span>
-  <span>atualizado 2026-10-17 · draft</span>
+  <span>atualizado 2026-10-18 · draft</span>
 </footer>
 </main>
 </body>

@@ -6,11 +6,13 @@ ao lado de versões anteriores de si mesmo. Protótipo para game jam, em Unity 6
 ## Jogar o protótipo
 
 Abra o projeto no Unity 6 (6000.3.25f1), abra `Assets/_Project/Scenes/Arena_01.unity` e dê Play.
-A nave e o eco já usam o modelo de blockout da nave (*BiluShip*); o resto é placeholder enquanto a arte
+Nave, eco, inimigos e chefe já usam os modelos de blockout do designer; o resto é placeholder enquanto a arte
 não chega. A arena tem ondas de inimigos, um corredor de
 armadilhas (o eco pode segurar o interruptor) e o Guardião do Ciclo; derrotá-lo é a vitória.
 A nave e o eco acertando o mesmo alvo dão **Crossfire**; um gerador do Guardião derrubado pela nave e o
 outro pelo eco dão **Synchronized Strike**.
+O mundo é desenhado pixelado, como no *Star Fox* do SNES: o nível de pixelado fica em **Systems › PixelView**
+(*Target Height*; desmarque o componente para desligar).
 
 | Tecla | Ação |
 |---|---|

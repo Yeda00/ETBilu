@@ -3,7 +3,8 @@
     "rootNamespace": "OneMoreTime.Gameplay",
     "references": [
         "OneMoreTime.Core",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -36,6 +36,8 @@ namespace OneMoreTime.Gameplay.Boss
         [Header("Entry")]
         [Tooltip("Playfield-local x where the Guardian holds position, measured from the right edge.")]
         [SerializeField] float holdFromRightEdge = 3f;
+        [Tooltip("How far past the right edge the Guardian starts its entry: enough for the whole model to be off screen.")]
+        [SerializeField, Min(0f)] float entryDistance = 5f;
         [SerializeField, Min(0.1f)] float entrySeconds = 2.5f;
 
         [Header("Attacks")]
@@ -88,7 +90,7 @@ namespace OneMoreTime.Gameplay.Boss
             ship = shipTransform;
             pool = projectiles;
             var h = playfield.HalfExtents;
-            entryFrom = new Vector2(h.x + 5f, 0f);
+            entryFrom = new Vector2(h.x + entryDistance, 0f);
             entryTo = new Vector2(h.x - holdFromRightEdge, 0f);
             transform.position = playfield.LocalToWorld(entryFrom);
             ApplyShields();
