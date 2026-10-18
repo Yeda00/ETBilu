@@ -671,7 +671,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1171801616}
   - {fileID: 1633552306}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -819,60 +818,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.World.PixelView
   targetHeight: 270
---- !u!1 &1171801615
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1171801616}
-  - component: {fileID: 1171801617}
-  m_Layer: 0
-  m_Name: Backdrop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1171801616
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171801615}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 687199027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1171801617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171801615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 221698c0aa2f34f6d934e7a1ca493254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.World.BackdropScroller
-  playfield: {fileID: 904703256}
-  props:
-  - {fileID: 2471211492972192534, guid: 13ae614c627ab44ff80501da35e4dabd, type: 3}
-  - {fileID: 832391021022174835, guid: 046de79d18690441fb0dc6117c6d3acb, type: 3}
-  count: 36
-  depth: {x: 16, y: 70}
-  heightRange: {x: -10, y: 6}
-  scaleRange: {x: 0.6, y: 2.6}
-  spread: 110
-  seed: 7
 --- !u!1001 &1181875560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1583,7 +1528,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5fbc81d84d9414cb9b23fe1464f1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.UI::OneMoreTime.UI.MissionCardController
-  texts: {fileID: 11400000, guid: 5db6163db0f2e469e81e4b1f1347dd83, type: 2}
   fallbackMission: {fileID: 11400000, guid: ee8ecf26df9684b44a533a2b49089526, type: 2}
   sfx: {fileID: 385370052}
   lineDelay: 0.5

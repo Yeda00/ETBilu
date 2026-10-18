@@ -717,9 +717,6 @@ namespace OneMoreTime.EditorTools
             var world = Group("World");
             var ground = Part(world, PrimitiveType.Cube, "Ground", new Vector3(0f, -10f, 30f), Vector3.zero, new Vector3(400f, 1f, 70f), m.Ground);
             ground.transform.SetParent(playfield.transform, true);   // follows the scroll
-            var backdrop = Child<BackdropScroller>(world, "Backdrop");
-            Set(backdrop, "playfield", playfield);
-            SetArray(backdrop, "props", new Object[] { p.Pillar, p.Rock });
 
             // Wiring of the systems
             Set(spawner, "schedule", schedule);
