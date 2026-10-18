@@ -111,7 +111,9 @@ som toca. Todos são CC0, do OpenGameArt (fontes e licenças em `Audio/CREDITS.m
 | `SFX/KenneySciFi` | 73 efeitos sci-fi em OGG: lasers, explosões, motores, campo de força |
 | `SFX/Time` | Loop de reversão de tempo, candidato à invocação do eco |
 | `UI` | Dois bipes de menu (seleção e destaque) |
-| `Music` | Quatro faixas chiptune em loop: *Stage 1*, *Stage 2*, *Boss Fight* e *Stage Select* |
+| `Music` | Quatro faixas chiptune em loop de Juhani Junkala: *Stage 1*, *Stage 2*, *Boss Fight* e *Stage Select* |
+| `Music/NesShooter` | *NES Shooter Music*: cinco faixas (*Venus*, *Map*, *Mars*, *Mercury*, *Boss*, esta com intro), quatro jingles e os projetos FamiTracker. É a candidata à tela de título |
+| `Music/Pulsar`, `EpicSpaceShooter`, `RushPoint`, `OnAgainOffAgain` | Quatro faixas mais animadas, em estilo NES, candidatas aos stages (de 27 s a 164 s) |
 
 A camada sonora da tabela acima continua planejada: não há som de gravação nem de combo, e nenhum clipe foi
 escolhido para cada evento. Os eventos de dano, morte e combo já estão separados para receber áudio sem
