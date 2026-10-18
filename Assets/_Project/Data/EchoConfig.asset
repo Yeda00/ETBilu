@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: EchoConfig
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Echo.EchoConfig
   maxRecordSeconds: 3.5
+  minRecordSeconds: 0.25
   samplesPerSecond: 20
   maxActiveEchoes: 1
   consumeRecordingOnInvoke: 1
   fadeSeconds: 0.2
   cooldownSeconds: 2
-  returnInvulnerabilitySeconds: 0.2
+  returnInvulnerabilitySeconds: 0.4
   returnBulletClearRadius: 1.6
   previewDelaySeconds: 0.18

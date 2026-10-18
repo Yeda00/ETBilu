@@ -8,6 +8,8 @@ namespace OneMoreTime.Core.Echo
     {
         Shot = 0,
         Gadget = 1,
+        /// <summary>A dodge roll began; the echo spins like the ship did.</summary>
+        Dodge = 2,
     }
 
     /// <summary>

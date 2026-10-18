@@ -57,6 +57,16 @@
                     "priority": 0
                 },
                 {
+                    "name": "Dodge",
+                    "type": "Button",
+                    "id": "7d8d1c3c-e10a-48a2-a5d9-a29a8cde8fb6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "826cb0d2-98b2-4a87-8fc9-00ad0390748d",
@@ -255,6 +265,28 @@
                 },
                 {
                     "name": "",
+                    "id": "fea3ebef-393e-45fc-b37a-31d4ca64a027",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8193e8a9-de54-47f6-9bb8-17da23f131bb",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d4622115-731e-4a75-9ae0-758be5583a37",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -349,6 +381,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Gadget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6c40dcb-f7a9-4e98-a9d0-d35025cf6b33",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

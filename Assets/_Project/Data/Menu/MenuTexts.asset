@@ -43,9 +43,11 @@ MonoBehaviour:
   - key: Fire
     label: ATIRAR
   - key: Record
-    label: "\xC2NCORA / RETORNO TEMPORAL"
+    label: GRAVAR ECO (SEGURAR)
   - key: Gadget
     label: MINA TEMPORAL
+  - key: Dodge
+    label: ESQUIVA
   - key: Pause
     label: PAUSAR
   creditsTitle: "CR\xC9DITOS"

@@ -57,6 +57,13 @@ namespace OneMoreTime.Gameplay.Combat
 
         public void ResetHealth() => Model.Reset();
 
+        /// <summary>Sets the maximum before the first hit: a variant of an enemy type with its own toughness.</summary>
+        public void SetMax(int value)
+        {
+            maxHealth = Mathf.Max(1, value);
+            model = null;
+        }
+
         void OnValidate() => model = null;
     }
 }

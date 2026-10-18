@@ -48,6 +48,9 @@
     background-color: rgb(255, 138, 61);
 }
 .pip.down { background-color: rgb(42, 58, 99); }
+.pip.teeth { background-color: rgb(255, 235, 140); }
+.pip.teeth.down { background-color: rgb(42, 58, 99); }
+.pip.guarded { opacity: 0.4; }
 
 .value { color: rgb(230, 236, 255); font-size: 14px; margin-left: 10px; }
 .state { color: rgb(201, 212, 242); font-size: 13px; -unity-font-style: normal; }

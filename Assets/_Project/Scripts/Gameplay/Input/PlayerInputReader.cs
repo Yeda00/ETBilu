@@ -13,7 +13,7 @@ namespace OneMoreTime.Gameplay.Input
         [SerializeField] InputActionAsset controls;
         [SerializeField] string actionMap = "Gameplay";
 
-        InputAction move, aim, aimStick, fire, record, invokeEcho, gadget, pause;
+        InputAction move, aim, aimStick, fire, record, invokeEcho, gadget, dodge, pause;
         Vector2 lastPointer;
 
         public Vector2 Move => move != null ? Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f) : Vector2.zero;
@@ -26,6 +26,7 @@ namespace OneMoreTime.Gameplay.Input
         public bool RecordPressed => record != null && record.WasPressedThisFrame();
         public bool InvokeEchoPressed => invokeEcho != null && invokeEcho.WasPressedThisFrame();
         public bool GadgetPressed => gadget != null && gadget.WasPressedThisFrame();
+        public bool DodgePressed => dodge != null && dodge.WasPressedThisFrame();
         public bool PausePressed => pause != null && pause.WasPressedThisFrame();
 
         /// <summary>The right stick, for aiming with a gamepad. Zero without one.</summary>
@@ -53,6 +54,7 @@ namespace OneMoreTime.Gameplay.Input
             record = map.FindAction("Record", true);
             invokeEcho = map.FindAction("InvokeEcho", true);
             gadget = map.FindAction("Gadget", true);
+            dodge = map.FindAction("Dodge", false);
             pause = map.FindAction("Pause", true);
         }
 

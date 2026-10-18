@@ -87,7 +87,7 @@ namespace OneMoreTime.Gameplay.Ship
             float blend = visualSharpness <= 0f ? 1f : 1f - Mathf.Exp(-visualSharpness * Time.deltaTime);
             visualAngle = Mathf.LerpAngle(visualAngle, targetAngle, blend);
             if (motor.Visual != null)
-                motor.Visual.localRotation = Quaternion.Euler(motor.Bank, 0f, visualAngle);
+                motor.Visual.localRotation = ShipPose.Rotation(motor.Bank, visualAngle, motor.Roll);
 
             float indicatorBlend = indicatorSharpness <= 0f ? 1f : 1f - Mathf.Exp(-indicatorSharpness * Time.deltaTime);
             Vector2 smoothedDirection = Vector2.Lerp(indicatorDirection, direction, indicatorBlend);

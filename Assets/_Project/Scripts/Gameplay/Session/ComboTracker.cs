@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OneMoreTime.Core.Boss;
 using OneMoreTime.Core.Combos;
 using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
@@ -28,9 +29,8 @@ namespace OneMoreTime.Gameplay.Session
     /// <list type="bullet">
     /// <item><b>Crossfire</b>: the ship and an echo hit the same target inside a short window → bonus
     /// combined damage.</item>
-    /// <item><b>Synchronized Strike</b>: the Guardian's two generators fall almost together, one to the
-    /// ship and the other to an echo → the core's shield drops (the Guardian's own rule) and the combo
-    /// is reported.</item>
+    /// <item><b>Synchronized Strike</b>: the Guardian's two cannons fall almost together, one to the
+    /// ship and the other to an echo → the combo is reported and scored.</item>
     /// </list>
     /// Rules live in <see cref="CrossfireRule"/> and <see cref="SynchronizedStrikeRule"/>. Watches the
     /// enemies the waves spawn and the Guardian the stage brings in.
@@ -49,7 +49,7 @@ namespace OneMoreTime.Gameplay.Session
         [SerializeField, Min(0)] int crossfireScore = 100;
 
         [Header("Synchronized Strike (GDD 03) — starting values")]
-        [Tooltip("Most seconds between the two generators falling. Generous on purpose (GDD 10).")]
+        [Tooltip("Most seconds between the two cannons falling. Generous on purpose (GDD 10).")]
         [SerializeField, Min(0.05f)] float strikeWindow = 2.5f;
         [SerializeField, Min(0)] int strikeScore = 1000;
 
@@ -88,7 +88,7 @@ namespace OneMoreTime.Gameplay.Session
             if (stage != null)
                 stage.Changed -= OnStageChanged;
             if (boss != null)
-                boss.GeneratorDestroyed -= OnGeneratorDestroyed;
+                boss.PartDestroyed -= OnPartDestroyed;
             boss = null;
             foreach (var target in ids.Keys)
             {
@@ -110,13 +110,12 @@ namespace OneMoreTime.Gameplay.Session
             if (next == null || next == boss)
                 return;
             if (boss != null)
-                boss.GeneratorDestroyed -= OnGeneratorDestroyed;
+                boss.PartDestroyed -= OnPartDestroyed;
             boss = next;
-            boss.GeneratorDestroyed += OnGeneratorDestroyed;
+            boss.PartDestroyed += OnPartDestroyed;
             strike.Reset();
-            Track(boss.CoreHealth);
-            foreach (var generator in boss.Generators)
-                Track(generator);
+            foreach (var part in boss.Parts)
+                Track(part.health);
         }
 
         void Track(Health target)
@@ -148,28 +147,28 @@ namespace OneMoreTime.Gameplay.Session
             if (!crossfire.Hit(id, by, Time.time))
                 return;
 
-            // Report before the bonus: if the bonus brings down a generator, the Synchronized Strike it
+            // Report before the bonus: if the bonus brings down a cannon, the Synchronized Strike it
             // may complete is the last notice shown.
             Report(ComboType.Crossfire, target.transform.position, crossfireScore);
             if (crossfireDamage > 0 && !target.IsDead)   // the hit that completed the combo may have killed it
                 target.TakeDamage(new DamageInfo(crossfireDamage, DamageKind.Combined, info.Source));
         }
 
-        // Generators come back after falling, so they stay tracked; only their Crossfire marks reset.
         void OnDied(Health target, DamageInfo _)
         {
             if (ids.TryGetValue(target, out int id))
                 crossfire.Forget(id);
         }
 
-        void OnGeneratorDestroyed(GuardianBoss source, int index, DamageInfo info)
+        // The combo is the ship and an echo bringing down the two cannons together.
+        void OnPartDestroyed(GuardianBoss source, GuardianPart part, DamageInfo info)
         {
+            if (part != GuardianPart.CannonUpper && part != GuardianPart.CannonLower)
+                return;
             if (!TryGetAttacker(info.Source, out var by))
                 return;
-            // The core only opens under the Guardian's own window; the combo is the ship and an echo
-            // doing it together, so it counts only when the core did open.
-            if (strike.Broken(index, by, Time.time) && source.CoreVulnerable)
-                Report(ComboType.SynchronizedStrike, source.CorePosition, strikeScore);
+            if (strike.Broken(part == GuardianPart.CannonUpper ? 0 : 1, by, Time.time))
+                Report(ComboType.SynchronizedStrike, source.PartPosition(part), strikeScore);
         }
 
         void Report(ComboType type, Vector3 position, int points) => Triggered?.Invoke(new ComboReport(type, position, points));

@@ -23,6 +23,7 @@ namespace OneMoreTime.Gameplay.Combat
         public Faction Faction { get; private set; }
         public ShotSource Source { get; private set; }
         public bool IsLive => live;
+        public Vector3 Velocity => direction * speed;
 
         public void Launch(Vector3 position, Vector3 dir, Faction faction, ShotSource source, Action<Projectile> onRelease)
         {

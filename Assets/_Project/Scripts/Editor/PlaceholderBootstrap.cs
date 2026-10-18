@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using OneMoreTime.Core.Boss;
 using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Echo;
@@ -467,7 +468,7 @@ namespace OneMoreTime.EditorTools
 
         // ---------- boss ----------
 
-        // O Guardião do Ciclo (GDD 06): armoured core, two generators, a sweeping laser.
+        // O Guardião do Ciclo (GDD 06): armour, an antenna, eyes, two cannons and two sets of teeth, a sweeping laser.
         static GameObject BuildGuardian(Materials m, GameObject enemyShot)
         {
             var root = new GameObject("Guardian");
@@ -490,36 +491,13 @@ namespace OneMoreTime.EditorTools
             SetBool(armorHealth, "shielded", true);
             armor.AddComponent<ContactDamage>();
 
-            var core = new GameObject("Core");
-            core.transform.SetParent(root.transform, false);
-            core.transform.localPosition = new Vector3(-1.5f, 0f, 0f);
-            var coreCol = core.AddComponent<SphereCollider>();
-            coreCol.isTrigger = true;
-            coreCol.radius = 0.85f;
-            var coreHealth = core.AddComponent<Health>();
-            SetEnum(coreHealth, "faction", (int)Faction.Enemy);
-            SetInt(coreHealth, "maxHealth", 120);
-            SetBool(coreHealth, "shielded", true);
-            Part(core.transform, PrimitiveType.Sphere, "Visual", Vector3.zero, Vector3.zero, Vector3.one * 1.6f, m.BossCore);
-            var coreShield = Part(core.transform, PrimitiveType.Sphere, "Shield", Vector3.zero, Vector3.zero, Vector3.one * 2.5f, m.Shield, shadows: false);
-
-            var generators = new Object[2];
-            var generatorShields = new Object[2];
-            for (int i = 0; i < 2; i++)
-            {
-                var g = new GameObject(i == 0 ? "Generator_Upper" : "Generator_Lower");
-                g.transform.SetParent(root.transform, false);
-                g.transform.localPosition = new Vector3(-1.4f, i == 0 ? 4.6f : -4.6f, 0f);
-                var col = g.AddComponent<BoxCollider>();
-                col.isTrigger = true;
-                col.size = Vector3.one * 1.3f;
-                var health = g.AddComponent<Health>();
-                SetEnum(health, "faction", (int)Faction.Enemy);
-                SetInt(health, "maxHealth", 12);
-                Part(g.transform, PrimitiveType.Cube, "Visual", Vector3.zero, new Vector3(0f, 0f, 45f), Vector3.one, m.Enemy);
-                generators[i] = health;
-                generatorShields[i] = Part(g.transform, PrimitiveType.Sphere, "Shield", Vector3.zero, Vector3.zero, Vector3.one * 2f, m.Shield, shadows: false);
-            }
+            // The parts, in GuardianPart order: antenna, eyes, upper cannon, lower cannon, upper teeth, lower teeth.
+            var antenna = BuildGuardianPart(root.transform, m, "Antenna", new Vector3(-0.4f, 3.3f, 0f), 14, 0.9f, 0.7f);
+            var eyes = BuildGuardianPart(root.transform, m, "Eyes", new Vector3(-1.5f, 0.6f, 0f), 24, 1.2f, 1.3f);
+            var cannonUpper = BuildGuardianPart(root.transform, m, "Cannon_Upper", new Vector3(-1.4f, 4.6f, 0f), 20, 1.3f, 1f);
+            var cannonLower = BuildGuardianPart(root.transform, m, "Cannon_Lower", new Vector3(-1.4f, -4.6f, 0f), 20, 1.3f, 1f);
+            var teethUpper = BuildGuardianPart(root.transform, m, "Teeth_Upper", new Vector3(-2.2f, -0.6f, 0f), 45, 1.1f, 0.8f);
+            var teethLower = BuildGuardianPart(root.transform, m, "Teeth_Lower", new Vector3(-2.2f, -1.7f, 0f), 45, 1.1f, 0.8f);
 
             var muzzle = new GameObject("Muzzle").transform;
             muzzle.SetParent(root.transform, false);
@@ -547,10 +525,9 @@ namespace OneMoreTime.EditorTools
             Set(laser, "warning", warning);
 
             var boss = root.AddComponent<GuardianBoss>();
-            Set(boss, "core", coreHealth);
-            SetArray(boss, "generators", generators);
-            Set(boss, "coreShield", coreShield);
-            SetArray(boss, "generatorShields", generatorShields);
+            SetParts(boss, (GuardianPart.Antenna, antenna, 150), (GuardianPart.Eyes, eyes, 250),
+                (GuardianPart.CannonUpper, cannonUpper, 250), (GuardianPart.CannonLower, cannonLower, 250),
+                (GuardianPart.TeethUpper, teethUpper, 2500), (GuardianPart.TeethLower, teethLower, 2500));
             Set(boss, "muzzle", muzzle);
             Set(boss, "laser", laser);
             Set(boss, "shot", enemyShot.GetComponent<Projectile>());
@@ -558,6 +535,40 @@ namespace OneMoreTime.EditorTools
             SetLayer(root, LayerEnemy);
             SetLayer(sweep, LayerEnemyShot);
             return root;
+        }
+
+        // One breakable part of the Guardian: a collider, hit points, a marker and the shield that covers it while it cannot be hurt.
+        static GameObject BuildGuardianPart(Transform parent, Materials m, string name, Vector3 position, int health, float size, float markerSize)
+        {
+            var part = new GameObject(name);
+            part.transform.SetParent(parent, false);
+            part.transform.localPosition = position;
+            var col = part.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+            col.size = Vector3.one * size;
+            var hp = part.AddComponent<Health>();
+            SetEnum(hp, "faction", (int)Faction.Enemy);
+            SetInt(hp, "maxHealth", health);
+            SetBool(hp, "shielded", true);
+            Part(part.transform, PrimitiveType.Cube, "Visual", Vector3.zero, new Vector3(0f, 0f, 45f), Vector3.one * markerSize, m.Enemy);
+            Part(part.transform, PrimitiveType.Sphere, "Shield", Vector3.zero, Vector3.zero, Vector3.one * (size * 1.6f), m.Shield, shadows: false);
+            return part;
+        }
+
+        static void SetParts(GuardianBoss boss, params (GuardianPart part, GameObject go, int score)[] parts)
+        {
+            var so = new SerializedObject(boss);
+            var list = Prop(so, "parts");
+            list.arraySize = parts.Length;
+            for (int i = 0; i < parts.Length; i++)
+            {
+                var element = list.GetArrayElementAtIndex(i);
+                element.FindPropertyRelative("part").enumValueIndex = (int)parts[i].part;
+                element.FindPropertyRelative("health").objectReferenceValue = parts[i].go.GetComponent<Health>();
+                element.FindPropertyRelative("shield").objectReferenceValue = parts[i].go.transform.Find("Shield").gameObject;
+                element.FindPropertyRelative("score").intValue = parts[i].score;
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         // ---------- data ----------

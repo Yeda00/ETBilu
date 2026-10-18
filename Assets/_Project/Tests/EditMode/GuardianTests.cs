@@ -5,88 +5,122 @@ namespace OneMoreTime.Tests
 {
     public class GuardianModelTests
     {
-        const float Survival = 10f, PrepWindow = 6f, SyncWindow = 2f, Vulnerable = 4f;
+        const float Survival = 10f;
 
-        static GuardianModel InPreparation()
+        static GuardianModel Fighting()
         {
-            var g = new GuardianModel(Survival, PrepWindow, SyncWindow, Vulnerable);
+            var g = new GuardianModel(Survival);
             g.Tick(Survival);
-            Assert.That(g.Phase, Is.EqualTo(GuardianPhase.Preparation));
-            return g;
-        }
-
-        static GuardianModel InSynchronization()
-        {
-            var g = InPreparation();
-            g.DestroyGenerator(0);
-            g.DestroyGenerator(1);
-            g.Tick(Vulnerable);
-            Assert.That(g.Phase, Is.EqualTo(GuardianPhase.Synchronization));
+            Assert.That(g.Phase, Is.EqualTo(GuardianPhase.Dismantle));
             return g;
         }
 
         [Test]
-        public void Survival_shields_the_generators_until_it_ends()
+        public void Survival_shields_every_part_until_it_ends()
         {
-            var g = new GuardianModel(Survival, PrepWindow, SyncWindow, Vulnerable);
-            Assert.That(g.GeneratorsShielded, Is.True);
-            Assert.That(g.DestroyGenerator(0), Is.False);
+            var g = new GuardianModel(Survival);
+            foreach (GuardianPart part in System.Enum.GetValues(typeof(GuardianPart)))
+            {
+                Assert.That(g.IsExposed(part), Is.False, part.ToString());
+                Assert.That(g.Destroy(part), Is.False, part.ToString());
+            }
+
             g.Tick(Survival - 0.1f);
             Assert.That(g.Phase, Is.EqualTo(GuardianPhase.Survival));
             g.Tick(0.2f);
-            Assert.That(g.Phase, Is.EqualTo(GuardianPhase.Preparation));
-            Assert.That(g.DestroyGenerator(0), Is.True);
+            Assert.That(g.Phase, Is.EqualTo(GuardianPhase.Dismantle));
+            Assert.That(g.IsExposed(GuardianPart.Antenna), Is.True);
         }
 
         [Test]
-        public void A_lone_fallen_generator_comes_back_when_the_window_closes()
+        public void Antenna_eyes_and_cannons_are_open_from_the_start_but_the_teeth_are_guarded()
         {
-            var g = InPreparation();
-            g.DestroyGenerator(0);
-            Assert.That(g.WindowRemaining, Is.EqualTo(PrepWindow));
-            g.Tick(PrepWindow + 0.01f);
-            Assert.That(g.IsGeneratorUp(0), Is.True);
-            Assert.That(g.CoreVulnerable, Is.False);
+            var g = Fighting();
+            Assert.That(g.IsExposed(GuardianPart.Antenna), Is.True);
+            Assert.That(g.IsExposed(GuardianPart.Eyes), Is.True);
+            Assert.That(g.IsExposed(GuardianPart.CannonUpper), Is.True);
+            Assert.That(g.IsExposed(GuardianPart.CannonLower), Is.True);
+            Assert.That(g.IsExposed(GuardianPart.TeethUpper), Is.False);
+            Assert.That(g.IsExposed(GuardianPart.TeethLower), Is.False);
+            Assert.That(g.Destroy(GuardianPart.TeethUpper), Is.False);
         }
 
         [Test]
-        public void Both_generators_inside_the_window_open_the_core()
+        public void The_eyes_open_the_upper_teeth_and_both_cannons_open_the_lower_ones()
         {
-            var g = InPreparation();
-            g.DestroyGenerator(1);
-            g.Tick(PrepWindow - 0.5f);
-            Assert.That(g.DestroyGenerator(0), Is.True);
-            Assert.That(g.CoreVulnerable, Is.True);
-            Assert.That(g.VulnerableRemaining, Is.EqualTo(Vulnerable));
-            Assert.That(g.DestroyGenerator(0), Is.False, "already down");
+            var g = Fighting();
+            g.Destroy(GuardianPart.Eyes);
+            Assert.That(g.IsExposed(GuardianPart.TeethUpper), Is.True);
+            Assert.That(g.IsExposed(GuardianPart.TeethLower), Is.False);
+
+            g.Destroy(GuardianPart.CannonUpper);
+            Assert.That(g.IsExposed(GuardianPart.TeethLower), Is.False, "one cannon is not enough");
+            g.Destroy(GuardianPart.CannonLower);
+            Assert.That(g.IsExposed(GuardianPart.TeethLower), Is.True);
         }
 
         [Test]
-        public void First_opening_leads_to_synchronization_with_the_short_window()
+        public void A_part_falls_once_and_stays_down()
         {
-            var g = InSynchronization();
-            Assert.That(g.GeneratorsUp, Is.EqualTo(2), "generators rebuilt after the core closes");
-            Assert.That(g.Window, Is.EqualTo(SyncWindow));
-
-            g.DestroyGenerator(0);
-            g.Tick(SyncWindow + 0.01f);
-            Assert.That(g.IsGeneratorUp(0), Is.True, "too slow for the short window");
-            Assert.That(g.Phase, Is.EqualTo(GuardianPhase.Synchronization));
+            var g = Fighting();
+            Assert.That(g.Destroy(GuardianPart.Antenna), Is.True);
+            Assert.That(g.Destroy(GuardianPart.Antenna), Is.False);
+            Assert.That(g.IsDestroyed(GuardianPart.Antenna), Is.True);
+            Assert.That(g.IsExposed(GuardianPart.Antenna), Is.False);
+            g.Tick(100f);
+            Assert.That(g.IsDestroyed(GuardianPart.Antenna), Is.True, "nothing grows back");
         }
 
         [Test]
-        public void Core_only_falls_while_vulnerable()
+        public void The_antenna_calls_fighters_and_the_eyes_call_gunships_until_they_fall()
         {
-            var g = InSynchronization();
-            Assert.That(g.DefeatCore(), Is.False);
+            var g = new GuardianModel(Survival);
+            Assert.That(g.CallsFighters, Is.False, "not while everything is shielded");
+            Assert.That(g.CallsGunships, Is.False);
 
-            g.DestroyGenerator(0);
-            g.DestroyGenerator(1);
-            Assert.That(g.DefeatCore(), Is.True);
+            g = Fighting();
+            Assert.That(g.CallsFighters, Is.True);
+            Assert.That(g.CallsGunships, Is.True);
+            Assert.That(g.Frenzied, Is.False);
+
+            g.Destroy(GuardianPart.Antenna);
+            Assert.That(g.CallsFighters, Is.False);
+            Assert.That(g.CallsGunships, Is.True);
+            Assert.That(g.Frenzied, Is.True, "without the antenna it fires faster");
+
+            Assert.That(g.EyeAttack, Is.False);
+            g.Destroy(GuardianPart.Eyes);
+            Assert.That(g.CallsGunships, Is.False);
+            Assert.That(g.EyeAttack, Is.True, "without the eyes it gains a new attack");
+        }
+
+        [Test]
+        public void Each_cannon_lost_raises_the_fury()
+        {
+            var g = Fighting();
+            Assert.That(g.Fury, Is.Zero);
+            g.Destroy(GuardianPart.CannonLower);
+            Assert.That(g.Fury, Is.EqualTo(1));
+            g.Destroy(GuardianPart.CannonUpper);
+            Assert.That(g.Fury, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Only_both_teeth_down_defeats_it()
+        {
+            var g = Fighting();
+            g.Destroy(GuardianPart.Eyes);
+            g.Destroy(GuardianPart.CannonUpper);
+            g.Destroy(GuardianPart.CannonLower);
+
+            Assert.That(g.Destroy(GuardianPart.TeethUpper), Is.True);
+            Assert.That(g.IsDefeated, Is.False, "one set of teeth is not the end");
+            Assert.That(g.Destroy(GuardianPart.TeethLower), Is.True);
             Assert.That(g.IsDefeated, Is.True);
 
             g.Tick(100f);
             Assert.That(g.Phase, Is.EqualTo(GuardianPhase.Defeated));
+            Assert.That(g.CallsFighters, Is.False, "it calls nobody once it is beaten");
         }
     }
 }

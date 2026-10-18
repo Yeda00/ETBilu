@@ -96,6 +96,38 @@ namespace OneMoreTime.Gameplay.Feedback
             Ring(anchor, new Color(0.72f, 0.35f, 1f, 0.9f), 3.35f, 0.46f, 0.075f);
         }
 
+        public void BossAttackTelegraph(Vector3 position)
+        {
+            Burst(position, new Color(1f, 0.48f, 0.08f, 1f), 0.55f, 9);
+            Ring(position, new Color(1f, 0.35f, 0.06f, 0.9f), 1.15f, 0.42f, 0.075f);
+        }
+
+        public void BossDashTelegraph(Vector3 position)
+        {
+            Ring(position, new Color(1f, 0.22f, 0.08f, 0.95f), 2.2f, 0.5f, 0.1f);
+            Ring(position, new Color(1f, 0.65f, 0.12f, 0.72f), 3f, 0.62f, 0.055f);
+        }
+
+        public void BossDash(Vector3 position)
+        {
+            Burst(position, new Color(1f, 0.32f, 0.08f, 1f), 1.4f, 30);
+            Ring(position, new Color(1f, 0.55f, 0.12f, 0.9f), 2.5f, 0.3f, 0.09f);
+        }
+
+        public void BossCoreOpened(Vector3 position)
+        {
+            Burst(position, new Color(1f, 0.78f, 0.16f, 1f), 2f, 44);
+            Ring(position, new Color(1f, 0.8f, 0.18f, 1f), 3.2f, 0.38f, 0.14f);
+            Ring(position, new Color(0.55f, 0.35f, 1f, 0.95f), 4.2f, 0.56f, 0.08f);
+        }
+
+        public void BossPhaseShift(Vector3 position, bool finalPhase)
+        {
+            Color color = finalPhase ? new Color(1f, 0.12f, 0.06f, 1f) : new Color(1f, 0.5f, 0.1f, 1f);
+            Burst(position, color, finalPhase ? 2.2f : 1.5f, finalPhase ? 52 : 32);
+            Ring(position, color, finalPhase ? 4.6f : 3.4f, 0.5f, finalPhase ? 0.16f : 0.1f);
+        }
+
         void Update()
         {
             if (rings == null)

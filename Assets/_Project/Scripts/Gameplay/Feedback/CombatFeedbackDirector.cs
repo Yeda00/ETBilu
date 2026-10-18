@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using OneMoreTime.Core.Boss;
 using OneMoreTime.Core.Combat;
 using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
@@ -25,7 +26,7 @@ namespace OneMoreTime.Gameplay.Feedback
         static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
         static readonly int ColorId = Shader.PropertyToID("_Color");
 
-        enum TargetKind { Player, Enemy, BossGenerator, BossCore }
+        enum TargetKind { Player, Enemy, BossPart, BossTeeth }
 
         sealed class FlashState
         {
@@ -51,6 +52,7 @@ namespace OneMoreTime.Gameplay.Feedback
             {
                 waves.EnemySpawned += OnEnemySpawned;
                 waves.EnemyRemoved += OnEnemyRemoved;
+                waves.EnemyDetonated += OnEnemyDetonated;
             }
             if (stage != null)
                 stage.Changed += OnStageChanged;
@@ -64,17 +66,18 @@ namespace OneMoreTime.Gameplay.Feedback
             {
                 waves.EnemySpawned -= OnEnemySpawned;
                 waves.EnemyRemoved -= OnEnemyRemoved;
+                waves.EnemyDetonated -= OnEnemyDetonated;
             }
             if (stage != null)
                 stage.Changed -= OnStageChanged;
             if (combos != null)
                 combos.Triggered -= OnCombo;
+            DetachBoss();
             foreach (Health target in new List<Health>(targets.Keys))
                 Untrack(target);
             targets.Clear();
             flashByTarget.Clear();
             activeFlashes.Clear();
-            boss = null;
         }
 
         void Update()
@@ -98,6 +101,15 @@ namespace OneMoreTime.Gameplay.Feedback
 
         void OnEnemySpawned(Enemy enemy) => Track(enemy != null ? enemy.Health : null, TargetKind.Enemy);
 
+        // A bomber going off shows how far its blast reaches.
+        void OnEnemyDetonated(Enemy enemy, float radius)
+        {
+            if (enemy == null)
+                return;
+            effects?.Ring(enemy.transform.position, new Color(1f, 0.45f, 0.1f, 0.9f), radius, 0.3f, 0.12f);
+            cameraImpact?.Impulse(0.6f, 0.2f, default, 0.7f);
+        }
+
         void OnEnemyRemoved(Enemy enemy, bool _)
         {
             if (enemy != null)
@@ -109,10 +121,65 @@ namespace OneMoreTime.Gameplay.Feedback
             GuardianBoss next = stage != null ? stage.Boss : null;
             if (next == null || next == boss)
                 return;
+            DetachBoss();
             boss = next;
-            Track(boss.CoreHealth, TargetKind.BossCore);
-            foreach (Health generator in boss.Generators)
-                Track(generator, TargetKind.BossGenerator);
+            boss.DashTelegraphed += OnBossDashTelegraphed;
+            boss.Dashed += OnBossDashed;
+            boss.AttackTelegraphed += OnBossAttackTelegraphed;
+            boss.TeethExposed += OnBossTeethExposed;
+            boss.PartDestroyed += OnBossPartDestroyed;
+            boss.PhaseChanged += OnBossPhaseChanged;
+            foreach (PartRef part in boss.Parts)
+                Track(part.health, part.part == GuardianPart.TeethUpper || part.part == GuardianPart.TeethLower ? TargetKind.BossTeeth : TargetKind.BossPart);
+        }
+
+        void DetachBoss()
+        {
+            if (boss == null)
+                return;
+            boss.DashTelegraphed -= OnBossDashTelegraphed;
+            boss.Dashed -= OnBossDashed;
+            boss.AttackTelegraphed -= OnBossAttackTelegraphed;
+            boss.TeethExposed -= OnBossTeethExposed;
+            boss.PartDestroyed -= OnBossPartDestroyed;
+            boss.PhaseChanged -= OnBossPhaseChanged;
+            boss = null;
+        }
+
+        void OnBossAttackTelegraphed(Vector3 position) => effects?.BossAttackTelegraph(position);
+
+        void OnBossDashTelegraphed(Vector3 position)
+        {
+            effects?.BossDashTelegraph(position);
+            cameraImpact?.Impulse(0.18f, 0.18f, new Vector2(-0.2f, 0f), 0.15f);
+        }
+
+        void OnBossDashed(Vector3 position)
+        {
+            effects?.BossDash(position);
+            cameraImpact?.Impulse(0.42f, 0.16f, new Vector2(-0.55f, 0f), 0.45f);
+        }
+
+        void OnBossTeethExposed(Vector3 position)
+        {
+            effects?.BossCoreOpened(position);
+            cameraImpact?.Impulse(0.78f, 0.28f, new Vector2(-0.35f, 0.08f), 1f);
+        }
+
+        // A part shot off changes how the Guardian fights: the screen shakes harder the more furious it gets.
+        void OnBossPartDestroyed(GuardianBoss source, GuardianPart part, DamageInfo _)
+        {
+            bool furious = source.Rules != null && source.Rules.Fury >= 2;
+            effects?.BossPhaseShift(source.PartPosition(part), furious);
+            cameraImpact?.Impulse(furious ? 0.92f : 0.58f, furious ? 0.38f : 0.24f, new Vector2(-0.45f, 0f), furious ? 1.2f : 0.7f);
+        }
+
+        void OnBossPhaseChanged(GuardianBoss source, OneMoreTime.Core.Boss.GuardianPhase _, OneMoreTime.Core.Boss.GuardianPhase next)
+        {
+            if (next != OneMoreTime.Core.Boss.GuardianPhase.Dismantle)
+                return;
+            effects?.BossPhaseShift(source.CorePosition, false);
+            cameraImpact?.Impulse(0.58f, 0.24f, new Vector2(-0.45f, 0f), 0.7f);
         }
 
         void Track(Health target, TargetKind kind)
@@ -190,11 +257,11 @@ namespace OneMoreTime.Gameplay.Feedback
                     color = new Color(0.2f, 0.95f, 1f, 1f);
                     scale = 2.2f; particles = 52; shake = 1f; radius = 3.2f;
                     break;
-                case TargetKind.BossCore:
+                case TargetKind.BossTeeth:
                     color = new Color(1f, 0.28f, 0.12f, 1f);
                     scale = 3.4f; particles = 64; shake = 1f; radius = 4.5f;
                     break;
-                case TargetKind.BossGenerator:
+                case TargetKind.BossPart:
                     color = new Color(1f, 0.55f, 0.12f, 1f);
                     scale = 2f; particles = 44; shake = 0.72f; radius = 2.7f;
                     break;

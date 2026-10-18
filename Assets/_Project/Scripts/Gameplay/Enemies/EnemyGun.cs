@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using OneMoreTime.Core.Enemies;
 using OneMoreTime.Gameplay.Combat;
@@ -15,6 +16,8 @@ namespace OneMoreTime.Gameplay.Enemies
     public sealed class EnemyGun : MonoBehaviour
     {
         [SerializeField] Projectile shot;
+        [Tooltip("Other shots a model may fire (small, fast, heavy…); see GunTuning.shotVariant.")]
+        [SerializeField] Projectile[] shotVariants = Array.Empty<Projectile>();
         [SerializeField] Transform muzzle;
         [Tooltip("Shown during the windup before each burst. Optional.")]
         [SerializeField] GameObject telegraph;
@@ -51,7 +54,34 @@ namespace OneMoreTime.Gameplay.Enemies
             pool = projectiles;
         }
 
-        public void Arm() => cycle.Arm();
+        /// <summary>Another system (a bomb's fuse) wants the telegraph lit even though no burst is winding up.</summary>
+        public bool TelegraphOverride { get; set; }
+        /// <summary>False for a model that never fires; the gun stays off however it is armed.</summary>
+        public bool Fires { get; private set; } = true;
+
+        /// <summary>Sets the gun up for one model (GDD 04): timing, burst, spread and shot.</summary>
+        public void Tune(in GunTuning tuning)
+        {
+            Fires = tuning.fires;
+            aimAtShip = tuning.aimAtShip;
+            spread = tuning.spread;
+            if (tuning.shotVariant > 0 && tuning.shotVariant <= shotVariants.Length && shotVariants[tuning.shotVariant - 1] != null)
+                shot = shotVariants[tuning.shotVariant - 1];
+            firstDelay = tuning.firstDelay;
+            interval = Mathf.Max(0.05f, tuning.interval);
+            shotsPerBurst = Mathf.Max(1, tuning.shotsPerBurst);
+            shotGap = tuning.shotGap;
+            windup = tuning.windup;
+            maxBursts = tuning.maxBursts;
+            cycle = new FireCycle(firstDelay, interval, shotsPerBurst, shotGap, windup, maxBursts);
+        }
+
+        public void Arm()
+        {
+            if (Fires)
+                cycle.Arm();
+        }
+
         public void Disarm() => cycle.Disarm();
 
         void Update()
@@ -61,7 +91,7 @@ namespace OneMoreTime.Gameplay.Enemies
             bool visible = OnScreen();
             if (telegraph != null)
             {
-                bool show = visible && cycle.WindingUp;
+                bool show = visible && (cycle.WindingUp || TelegraphOverride);
                 if (telegraph.activeSelf != show)
                     telegraph.SetActive(show);
             }

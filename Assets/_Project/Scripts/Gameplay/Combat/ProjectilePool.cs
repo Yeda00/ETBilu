@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OneMoreTime.Core.Audio;
+using OneMoreTime.Core.Enemies;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -60,6 +61,31 @@ namespace OneMoreTime.Gameplay.Combat
             int count = dispelBuffer.Count;
             dispelBuffer.Clear();
             return count;
+        }
+
+        /// <summary>
+        /// Looks for a live shot of <paramref name="shooter"/>'s faction that will pass within <paramref name="radius"/> of
+        /// <paramref name="position"/> in the next <paramref name="lookahead"/> seconds, and answers with which way
+        /// is out (<see cref="Interception"/>). The soonest one wins.
+        /// </summary>
+        public bool TryFindThreat(Vector3 position, float radius, Faction shooter, float lookahead, out float side)
+        {
+            side = 0f;
+            float soonest = float.MaxValue;
+            bool found = false;
+            foreach (Projectile projectile in active)
+            {
+                if (projectile == null || !projectile.IsLive || projectile.Faction != shooter)
+                    continue;
+                Vector3 at = projectile.transform.position;
+                float t = Interception.TimeToHit(position, radius, at, projectile.Velocity, lookahead, out float s);
+                if (t < 0f || t >= soonest)
+                    continue;
+                soonest = t;
+                side = s;
+                found = true;
+            }
+            return found;
         }
 
         ObjectPool<Projectile> GetPool(Projectile prefab)

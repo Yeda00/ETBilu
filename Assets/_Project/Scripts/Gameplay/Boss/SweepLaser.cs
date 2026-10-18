@@ -1,3 +1,4 @@
+using System;
 using OneMoreTime.Core.Traps;
 using UnityEngine;
 
@@ -23,6 +24,16 @@ namespace OneMoreTime.Gameplay.Boss
         TrapCycle cycle;
         float clock;
         bool active;
+        bool wasOn;
+        bool wasWarning;
+
+        public event Action<Vector3> Telegraphed;
+        public event Action<Vector3> Fired;
+        public event Action Completed;
+
+        /// <summary>True only during the readable warning or the damaging sweep.</summary>
+        public bool IsThreatening => active && (wasWarning || wasOn);
+        public bool IsFiring => active && wasOn;
 
         /// <summary>The boss turns the laser on for the phase that uses it.</summary>
         public bool Active
@@ -57,12 +68,25 @@ namespace OneMoreTime.Gameplay.Boss
         {
             bool on = active && cycle.IsOn(clock);
             bool warn = active && cycle.IsWarning(clock);
+            bool completed = active && !on && wasOn;
+            if (warn && !wasWarning)
+                Telegraphed?.Invoke(transform.position);
+            if (on && !wasOn)
+                Fired?.Invoke(transform.position);
+            wasOn = on;
+            wasWarning = warn;
+            if (completed)
+                Completed?.Invoke();
             if (beam != null && beam.activeSelf != on)
                 beam.SetActive(on);
             if (warning != null && warning.activeSelf != warn)
                 warning.SetActive(warn);
             if (!active)
+            {
+                wasOn = false;
+                wasWarning = false;
                 return;
+            }
 
             // The warning belongs to the sweep about to start, so it already shows that sweep's side.
             int sweep = cycle.CycleIndex(clock) + (on ? 0 : 1);

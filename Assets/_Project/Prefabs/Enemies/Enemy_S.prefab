@@ -288,6 +288,127 @@ MonoBehaviour:
   visual: {fileID: 6085411899968355268}
   bankAngle: 25
   scoreValue: 100
+  profiles:
+  - name: "S_1 \xB7 Kamikaze"
+    pattern: 3
+    health: 2
+    scoreValue: 120
+    speed: 6.4
+    swoopAt: 0.3
+    swoopSeconds: 0.75
+    maxSwoop: 5
+    turnRate: 85
+    holdFromRightEdge: 4.5
+    enterSeconds: 1.25
+    holdSeconds: 6.5
+    bobAmplitude: 0.8
+    bobFrequency: 0.45
+    leaveAcceleration: 6
+    gun:
+      fires: 0
+      aimAtShip: 0
+      firstDelay: 0
+      interval: 0
+      shotsPerBurst: 0
+      shotGap: 0
+      spread: 0
+      windup: 0
+      maxBursts: 0
+      shotVariant: 0
+    blast:
+      explodes: 1
+      triggerRadius: 1
+      fuseSeconds: 0.15
+      autoSeconds: 5.5
+      blastRadius: 1.7
+      damage: 1
+    dodge:
+      dodges: 0
+      senseRadius: 0
+      lookahead: 0
+      distance: 0
+      seconds: 0
+      cooldown: 0
+  - name: "S_2 \xB7 Veloz"
+    pattern: 0
+    health: 2
+    scoreValue: 100
+    speed: 9.8
+    swoopAt: 0.35
+    swoopSeconds: 0.6
+    maxSwoop: 5
+    turnRate: 100
+    holdFromRightEdge: 4.5
+    enterSeconds: 1.25
+    holdSeconds: 6.5
+    bobAmplitude: 0.8
+    bobFrequency: 0.45
+    leaveAcceleration: 6
+    gun:
+      fires: 1
+      aimAtShip: 1
+      firstDelay: 0.25
+      interval: 2.6
+      shotsPerBurst: 1
+      shotGap: 0
+      spread: 0
+      windup: 0.25
+      maxBursts: 2
+      shotVariant: 1
+    blast:
+      explodes: 0
+      triggerRadius: 0
+      fuseSeconds: 0
+      autoSeconds: 0
+      blastRadius: 0
+      damage: 0
+    dodge:
+      dodges: 0
+      senseRadius: 0
+      lookahead: 0
+      distance: 0
+      seconds: 0
+      cooldown: 0
+  - name: "S_3 \xB7 Rajada curta"
+    pattern: 0
+    health: 3
+    scoreValue: 150
+    speed: 6.8
+    swoopAt: 0.35
+    swoopSeconds: 0.9
+    maxSwoop: 5
+    turnRate: 100
+    holdFromRightEdge: 4.5
+    enterSeconds: 1.25
+    holdSeconds: 6.5
+    bobAmplitude: 0.8
+    bobFrequency: 0.45
+    leaveAcceleration: 6
+    gun:
+      fires: 1
+      aimAtShip: 1
+      firstDelay: 0.4
+      interval: 1.7
+      shotsPerBurst: 3
+      shotGap: 0.26
+      spread: 0
+      windup: 0.4
+      maxBursts: 2
+      shotVariant: 2
+    blast:
+      explodes: 0
+      triggerRadius: 0
+      fuseSeconds: 0
+      autoSeconds: 0
+      blastRadius: 0
+      damage: 0
+    dodge:
+      dodges: 0
+      senseRadius: 0
+      lookahead: 0
+      distance: 0
+      seconds: 0
+      cooldown: 0
   speed: 7.2
   swoopAt: 0.3
   swoopSeconds: 0.75
@@ -327,6 +448,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Enemies.EnemyGun
   shot: {fileID: 992733288632202115, guid: 8972164f6379d4ce1a276a2a38dbd41e, type: 3}
+  shotVariants:
+  - {fileID: 1995293078288957046, guid: 7ab417e6a0afa4f91bab60e6c487db96, type: 3}
+  - {fileID: 8051933173992308672, guid: 0198f17eaf9d947e3baa0049aad10acb, type: 3}
+  - {fileID: 7576382295272816653, guid: 6b07412a53d5845aa947d13a3af4c3a2, type: 3}
+  - {fileID: 7569716769979873718, guid: c75b8a32034754e0ea7ad41f37217901, type: 3}
   muzzle: {fileID: 3971538178422524480}
   telegraph: {fileID: 217859010070054514}
   aimAtShip: 1
@@ -359,6 +485,7 @@ MonoBehaviour:
   - model: {fileID: 9005131231484389963}
     hitbox: {x: 0.89816535, y: 0.87519807}
     muzzleX: -0.62833256
+  randomFrom: 
   hitbox: {fileID: 9078215713043283828}
   muzzle: {fileID: 3971538178422524480}
 --- !u!1 &3529251312701616032

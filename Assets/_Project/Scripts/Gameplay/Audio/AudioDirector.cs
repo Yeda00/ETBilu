@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using OneMoreTime.Core.Audio;
+using OneMoreTime.Core.Boss;
 using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Echo;
@@ -32,7 +33,7 @@ namespace OneMoreTime.Gameplay.Audio
         [Tooltip("Pitch of the first beat; it rises to the second value as the 5 s fill up.")]
         [SerializeField, Min(40f)] float pulseFrequency = 660f;
 
-        enum TargetKind { Player, Enemy, Generator, Core }
+        enum TargetKind { Player, Enemy, Part, Teeth }
 
         readonly Dictionary<Health, TargetKind> targets = new();
         readonly RecordPulse pulse = new();
@@ -40,8 +41,10 @@ namespace OneMoreTime.Gameplay.Audio
         AudioClip anchorClip;
         AudioClip returnClip;
         AudioClip arrivalClip;
+        AudioClip bossChargeClip;
+        AudioClip bossDashClip;
+        AudioClip bossRuptureClip;
         GuardianBoss boss;
-        bool bossVulnerable;
         int bossPhase;
         SessionState lastState = SessionState.Playing;
 
@@ -53,6 +56,9 @@ namespace OneMoreTime.Gameplay.Audio
             anchorClip = ProceduralClips.TemporalAnchor();
             returnClip = ProceduralClips.TemporalReturn();
             arrivalClip = ProceduralClips.TemporalArrival();
+            bossChargeClip = ProceduralClips.BossCharge();
+            bossDashClip = ProceduralClips.BossDash();
+            bossRuptureClip = ProceduralClips.BossRupture();
         }
 
         void OnEnable()
@@ -104,10 +110,10 @@ namespace OneMoreTime.Gameplay.Audio
             }
             if (session != null)
                 session.Changed -= OnSessionChanged;
+            DetachBoss();
             foreach (var target in new List<Health>(targets.Keys))
                 Untrack(target);
             targets.Clear();
-            boss = null;
         }
 
         void OnDestroy()
@@ -120,6 +126,12 @@ namespace OneMoreTime.Gameplay.Audio
                 Destroy(returnClip);
             if (arrivalClip != null)
                 Destroy(arrivalClip);
+            if (bossChargeClip != null)
+                Destroy(bossChargeClip);
+            if (bossDashClip != null)
+                Destroy(bossDashClip);
+            if (bossRuptureClip != null)
+                Destroy(bossRuptureClip);
         }
 
         void Update()
@@ -175,8 +187,8 @@ namespace OneMoreTime.Gameplay.Audio
             SoundCue cue = KindOf(target) switch
             {
                 TargetKind.Player => SoundCue.PlayerDeath,
-                TargetKind.Core => SoundCue.CoreDeath,
-                TargetKind.Generator => SoundCue.GeneratorDeath,
+                TargetKind.Teeth => SoundCue.CoreDeath,
+                TargetKind.Part => SoundCue.GeneratorDeath,
                 _ => target.Max > 5 ? SoundCue.EnemyDeathBig : SoundCue.EnemyDeathSmall,
             };
             Play(cue, target.transform.position);
@@ -244,24 +256,79 @@ namespace OneMoreTime.Gameplay.Audio
 
             if (stage.Boss != null && stage.Boss != boss)
             {
+                DetachBoss();
                 boss = stage.Boss;
-                bossVulnerable = boss.CoreVulnerable;
                 bossPhase = (int)boss.Phase;
-                Track(boss.CoreHealth, TargetKind.Core);
-                foreach (Health generator in boss.Generators)
-                    Track(generator, TargetKind.Generator);
+                boss.AttackTelegraphed += OnBossAttackTelegraphed;
+                boss.DashTelegraphed += OnBossDashTelegraphed;
+                boss.Dashed += OnBossDashed;
+                boss.TeethExposed += OnBossTeethExposed;
+                boss.PartDestroyed += OnBossPartDestroyed;
+                boss.PhaseChanged += OnBossPhaseChanged;
+                foreach (PartRef part in boss.Parts)
+                    Track(part.health, part.part == GuardianPart.TeethUpper || part.part == GuardianPart.TeethLower ? TargetKind.Teeth : TargetKind.Part);
             }
+        }
+
+        void DetachBoss()
+        {
+            if (boss == null)
+                return;
+            boss.AttackTelegraphed -= OnBossAttackTelegraphed;
+            boss.DashTelegraphed -= OnBossDashTelegraphed;
+            boss.Dashed -= OnBossDashed;
+            boss.TeethExposed -= OnBossTeethExposed;
+            boss.PartDestroyed -= OnBossPartDestroyed;
+            boss.PhaseChanged -= OnBossPhaseChanged;
+            boss = null;
+        }
+
+        void OnBossAttackTelegraphed(Vector3 position)
+        {
+            float pan = Pan(position);
+            sfx?.PlayClip(bossChargeClip, 0.42f, 1f, 0f, pan, 5200f);
+        }
+
+        void OnBossDashTelegraphed(Vector3 position)
+        {
+            float pan = Pan(position);
+            sfx?.PlayClip(bossChargeClip, 0.48f, 0.68f, 0f, pan, 3100f);
+        }
+
+        void OnBossDashed(Vector3 position)
+        {
+            sfx?.PlayClip(bossDashClip, 0.76f, 0.92f, 0f, Pan(position), 7200f);
+            music?.PulseDuck(0.62f, 0.045f);
+        }
+
+        // A set of teeth became reachable: the weak point opens.
+        void OnBossTeethExposed(Vector3 position)
+        {
+            Play(SoundCue.BossVulnerable, position);
+            sfx?.PlayClip(bossRuptureClip, 0.9f, 1f, 0f, Pan(position));
+            music?.PulseDuck(0.26f, 0.12f);
+        }
+
+        // Each part lost is a change in the fight: the lower the Guardian's rumble, the more furious it is.
+        void OnBossPartDestroyed(GuardianBoss source, GuardianPart part, DamageInfo _)
+        {
+            bool furious = source.Rules != null && source.Rules.Fury >= 2;
+            sfx?.PlayClip(bossRuptureClip, furious ? 0.88f : 0.58f, furious ? 0.72f : 0.9f, 0f, Pan(source.PartPosition(part)));
+            music?.PulseDuck(furious ? 0.2f : 0.38f, 0.12f);
+        }
+
+        void OnBossPhaseChanged(GuardianBoss source, OneMoreTime.Core.Boss.GuardianPhase _, OneMoreTime.Core.Boss.GuardianPhase next)
+        {
+            bossPhase = (int)next;
+            Play(SoundCue.BossPhase, source.CorePosition);
+            sfx?.PlayClip(bossRuptureClip, 0.58f, 0.9f, 0f, Pan(source.CorePosition));
+            music?.PulseDuck(0.38f, 0.12f);
         }
 
         void UpdateBoss()
         {
             if (boss == null)
                 return;
-
-            bool vulnerable = boss.CoreVulnerable;
-            if (vulnerable && !bossVulnerable)
-                Play(SoundCue.BossVulnerable, boss.CorePosition);
-            bossVulnerable = vulnerable;
 
             int phase = (int)boss.Phase;
             if (phase > bossPhase)
@@ -308,5 +375,13 @@ namespace OneMoreTime.Gameplay.Audio
         }
 
         Vector3 ShipPosition() => player != null ? player.transform.position : Vector3.zero;
+
+        float Pan(Vector3 worldPosition)
+        {
+            Camera camera = Camera.main;
+            if (camera == null)
+                return 0f;
+            return Mathf.Clamp((camera.WorldToViewportPoint(worldPosition).x - 0.5f) * 1.2f, -0.65f, 0.65f);
+        }
     }
 }

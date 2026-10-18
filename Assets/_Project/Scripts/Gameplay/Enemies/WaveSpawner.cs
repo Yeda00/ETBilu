@@ -33,6 +33,8 @@ namespace OneMoreTime.Gameplay.Enemies
 
         public event Action<Enemy> EnemySpawned;
         public event Action<Enemy, bool> EnemyRemoved;
+        /// <summary>A bomber went off: which one, and the radius of the blast.</summary>
+        public event Action<Enemy, float> EnemyDetonated;
         public event Action Cleared;
 
         public float Clock => clock;
@@ -112,13 +114,36 @@ namespace OneMoreTime.Gameplay.Enemies
                 {
                     var local = new Vector2(h.x + spawnMarginX + n * wave.spacing, height * (h.y - 1f));
                     var enemy = Instantiate(wave.enemy, playfield.LocalToWorld(local), Quaternion.identity, transform);
-                    enemy.Spawn(playfield, ship, pool, n * wave.spacing, n * 0.9f + row * 1.7f);
+                    enemy.Spawn(playfield, ship, pool, n * wave.spacing, n * 0.9f + row * 1.7f, wave.variant - 1);
                     enemy.Removed += OnEnemyRemoved;
+                    enemy.Detonated += OnEnemyDetonated;
                     alive.Add(enemy);
                     EnemySpawned?.Invoke(enemy);
                 }
                 row++;
             }
+        }
+
+        /// <summary>
+        /// Brings in one enemy outside the schedule — a reinforcement the Guardian called (GDD 06) — and treats it like any
+        /// other: it is counted, scored and shown by the same systems.
+        /// </summary>
+        /// <param name="height">Entry height on screen: −1 bottom, 0 centre, 1 top.</param>
+        /// <param name="variant">The model it takes (0-based); negative leaves the random pick.</param>
+        /// <param name="queueOffset">Delay in units behind the right edge; a hovering enemy also shifts its column by it.</param>
+        public Enemy SpawnExtra(Enemy prefab, float height, int variant, float queueOffset, float phase)
+        {
+            if (prefab == null || playfield == null)
+                return null;
+            var h = playfield.HalfExtents;
+            var local = new Vector2(h.x + spawnMarginX + Mathf.Max(0f, queueOffset), height * (h.y - 1f));
+            var enemy = Instantiate(prefab, playfield.LocalToWorld(local), Quaternion.identity, transform);
+            enemy.Spawn(playfield, ship, pool, queueOffset, phase, variant);
+            enemy.Removed += OnEnemyRemoved;
+            enemy.Detonated += OnEnemyDetonated;
+            alive.Add(enemy);
+            EnemySpawned?.Invoke(enemy);
+            return enemy;
         }
 
         static IEnumerable<float> Rows(WaveSchedule.Wave wave)
@@ -127,6 +152,8 @@ namespace OneMoreTime.Gameplay.Enemies
             if (wave.secondRow)
                 yield return wave.secondRowHeight;
         }
+
+        void OnEnemyDetonated(Enemy enemy, float radius) => EnemyDetonated?.Invoke(enemy, radius);
 
         void OnEnemyRemoved(Enemy enemy, bool killed)
         {

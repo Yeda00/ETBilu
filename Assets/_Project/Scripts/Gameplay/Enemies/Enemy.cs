@@ -14,13 +14,21 @@ namespace OneMoreTime.Gameplay.Enemies
         Hover = 1,
         /// <summary>Interceptor (Enemy_W): crosses the arena on a serpentine path while firing (GDD 04).</summary>
         Serpentine = 2,
+        /// <summary>Kamikaze (Enemy_S model 1): homes in on the ship with a limited turn rate (GDD 04).</summary>
+        Chase = 3,
     }
 
     /// <summary>
     /// A scripted enemy. Spawned by <see cref="WaveSpawner"/>, which injects the playfield, the ship and
     /// the projectile pool. Moves in playfield space (screen-relative), with the path rules in
-        /// <see cref="SwoopMotion"/>, <see cref="SerpentineMotion"/> and <see cref="HoverMotion"/>; arms its <see cref="EnemyGun"/> when the
-    /// path allows. Leaving through the left edge removes it without penalty (GDD 04).
+    /// <see cref="SwoopMotion"/>, <see cref="SerpentineMotion"/>, <see cref="HoverMotion"/> and
+    /// <see cref="ChaseMotion"/>; arms its <see cref="EnemyGun"/> when the path allows. Leaving through the
+    /// left edge removes it without penalty (GDD 04).
+    /// <para>
+    /// A type may carry one <see cref="EnemyProfile"/> per model (<see cref="ModelVariants"/>): the model that
+    /// shows decides the path, toughness, gun, bomb and dodge, so each look means one behaviour. Without
+    /// profiles the fields below are used as they are.
+    /// </para>
     /// </summary>
     [RequireComponent(typeof(Health))]
     public sealed class Enemy : MonoBehaviour
@@ -30,6 +38,8 @@ namespace OneMoreTime.Gameplay.Enemies
         [SerializeField] Transform visual;
         [SerializeField, Min(0f)] float bankAngle = 25f;
         [SerializeField, Min(0)] int scoreValue = 100;
+        [Tooltip("One per model, in the order of ModelVariants. Empty: the fields below are used.")]
+        [SerializeField] EnemyProfile[] profiles = Array.Empty<EnemyProfile>();
 
         [Header("Swoop (small) — starting values")]
         [Tooltip("Units per second toward the left, relative to the screen.")]
@@ -57,14 +67,28 @@ namespace OneMoreTime.Gameplay.Enemies
         EnemyGun gun;
         Playfield playfield;
         Transform target;
+        Health targetHealth;
+        ProjectilePool shots;
         SwoopMotion swoop;
         HoverMotion hover;
         SerpentineMotion serpentine;
+        ChaseMotion chase;
+        BlastFuse fuse;
+        BlastTuning blast;
+        DodgeTuning dodgeTuning;
+        float chaseTurnRate = 100f;
         Vector2 local;
         float bank;
+        float yaw;
+        float roll;
+        float dodgeClock = -1f;
+        float dodgeFrom, dodgeTo, dodgeOffset, dodgeCooldown, dodgeSettle;
         bool removed;
+        bool selfDestructed;
 
         public event Action<Enemy, bool> Removed;   // bool: killed by the player
+        /// <summary>A bomber went off, with the radius of its blast.</summary>
+        public event Action<Enemy, float> Detonated;
         public int ScoreValue => scoreValue;
         public Health Health => health;
         public MovementPattern Pattern => pattern;
@@ -79,19 +103,29 @@ namespace OneMoreTime.Gameplay.Enemies
         /// <param name="queueOffset">How far behind the first enemy of its wave this one entered; a hovering
         /// enemy keeps that gap at its column, so a wave of two does not stack.</param>
         /// <param name="phase">Desynchronises the bob or sine path of enemies in the same wave.</param>
-        public void Spawn(Playfield field, Transform ship, ProjectilePool pool, float queueOffset, float phase)
+        /// <param name="variant">The model this enemy takes (0-based); a negative number leaves the random pick.</param>
+        public void Spawn(Playfield field, Transform ship, ProjectilePool pool, float queueOffset, float phase, int variant = -1)
         {
             playfield = field;
             target = ship;
+            targetHealth = ship != null ? ship.GetComponentInParent<Health>() : null;
+            shots = pool;
             local = playfield.WorldToLocal(transform.position);
             var h = playfield.HalfExtents;
+
+            ChooseProfile(variant);
+
             if (pattern == MovementPattern.Swoop)
                 swoop = new SwoopMotion(local, speed, swoopAt * h.x, swoopSeconds, maxSwoop);
             else if (pattern == MovementPattern.Hover)
                 hover = new HoverMotion(local, h.x - holdFromRightEdge + queueOffset, enterSeconds, holdSeconds,
                     bobAmplitude, bobFrequency, phase, leaveAcceleration);
+            else if (pattern == MovementPattern.Chase)
+                chase = new ChaseMotion(local, speed, chaseTurnRate);
             else
                 serpentine = new SerpentineMotion(local, speed, waveAmplitude, waveFrequency, phase);
+            if (blast.explodes)
+                fuse = new BlastFuse(blast.triggerRadius, blast.fuseSeconds, blast.autoSeconds);
             if (gun != null)
             {
                 gun.Configure(field, ship, pool);
@@ -100,16 +134,51 @@ namespace OneMoreTime.Gameplay.Enemies
             }
         }
 
+        // The model that shows decides how this enemy behaves (GDD 04).
+        void ChooseProfile(int variant)
+        {
+            var models = GetComponent<ModelVariants>();
+            if (profiles.Length == 0 || models == null)
+                return;
+            if (variant >= 0 && variant < models.Count)
+                models.Pick(variant);
+            var p = profiles[Mathf.Clamp(models.Current, 0, profiles.Length - 1)];
+
+            pattern = p.pattern;
+            scoreValue = p.scoreValue;
+            speed = p.speed;
+            swoopAt = p.swoopAt;
+            swoopSeconds = p.swoopSeconds;
+            maxSwoop = p.maxSwoop;
+            chaseTurnRate = p.turnRate;
+            holdFromRightEdge = p.holdFromRightEdge;
+            enterSeconds = p.enterSeconds;
+            holdSeconds = p.holdSeconds;
+            bobAmplitude = p.bobAmplitude;
+            bobFrequency = p.bobFrequency;
+            leaveAcceleration = p.leaveAcceleration;
+            blast = p.blast;
+            dodgeTuning = p.dodge;
+            health.SetMax(p.health);
+            gun?.Tune(p.gun);
+            // A bomber's attack is its blast, not the touch.
+            var contact = GetComponent<ContactDamage>();
+            if (contact != null && blast.explodes)
+                contact.enabled = false;
+        }
+
         void Update()
         {
             if (playfield == null || removed)
                 return;
             float dt = Time.deltaTime;
             var before = local;
+            bool shipAlive = target != null && target.gameObject.activeInHierarchy;
+            Vector2 shipLocal = shipAlive ? playfield.WorldToLocal(target.position) : local;
 
             if (swoop != null)
             {
-                float targetY = target != null && target.gameObject.activeInHierarchy ? playfield.WorldToLocal(target.position).y : local.y;
+                float targetY = shipAlive ? shipLocal.y : local.y;
                 if (swoop.Tick(dt, targetY) && gun != null)
                     gun.Arm();
                 local = swoop.Position;
@@ -124,15 +193,96 @@ namespace OneMoreTime.Gameplay.Enemies
                 }
                 local = hover.Position;
             }
+            else if (chase != null)
+            {
+                chase.Tick(dt, shipAlive ? shipLocal : local + Vector2.left * 10f);
+                local = chase.Position;
+                yaw = chase.Heading - 180f;
+            }
             else if (serpentine != null)
             {
                 serpentine.Tick(dt);
                 local = serpentine.Position;
             }
+
+            UpdateDodge(dt);
+            local.y += dodgeOffset;
             transform.position = playfield.LocalToWorld(local);
             Bank(before, dt);
+            UpdateBlast(dt, shipAlive ? Vector2.Distance(local, shipLocal) : float.MaxValue);
+            if (removed)
+                return;
 
-            if (playfield.IsPastLeftEdge(transform.position))
+            if (playfield.IsPastLeftEdge(transform.position) || (chase != null && playfield.IsFarOutside(transform.position, 6f)))
+                Remove(false);
+        }
+
+        // The shotgunner steps out of the way of a shot it can see coming, with a barrel roll (GDD 04).
+        void UpdateDodge(float dt)
+        {
+            if (!dodgeTuning.dodges)
+                return;
+            dodgeCooldown -= dt;
+            bool holding = hover != null && hover.Phase == HoverPhase.Holding;
+            if (dodgeClock < 0f && dodgeCooldown <= 0f && holding && shots != null
+                && shots.TryFindThreat(transform.position, dodgeTuning.senseRadius, Faction.Player, dodgeTuning.lookahead, out float side))
+            {
+                float limit = playfield.HalfExtents.y - 1.2f;
+                float away = side != 0f ? side : (local.y > 0f ? -1f : 1f);   // dead on: toward the middle
+                float baseY = local.y - dodgeOffset;
+                dodgeFrom = dodgeOffset;
+                dodgeTo = Mathf.Clamp(baseY + away * dodgeTuning.distance, -limit, limit) - baseY;
+                dodgeClock = 0f;
+                dodgeCooldown = dodgeTuning.cooldown;
+            }
+
+            if (dodgeClock >= 0f)
+            {
+                dodgeClock += dt;
+                float k = Mathf.Clamp01(dodgeClock / dodgeTuning.seconds);
+                dodgeOffset = Mathf.Lerp(dodgeFrom, dodgeTo, Mathf.SmoothStep(0f, 1f, k));
+                roll = 360f * Mathf.SmoothStep(0f, 1f, k);
+                if (k >= 1f)
+                {
+                    dodgeClock = -1f;
+                    roll = 0f;
+                    dodgeSettle = 0.9f;
+                }
+            }
+            else
+            {
+                // After the sidestep it drifts back to its line.
+                dodgeSettle -= dt;
+                if (dodgeSettle <= 0f)
+                    dodgeOffset = Mathf.MoveTowards(dodgeOffset, 0f, 1.6f * dt);
+            }
+        }
+
+        void UpdateBlast(float dt, float distanceToShip)
+        {
+            if (fuse == null)
+                return;
+            bool bang = fuse.Tick(dt, distanceToShip);
+            if (gun != null)
+                gun.TelegraphOverride = fuse.Warning;
+            if (visual != null)
+                visual.localScale = Vector3.one * (1f + 0.14f * fuse.Urgency * Mathf.Sin(Time.time * (14f + 26f * fuse.Urgency)));
+            if (bang)
+                Detonate();
+        }
+
+        // The bang hurts the ship if it is inside the radius when the fuse ends; the enemy dies without paying out (GDD 04).
+        void Detonate()
+        {
+            if (removed)
+                return;
+            bool inside = target != null && target.gameObject.activeInHierarchy
+                && Vector2.Distance(local, playfield.WorldToLocal(target.position)) <= blast.blastRadius;
+            if (inside && targetHealth != null)
+                targetHealth.TakeDamage(new DamageInfo(blast.damage, DamageKind.Contact, ShotSource.Enemy));
+            Detonated?.Invoke(this, blast.blastRadius);
+            selfDestructed = true;
+            if (!health.TakeDamage(new DamageInfo(Mathf.Max(1, health.Current), DamageKind.Direct, ShotSource.Enemy)))
                 Remove(false);
         }
 
@@ -143,10 +293,13 @@ namespace OneMoreTime.Gameplay.Enemies
             float climb = (local.y - before.y) / dt;
             float goal = Mathf.Clamp(-climb * 8f, -bankAngle, bankAngle);
             bank = Mathf.Lerp(bank, goal, 1f - Mathf.Exp(-10f * dt));
-            visual.localRotation = Quaternion.Euler(bank, 0f, 0f);
+            visual.localRotation = Quaternion.Euler(bank + roll, 0f, yaw);
         }
 
-        void OnDied(Health _, DamageInfo __) => Remove(true);
+        /// <summary>Takes it off the field without a kill: its caller was beaten (GDD 06).</summary>
+        public void Dismiss() => Remove(false);
+
+        void OnDied(Health _, DamageInfo __) => Remove(!selfDestructed);
 
         void Remove(bool killed)
         {
@@ -155,6 +308,7 @@ namespace OneMoreTime.Gameplay.Enemies
             removed = true;
             Removed?.Invoke(this, killed);
             Removed = null;
+            Detonated = null;
             Destroy(gameObject);
         }
     }

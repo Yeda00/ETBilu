@@ -11,9 +11,9 @@ using UnityEngine;
 namespace OneMoreTime.Gameplay.Echo
 {
     /// <summary>
-    /// Tap Record to plant an anchor and start capturing the ship. Tap it again — or fill the
-    /// window — to snap back to the anchor while a harmless preview becomes a combat echo and
-    /// replays the route. The world itself never rewinds.
+    /// Press Record to plant an anchor and hold it while the ship is captured. Letting go — or filling
+    /// the window — snaps the ship back to the anchor with a short spin and no damage, while a harmless
+    /// preview becomes a combat echo and replays the route. The world itself never rewinds.
     /// </summary>
     [DefaultExecutionOrder(100)]
     public sealed class EchoAbility : MonoBehaviour
@@ -81,6 +81,8 @@ namespace OneMoreTime.Gameplay.Echo
                 weapon.Fired += OnShipFired;
             if (gadget != null)
                 gadget.Used += OnGadgetUsed;
+            if (motor != null)
+                motor.Dodged += OnShipDodged;
         }
 
         void OnDisable()
@@ -89,6 +91,8 @@ namespace OneMoreTime.Gameplay.Echo
                 weapon.Fired -= OnShipFired;
             if (gadget != null)
                 gadget.Used -= OnGadgetUsed;
+            if (motor != null)
+                motor.Dodged -= OnShipDodged;
             recorder?.Cancel();
             if (preview != null && !active.Contains(preview))
                 Destroy(preview.gameObject);
@@ -109,17 +113,17 @@ namespace OneMoreTime.Gameplay.Echo
                     Changed?.Invoke();
             }
 
-            if (input.RecordPressed)
-            {
-                if (IsRecording)
-                    ReturnAndReplay();
-                else
-                    TryPlantAnchor();
-            }
+            if (input.RecordPressed && !IsRecording)
+                TryPlantAnchor();
 
-            // E remains a temporary compatibility alias for returning, but is no longer a separate step.
-            if (input.InvokeEchoPressed && IsRecording)
-                ReturnAndReplay();
+            // Holding is what records: letting go (or E, kept as a temporary alias) takes the ship back.
+            if (IsRecording && (!input.RecordHeld || input.InvokeEchoPressed))
+            {
+                if (recorder.Elapsed < config.minRecordSeconds)
+                    CancelRecording();
+                else
+                    ReturnAndReplay();
+            }
 
             if (!IsRecording)
                 return;
@@ -155,6 +159,18 @@ namespace OneMoreTime.Gameplay.Echo
             return true;
         }
 
+        /// <summary>Drops a recording that was let go too soon: the anchor goes away, with no echo and no cooldown.</summary>
+        void CancelRecording()
+        {
+            recorder.Cancel();
+            if (preview != null)
+                Destroy(preview.gameObject);
+            preview = null;
+            previewHistory.Clear();
+            DestroyTimelineVisuals();
+            Changed?.Invoke();
+        }
+
         /// <summary>Compatibility entry point: the old Invoke command now means return to the planted anchor.</summary>
         public bool TryInvoke() => ReturnAndReplay();
 
@@ -180,6 +196,7 @@ namespace OneMoreTime.Gameplay.Echo
             Vector3 anchorWorld = playfield.LocalToWorld(anchor);
             transform.localPosition = new Vector3(anchor.x, anchor.y, transform.localPosition.z);
             health?.GrantInvulnerability(config.returnInvulnerabilitySeconds);
+            motor.PlayRoll(config.returnInvulnerabilitySeconds);
             int bulletsDispelled = pool != null ? pool.DispelEnemyProjectiles(anchorWorld, config.returnBulletClearRadius) : 0;
             effects?.TemporalReturn(departureWorld, anchorWorld, bulletsDispelled);
             Vector2 bias = returnDirection.sqrMagnitude > 0f ? returnDirection.normalized * 0.45f : Vector2.zero;
@@ -190,7 +207,7 @@ namespace OneMoreTime.Gameplay.Echo
             ghost.name = "Eco da Âncora";
             ghost.Finished += OnGhostFinished;
             active.Add(ghost);
-            ghost.Play(recording, playfield, pool, config.fadeSeconds);
+            ghost.Play(recording, playfield, pool, config.fadeSeconds, motor.DodgeSeconds);
 
             cooldownRemaining = config.cooldownSeconds;
             previewHistory.Clear();
@@ -301,6 +318,12 @@ namespace OneMoreTime.Gameplay.Echo
         {
             if (IsRecording)
                 recorder.AddEvent(EchoEventType.Gadget, origin, direction);
+        }
+
+        void OnShipDodged(Vector2 origin, Vector2 direction)
+        {
+            if (IsRecording)
+                recorder.AddEvent(EchoEventType.Dodge, origin, direction);
         }
 
         void OnGhostFinished(EchoGhost ghost)

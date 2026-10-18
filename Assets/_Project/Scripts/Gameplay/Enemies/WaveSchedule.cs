@@ -20,6 +20,8 @@ namespace OneMoreTime.Gameplay.Enemies
             [Min(0f)] public float time;
             [Tooltip("The enemy prefab; its own Enemy component says how it moves and shoots.")]
             public Enemy enemy;
+            [Tooltip("Which model, and so which behaviour, the whole wave uses: 0 picks one at random for each enemy, 1–3 is that model.")]
+            [Range(0, 3)] public int variant;
             [Min(1)] public int count;
             [Tooltip("Entry height on screen: -1 bottom, 0 centre, 1 top.")]
             [Range(-1f, 1f)] public float height;

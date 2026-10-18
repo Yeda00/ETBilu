@@ -22,6 +22,8 @@ namespace OneMoreTime.Gameplay.Enemies
         }
 
         [SerializeField] Variant[] variants = Array.Empty<Variant>();
+        [Tooltip("Indexes the random pick may choose from; empty means all of them. The interceptor shares the small models but keeps off the kamikaze's.")]
+        [SerializeField] int[] randomFrom = Array.Empty<int>();
         [SerializeField] BoxCollider hitbox;
         [Tooltip("The EnemyGun's muzzle, moved to the picked model's nose.")]
         [SerializeField] Transform muzzle;
@@ -32,8 +34,11 @@ namespace OneMoreTime.Gameplay.Enemies
 
         void Awake()
         {
-            if (variants.Length > 0)
-                Pick(UnityEngine.Random.Range(0, variants.Length));
+            if (variants.Length == 0)
+                return;
+            Pick(randomFrom.Length > 0
+                ? randomFrom[UnityEngine.Random.Range(0, randomFrom.Length)]
+                : UnityEngine.Random.Range(0, variants.Length));
         }
 
         public void Pick(int index)

@@ -116,7 +116,7 @@ namespace OneMoreTime.Gameplay.Session
                 return;
             }
             Boss = Instantiate(boss, world);
-            Boss.Begin(playfield, ship, pool);
+            Boss.Begin(playfield, ship, pool, waves);
             Boss.Scored += OnScored;
             Boss.Defeated += OnBossDefeated;
         }

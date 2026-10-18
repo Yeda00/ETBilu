@@ -288,6 +288,7 @@ MonoBehaviour:
   visual: {fileID: 6085411899968355268}
   bankAngle: 25
   scoreValue: 150
+  profiles: []
   speed: 5.8
   swoopAt: 0.3
   swoopSeconds: 0.75
@@ -327,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Enemies.EnemyGun
   shot: {fileID: 992733288632202115, guid: 8972164f6379d4ce1a276a2a38dbd41e, type: 3}
+  shotVariants: []
   muzzle: {fileID: 3971538178422524480}
   telegraph: {fileID: 217859010070054514}
   aimAtShip: 1
@@ -359,6 +361,7 @@ MonoBehaviour:
   - model: {fileID: 9005131231484389963}
     hitbox: {x: 0.89816535, y: 0.87519807}
     muzzleX: -0.62833256
+  randomFrom: 0100000002000000
   hitbox: {fileID: 9078215713043283828}
   muzzle: {fileID: 3971538178422524480}
 --- !u!1 &3529251312701616032

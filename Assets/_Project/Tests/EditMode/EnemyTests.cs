@@ -211,3 +211,121 @@ namespace OneMoreTime.Tests
         }
     }
 }
+
+namespace OneMoreTime.Tests
+{
+    public class ChaseMotionTests
+    {
+        [Test]
+        public void Homes_in_on_a_target_it_can_reach()
+        {
+            var motion = new ChaseMotion(new Vector2(10f, 0f), 6f, 120f);
+            var target = new Vector2(-2f, 3f);
+            float closest = float.MaxValue;
+            for (int i = 0; i < 360; i++)
+            {
+                motion.Tick(1f / 60f, target);
+                closest = Mathf.Min(closest, Vector2.Distance(motion.Position, target));
+            }
+            Assert.That(closest, Is.LessThan(0.5f));
+        }
+
+        [Test]
+        public void Turns_only_so_fast()
+        {
+            var motion = new ChaseMotion(Vector2.zero, 5f, 90f);   // flying left
+            motion.Tick(0.5f, new Vector2(0f, 10f));               // target straight up: wants a 90° turn
+
+            Assert.That(motion.Heading, Is.EqualTo(135f).Within(0.01f), "45° in half a second at 90°/s");
+        }
+
+        [Test]
+        public void A_target_that_keeps_moving_can_make_it_overshoot()
+        {
+            var motion = new ChaseMotion(new Vector2(8f, 0f), 6f, 70f);
+            float closest = float.MaxValue;
+            for (int i = 0; i < 240; i++)
+            {
+                var target = new Vector2(0f, 3f * Mathf.Sin(i / 60f * 6f));
+                motion.Tick(1f / 60f, target);
+                closest = Mathf.Min(closest, Vector2.Distance(motion.Position, target));
+            }
+            Assert.That(closest, Is.GreaterThan(0.2f), "it never quite lands on a ship that weaves");
+        }
+    }
+
+    public class BlastFuseTests
+    {
+        [Test]
+        public void Waits_quietly_while_nothing_is_near()
+        {
+            var fuse = new BlastFuse(triggerRadius: 3f, fuseSeconds: 0.8f);
+            Assert.That(fuse.Tick(5f, 10f), Is.False);
+            Assert.That(fuse.Triggered, Is.False);
+            Assert.That(fuse.Warning, Is.False);
+        }
+
+        [Test]
+        public void A_target_in_range_lights_the_fuse_and_it_goes_off_once()
+        {
+            var fuse = new BlastFuse(3f, 0.8f);
+            Assert.That(fuse.Tick(0.1f, 2f), Is.False);
+            Assert.That(fuse.Triggered, Is.True);
+            Assert.That(fuse.Warning, Is.True);
+
+            Assert.That(fuse.Tick(0.5f, 9f), Is.False, "the fuse burns even if the target runs");
+            Assert.That(fuse.Tick(0.3f, 9f), Is.True);
+            Assert.That(fuse.Tick(1f, 0f), Is.False, "only once");
+        }
+
+        [Test]
+        public void The_timer_sets_it_off_without_a_target_and_warns_before()
+        {
+            var fuse = new BlastFuse(1f, 0.1f, autoSeconds: 4f, warnSeconds: 1f);
+            fuse.Tick(2.9f, 20f);
+            Assert.That(fuse.Warning, Is.False);
+            fuse.Tick(0.2f, 20f);
+            Assert.That(fuse.Warning, Is.True, "the last second before the timer ends");
+            Assert.That(fuse.Tick(1f, 20f), Is.True, "the timer ran out, and the short fuse with it");
+        }
+
+        [Test]
+        public void Urgency_rises_as_the_fuse_burns()
+        {
+            var fuse = new BlastFuse(3f, 1f);
+            fuse.Tick(0.01f, 1f);
+            float early = fuse.Urgency;
+            fuse.Tick(0.6f, 1f);
+            Assert.That(fuse.Urgency, Is.GreaterThan(early));
+        }
+    }
+
+    public class InterceptionTests
+    {
+        [Test]
+        public void A_shot_flying_at_me_is_seen_with_its_arrival_time()
+        {
+            float t = Interception.TimeToHit(new Vector2(10f, 0f), 0.6f, Vector2.zero, new Vector2(20f, 0f), 1f, out float side);
+            Assert.That(t, Is.EqualTo(0.5f).Within(1e-3f));
+            Assert.That(side, Is.EqualTo(0f));
+        }
+
+        [Test]
+        public void Says_which_way_is_out_for_a_shot_passing_close()
+        {
+            // I am a little above the shot's line: up is the way out.
+            Interception.TimeToHit(new Vector2(10f, 0.3f), 0.6f, Vector2.zero, new Vector2(20f, 0f), 1f, out float above);
+            Interception.TimeToHit(new Vector2(10f, -0.3f), 0.6f, Vector2.zero, new Vector2(20f, 0f), 1f, out float below);
+            Assert.That(above, Is.EqualTo(1f));
+            Assert.That(below, Is.EqualTo(-1f));
+        }
+
+        [Test]
+        public void Shots_that_miss_or_leave_are_ignored()
+        {
+            Assert.That(Interception.TimeToHit(new Vector2(10f, 3f), 0.6f, Vector2.zero, new Vector2(20f, 0f), 1f, out _), Is.Negative, "passes wide");
+            Assert.That(Interception.TimeToHit(new Vector2(-5f, 0f), 0.6f, Vector2.zero, new Vector2(20f, 0f), 1f, out _), Is.Negative, "already gone");
+            Assert.That(Interception.TimeToHit(new Vector2(40f, 0f), 0.6f, Vector2.zero, new Vector2(20f, 0f), 1f, out _), Is.Negative, "too far to matter yet");
+        }
+    }
+}

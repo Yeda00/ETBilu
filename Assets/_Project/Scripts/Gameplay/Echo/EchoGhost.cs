@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OneMoreTime.Core.Echo;
+using OneMoreTime.Core.Ship;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Gadgets;
 using OneMoreTime.Gameplay.Ship;
@@ -36,6 +37,9 @@ namespace OneMoreTime.Gameplay.Echo
         MaterialPropertyBlock block;
         Color[] baseColors;
         bool previewing;
+        float rollSeconds;
+        float rollClock;
+        bool rolling;
 
         public event Action<EchoGhost> Finished;
         public float Progress => playback?.Progress ?? 1f;
@@ -46,9 +50,11 @@ namespace OneMoreTime.Gameplay.Echo
                 shotFeedback = GetComponent<ShipFireFeedback>();
         }
 
-        public void Play(EchoRecording recording, Playfield field, ProjectilePool projectiles, float fade)
+        /// <param name="dodgeSeconds">How long the ship's dodge roll lasts; the echo spins for as long at each recorded dodge.</param>
+        public void Play(EchoRecording recording, Playfield field, ProjectilePool projectiles, float fade, float dodgeSeconds = 0.4f)
         {
             previewing = false;
+            rollSeconds = Mathf.Max(0.05f, dodgeSeconds);
             playback = new EchoPlayback(recording);
             playfield = field;
             pool = projectiles;
@@ -91,7 +97,6 @@ namespace OneMoreTime.Gameplay.Echo
         {
             due.Clear();
             playback.Advance(dt, due);
-            ApplyPose();
             foreach (var e in due)
             {
                 if (e.type == EchoEventType.Shot)
@@ -101,7 +106,19 @@ namespace OneMoreTime.Gameplay.Echo
                 }
                 else if (e.type == EchoEventType.Gadget && mine != null)
                     Instantiate(mine, playfield.LocalToWorld(e.position), Quaternion.identity, pool.transform).Arm(Faction.Player, ShotSource.Echo, pool);
+                else if (e.type == EchoEventType.Dodge)
+                {
+                    rolling = true;
+                    rollClock = 0f;
+                }
             }
+            if (rolling)
+            {
+                rollClock += dt;
+                if (rollClock >= rollSeconds)
+                    rolling = false;
+            }
+            ApplyPose();
             ApplyFade();
         }
 
@@ -117,7 +134,8 @@ namespace OneMoreTime.Gameplay.Echo
             {
                 Vector2 aim = pose.aimDirection.sqrMagnitude > 0f ? pose.aimDirection : Vector2.right;
                 float angle = Mathf.Atan2(aim.y, aim.x) * Mathf.Rad2Deg;
-                visual.localRotation = Quaternion.Euler(pose.rotation, 0f, angle);
+                float roll = rolling ? DodgeModel.RollAngle(rollClock / rollSeconds) : 0f;
+                visual.localRotation = ShipPose.Rotation(pose.rotation, angle, roll);
             }
         }
 

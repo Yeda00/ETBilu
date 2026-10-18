@@ -89,6 +89,67 @@ namespace OneMoreTime.Gameplay.Audio
             return Make("Temporal Echo Arrival (Runtime)", samples, sampleRate);
         }
 
+        /// <summary>Low mechanical rise used while the Guardian charges a shot or a laser.</summary>
+        public static AudioClip BossCharge(int sampleRate = 44100)
+        {
+            const float seconds = 0.38f;
+            int count = Mathf.RoundToInt(seconds * sampleRate);
+            var samples = new float[count];
+            for (int i = 0; i < count; i++)
+            {
+                float t = (float)i / sampleRate;
+                float p = t / seconds;
+                float frequency = Mathf.Lerp(72f, 520f, p * p);
+                float pulse = Mathf.Sin(t * frequency * Mathf.PI * 2f) * 0.42f
+                    + Mathf.Sin(t * frequency * Mathf.PI * 4f) * 0.16f;
+                float tremolo = 0.72f + Mathf.Sin(t * 22f * Mathf.PI * 2f) * 0.28f;
+                float envelope = Mathf.Clamp01(t / 0.02f) * Mathf.Sin(p * Mathf.PI);
+                samples[i] = Mathf.Clamp(pulse * tremolo * envelope, -1f, 1f);
+            }
+            return Make("Guardian Charge (Runtime)", samples, sampleRate);
+        }
+
+        /// <summary>Short filtered-noise sweep for the Guardian's station-to-station dash.</summary>
+        public static AudioClip BossDash(int sampleRate = 44100)
+        {
+            const float seconds = 0.34f;
+            int count = Mathf.RoundToInt(seconds * sampleRate);
+            var samples = new float[count];
+            uint noise = 0x91E10DA5u;
+            float previous = 0f;
+            for (int i = 0; i < count; i++)
+            {
+                float p = (float)i / count;
+                noise = noise * 1664525u + 1013904223u;
+                float white = (noise >> 8) / 16777215f * 2f - 1f;
+                previous = Mathf.Lerp(previous, white, Mathf.Lerp(0.08f, 0.42f, p));
+                float tone = Mathf.Sin(i * Mathf.Lerp(120f, 48f, p) / sampleRate * Mathf.PI * 2f) * 0.3f;
+                float envelope = Mathf.Sin(p * Mathf.PI) * (1f - p * 0.35f);
+                samples[i] = Mathf.Clamp((previous * 0.65f + tone) * envelope, -1f, 1f);
+            }
+            return Make("Guardian Dash (Runtime)", samples, sampleRate);
+        }
+
+        /// <summary>Layered shield-collapse impact for exposing the core and changing phase.</summary>
+        public static AudioClip BossRupture(int sampleRate = 44100)
+        {
+            const float seconds = 0.62f;
+            int count = Mathf.RoundToInt(seconds * sampleRate);
+            var samples = new float[count];
+            uint noise = 0x71C3A51Du;
+            for (int i = 0; i < count; i++)
+            {
+                float t = (float)i / sampleRate;
+                float p = t / seconds;
+                noise = noise * 1103515245u + 12345u;
+                float grit = ((noise >> 8) / 16777215f * 2f - 1f) * Mathf.Exp(-t * 12f) * 0.32f;
+                float low = Mathf.Sin(t * Mathf.Lerp(105f, 42f, p) * Mathf.PI * 2f) * Mathf.Exp(-t * 4.5f) * 0.72f;
+                float crack = Mathf.Sin(t * 1240f * Mathf.PI * 2f) * Mathf.Exp(-t * 24f) * 0.22f;
+                samples[i] = Mathf.Clamp(low + grit + crack, -1f, 1f);
+            }
+            return Make("Guardian Rupture (Runtime)", samples, sampleRate);
+        }
+
         static AudioClip Make(string name, float[] samples, int sampleRate)
         {
             var clip = AudioClip.Create(name, samples.Length, 1, sampleRate, false);
