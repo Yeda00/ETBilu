@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace OneMoreTime.Gameplay.Combat
@@ -19,6 +20,7 @@ namespace OneMoreTime.Gameplay.Combat
         float age;
         bool live;
         Action<Projectile> release;
+        readonly HashSet<Health> crossedShields = new();
 
         public Faction Faction { get; private set; }
         public ShotSource Source { get; private set; }
@@ -34,6 +36,7 @@ namespace OneMoreTime.Gameplay.Combat
             release = onRelease;
             age = 0f;
             live = true;
+            crossedShields.Clear();
         }
 
         void Update()
@@ -51,6 +54,15 @@ namespace OneMoreTime.Gameplay.Combat
             var target = other.GetComponentInParent<Health>();
             if (target == null || target.Faction == Faction)
                 return;
+
+            // Protected boss pieces and the hull overlap the exposed weak points in screen space.
+            // Report one blocked hit for feedback, but let the shot continue to a valid target behind them.
+            if (target.Shielded)
+            {
+                if (crossedShields.Add(target))
+                    target.TakeDamage(new DamageInfo(damage, kind, Source));
+                return;
+            }
             target.TakeDamage(new DamageInfo(damage, kind, Source));
             Release();
         }
