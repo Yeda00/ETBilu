@@ -1,0 +1,57 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="Menu.uss" />
+    <ui:VisualElement name="menu" class="menu">
+        <ui:VisualElement name="stars" class="stars" picking-mode="Ignore" />
+
+        <ui:VisualElement name="screen-title" class="screen">
+            <ui:Label name="logo-top" class="logo" />
+            <ui:Label name="logo-bottom" class="logo logo-big" />
+            <ui:Label name="tagline" class="tagline" />
+            <ui:Label name="press-start" class="press-start" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="screen-main" class="screen hidden">
+            <ui:VisualElement name="main-list" class="bar-list list-left" />
+            <ui:Label name="main-hint" class="hint" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="screen-sound" class="screen hidden">
+            <ui:Label name="sound-title" class="bar title-bar" />
+            <ui:VisualElement name="sound-rows" class="sound-rows" />
+            <ui:Label name="sound-hint" class="hint" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="screen-controls" class="screen hidden">
+            <ui:Label name="controls-title" class="bar title-bar" />
+            <ui:VisualElement name="controls-rows" class="panel" />
+            <ui:Label name="controls-hint" class="hint" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="screen-credits" class="screen hidden">
+            <ui:Label name="credits-title" class="bar title-bar" />
+            <ui:Label name="credits-body" class="panel credits-body" />
+            <ui:Label name="credits-hint" class="hint" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="screen-missions" class="screen hidden">
+            <ui:Label name="missions-title" class="bar title-bar" />
+            <ui:VisualElement name="map" class="map" />
+            <ui:VisualElement name="mission-info" class="mission-info">
+                <ui:Label name="mission-number" class="mission-number" />
+                <ui:Label name="mission-place" class="mission-place" />
+                <ui:Label name="mission-title" class="mission-title" />
+            </ui:VisualElement>
+            <ui:Label name="missions-hint" class="hint" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="screen-intro" class="screen hidden">
+            <ui:VisualElement name="intro-picture" class="intro-picture" />
+            <ui:VisualElement name="intro-viewport" class="intro-viewport">
+                <ui:Label name="intro-text" class="intro-text" />
+            </ui:VisualElement>
+            <ui:Label name="intro-hint" class="hint" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="fade" class="fade" picking-mode="Ignore" />
+    </ui:VisualElement>
+</ui:UXML>

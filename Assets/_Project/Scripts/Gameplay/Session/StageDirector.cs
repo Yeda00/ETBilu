@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Echo;
@@ -36,6 +37,8 @@ namespace OneMoreTime.Gameplay.Session
         [SerializeField] GuardianBoss boss;
         [Tooltip("Encounter the scene starts at. Set to Traps or Boss to test them straight away.")]
         [SerializeField] StageSegment startAt = StageSegment.Waves;
+        [Tooltip("Held until it opens before the first encounter starts (the mission card). Optional.")]
+        [SerializeField] StageGate gate;
         [Tooltip("Gap between the right edge and the trap section's first trap when it spawns.")]
         [SerializeField, Min(0f)] float sectionSpawnMargin = 1f;
         [Tooltip("Scroll speed while the cleared trap corridor leaves the screen.")]
@@ -45,20 +48,23 @@ namespace OneMoreTime.Gameplay.Session
         public event Action Completed;
         public event Action<int> Scored;
 
-        /// <summary>False until the first encounter begins.</summary>
+        /// <summary>False while the stage waits for its gate.</summary>
         public bool HasBegun { get; private set; }
         public StageSegment Segment { get; private set; }
         public TrapSection Section { get; private set; }
         public GuardianBoss Boss { get; private set; }
 
-        void Start()
+        IEnumerator Start()
         {
             if (playfield == null)
             {
                 Debug.LogWarning($"{nameof(StageDirector)} needs a playfield.", this);
                 enabled = false;
-                return;
+                yield break;
             }
+            if (gate != null)
+                while (!gate.IsOpen)
+                    yield return null;
             Begin(RunCheckpoint.Resume(startAt));
         }
 

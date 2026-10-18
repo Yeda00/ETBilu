@@ -49,21 +49,21 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 |---|---|
 | `Scripts/Core` | Regras em C# puro, sem MonoBehaviour, cobertas por testes (`OneMoreTime.Core`) |
 | `Scripts/Gameplay` | Componentes da cena (`OneMoreTime.Gameplay`), uma subpasta por área: Input, World, Ship, Echo, Combat, Enemies, Gadgets, Traps, Boss, Session, Feedback, Audio |
-| `Scripts/UI` | HUD (`OneMoreTime.UI`); layout e estilo em `UI/Hud.uxml` e `UI/Hud.uss` |
+| `Scripts/UI` | HUD, menus e cartão de missão (`OneMoreTime.UI`); layout e estilo em `UI/Hud.*`, `UI/Menu.*` e `UI/MissionCard.*` |
 | `Scripts/Editor` | Ferramentas de Editor (`OneMoreTime.Editor`) |
 | `Tests/EditMode` | Testes do Core |
-| `Data` | ScriptableObjects de ajuste: `EchoConfig`, `AudioLibrary` (qual clipe toca em cada cue e qual música em cada encontro), ondas em `Data/Waves` |
+| `Data` | ScriptableObjects de ajuste: `EchoConfig`, `AudioLibrary` (qual clipe toca em cada cue e qual música em cada tela e encontro), `Menu/MenuTexts` (as palavras do menu), `Missions/Mission_01` (cartão, mapa e história da missão), ondas em `Data/Waves` |
 | `Audio` | Clipes CC0 do OpenGameArt: `SFX/`, `UI/`, `Music/`. Fontes e licenças em `Audio/CREDITS.md`; ao trocar ou somar um pack, atualize o arquivo |
 | `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Traps, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
 | `Art/Ships` | Modelos de blockout: `Bilu_BlockOut` (nave e eco), `Enemie_S_1`/`Enemie_S`/`Enemie_S_3_BlockOut` (caça), `Enemie_M_1`/`_2`/`_3_BlockOut` (artilheiro), `Enemie_Boss_BlockOut` (Guardião). `BI_Ships_BlockOut` e `Enemie_M_BlockOut` (igual ao `M_2`) estão sem uso |
-| `Scenes` | `Arena_01.unity`, a única cena no build por enquanto |
+| `Scenes` | `Menu.unity` (título, menu, mapa de missões, história) é a cena 0 do build; `Arena_01.unity`, a cena 1 |
 | `Input` | `OneMoreTimeControls.inputactions` — o único asset de input do jogo |
 
 Convenções:
 - **Nada de lógica nova em MonoBehaviour se ela cabe no Core.** Regra testável vai para `Core` com teste.
 - **Referências por `[SerializeField]`, não por busca** (`Find*`) nem singletons. O `Playfield` e o `ProjectilePool` chegam a quem precisa pela cena ou por injeção.
-- **Só o `PlayerInputReader` lê o Input System.**
+- **Só o `PlayerInputReader` (jogo) e o `MenuInputReader` (menus) leem o Input System.** Os dois usam o mesmo asset, em mapas diferentes (`Gameplay` e `Menu`).
 - **Arte troca sem tocar no código:** cada prefab tem um filho `Visual`; substitua o que está dentro dele.
   Na nave, no eco e nos inimigos o `Visual` é o pivô da inclinação (o código reescreve a rotação dele): o modelo fica em
   `Visual/Model`, que guarda a rotação, a escala e o centro (no Guardião também). Os colisores ficam no plano de jogo
@@ -81,6 +81,7 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
 
 - **Testes:** `unity command run_tests --mode editor`.
 - **Áudio:** o menu *One More Time › Bootstrap › Build Audio* (`unity command menu --path "One More Time/Bootstrap/Build Audio"`) cria o `AudioLibrary`, ajusta a importação da música (Streaming) e liga o grupo `Systems/Audio` na cena. Não sobrescreve nada que exista: para refazer o mapeamento, apague `Data/AudioLibrary.asset`. Som novo = um `SoundCue` no Core, um pedido no `AudioDirector` (ou `ProjectilePool.Raise`) e o clipe no asset.
+- **Menu e missões:** o menu *One More Time › Bootstrap › Build Menu* (`unity command menu --path "One More Time/Bootstrap/Build Menu"`) cria `MenuTexts`, `Mission_01`, a cena `Menu`, põe o cartão de missão na arena e deixa o build em Menu → Arena. Rode *Build Audio* antes. Não sobrescreve: para refazer a cena, apague `Scenes/Menu.unity`. Para testar o menu em Play, abra a cena `Menu` (`unity command open_scene --path ...`); o editor precisa estar em primeiro plano para o tempo e as teclas andarem.
 - **Conteúdo placeholder:** o menu *One More Time › Bootstrap › Build Placeholder Content* (`unity command menu --path "One More Time/Bootstrap/Build Placeholder Content"`) recria o que faltar — materiais, prefabs, dados, painel de UI e a cena. Não sobrescreve nada que exista; apague um asset para ele ser refeito.
   Os inimigos `Enemy_S` e `Enemy_M` saem do bootstrap já com as três variações de modelo (prefabs antigos, de um modelo só,
   ganham as variações no lugar, sem perder as referências das ondas). Atenção: apagar `PlayerShip`, `EchoGhost` ou `Guardian`
@@ -99,6 +100,6 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
 - **`eval` roda dentro de um método:** sem `using`; escreva os nomes completos (`UnityEngine.Object.FindFirstObjectByType<...>`).
 - **Visual pixelado:** o `PixelView` (em `Systems`) muda a escala de render do `PC_RPAsset` durante o Play e devolve ao sair.
   Se o Play travar ou o Editor fechar no meio, confira se o *Render Scale* do asset voltou a 1 e não commite essa mudança.
-- **Pular para um encontro no Play mode:** `RunCheckpoint.Save(StageSegment.Boss)` e `SceneManager.LoadScene(0)` por eval, o mesmo caminho de uma morte.
+- **Pular para um encontro no Play mode:** `RunCheckpoint.Save(StageSegment.Boss)` e `SceneManager.LoadScene("Arena_01")` por eval, o mesmo caminho de uma morte (a cena 0 agora é o menu).
 - **Capturas** (`capture_game_view --save_path`) são relativas a `Assets/` e precisam ficar dentro do projeto: apague depois
   (`AssetDatabase.DeleteAsset` por eval), para não versionar.

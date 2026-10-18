@@ -959,6 +959,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 567456073}
+  - {fileID: 1887850887}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1205768501
@@ -1536,6 +1537,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 143153982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1887850886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1887850887}
+  - component: {fileID: 1887850889}
+  - component: {fileID: 1887850888}
+  m_Layer: 0
+  m_Name: MissionCard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1887850887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887850886}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1200989244}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1887850888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887850886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a5fbc81d84d9414cb9b23fe1464f1c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.UI::OneMoreTime.UI.MissionCardController
+  texts: {fileID: 11400000, guid: 5db6163db0f2e469e81e4b1f1347dd83, type: 2}
+  fallbackMission: {fileID: 11400000, guid: ee8ecf26df9684b44a533a2b49089526, type: 2}
+  sfx: {fileID: 385370052}
+  lineDelay: 0.5
+  lineFade: 0.35
+  holdSeconds: 1.6
+  fadeOutSeconds: 0.6
+--- !u!114 &1887850889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887850886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 29fe3222bdf734c0aafd1b3bf68d650a, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 5612212abbaad4419b7a744805ff57a6, type: 3}
+  m_SortingOrder: 10
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!1 &1943902050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,6 +1650,7 @@ MonoBehaviour:
   trapSection: {fileID: 8156573256078891116, guid: 24aa144dd48464648b19093c9587c8a9, type: 3}
   boss: {fileID: 1985196233868160455, guid: c5030c6e15be14e10871eb43a0352992, type: 3}
   startAt: 0
+  gate: {fileID: 1887850888}
   sectionSpawnMargin: 1
   exitScrollSpeed: 6
 --- !u!4 &1943902052

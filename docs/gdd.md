@@ -78,6 +78,7 @@ padrões a cada fase.
 ## Controles e HUD → [07](gdd/07-controles-e-interface.md)
 
 WASD/setas movem · mouse mira · Espaço/clique atira · **Shift** grava · **E** invoca · **Q** gadget · Esc pausa.
+O jogo abre num menu inspirado no *Star Fox 64*: título, menu (jogo, controles, som, créditos), mapa de missões, história que sobe pela tela e, na arena, o cartão "Missão Nº 1".
 O HUD mostra integridade, memória temporal, ecos ativos, gadget, vida do chefe e combos.
 
 ## Visual e som → [08](gdd/08-direcao-visual-e-sonora.md)
@@ -99,7 +100,7 @@ blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, t
 gravação de 5 s, eco que repete movimento, tiros e gadget, caças, interceptadores e artilheiros que atiram, em ondas por script,
 corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
 (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
-atual recomeça), vitória (derrotar o Guardião) e som: efeitos e música CC0 ligados ao jogo, com os valores ainda por ajustar de ouvido.
+atual recomeça), vitória (derrotar o Guardião), o fluxo de menus (título, menu, mapa de missões, história e cartão de missão) e som: efeitos e música CC0 ligados ao jogo, com os valores ainda por ajustar de ouvido.
 Faltam torreta, os outros três combos, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).
 
 ## Perguntas em aberto

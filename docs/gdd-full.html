@@ -551,9 +551,27 @@
       <tr><th scope="row">Feedback de combo</th><td>Entender o que funcionou → <a href="#c03">03</a></td></tr>
     </tbody></table></div>
   </section>
+  <section class="part"><h3>Telas do jogo</h3>
+    <p>O jogo abre no menu e só depois vai para a arena. O estilo é inspirado nos menus de <em>Star Fox 64</em>: fundo preto com estrelas, barras de aço com texto azul-escuro, um mapa de missões e uma história que sobe pela tela. A nave Bilu aparece em 3D atrás do título e do menu.</p>
+    <div class="scroll"><table><thead><tr><th>Tela</th><th>O que tem</th><th>Como sai</th></tr></thead><tbody>
+      <tr><th scope="row">Título</th><td>"ONE MORE TIME", "O PASSADO CONTINUA LUTANDO" e "PRESSIONE ENTER" piscando; música do título</td><td>Qualquer tecla ou clique: menu principal</td></tr>
+      <tr><th scope="row">Menu principal</th><td>JOGO PRINCIPAL · CONTROLES · SOM · CRÉDITOS · SAIR</td><td>Esc volta ao título</td></tr>
+      <tr><th scope="row">Som</th><td>Barras de MÚSICA e EFEITOS de 0 a 10, salvas entre partidas; o ajuste vale na hora</td><td>Esc ou Enter volta</td></tr>
+      <tr><th scope="row">Controles</th><td>A lista de teclas da tabela acima</td><td>Esc volta</td></tr>
+      <tr><th scope="row">Créditos</th><td>Os créditos de áudio (tudo CC0). A equipe é _TBD_</td><td>Esc volta</td></tr>
+      <tr><th scope="row">Mapa de missões</th><td>Sete casas ligadas por uma linha; só a primeira (Missão Nº 1) existe, as outras são "?" bloqueadas e respondem com um som de negação</td><td>Enter abre a história; Esc volta</td></tr>
+      <tr><th scope="row">História</th><td>Imagem pequena no alto e o texto da missão subindo, com música de abertura</td><td>Enter pula, ↓ acelera, Esc volta; no fim, a arena</td></tr>
+      <tr><th scope="row">Cartão de missão</th><td>Na arena, tela preta com "MISSÃO Nº 1", o local e o nome da missão, por cerca de 3 s; a fase só começa quando ele some</td><td>Sozinho. Não volta depois de uma morte</td></tr>
+    </tbody></table></div>
+    <p>Teclas do menu: ↑ ↓ ← → ou W A S D movem (repetem se a tecla ficar apertada), Enter ou Espaço confirmam, Esc ou Backspace voltam. O mouse também funciona: passar sobre uma barra a seleciona e clicar confirma.</p>
+    <p>A ordem das telas, o cursor, a rolagem do texto e os volumes são regras do Core, com testes (<code>ScreenFlow</code>, <code>MenuCursor</code>, <code>CrawlScroll</code>, <code>SoundLevels</code>). Os textos ficam em dois assets, para editar sem mexer em código: <code>Data/Menu/MenuTexts</code> (as palavras de todas as telas) e <code>Data/Missions/Mission_01</code> (<code>MissionData</code>: número, local, nome, texto da história, imagem e cena). O layout e o visual ficam em <code>UI/Menu.uxml</code>, <code>Menu.uss</code>, <code>MissionCard.uxml</code> e <code>MissionCard.uss</code>.</p>
+    <div class="rule"><span class="osd">Q · proposta</span>O texto da história e o nome da Missão Nº 1 ("Terra · Sertão Seco", "Derrubar o Império") são rascunho, escritos a partir da premissa da bíblia de arte. O dono precisa aprovar ou reescrever. A imagem da história é um recorte da arena, só para ocupar o lugar da arte final.</div>
+  </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Suporte a controle: "pode vir depois" — entra na jam?</span></li>
     <li><span>Mapeamento definitivo das teclas no Input System.</span></li>
+    <li><span>Fonte pixelada para os menus e o HUD: o protótipo usa a fonte padrão do Unity.</span></li>
+    <li><span>Tela de título definitiva: o protótipo mostra a nave de blockout.</span></li>
     <li><span>O aviso de combo usa laranja, como o mockup; laranja também é a cor de perigo → <a href="#c08">08</a>. Fica assim, ou o combo ganha uma cor própria?</span></li>
   </ul></div>
 </section>
@@ -633,8 +651,9 @@
       <tr><th scope="row">Combo temporal</th><td><em>Starpower</em> do Mini pack, curto</td></tr>
       <tr><th scope="row">Chefe vulnerável, nova fase</th><td>Campo de força da Kenney; rugido do Mini pack</td></tr>
       <tr><th scope="row">Interruptor, corredor limpo, pausa, vitória</th><td>Bipes e jingles curtos (<em>Pickup</em>, <em>Powerup</em>, menu, <em>Win Jingle</em>)</td></tr>
+      <tr><th scope="row">Menus e cartão de missão</th><td>Os dois bipes de menu, um som de negação (<em>Wrong</em>) e um campo de força curto no cartão</td></tr>
     </tbody></table></div>
-    <p>A música muda a cada encontro: ondas com <em>8-bit Epic Space Shooter</em>, corredor de armadilhas com <em>Pulsar</em> e o Guardião com a faixa <em>Boss</em> do <em>NES Shooter Music</em> (intro e loop). A música abaixa na pausa e some na vitória e na derrota. Não existe tela de título no jogo ainda; <em>NES Shooter Music</em> é a candidata a ela.</p>
+    <p>A música muda a cada tela e a cada encontro. O título e o menu tocam <em>Venus</em>, do <em>NES Shooter Music</em>; o mapa de missões, <em>Map</em>; a história, <em>Stage 1</em>, de Juhani Junkala, uma faixa provisória de aventura (o time pediu o clima de abertura do <em>Overground</em>, de <em>Shovel Knight Dig</em>, que tem direitos autorais e não pode ser usado). Nas fases, as ondas tocam <em>8-bit Epic Space Shooter</em>, o corredor de armadilhas <em>Pulsar</em> e o Guardião a faixa <em>Boss</em> do <em>NES Shooter Music</em> (intro e loop). A música abaixa na pausa e some na vitória e na derrota. Qual faixa vai em cada lugar é uma escolha pelo nome dos arquivos: falta ouvir e ajustar no <code>AudioLibrary</code>. O controle de MÚSICA e EFEITOS da tela de som (<a href="#c07">07</a>) multiplica o volume de tudo.</p>
     <p>Ainda sem som: lasers e barreiras do corredor, o laser giratório do Guardião e a fase 4 do chefe (que não existe). O pulso de interferência também não existe ainda.</p>
     <p>Os clipes ficam em <code>Assets/_Project/Audio</code>. Todos são CC0, do OpenGameArt (fontes e licenças em <code>Audio/CREDITS.md</code>):</p>
     <div class="scroll"><table><thead><tr><th>Pasta</th><th>Conteúdo</th></tr></thead><tbody>
@@ -707,6 +726,8 @@
       <tr><td>—</td><td><code>PixelView</code></td><td>O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → <a href="#c08">08</a></td></tr>
       <tr><td>—</td><td><code>StageDirector</code> + <code>RunCheckpoint</code></td><td>Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte</td></tr>
       <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota</td></tr>
+      <tr><td><code>MenuSystem</code></td><td><code>MenuController</code> + <code>MenuInputReader</code> + <code>StarfieldView</code> + <code>ShowcaseSpin</code> (+ <code>ScreenFlow</code>, <code>MenuCursor</code>, <code>CrawlScroll</code>, <code>SoundLevels</code> no Core)</td><td>A cena <code>Menu</code> (índice 0 do build). A ordem das telas, o cursor, a rolagem da história e os volumes são regras do Core; o <code>MenuController</code> desenha as telas em UI Toolkit (<code>Menu.uxml</code>), toca os sons e carrega a fase. O <code>MenuInputReader</code> lê o mapa <code>Menu</code> do mesmo asset de input → <a href="#c07">07</a></td></tr>
+      <tr><td><code>MissionSystem</code></td><td><code>MissionData</code> + <code>MenuTexts</code> + <code>MissionSelection</code> + <code>MissionCardController</code> + <code>StageGate</code></td><td>Os textos são ScriptableObjects. A missão escolhida no mapa chega à arena por <code>MissionSelection</code>; o cartão de missão é um <code>StageGate</code>: o <code>StageDirector</code> espera ele abrir antes do primeiro encontro, e o cartão não volta depois de uma morte (<code>RunCheckpoint.HasSaved</code>)</td></tr>
       <tr><td><code>AudioSystem</code></td><td><code>AudioDirector</code> + <code>SfxPlayer</code> + <code>MusicPlayer</code> + <code>AudioLibrary</code> (+ <code>SoundCue</code>, <code>CueThrottle</code>, <code>RecordPulse</code>, <code>VolumeFader</code> no Core)</td><td>O <code>AudioDirector</code> traduz eventos de tiro, dano, morte, eco, combo, chefe, armadilha e pausa em cues; tiros e minas chegam por <code>ProjectilePool.CueRaised</code>. O <code>SfxPlayer</code> toca numa reserva fixa de <code>AudioSource</code> (escolhe clipe, tom, pan e abafamento) e o <code>MusicPlayer</code> encadeia intro e loop por encontro. Os clipes de cada cue ficam no <code>AudioLibrary</code> (asset em <code>Data/</code>); o menu <em>One More Time › Bootstrap › Build Audio</em> cria o asset e liga o áudio na cena → <a href="#c08">08</a></td></tr>
       <tr><td>—</td><td><code>CombatFeedbackDirector</code> + <code>CombatVfxPool</code> + <code>CameraImpact</code></td><td>Traduz eventos de dano, escudo, morte e combo em flashes, VFX reutilizados e impulsos proporcionais de câmera; não altera vida, dano ou colisão</td></tr>
     </tbody></table></div>
@@ -769,7 +790,7 @@
   <section class="part"><h3>Estado do MVP</h3>
     <div class="scroll"><table><thead><tr><th>Item do MVP</th><th>Estado</th></tr></thead><tbody>
       <tr><th scope="row">Nave com movimento e disparo</th><td><span class="chip ok">feito</span></td></tr>
-      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code>; naves e chefe com os modelos de blockout, o resto em placeholder</td></tr>
+      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code> (a cena <code>Menu</code> vem antes no build); naves e chefe com os modelos de blockout, o resto em placeholder</td></tr>
       <tr><th scope="row">Gravação de cinco segundos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Reprodução de movimento e disparos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Inimigos com ondas por script</th><td><span class="chip ok">feito</span> caça (S) e artilheiro (M), que atiram → <a href="#c04">04</a></td></tr>
@@ -777,6 +798,7 @@
       <tr><th scope="row">Um gadget funcional</th><td><span class="chip ok">feito</span> mina temporal, na tecla Q, reproduzida pelo eco → <a href="#c05">05</a></td></tr>
       <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, fases 1 a 3 → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = derrotar o Guardião; derrota recomeça o encontro atual</td></tr>
+      <tr><th scope="row">Fluxo de telas</th><td><span class="chip ok">feito</span> título, menu, som, controles, créditos, mapa de missões, história e cartão de missão, na cena <code>Menu</code> → <a href="#c07">07</a></td></tr>
     </tbody></table></div>
     <p>Dos opcionais, já entraram <strong>dois combos temporais com aviso no HUD</strong> (Crossfire e Synchronized Strike) e a <strong>pontuação por combos</strong> → <a href="#c03">03</a>, e o <strong>áudio</strong>: efeitos e música CC0 ligados ao jogo → <a href="#c08">08</a>.</p>
   </section>

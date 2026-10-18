@@ -122,10 +122,15 @@ nome dos arquivos, e precisam de ajuste de ouvido.
 | Combo temporal | *Starpower* do Mini pack, curto |
 | Chefe vulnerável, nova fase | Campo de força da Kenney; rugido do Mini pack |
 | Interruptor, corredor limpo, pausa, vitória | Bipes e jingles curtos (*Pickup*, *Powerup*, menu, *Win Jingle*) |
+| Menus e cartão de missão | Os dois bipes de menu, um som de negação (*Wrong*) e um campo de força curto no cartão |
 
-A música muda a cada encontro: ondas com *8-bit Epic Space Shooter*, corredor de armadilhas com *Pulsar* e o
-Guardião com a faixa *Boss* do *NES Shooter Music* (intro e loop). A música abaixa na pausa e some na vitória e
-na derrota. Não existe tela de título no jogo ainda; *NES Shooter Music* é a candidata a ela.
+A música muda a cada tela e a cada encontro. O título e o menu tocam *Venus*, do *NES Shooter Music*; o mapa de
+missões, *Map*; a história, *Stage 1*, de Juhani Junkala, uma faixa provisória de aventura (o time pediu o clima de
+abertura do *Overground*, de *Shovel Knight Dig*, que tem direitos autorais e não pode ser usado). Nas fases, as
+ondas tocam *8-bit Epic Space Shooter*, o corredor de armadilhas *Pulsar* e o Guardião a faixa *Boss* do *NES
+Shooter Music* (intro e loop). A música abaixa na pausa e some na vitória e na derrota. Qual faixa vai em cada
+lugar é uma escolha pelo nome dos arquivos: falta ouvir e ajustar no `AudioLibrary`. O controle de MÚSICA e
+EFEITOS da tela de som ([07](07-controles-e-interface.md)) multiplica o volume de tudo.
 
 Ainda sem som: lasers e barreiras do corredor, o laser giratório do Guardião e a fase 4 do chefe (que não
 existe). O pulso de interferência também não existe ainda.

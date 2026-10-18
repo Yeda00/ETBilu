@@ -32,7 +32,7 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Item do MVP | Estado |
 |---|---|
 | Nave com movimento e disparo | ✅ |
-| Uma arena side-scrolling 2.5D | ✅ cena `Arena_01`; naves e chefe com os modelos de blockout, o resto em placeholder |
+| Uma arena side-scrolling 2.5D | ✅ cena `Arena_01` (a cena `Menu` vem antes no build); naves e chefe com os modelos de blockout, o resto em placeholder |
 | Gravação de cinco segundos | ✅ |
 | Reprodução de movimento e disparos | ✅ |
 | Inimigos com ondas por script | ✅ caça (S) e artilheiro (M), que atiram → [04](04-inimigos-e-ondas.md) |
@@ -40,6 +40,7 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Um gadget funcional | ✅ mina temporal, na tecla Q, reproduzida pelo eco → [05](05-armadilhas-gadgets-puzzles.md) |
 | Um chefe com janela de vulnerabilidade temporal | ✅ Guardião do Ciclo, fases 1 a 3 → [06](06-chefe-e-runs.md) |
 | Interface mínima e condição de vitória e derrota | ✅ vitória = derrotar o Guardião; derrota recomeça o encontro atual |
+| Fluxo de telas | ✅ título, menu, som, controles, créditos, mapa de missões, história e cartão de missão, na cena `Menu` → [07](07-controles-e-interface.md) |
 
 Dos opcionais, já entraram **dois combos temporais com aviso no HUD** (Crossfire e Synchronized Strike) e a
 **pontuação por combos** → [03](03-combate.md), e o **áudio**: efeitos e música CC0 ligados ao jogo → [08](08-direcao-visual-e-sonora.md).

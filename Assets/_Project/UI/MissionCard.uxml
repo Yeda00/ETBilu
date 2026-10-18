@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="MissionCard.uss" />
+    <ui:VisualElement name="card" class="card" picking-mode="Ignore">
+        <ui:Label name="card-number" class="card-number" />
+        <ui:Label name="card-place" class="card-place" />
+        <ui:Label name="card-title" class="card-title" />
+    </ui:VisualElement>
+</ui:UXML>

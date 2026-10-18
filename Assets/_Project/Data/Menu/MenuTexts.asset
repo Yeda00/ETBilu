@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb42388a59254628b82c68a55dc9681, type: 3}
+  m_Name: MenuTexts
+  m_EditorClassIdentifier: OneMoreTime.UI::OneMoreTime.UI.MenuTexts
+  logoTop: ONE MORE
+  logoBottom: TIME
+  tagline: O PASSADO CONTINUA LUTANDO
+  pressStart: PRESSIONE ENTER
+  playLabel: JOGO PRINCIPAL
+  controlsLabel: CONTROLES
+  soundLabel: SOM
+  creditsLabel: "CR\xC9DITOS"
+  quitLabel: SAIR
+  soundTitle: SOM
+  musicLabel: "M\xDASICA"
+  effectsLabel: EFEITOS
+  controlsTitle: CONTROLES
+  controls:
+  - action: MOVER A NAVE
+    keys: W A S D  ou  SETAS
+  - action: MIRAR
+    keys: MOUSE
+  - action: ATIRAR
+    keys: "ESPA\xC7O  ou  BOT\xC3O ESQUERDO"
+  - action: GRAVAR O ECO
+    keys: SEGURAR SHIFT
+  - action: INVOCAR O ECO
+    keys: E
+  - action: MINA TEMPORAL
+    keys: Q
+  - action: PAUSAR
+    keys: ESC
+  creditsTitle: "CR\xC9DITOS"
+  credits: "M\xDASICA\nNES Shooter Music \xB7 SketchyLogic\n8-bit Epic Space Shooter
+    \xB7 HydroGene\nPulsar \xB7 celestialghost8\n4 Chiptunes (Adventure) \xB7 Juhani
+    Junkala\n\nEFEITOS SONOROS\n8-Bit Sound Effect Pack \xB7 Deva (@Shades)\n8 bit
+    Mini pack \xB7 phoenix1291\nSci-Fi Sounds \xB7 Kenney\nReversing Time \xB7 isaiah658\n8bit
+    Menu \xB7 Fupi\n\nTodos em CC0, pelo OpenGameArt.org"
+  missionsTitle: "MISS\xD5ES"
+  missionNumberFormat: "MISS\xC3O N\xBA {0}"
+  lockedLabel: BLOQUEADA
+  lockedHint: "AINDA N\xC3O DISPON\xCDVEL"
+  introHint: "ENTER PULA  \xB7  \u2193 ACELERA"
+  listHint: "\u2191 \u2193 ESCOLHE  \xB7  ENTER CONFIRMA  \xB7  ESC VOLTA"
+  soundHint: "\u2191 \u2193 ESCOLHE  \xB7  \u2190 \u2192 AJUSTA  \xB7  ESC VOLTA"
+  mapHint: "\u2190 \u2192 ESCOLHE  \xB7  ENTER CONFIRMA  \xB7  ESC VOLTA"
+  backHint: ESC VOLTA

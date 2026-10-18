@@ -1,0 +1,173 @@
+/* Menu screens (title, main menu, sound, controls, credits, mission map, story).
+   Inspired by the menus of Star Fox 64: black starfield, steel bars with dark-blue text, a map of missions.
+   Placeholder look: colours follow the art bible (Bilu blue, green and yellow); swap freely. */
+
+.menu {
+    flex-grow: 1;
+    /* No background: the 3D ship behind the title is drawn by the camera, whose colour is the night. */
+    -unity-font-style: bold;
+}
+
+.stars { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.star { position: absolute; background-color: rgb(210, 220, 255); }
+
+.screen {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    align-items: center;
+    justify-content: center;
+}
+.hidden { display: none; }
+
+#screen-title { justify-content: flex-start; padding-top: 70px; }
+
+.fade { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgb(0, 0, 0); opacity: 1; }
+
+/* ---- Title ---- */
+.logo {
+    color: rgb(255, 210, 31);
+    font-size: 96px;
+    letter-spacing: 14px;
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 6px;
+    -unity-text-outline-color: rgb(0, 104, 56);
+    margin: 0; padding: 0;
+}
+.logo-big { font-size: 200px; letter-spacing: 24px; color: rgb(255, 236, 120); margin-top: -10px; }
+.tagline {
+    color: rgb(150, 190, 255);
+    font-size: 28px;
+    letter-spacing: 8px;
+    margin-top: 6px;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: rgb(6, 4, 18);
+}
+.press-start {
+    position: absolute; bottom: 56px;
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    letter-spacing: 6px;
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgb(200, 30, 50);
+}
+.press-start.dim { opacity: 0; }
+
+/* ---- Steel bars (buttons and titles) ---- */
+.bar {
+    min-width: 520px;
+    height: 64px;
+    margin: 9px 0;
+    padding: 0 28px;
+    justify-content: center;
+    background-color: rgb(120, 124, 148);
+    border-width: 3px;
+    border-top-color: rgb(196, 200, 222);
+    border-left-color: rgb(160, 164, 188);
+    border-right-color: rgb(70, 72, 96);
+    border-bottom-color: rgb(46, 48, 66);
+    color: rgb(34, 26, 104);
+    font-size: 34px;
+    letter-spacing: 5px;
+    -unity-text-align: middle-center;
+}
+.bar.selected {
+    background-color: rgb(46, 116, 230);
+    border-top-color: rgb(150, 196, 255);
+    border-left-color: rgb(100, 160, 250);
+    border-right-color: rgb(24, 64, 150);
+    border-bottom-color: rgb(14, 40, 100);
+    color: rgb(255, 226, 70);
+}
+.title-bar { min-width: 460px; height: 70px; margin-bottom: 36px; font-size: 38px; }
+
+.bar-list { align-items: stretch; }
+.list-left { position: absolute; left: 150px; top: 0; bottom: 0; justify-content: center; }
+
+.hint {
+    position: absolute; bottom: 44px;
+    color: rgb(150, 160, 205);
+    font-size: 22px;
+    letter-spacing: 3px;
+    -unity-font-style: normal;
+}
+
+/* ---- Panels (controls, credits) ---- */
+.panel {
+    min-width: 900px;
+    padding: 26px 40px;
+    background-color: rgba(14, 12, 40, 0.88);
+    border-width: 3px;
+    border-color: rgb(120, 124, 148);
+    border-top-color: rgb(196, 200, 222);
+    border-bottom-color: rgb(46, 48, 66);
+}
+.control-row { flex-direction: row; justify-content: space-between; margin: 7px 0; }
+.control-action { color: rgb(255, 226, 70); font-size: 28px; letter-spacing: 3px; }
+.control-keys { color: rgb(220, 228, 255); font-size: 28px; letter-spacing: 3px; -unity-font-style: normal; }
+.credits-body {
+    color: rgb(220, 228, 255);
+    font-size: 24px;
+    letter-spacing: 2px;
+    white-space: normal;
+    -unity-text-align: upper-center;
+    -unity-font-style: normal;
+}
+
+/* ---- Sound screen ---- */
+.sound-rows { align-items: stretch; }
+.sound-row {
+    flex-direction: row; align-items: center; justify-content: space-between;
+    min-width: 900px; height: 72px; margin: 10px 0; padding: 0 34px;
+    background-color: rgba(14, 12, 40, 0.88);
+    border-width: 3px; border-color: rgb(70, 72, 96);
+}
+.sound-row.selected { border-color: rgb(255, 226, 70); }
+.sound-label { color: rgb(220, 228, 255); font-size: 32px; letter-spacing: 5px; width: 240px; }
+.sound-row.selected .sound-label { color: rgb(255, 226, 70); }
+.sound-meter { flex-direction: row; }
+.sound-cell { width: 34px; height: 30px; margin: 0 3px; background-color: rgb(40, 44, 80); }
+.sound-cell.on { background-color: rgb(120, 190, 255); }
+.sound-row.selected .sound-cell.on { background-color: rgb(255, 226, 70); }
+
+/* ---- Mission map ---- */
+.map { flex-direction: row; align-items: center; margin-bottom: 34px; }
+.slot {
+    width: 118px; height: 118px;
+    align-items: center; justify-content: center;
+    background-color: rgba(14, 12, 40, 0.88);
+    border-width: 4px; border-color: rgb(200, 206, 230);
+    border-radius: 10px;
+}
+.slot.locked { border-color: rgb(70, 72, 96); }
+.slot.selected { border-color: rgb(255, 226, 70); background-color: rgb(46, 116, 230); }
+.slot-code { color: rgb(255, 226, 70); font-size: 36px; letter-spacing: 3px; }
+.slot.locked .slot-code { color: rgb(90, 94, 130); }
+.slot.selected .slot-code { color: rgb(255, 255, 255); }
+.link { width: 38px; height: 6px; background-color: rgb(200, 206, 230); }
+.link.locked { background-color: rgb(50, 52, 78); }
+.mission-info { align-items: center; min-height: 170px; }
+.mission-number { color: rgb(255, 255, 255); font-size: 46px; letter-spacing: 6px; }
+.mission-place { color: rgb(150, 190, 255); font-size: 28px; letter-spacing: 4px; margin-top: 8px; }
+.mission-title { color: rgb(255, 226, 70); font-size: 34px; letter-spacing: 4px; margin-top: 8px; }
+
+/* ---- Story ---- */
+.intro-picture {
+    width: 380px; height: 200px;
+    margin-bottom: 26px;
+    background-color: rgb(14, 12, 40);
+    border-width: 3px; border-color: rgb(200, 206, 230);
+    -unity-background-scale-mode: scale-and-crop;
+}
+.intro-viewport {
+    width: 1040px;
+    overflow: hidden;
+    border-width: 0;
+}
+.intro-text {
+    position: absolute; left: 0; right: 0; top: 0;
+    color: rgb(222, 230, 255);
+    font-size: 34px;
+    letter-spacing: 2px;
+    white-space: normal;
+    -unity-text-align: upper-left;
+    -unity-font-style: normal;
+}

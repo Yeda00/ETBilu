@@ -12,11 +12,14 @@ namespace OneMoreTime.Gameplay.Session
 
         public static void Save(StageSegment segment) => saved = segment;
 
+        /// <summary>True after an encounter began in this run: a reload after a death, not a fresh start.</summary>
+        public static bool HasSaved => saved.HasValue;
+
         /// <summary>The saved encounter, or <paramref name="fallback"/> if it comes later.</summary>
         public static StageSegment Resume(StageSegment fallback) =>
             saved.HasValue && saved.Value > fallback ? saved.Value : fallback;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void Clear() => saved = null;
+        public static void Clear() => saved = null;
     }
 }
