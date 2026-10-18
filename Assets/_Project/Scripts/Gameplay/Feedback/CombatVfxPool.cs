@@ -102,6 +102,18 @@ namespace OneMoreTime.Gameplay.Feedback
             Ring(position, new Color(1f, 0.35f, 0.06f, 0.9f), 1.15f, 0.42f, 0.075f);
         }
 
+        public void EnemyLaserTelegraph(Vector3 position)
+        {
+            Burst(position, new Color(1f, 0.72f, 0.12f, 1f), 0.65f, 12);
+            Ring(position, new Color(1f, 0.55f, 0.08f, 0.9f), 1.25f, 0.42f, 0.08f);
+        }
+
+        public void EnemyLaserFired(Vector3 position)
+        {
+            Burst(position, new Color(1f, 0.18f, 0.05f, 1f), 1.05f, 22);
+            Ring(position, new Color(1f, 0.3f, 0.06f, 0.95f), 1.7f, 0.24f, 0.11f);
+        }
+
         public void BossDashTelegraph(Vector3 position)
         {
             Ring(position, new Color(1f, 0.22f, 0.08f, 0.95f), 2.2f, 0.5f, 0.1f);

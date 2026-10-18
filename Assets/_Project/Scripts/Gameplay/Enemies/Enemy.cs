@@ -16,6 +16,8 @@ namespace OneMoreTime.Gameplay.Enemies
         Serpentine = 2,
         /// <summary>Kamikaze (Enemy_S model 1): homes in on the ship with a limited turn rate (GDD 04).</summary>
         Chase = 3,
+        /// <summary>Gunship that follows the ship's height, locks the line and fires a horizontal laser.</summary>
+        TrackerLaser = 4,
     }
 
     /// <summary>
@@ -76,8 +78,15 @@ namespace OneMoreTime.Gameplay.Enemies
         BlastFuse fuse;
         BlastTuning blast;
         DodgeTuning dodgeTuning;
+        TrackingLaserTuning laserTuning;
+        TrackingLaserCycle trackingLaser;
+        LineRenderer laserWarning;
+        LineRenderer laserBeam;
+        Material laserWarningMaterial;
+        Material laserBeamMaterial;
         float chaseTurnRate = 100f;
         Vector2 local;
+        float trackingY;
         float bank;
         float yaw;
         float roll;
@@ -89,6 +98,8 @@ namespace OneMoreTime.Gameplay.Enemies
         public event Action<Enemy, bool> Removed;   // bool: killed by the player
         /// <summary>A bomber went off, with the radius of its blast.</summary>
         public event Action<Enemy, float> Detonated;
+        public event Action<Enemy> LaserTelegraphed;
+        public event Action<Enemy> LaserFired;
         public int ScoreValue => scoreValue;
         public Health Health => health;
         public MovementPattern Pattern => pattern;
@@ -98,6 +109,16 @@ namespace OneMoreTime.Gameplay.Enemies
             health = GetComponent<Health>();
             gun = GetComponent<EnemyGun>();
             health.Died += OnDied;
+        }
+
+        void OnDestroy()
+        {
+            if (health != null)
+                health.Died -= OnDied;
+            if (laserWarningMaterial != null)
+                Destroy(laserWarningMaterial);
+            if (laserBeamMaterial != null)
+                Destroy(laserBeamMaterial);
         }
 
         /// <param name="queueOffset">How far behind the first enemy of its wave this one entered; a hovering
@@ -117,7 +138,7 @@ namespace OneMoreTime.Gameplay.Enemies
 
             if (pattern == MovementPattern.Swoop)
                 swoop = new SwoopMotion(local, speed, swoopAt * h.x, swoopSeconds, maxSwoop);
-            else if (pattern == MovementPattern.Hover)
+            else if (pattern == MovementPattern.Hover || pattern == MovementPattern.TrackerLaser)
                 hover = new HoverMotion(local, h.x - holdFromRightEdge + queueOffset, enterSeconds, holdSeconds,
                     bobAmplitude, bobFrequency, phase, leaveAcceleration);
             else if (pattern == MovementPattern.Chase)
@@ -126,6 +147,13 @@ namespace OneMoreTime.Gameplay.Enemies
                 serpentine = new SerpentineMotion(local, speed, waveAmplitude, waveFrequency, phase);
             if (blast.explodes)
                 fuse = new BlastFuse(blast.triggerRadius, blast.fuseSeconds, blast.autoSeconds);
+            if (laserTuning.enabled)
+            {
+                trackingY = local.y;
+                trackingLaser = new TrackingLaserCycle(laserTuning.trackingSeconds, laserTuning.chargeSeconds,
+                    laserTuning.fireSeconds, laserTuning.recoverySeconds, laserTuning.bursts);
+                BuildTrackingLaserVisuals();
+            }
             if (gun != null)
             {
                 gun.Configure(field, ship, pool);
@@ -151,6 +179,8 @@ namespace OneMoreTime.Gameplay.Enemies
             swoopSeconds = p.swoopSeconds;
             maxSwoop = p.maxSwoop;
             chaseTurnRate = p.turnRate;
+            waveAmplitude = p.waveAmplitude;
+            waveFrequency = p.waveFrequency;
             holdFromRightEdge = p.holdFromRightEdge;
             enterSeconds = p.enterSeconds;
             holdSeconds = p.holdSeconds;
@@ -159,6 +189,7 @@ namespace OneMoreTime.Gameplay.Enemies
             leaveAcceleration = p.leaveAcceleration;
             blast = p.blast;
             dodgeTuning = p.dodge;
+            laserTuning = p.trackingLaser;
             health.SetMax(p.health);
             gun?.Tune(p.gun);
             // A bomber's attack is its blast, not the touch.
@@ -186,12 +217,25 @@ namespace OneMoreTime.Gameplay.Enemies
             else if (hover != null)
             {
                 hover.Tick(dt);
-                if (gun != null)
+                if (trackingLaser != null)
                 {
-                    if (hover.Phase == HoverPhase.Holding) gun.Arm();
-                    else gun.Disarm();
+                    local.x = hover.Position.x;
+                    if (hover.Phase == HoverPhase.Entering)
+                        trackingY = hover.Position.y;
+                    else if (hover.Phase == HoverPhase.Holding)
+                        UpdateTrackingLaser(dt, shipAlive, shipLocal);
+                    local.y = trackingY;
+                    gun?.Disarm();
                 }
-                local = hover.Position;
+                else
+                {
+                    if (gun != null)
+                    {
+                        if (hover.Phase == HoverPhase.Holding) gun.Arm();
+                        else gun.Disarm();
+                    }
+                    local = hover.Position;
+                }
             }
             else if (chase != null)
             {
@@ -208,6 +252,7 @@ namespace OneMoreTime.Gameplay.Enemies
             UpdateDodge(dt);
             local.y += dodgeOffset;
             transform.position = playfield.LocalToWorld(local);
+            UpdateTrackingLaserVisuals();
             Bank(before, dt);
             UpdateBlast(dt, shipAlive ? Vector2.Distance(local, shipLocal) : float.MaxValue);
             if (removed)
@@ -215,6 +260,101 @@ namespace OneMoreTime.Gameplay.Enemies
 
             if (playfield.IsPastLeftEdge(transform.position) || (chase != null && playfield.IsFarOutside(transform.position, 6f)))
                 Remove(false);
+        }
+
+        void UpdateTrackingLaser(float dt, bool shipAlive, Vector2 shipLocal)
+        {
+            if (trackingLaser.Phase is TrackingLaserPhase.Tracking or TrackingLaserPhase.Recovering)
+            {
+                float targetY = shipAlive ? shipLocal.y : 0f;
+                float limit = playfield.HalfExtents.y - 0.8f;
+                trackingY = Mathf.MoveTowards(trackingY, Mathf.Clamp(targetY, -limit, limit), laserTuning.followSpeed * dt);
+            }
+
+            TrackingLaserPhase before = trackingLaser.Phase;
+            if (!trackingLaser.Tick(dt) || trackingLaser.Phase == before)
+                return;
+
+            if (trackingLaser.Phase == TrackingLaserPhase.Charging)
+            {
+                LaserTelegraphed?.Invoke(this);
+                if (gun != null)
+                    gun.TelegraphOverride = true;
+            }
+            else
+            {
+                if (gun != null)
+                    gun.TelegraphOverride = false;
+                if (trackingLaser.Phase == TrackingLaserPhase.Firing)
+                    FireTrackingLaser(shipAlive, shipLocal);
+            }
+        }
+
+        void FireTrackingLaser(bool shipAlive, Vector2 shipLocal)
+        {
+            LaserFired?.Invoke(this);
+            if (!shipAlive || targetHealth == null || shipLocal.x > local.x)
+                return;
+            float hitTolerance = laserTuning.beamWidth * 0.5f + 0.42f;
+            if (Mathf.Abs(shipLocal.y - trackingY) <= hitTolerance)
+                targetHealth.TakeDamage(new DamageInfo(laserTuning.damage, DamageKind.Direct, ShotSource.Enemy));
+        }
+
+        void BuildTrackingLaserVisuals()
+        {
+            laserWarning = BuildLaserLine("Laser Warning", new Color(1f, 0.72f, 0.12f, 0.85f), 71);
+            laserBeam = BuildLaserLine("Tracking Laser", new Color(1f, 0.16f, 0.06f, 1f), 72);
+            laserWarningMaterial = laserWarning != null ? laserWarning.sharedMaterial : null;
+            laserBeamMaterial = laserBeam != null ? laserBeam.sharedMaterial : null;
+        }
+
+        LineRenderer BuildLaserLine(string lineName, Color color, int order)
+        {
+            var lineObject = new GameObject(lineName);
+            lineObject.transform.SetParent(transform, false);
+            var line = lineObject.AddComponent<LineRenderer>();
+            line.useWorldSpace = true;
+            line.positionCount = 2;
+            line.numCapVertices = 4;
+            line.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            line.receiveShadows = false;
+            line.sortingOrder = order;
+            Shader shader = Shader.Find("Sprites/Default") ?? Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader != null)
+                line.sharedMaterial = new Material(shader) { name = $"{lineName} (Runtime)", hideFlags = HideFlags.DontSave };
+            line.startColor = color;
+            line.endColor = color;
+            line.enabled = false;
+            return line;
+        }
+
+        void UpdateTrackingLaserVisuals()
+        {
+            if (trackingLaser == null || laserWarning == null || laserBeam == null || playfield == null)
+                return;
+            if (hover == null || hover.Phase != HoverPhase.Holding || trackingLaser.Phase == TrackingLaserPhase.Exhausted)
+            {
+                if (gun != null)
+                    gun.TelegraphOverride = false;
+                laserWarning.enabled = false;
+                laserBeam.enabled = false;
+                return;
+            }
+            bool warning = trackingLaser.Phase == TrackingLaserPhase.Charging;
+            bool firing = trackingLaser.Phase == TrackingLaserPhase.Firing;
+            laserWarning.enabled = warning;
+            laserBeam.enabled = firing;
+            if (!warning && !firing)
+                return;
+
+            Vector3 origin = playfield.LocalToWorld(new Vector2(local.x - 0.55f, trackingY));
+            Vector3 end = playfield.LocalToWorld(new Vector2(-playfield.HalfExtents.x - 0.6f, trackingY));
+            LineRenderer line = firing ? laserBeam : laserWarning;
+            line.SetPosition(0, origin);
+            line.SetPosition(1, end);
+            line.widthMultiplier = firing
+                ? laserTuning.beamWidth
+                : Mathf.Lerp(0.035f, 0.13f, 0.5f + Mathf.Sin(Time.time * 22f) * 0.5f);
         }
 
         // The shotgunner steps out of the way of a shot it can see coming, with a barrel roll (GDD 04).
@@ -309,6 +449,8 @@ namespace OneMoreTime.Gameplay.Enemies
             Removed?.Invoke(this, killed);
             Removed = null;
             Detonated = null;
+            LaserTelegraphed = null;
+            LaserFired = null;
             Destroy(gameObject);
         }
     }

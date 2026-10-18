@@ -44,6 +44,8 @@ namespace OneMoreTime.Gameplay.Audio
         AudioClip bossChargeClip;
         AudioClip bossDashClip;
         AudioClip bossRuptureClip;
+        AudioClip enemyLaserChargeClip;
+        AudioClip enemyLaserFireClip;
         GuardianBoss boss;
         int bossPhase;
         SessionState lastState = SessionState.Playing;
@@ -59,6 +61,8 @@ namespace OneMoreTime.Gameplay.Audio
             bossChargeClip = ProceduralClips.BossCharge();
             bossDashClip = ProceduralClips.BossDash();
             bossRuptureClip = ProceduralClips.BossRupture();
+            enemyLaserChargeClip = ProceduralClips.EnemyLaserCharge();
+            enemyLaserFireClip = ProceduralClips.EnemyLaserFire();
         }
 
         void OnEnable()
@@ -70,6 +74,8 @@ namespace OneMoreTime.Gameplay.Audio
             {
                 waves.EnemySpawned += OnEnemySpawned;
                 waves.EnemyRemoved += OnEnemyRemoved;
+                waves.EnemyLaserTelegraphed += OnEnemyLaserTelegraphed;
+                waves.EnemyLaserFired += OnEnemyLaserFired;
             }
             if (stage != null)
                 stage.Changed += OnStageChanged;
@@ -98,6 +104,8 @@ namespace OneMoreTime.Gameplay.Audio
             {
                 waves.EnemySpawned -= OnEnemySpawned;
                 waves.EnemyRemoved -= OnEnemyRemoved;
+                waves.EnemyLaserTelegraphed -= OnEnemyLaserTelegraphed;
+                waves.EnemyLaserFired -= OnEnemyLaserFired;
             }
             if (stage != null)
                 stage.Changed -= OnStageChanged;
@@ -132,6 +140,10 @@ namespace OneMoreTime.Gameplay.Audio
                 Destroy(bossDashClip);
             if (bossRuptureClip != null)
                 Destroy(bossRuptureClip);
+            if (enemyLaserChargeClip != null)
+                Destroy(enemyLaserChargeClip);
+            if (enemyLaserFireClip != null)
+                Destroy(enemyLaserFireClip);
         }
 
         void Update()
@@ -152,6 +164,20 @@ namespace OneMoreTime.Gameplay.Audio
         {
             if (enemy != null)
                 Untrack(enemy.Health);
+        }
+
+        void OnEnemyLaserTelegraphed(Enemy enemy)
+        {
+            if (enemy != null)
+                sfx?.PlayClip(enemyLaserChargeClip, 0.55f, 1f, 0f, Pan(enemy.transform.position), 5600f);
+        }
+
+        void OnEnemyLaserFired(Enemy enemy)
+        {
+            if (enemy == null)
+                return;
+            sfx?.PlayClip(enemyLaserFireClip, 0.78f, 1f, 0f, Pan(enemy.transform.position), 9200f);
+            music?.PulseDuck(0.68f, 0.04f);
         }
 
         void Track(Health target, TargetKind kind)

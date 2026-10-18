@@ -46,6 +46,21 @@ namespace OneMoreTime.Gameplay.Enemies
         [UnityEngine.Min(0f)] public float cooldown;
     }
 
+    /// <summary>A gunship that follows the ship vertically, locks that line, then fires a horizontal beam.</summary>
+    [Serializable]
+    public struct TrackingLaserTuning
+    {
+        public bool enabled;
+        [UnityEngine.Min(0.1f)] public float followSpeed;
+        [UnityEngine.Min(0.05f)] public float trackingSeconds;
+        [UnityEngine.Min(0.05f)] public float chargeSeconds;
+        [UnityEngine.Min(0.05f)] public float fireSeconds;
+        [UnityEngine.Min(0.05f)] public float recoverySeconds;
+        [UnityEngine.Min(0.1f)] public float beamWidth;
+        [UnityEngine.Min(1)] public int damage;
+        [UnityEngine.Min(1)] public int bursts;
+    }
+
     /// <summary>
     /// What one model of an enemy type does (GDD 04): its path, toughness, gun and any bomb or dodge. The enemy
     /// picks the profile whose index is the model's, so the player learns each model by its look.
@@ -67,6 +82,10 @@ namespace OneMoreTime.Gameplay.Enemies
         [UnityEngine.Tooltip("Chase: degrees per second it can turn.")]
         [UnityEngine.Min(0f)] public float turnRate = 100f;
 
+        [UnityEngine.Header("Serpentine")]
+        [UnityEngine.Min(0f)] public float waveAmplitude = 1.4f;
+        [UnityEngine.Min(0f)] public float waveFrequency = 0.55f;
+
         [UnityEngine.Header("Hover")]
         [UnityEngine.Min(0f)] public float holdFromRightEdge = 4.5f;
         [UnityEngine.Min(0.05f)] public float enterSeconds = 1.25f;
@@ -79,5 +98,6 @@ namespace OneMoreTime.Gameplay.Enemies
         public GunTuning gun;
         public BlastTuning blast;
         public DodgeTuning dodge;
+        public TrackingLaserTuning trackingLaser;
     }
 }

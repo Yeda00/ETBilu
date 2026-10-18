@@ -288,7 +288,163 @@ MonoBehaviour:
   visual: {fileID: 6085411899968355268}
   bankAngle: 25
   scoreValue: 150
-  profiles: []
+  profiles:
+  - name: "W_1 \xB7 Batedor"
+    pattern: 2
+    health: 3
+    scoreValue: 130
+    speed: 8.8
+    swoopAt: 0.3
+    swoopSeconds: 0.75
+    maxSwoop: 5
+    turnRate: 100
+    waveAmplitude: 1.2
+    waveFrequency: 0.62
+    holdFromRightEdge: 4.5
+    enterSeconds: 1.25
+    holdSeconds: 6.5
+    bobAmplitude: 0.8
+    bobFrequency: 0.45
+    leaveAcceleration: 6
+    gun:
+      fires: 1
+      aimAtShip: 1
+      firstDelay: 0.5
+      interval: 2.4
+      shotsPerBurst: 1
+      shotGap: 0
+      spread: 0
+      windup: 0.3
+      maxBursts: 2
+      shotVariant: 1
+    blast:
+      explodes: 0
+      triggerRadius: 0
+      fuseSeconds: 0
+      autoSeconds: 0
+      blastRadius: 0
+      damage: 0
+    dodge:
+      dodges: 0
+      senseRadius: 0
+      lookahead: 0
+      distance: 0
+      seconds: 0
+      cooldown: 0
+    trackingLaser:
+      enabled: 0
+      followSpeed: 0
+      trackingSeconds: 0
+      chargeSeconds: 0
+      fireSeconds: 0
+      recoverySeconds: 0
+      beamWidth: 0
+      damage: 0
+      bursts: 0
+  - name: "W_2 \xB7 Tecel\xE3o"
+    pattern: 2
+    health: 3
+    scoreValue: 160
+    speed: 7.7
+    swoopAt: 0.3
+    swoopSeconds: 0.75
+    maxSwoop: 5
+    turnRate: 100
+    waveAmplitude: 2.15
+    waveFrequency: 0.48
+    holdFromRightEdge: 4.5
+    enterSeconds: 1.25
+    holdSeconds: 6.5
+    bobAmplitude: 0.8
+    bobFrequency: 0.45
+    leaveAcceleration: 6
+    gun:
+      fires: 1
+      aimAtShip: 0
+      firstDelay: 0.35
+      interval: 1.8
+      shotsPerBurst: 2
+      shotGap: 0.18
+      spread: 0
+      windup: 0.3
+      maxBursts: 3
+      shotVariant: 1
+    blast:
+      explodes: 0
+      triggerRadius: 0
+      fuseSeconds: 0
+      autoSeconds: 0
+      blastRadius: 0
+      damage: 0
+    dodge:
+      dodges: 0
+      senseRadius: 0
+      lookahead: 0
+      distance: 0
+      seconds: 0
+      cooldown: 0
+    trackingLaser:
+      enabled: 0
+      followSpeed: 0
+      trackingSeconds: 0
+      chargeSeconds: 0
+      fireSeconds: 0
+      recoverySeconds: 0
+      beamWidth: 0
+      damage: 0
+      bursts: 0
+  - name: "W_3 \xB7 Agulha"
+    pattern: 2
+    health: 4
+    scoreValue: 190
+    speed: 6.6
+    swoopAt: 0.3
+    swoopSeconds: 0.75
+    maxSwoop: 5
+    turnRate: 100
+    waveAmplitude: 0.85
+    waveFrequency: 1.05
+    holdFromRightEdge: 4.5
+    enterSeconds: 1.25
+    holdSeconds: 6.5
+    bobAmplitude: 0.8
+    bobFrequency: 0.45
+    leaveAcceleration: 6
+    gun:
+      fires: 1
+      aimAtShip: 1
+      firstDelay: 0.55
+      interval: 1.65
+      shotsPerBurst: 3
+      shotGap: 0
+      spread: 8
+      windup: 0.42
+      maxBursts: 3
+      shotVariant: 2
+    blast:
+      explodes: 0
+      triggerRadius: 0
+      fuseSeconds: 0
+      autoSeconds: 0
+      blastRadius: 0
+      damage: 0
+    dodge:
+      dodges: 0
+      senseRadius: 0
+      lookahead: 0
+      distance: 0
+      seconds: 0
+      cooldown: 0
+    trackingLaser:
+      enabled: 0
+      followSpeed: 0
+      trackingSeconds: 0
+      chargeSeconds: 0
+      fireSeconds: 0
+      recoverySeconds: 0
+      beamWidth: 0
+      damage: 0
+      bursts: 0
   speed: 5.8
   swoopAt: 0.3
   swoopSeconds: 0.75
@@ -328,7 +484,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Enemies.EnemyGun
   shot: {fileID: 992733288632202115, guid: 8972164f6379d4ce1a276a2a38dbd41e, type: 3}
-  shotVariants: []
+  shotVariants:
+  - {fileID: 1995293078288957046, guid: 7ab417e6a0afa4f91bab60e6c487db96, type: 3}
+  - {fileID: 8051933173992308672, guid: 0198f17eaf9d947e3baa0049aad10acb, type: 3}
+  - {fileID: 7576382295272816653, guid: 6b07412a53d5845aa947d13a3af4c3a2, type: 3}
+  - {fileID: 7569716769979873718, guid: c75b8a32034754e0ea7ad41f37217901, type: 3}
   muzzle: {fileID: 3971538178422524480}
   telegraph: {fileID: 217859010070054514}
   aimAtShip: 1

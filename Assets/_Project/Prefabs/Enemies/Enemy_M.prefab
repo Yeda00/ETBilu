@@ -121,21 +121,23 @@ MonoBehaviour:
   bankAngle: 25
   scoreValue: 300
   profiles:
-  - name: "M_1 \xB7 Tanque"
-    pattern: 1
-    health: 30
-    scoreValue: 250
+  - name: "M_1 \xB7 Rastreador laser"
+    pattern: 4
+    health: 24
+    scoreValue: 400
     speed: 7
     swoopAt: 0.3
     swoopSeconds: 0.75
     maxSwoop: 5
     turnRate: 100
-    holdFromRightEdge: 5.5
-    enterSeconds: 1.4
-    holdSeconds: 11
-    bobAmplitude: 0.25
-    bobFrequency: 0.2
-    leaveAcceleration: 3
+    waveAmplitude: 1.4
+    waveFrequency: 0.55
+    holdFromRightEdge: 4.2
+    enterSeconds: 1.25
+    holdSeconds: 10.5
+    bobAmplitude: 0
+    bobFrequency: 0
+    leaveAcceleration: 4.5
     gun:
       fires: 0
       aimAtShip: 0
@@ -148,12 +150,12 @@ MonoBehaviour:
       maxBursts: 0
       shotVariant: 0
     blast:
-      explodes: 1
-      triggerRadius: 3.4
-      fuseSeconds: 0.9
+      explodes: 0
+      triggerRadius: 0
+      fuseSeconds: 0
       autoSeconds: 0
-      blastRadius: 3.8
-      damage: 2
+      blastRadius: 0
+      damage: 0
     dodge:
       dodges: 0
       senseRadius: 0
@@ -161,6 +163,16 @@ MonoBehaviour:
       distance: 0
       seconds: 0
       cooldown: 0
+    trackingLaser:
+      enabled: 1
+      followSpeed: 4.8
+      trackingSeconds: 1.25
+      chargeSeconds: 0.9
+      fireSeconds: 0.34
+      recoverySeconds: 1.15
+      beamWidth: 0.48
+      damage: 1
+      bursts: 3
   - name: "M_2 \xB7 Rajada"
     pattern: 1
     health: 18
@@ -170,6 +182,8 @@ MonoBehaviour:
     swoopSeconds: 0.75
     maxSwoop: 5
     turnRate: 100
+    waveAmplitude: 1.4
+    waveFrequency: 0.55
     holdFromRightEdge: 4.5
     enterSeconds: 1.25
     holdSeconds: 6.5
@@ -201,6 +215,16 @@ MonoBehaviour:
       distance: 0
       seconds: 0
       cooldown: 0
+    trackingLaser:
+      enabled: 0
+      followSpeed: 0
+      trackingSeconds: 0
+      chargeSeconds: 0
+      fireSeconds: 0
+      recoverySeconds: 0
+      beamWidth: 0
+      damage: 0
+      bursts: 0
   - name: "M_3 \xB7 Escopeta"
     pattern: 1
     health: 18
@@ -210,6 +234,8 @@ MonoBehaviour:
     swoopSeconds: 0.75
     maxSwoop: 5
     turnRate: 100
+    waveAmplitude: 1.4
+    waveFrequency: 0.55
     holdFromRightEdge: 4.5
     enterSeconds: 1.6
     holdSeconds: 7.5
@@ -241,6 +267,16 @@ MonoBehaviour:
       distance: 2.4
       seconds: 0.32
       cooldown: 2.2
+    trackingLaser:
+      enabled: 0
+      followSpeed: 0
+      trackingSeconds: 0
+      chargeSeconds: 0
+      fireSeconds: 0
+      recoverySeconds: 0
+      beamWidth: 0
+      damage: 0
+      bursts: 0
   speed: 6.5
   swoopAt: 0.3
   swoopSeconds: 1

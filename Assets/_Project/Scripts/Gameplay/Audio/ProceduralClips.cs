@@ -109,6 +109,47 @@ namespace OneMoreTime.Gameplay.Audio
             return Make("Guardian Charge (Runtime)", samples, sampleRate);
         }
 
+        /// <summary>Rising warning tone for the gunship that locks the player's horizontal lane.</summary>
+        public static AudioClip EnemyLaserCharge(int sampleRate = 44100)
+        {
+            const float seconds = 0.72f;
+            int count = Mathf.RoundToInt(seconds * sampleRate);
+            var samples = new float[count];
+            for (int i = 0; i < count; i++)
+            {
+                float t = (float)i / sampleRate;
+                float p = t / seconds;
+                float frequency = Mathf.Lerp(180f, 980f, p * p);
+                float warning = Mathf.Sin(t * frequency * Mathf.PI * 2f) * 0.34f
+                    + Mathf.Sign(Mathf.Sin(t * frequency * 0.5f * Mathf.PI * 2f)) * 0.1f;
+                float pulse = 0.55f + Mathf.Sin(t * Mathf.Lerp(8f, 20f, p) * Mathf.PI * 2f) * 0.45f;
+                float envelope = Mathf.Clamp01(t / 0.025f) * Mathf.Sin(p * Mathf.PI * 0.82f);
+                samples[i] = Mathf.Clamp(warning * pulse * envelope, -1f, 1f);
+            }
+            return Make("Enemy Tracking Laser Charge (Runtime)", samples, sampleRate);
+        }
+
+        /// <summary>Short, bright discharge with a low tail for the tracking beam.</summary>
+        public static AudioClip EnemyLaserFire(int sampleRate = 44100)
+        {
+            const float seconds = 0.34f;
+            int count = Mathf.RoundToInt(seconds * sampleRate);
+            var samples = new float[count];
+            uint noise = 0xA17E5EEDu;
+            for (int i = 0; i < count; i++)
+            {
+                float t = (float)i / sampleRate;
+                float p = t / seconds;
+                noise = noise * 1664525u + 1013904223u;
+                float grit = ((noise >> 8) / 16777215f * 2f - 1f) * Mathf.Exp(-t * 18f) * 0.25f;
+                float high = Mathf.Sin(t * Mathf.Lerp(1250f, 520f, p) * Mathf.PI * 2f) * 0.38f;
+                float low = Mathf.Sin(t * 92f * Mathf.PI * 2f) * 0.3f;
+                float envelope = Mathf.Clamp01(t / 0.008f) * (1f - p) * (1f - p * 0.35f);
+                samples[i] = Mathf.Clamp((high + low + grit) * envelope, -1f, 1f);
+            }
+            return Make("Enemy Tracking Laser Fire (Runtime)", samples, sampleRate);
+        }
+
         /// <summary>Short filtered-noise sweep for the Guardian's station-to-station dash.</summary>
         public static AudioClip BossDash(int sampleRate = 44100)
         {

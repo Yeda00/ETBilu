@@ -84,6 +84,50 @@ namespace OneMoreTime.Tests
         }
     }
 
+    public class TrackingLaserCycleTests
+    {
+        [Test]
+        public void Tracks_then_locks_warns_fires_and_recovers()
+        {
+            var laser = new TrackingLaserCycle(1f, 0.8f, 0.3f, 1.2f, maxBursts: 2);
+            Assert.That(laser.Phase, Is.EqualTo(TrackingLaserPhase.Tracking));
+            Assert.That(laser.LocksAim, Is.False);
+
+            laser.Tick(1f);
+            Assert.That(laser.Phase, Is.EqualTo(TrackingLaserPhase.Charging));
+            Assert.That(laser.LocksAim, Is.True);
+            Assert.That(laser.IsThreatening, Is.True);
+
+            laser.Tick(0.8f);
+            Assert.That(laser.Phase, Is.EqualTo(TrackingLaserPhase.Firing));
+            Assert.That(laser.BurstsFired, Is.EqualTo(1));
+
+            laser.Tick(0.3f);
+            Assert.That(laser.Phase, Is.EqualTo(TrackingLaserPhase.Recovering));
+            Assert.That(laser.LocksAim, Is.False);
+        }
+
+        [Test]
+        public void Stops_after_the_authored_number_of_beams()
+        {
+            var laser = new TrackingLaserCycle(0.1f, 0.1f, 0.1f, 0.1f, maxBursts: 2);
+            for (int i = 0; i < 8; i++)
+                laser.Tick(0.1f);
+            Assert.That(laser.BurstsFired, Is.EqualTo(2));
+            Assert.That(laser.Phase, Is.EqualTo(TrackingLaserPhase.Exhausted));
+            Assert.That(laser.Tick(10f), Is.False);
+        }
+
+        [Test]
+        public void Non_positive_time_does_not_advance()
+        {
+            var laser = new TrackingLaserCycle(1f, 1f, 1f, 1f, 1);
+            Assert.That(laser.Tick(0f), Is.False);
+            Assert.That(laser.Tick(-1f), Is.False);
+            Assert.That(laser.Phase, Is.EqualTo(TrackingLaserPhase.Tracking));
+        }
+    }
+
     public class SwoopMotionTests
     {
         [Test]

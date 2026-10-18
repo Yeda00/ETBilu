@@ -114,43 +114,43 @@ MonoBehaviour:
   survivalSeconds: 8
   fighterPrefab: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
   gunshipPrefab: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
-  firstFighterCall: 5
-  fighterCallSeconds: 12
+  firstFighterCall: 4.5
+  fighterCallSeconds: 10
   fightersPerCall: 1
-  fighterCap: 2
-  firstGunshipCall: 10
-  gunshipCallSeconds: 22
+  fighterCap: 3
+  firstGunshipCall: 9
+  gunshipCallSeconds: 18
   gunshipCap: 1
   holdFromRightEdge: 3
   entryDistance: 14
   entrySeconds: 2.5
   laneHeight: 2.35
   laneInset: 1.1
-  moveTelegraphSeconds: 0.72
-  dashSeconds: 0.55
-  moveRecoverySeconds: 0.5
+  moveTelegraphSeconds: 0.64
+  dashSeconds: 0.5
+  moveRecoverySeconds: 0.42
   hoverAmplitude: 0.18
   hoverFrequency: 0.9
-  furySpeedUp: 0.18
-  attackTelegraphSeconds: 0.6
-  fanInterval: 1.35
-  fanShots: 5
-  fanSpread: 13
-  burstInterval: 1.25
-  burstShots: 5
-  wallRows: 9
-  wallGap: 3.4
-  ringInterval: 1.35
-  ringShots: 14
-  ringGapDegrees: 42
-  lastChanceInterval: 1.1
-  frenzyInterval: 0.86
-  spiralSeconds: 1.2
-  spiralStep: 0.15
+  furySpeedUp: 0.23
+  attackTelegraphSeconds: 0.55
+  fanInterval: 1.2
+  fanShots: 6
+  fanSpread: 12
+  burstInterval: 1.1
+  burstShots: 6
+  wallRows: 10
+  wallGap: 3.2
+  ringInterval: 1.2
+  ringShots: 16
+  ringGapDegrees: 38
+  lastChanceInterval: 0.96
+  frenzyInterval: 0.82
+  spiralSeconds: 1.35
+  spiralStep: 0.13
   spiralTurn: 16
-  partBreakBreather: 1.1
-  laserSuppressionAfterPattern: 1.6
-  reinforcementRecovery: 1.35
+  partBreakBreather: 1
+  laserSuppressionAfterPattern: 1.4
+  reinforcementRecovery: 1.2
 --- !u!1 &508122715200023412
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,8 +288,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Boss.SweepLaser
   sweepSeconds: 1.7
-  restSeconds: 2.2
-  warningSeconds: 1.1
+  restSeconds: 1.9
+  warningSeconds: 1
   edgeY: 6.7794046
   innerY: 0.8
   beam: {fileID: 7201308197729497431}

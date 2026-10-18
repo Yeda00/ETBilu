@@ -35,6 +35,8 @@ namespace OneMoreTime.Gameplay.Enemies
         public event Action<Enemy, bool> EnemyRemoved;
         /// <summary>A bomber went off: which one, and the radius of the blast.</summary>
         public event Action<Enemy, float> EnemyDetonated;
+        public event Action<Enemy> EnemyLaserTelegraphed;
+        public event Action<Enemy> EnemyLaserFired;
         public event Action Cleared;
 
         public float Clock => clock;
@@ -115,10 +117,7 @@ namespace OneMoreTime.Gameplay.Enemies
                     var local = new Vector2(h.x + spawnMarginX + n * wave.spacing, height * (h.y - 1f));
                     var enemy = Instantiate(wave.enemy, playfield.LocalToWorld(local), Quaternion.identity, transform);
                     enemy.Spawn(playfield, ship, pool, n * wave.spacing, n * 0.9f + row * 1.7f, wave.variant - 1);
-                    enemy.Removed += OnEnemyRemoved;
-                    enemy.Detonated += OnEnemyDetonated;
-                    alive.Add(enemy);
-                    EnemySpawned?.Invoke(enemy);
+                    Register(enemy);
                 }
                 row++;
             }
@@ -139,11 +138,18 @@ namespace OneMoreTime.Gameplay.Enemies
             var local = new Vector2(h.x + spawnMarginX + Mathf.Max(0f, queueOffset), height * (h.y - 1f));
             var enemy = Instantiate(prefab, playfield.LocalToWorld(local), Quaternion.identity, transform);
             enemy.Spawn(playfield, ship, pool, queueOffset, phase, variant);
+            Register(enemy);
+            return enemy;
+        }
+
+        void Register(Enemy enemy)
+        {
             enemy.Removed += OnEnemyRemoved;
             enemy.Detonated += OnEnemyDetonated;
+            enemy.LaserTelegraphed += OnEnemyLaserTelegraphed;
+            enemy.LaserFired += OnEnemyLaserFired;
             alive.Add(enemy);
             EnemySpawned?.Invoke(enemy);
-            return enemy;
         }
 
         static IEnumerable<float> Rows(WaveSchedule.Wave wave)
@@ -154,9 +160,14 @@ namespace OneMoreTime.Gameplay.Enemies
         }
 
         void OnEnemyDetonated(Enemy enemy, float radius) => EnemyDetonated?.Invoke(enemy, radius);
+        void OnEnemyLaserTelegraphed(Enemy enemy) => EnemyLaserTelegraphed?.Invoke(enemy);
+        void OnEnemyLaserFired(Enemy enemy) => EnemyLaserFired?.Invoke(enemy);
 
         void OnEnemyRemoved(Enemy enemy, bool killed)
         {
+            enemy.Detonated -= OnEnemyDetonated;
+            enemy.LaserTelegraphed -= OnEnemyLaserTelegraphed;
+            enemy.LaserFired -= OnEnemyLaserFired;
             alive.Remove(enemy);
             EnemyRemoved?.Invoke(enemy, killed);
         }

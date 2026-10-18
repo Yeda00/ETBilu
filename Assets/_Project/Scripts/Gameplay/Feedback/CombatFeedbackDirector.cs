@@ -53,6 +53,8 @@ namespace OneMoreTime.Gameplay.Feedback
                 waves.EnemySpawned += OnEnemySpawned;
                 waves.EnemyRemoved += OnEnemyRemoved;
                 waves.EnemyDetonated += OnEnemyDetonated;
+                waves.EnemyLaserTelegraphed += OnEnemyLaserTelegraphed;
+                waves.EnemyLaserFired += OnEnemyLaserFired;
             }
             if (stage != null)
                 stage.Changed += OnStageChanged;
@@ -67,6 +69,8 @@ namespace OneMoreTime.Gameplay.Feedback
                 waves.EnemySpawned -= OnEnemySpawned;
                 waves.EnemyRemoved -= OnEnemyRemoved;
                 waves.EnemyDetonated -= OnEnemyDetonated;
+                waves.EnemyLaserTelegraphed -= OnEnemyLaserTelegraphed;
+                waves.EnemyLaserFired -= OnEnemyLaserFired;
             }
             if (stage != null)
                 stage.Changed -= OnStageChanged;
@@ -108,6 +112,22 @@ namespace OneMoreTime.Gameplay.Feedback
                 return;
             effects?.Ring(enemy.transform.position, new Color(1f, 0.45f, 0.1f, 0.9f), radius, 0.3f, 0.12f);
             cameraImpact?.Impulse(0.6f, 0.2f, default, 0.7f);
+        }
+
+        void OnEnemyLaserTelegraphed(Enemy enemy)
+        {
+            if (enemy == null)
+                return;
+            effects?.EnemyLaserTelegraph(enemy.transform.position);
+            cameraImpact?.Impulse(0.08f, 0.12f, new Vector2(-0.08f, 0f), 0.08f);
+        }
+
+        void OnEnemyLaserFired(Enemy enemy)
+        {
+            if (enemy == null)
+                return;
+            effects?.EnemyLaserFired(enemy.transform.position);
+            cameraImpact?.Impulse(0.3f, 0.13f, new Vector2(-0.28f, 0f), 0.3f);
         }
 
         void OnEnemyRemoved(Enemy enemy, bool _)
