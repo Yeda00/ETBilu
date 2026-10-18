@@ -33,7 +33,7 @@ namespace OneMoreTime.UI
         [SerializeField] ShowcaseSpin showcase;
         [SerializeField, Range(3, 9)] int mapSlots = 7;
         [Header("Story")]
-        [SerializeField, Min(10f)] float crawlSpeed = 62f;
+        [SerializeField, Min(10f)] float crawlSpeed = 40f;
         [SerializeField, Min(100f)] float crawlViewportHeight = 480f;
         [SerializeField, Min(0.05f)] float fadeSeconds = 0.5f;
 
