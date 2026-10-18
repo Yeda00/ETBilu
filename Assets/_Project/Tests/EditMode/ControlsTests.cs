@@ -6,7 +6,7 @@ namespace OneMoreTime.Tests
 {
     public class BindingLabelsTests
     {
-        [TestCase("<Keyboard>/space", "ESPAÇO")]
+        [TestCase("<Keyboard>/space", "SPACE")]
         [TestCase("<Keyboard>/leftShift", "SHIFT")]
         [TestCase("<Keyboard>/escape", "ESC")]
         [TestCase("<Keyboard>/e", "E")]
@@ -15,16 +15,47 @@ namespace OneMoreTime.Tests
         [TestCase("<Keyboard>/numpad7", "NUM 7")]
         [TestCase("<Keyboard>/leftBracket", "LEFT BRACKET")]
         [TestCase("<Keyboard>/#(q)", "Q")]
-        [TestCase("<Mouse>/leftButton", "CLIQUE ESQ.")]
+        [TestCase("<Mouse>/leftButton", "LEFT CLICK")]
         [TestCase("<Gamepad>/rightTrigger", "RT")]
         [TestCase("<Gamepad>/leftShoulder", "LB")]
         [TestCase("<Gamepad>/buttonSouth", "A")]
         [TestCase("<Gamepad>/start", "START")]
         [TestCase("<Gamepad>/dpad/up", "D-PAD ↑")]
-        [TestCase("<Gamepad>/leftStick", "STICK ESQ.")]
-        public void Paths_read_as_short_portuguese_labels(string path, string expected)
+        [TestCase("<Gamepad>/leftStick", "LEFT STICK")]
+        [TestCase("<Gamepad>/rightStick/up", "RIGHT STICK ↑")]
+        public void Paths_read_as_short_english_labels_by_default(string path, string expected)
         {
             Assert.That(BindingLabels.Format(path), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void A_lookup_replaces_the_words_that_change_with_the_language()
+        {
+            string Portuguese(string key) => key switch
+            {
+                "bind.space" => "ESPAÇO",
+                "bind.mouseLeft" => "CLIQUE ESQ.",
+                "bind.stickLeft" => "STICK ESQ.",
+                _ => null,   // not translated: the English default stays
+            };
+
+            Assert.That(BindingLabels.Format("<Keyboard>/space", Portuguese), Is.EqualTo("ESPAÇO"));
+            Assert.That(BindingLabels.Format("<Mouse>/leftButton", Portuguese), Is.EqualTo("CLIQUE ESQ."));
+            Assert.That(BindingLabels.Format("<Gamepad>/leftStick/up", Portuguese), Is.EqualTo("STICK ESQ. ↑"));
+            Assert.That(BindingLabels.Format("<Mouse>/rightButton", Portuguese), Is.EqualTo("RIGHT CLICK"));
+            Assert.That(BindingLabels.Format("<Keyboard>/escape", Portuguese), Is.EqualTo("ESC"), "keys that read the same stay as they are");
+        }
+
+        [Test]
+        public void Notes_are_tokens_or_text_that_is_the_same_in_every_language()
+        {
+            Assert.That(BindingLabels.Token("bind.mouse"), Is.EqualTo("MOUSE"));
+            Assert.That(BindingLabels.Token("+ ↑"), Is.EqualTo("+ ↑"));
+            Assert.That(BindingLabels.Token("bind.plusClick", _ => "+ CLIQUE"), Is.EqualTo("+ CLIQUE"));
+            foreach (var row in ControlLayout.Rows)
+                foreach (var note in new[] { row.KeyboardNote, row.GamepadNote })
+                    if (note.StartsWith(BindingLabels.TokenPrefix))
+                        Assert.That(BindingLabels.English.ContainsKey(note), Is.True, $"{row.Key}: {note} has no English default");
         }
 
         [Test]

@@ -15,7 +15,8 @@ using UnityEngine.UIElements;
 namespace OneMoreTime.EditorTools
 {
     /// <summary>
-    /// Builds the menu flow: the text assets (MenuTexts and the first MissionData), the Menu scene (title, menu,
+    /// Builds the menu flow: the first MissionData (its words are keys of the Game string table, see Build
+    /// Localization), the Menu scene (title, menu,
     /// sound, controls, credits, mission map, story), the mission card in the arena, and the build order (Menu
     /// first, then the arena). Idempotent like the other bootstraps: existing assets and scenes are kept, and
     /// the arena is only touched where something is missing. Run Build Audio first, so the sounds exist.
@@ -26,7 +27,6 @@ namespace OneMoreTime.EditorTools
         const string DataDir = Root + "/Data";
         const string UiDir = Root + "/UI";
         public const string MenuScenePath = Root + "/Scenes/Menu.unity";
-        const string TextsPath = DataDir + "/Menu/MenuTexts.asset";
         const string MissionPath = DataDir + "/Missions/Mission_01.asset";
         const string PicturePath = Root + "/Art/UI/Mission01_Story.png";
 
@@ -35,13 +35,12 @@ namespace OneMoreTime.EditorTools
         [MenuItem("One More Time/Bootstrap/Build Menu", priority = 12)]
         public static void BuildAll()
         {
-            var texts = LoadOrCreate(TextsPath, () => ScriptableObject.CreateInstance<MenuTexts>());
             var mission = LoadOrCreate(MissionPath, CreateMission01);
-            BuildMenuScene(texts, mission);
-            WireArena(texts, mission);
+            BuildMenuScene(mission);
+            WireArena(mission);
             SetBuildOrder();
             AssetDatabase.SaveAssets();
-            Debug.Log("[One More Time] Menu flow built: Menu.unity, MenuTexts, Mission_01, mission card in the arena.");
+            Debug.Log("[One More Time] Menu flow built: Menu.unity, Mission_01, mission card in the arena.");
         }
 
         // ---------------------------------------------------------------- assets
@@ -50,8 +49,11 @@ namespace OneMoreTime.EditorTools
         {
             var mission = ScriptableObject.CreateInstance<MissionData>();
             mission.number = 1;
-            mission.place = "Terra · Sertão Seco";
-            mission.title = "Derrubar o Império";
+            mission.place = "Earth · Dry Backlands";
+            mission.title = "Overthrow the Empire";
+            mission.placeKey = "mission.01.place";
+            mission.titleKey = "mission.01.title";
+            mission.storyKeys = LocalizationStrings.Mission01Story;
             mission.mapCode = "SE";
             mission.sceneName = "Arena_01";
             mission.story = new[]
@@ -83,7 +85,7 @@ namespace OneMoreTime.EditorTools
 
         // ---------------------------------------------------------------- the menu scene
 
-        static void BuildMenuScene(MenuTexts texts, MissionData mission)
+        static void BuildMenuScene(MissionData mission)
         {
             if (File.Exists(MenuScenePath))
             {
@@ -93,12 +95,11 @@ namespace OneMoreTime.EditorTools
 
             // NewScene unloads unused assets: remember paths and refetch.
             AssetDatabase.SaveAssets();
-            string textsPath = AssetDatabase.GetAssetPath(texts), missionPath = AssetDatabase.GetAssetPath(mission);
+            string missionPath = AssetDatabase.GetAssetPath(mission);
             var current = SceneManager.GetActiveScene();
             if (current.isDirty && !string.IsNullOrEmpty(current.path))
                 EditorSceneManager.SaveScene(current);
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            texts = AssetDatabase.LoadAssetAtPath<MenuTexts>(textsPath);
             mission = AssetDatabase.LoadAssetAtPath<MissionData>(missionPath);
 
             RenderSettings.skybox = null;
@@ -166,7 +167,6 @@ namespace OneMoreTime.EditorTools
             Set(menu, "input", reader);
             Set(menu, "sfx", sfx);
             Set(menu, "music", music);
-            Set(menu, "texts", texts);
             Set(menu, "showcase", showcase);
             SetArray(menu, "missions", new Object[] { mission });
 
@@ -176,11 +176,10 @@ namespace OneMoreTime.EditorTools
 
         // ---------------------------------------------------------------- the mission card in the arena
 
-        static void WireArena(MenuTexts texts, MissionData mission)
+        static void WireArena(MissionData mission)
         {
             var scene = EditorSceneManager.OpenScene(PlaceholderBootstrap.ScenePath, OpenSceneMode.Single);
             // Building the menu scene unloaded the assets passed in: load them again by path.
-            texts = AssetDatabase.LoadAssetAtPath<MenuTexts>(TextsPath);
             mission = AssetDatabase.LoadAssetAtPath<MissionData>(MissionPath);
 
             var stage = Object.FindFirstObjectByType<StageDirector>();
@@ -205,7 +204,6 @@ namespace OneMoreTime.EditorTools
                 card = go.AddComponent<MissionCardController>();
                 changed = true;
             }
-            changed |= SetIfNull(card, "texts", texts);
             changed |= SetIfNull(card, "fallbackMission", mission);
             changed |= SetIfNull(card, "sfx", sfx);
             changed |= SetIfNull(stage, "gate", card);

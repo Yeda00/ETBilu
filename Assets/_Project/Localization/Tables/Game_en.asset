@@ -1,0 +1,471 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Game_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: cabe8f9caed834af5a652e55fb030d55, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 426762240
+    m_Localized: BILU'S
+    m_Metadata:
+      m_Items: []
+  - m_Id: 460316672
+    m_Localized: INVASION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510976
+    m_Localized: THE PAST KEEPS FIGHTING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510977
+    m_Localized: PRESS ENTER / START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510978
+    m_Localized: MAIN GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510979
+    m_Localized: CONTROLS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510980
+    m_Localized: SOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510981
+    m_Localized: LANGUAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510982
+    m_Localized: CREDITS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510983
+    m_Localized: QUIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510984
+    m_Localized: SOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510985
+    m_Localized: MUSIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510986
+    m_Localized: EFFECTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510987
+    m_Localized: CONTROLS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510988
+    m_Localized: KEYBOARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510989
+    m_Localized: GAMEPAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510990
+    m_Localized: RESET TO DEFAULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510991
+    m_Localized: "PRESS\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510992
+    m_Localized: MOVE UP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510993
+    m_Localized: MOVE DOWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510994
+    m_Localized: MOVE LEFT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510995
+    m_Localized: MOVE RIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510996
+    m_Localized: AIM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510997
+    m_Localized: FIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510998
+    m_Localized: RECORD ECHO (HOLD)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510999
+    m_Localized: TEMPORAL MINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511000
+    m_Localized: DODGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511001
+    m_Localized: PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511002
+    m_Localized: SPACE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511003
+    m_Localized: NUMPAD ENTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511004
+    m_Localized: NUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511005
+    m_Localized: MOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511006
+    m_Localized: LEFT CLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511007
+    m_Localized: RIGHT CLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511008
+    m_Localized: MIDDLE CLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511009
+    m_Localized: LEFT STICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511010
+    m_Localized: RIGHT STICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511011
+    m_Localized: CLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511012
+    m_Localized: + CLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511013
+    m_Localized: + RIGHT CLICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511014
+    m_Localized: CREDITS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511015
+    m_Localized: "MUSIC\nNES Shooter Music \xB7 SketchyLogic\n8-bit Epic Space Shooter
+      \xB7 HydroGene\nPulsar \xB7 celestialghost8\n4 Chiptunes (Adventure) \xB7 Juhani
+      Junkala\n\nSOUND EFFECTS\n8-Bit Sound Effect Pack \xB7 Deva (@Shades)\n8 bit
+      Mini pack \xB7 phoenix1291\nSci-Fi Sounds \xB7 Kenney\nReversing Time \xB7
+      isaiah658\n8bit Menu \xB7 Fupi\n\nAll CC0, from OpenGameArt.org"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511016
+    m_Localized: LANGUAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511017
+    m_Localized: MISSIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511018
+    m_Localized: MISSION NO. {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511019
+    m_Localized: LOCKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511020
+    m_Localized: NOT AVAILABLE YET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511021
+    m_Localized: "\u2191 \u2193 SELECT  \xB7  ENTER OR A CONFIRMS  \xB7  ESC OR B
+      BACK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511022
+    m_Localized: "\u2191 \u2193 SELECT  \xB7  \u2190 \u2192 ADJUST  \xB7  ESC OR
+      B BACK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511023
+    m_Localized: "\u2190 \u2192 SELECT  \xB7  ENTER OR A CONFIRMS  \xB7  ESC OR B
+      BACK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511024
+    m_Localized: ESC OR B BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511025
+    m_Localized: "\u2191 \u2193 \u2190 \u2192 SELECT  \xB7  ENTER OR A CHANGES  \xB7 
+      ESC OR B BACK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511026
+    m_Localized: "PRESS THE NEW BUTTON  \xB7  ESC CANCELS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511027
+    m_Localized: THIS CONTROL CAN'T BE CHANGED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511028
+    m_Localized: "ENTER OR A SKIPS  \xB7  \u2193 SPEEDS UP"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511029
+    m_Localized: INTEGRITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511030
+    m_Localized: TEMPORAL MEMORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511031
+    m_Localized: "GADGET \xB7 TEMPORAL MINE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511032
+    m_Localized: THE CYCLE'S GUARDIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511033
+    m_Localized: SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511034
+    m_Localized: ACTIVE ECHOES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511035
+    m_Localized: Echo {0:00}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511036
+    m_Localized: '{0:0.0} / {1:0.0} s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511037
+    m_Localized: '{0:0.0} s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511038
+    m_Localized: READY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511039
+    m_Localized: "release SHIFT \xB7 return to anchor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511040
+    m_Localized: recalibrating anchor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511041
+    m_Localized: "hold SHIFT \xB7 record echo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511042
+    m_Localized: echo replaying
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511043
+    m_Localized: replaying route
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511044
+    m_Localized: anchor available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511045
+    m_Localized: "Q \xB7 ready"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511046
+    m_Localized: recharge {0:0.0} s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511047
+    m_Localized: "PHASE 1 \xB7 SURVIVAL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511048
+    m_Localized: "PHASE 2 \xB7 DISMANTLE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511049
+    m_Localized: the Guardian approaches
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511050
+    m_Localized: Guardian destroyed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511051
+    m_Localized: everything shielded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511052
+    m_Localized: UPPER AND LOWER TEETH EXPOSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511053
+    m_Localized: UPPER TEETH EXPOSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511054
+    m_Localized: LOWER TEETH EXPOSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511055
+    m_Localized: "eyes open the upper teeth \xB7 cannons, the lower ones"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511056
+    m_Localized: CROSSFIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511057
+    m_Localized: SHIP + ECHO ON THE SAME TARGET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511058
+    m_Localized: SYNCHRONIZED STRIKE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511059
+    m_Localized: SHIP + ECHO ON THE CANNONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511060
+    m_Localized: PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511061
+    m_Localized: Esc to resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511062
+    m_Localized: TRY AGAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511063
+    m_Localized: "the encounter restarts\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511064
+    m_Localized: GUARDIAN DEFEATED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511065
+    m_Localized: "score {0} \xB7 {1} kills \xB7 {2} {3}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511066
+    m_Localized: combo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511067
+    m_Localized: combos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511068
+    m_Localized: "{0} move \xB7 {1} aim \xB7 {2}/{3} shoot \xB7 {4} hold: record
+      \xB7 {5} dodge \xB7 {6} mine \xB7 {7} pause"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511069
+    m_Localized: "{0} move \xB7 {1} aim \xB7 {2} shoot \xB7 {3} hold: record \xB7
+      {4} dodge \xB7 {5} mine \xB7 {6} pause"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511070
+    m_Localized: "Earth \xB7 Dry Backlands"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511071
+    m_Localized: Overthrow the Empire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511072
+    m_Localized: October 2010. Bilu visited Earth on a peace mission, bringing words
+      of wisdom that were meant to change the planet's fate forever.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511073
+    m_Localized: 42 years later, driven by a mix of rage, disappointment and revolt,
+      Bilu returns to Earth. But this time peace is no longer an option.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511074
+    m_Localized: Consumed by tyranny and totalitarianism, Earth was squeezed down
+      to the last drop. After a series of climate catastrophes, the sea dried up,
+      and the planet became an arid, decaying desert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511075
+    m_Localized: 'The resources that were left were looted and sent on a desperate
+      mission to the long-dreamed-of colony on Mars. Which, ironically, went wrong:
+      it seems they needed university professors after all...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511076
+    m_Localized: And the so-called 1% drifted off into infinity, on a luxury cruise
+      with a destination as certain as the Titanic's.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511077
+    m_Localized: 'Earth became a joke with no punchline: the ruins of a decaying
+      empire, defended by the gears of a system with no boss that no longer knows
+      how to stop.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42332987580416
+    m_Localized: Bilu returns to deliver the message again. And this time it is going
+      down their throats.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42333029523456
+    m_Localized: 'Once was not enough. So, one more time:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42333029523457
+    m_Localized: SEEK KNOWLEDGE!!!!
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -1,0 +1,1023 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Game Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Game
+  m_TableCollectionNameGuidString: cabe8f9caed834af5a652e55fb030d55
+  m_Entries:
+  - m_Id: 426762240
+    m_Key: menu.logoTop
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715038
+  - m_Id: 460316672
+    m_Key: menu.logoBottom
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715039
+  - m_Id: 464510976
+    m_Key: menu.tagline
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715040
+  - m_Id: 464510977
+    m_Key: menu.pressStart
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715041
+  - m_Id: 464510978
+    m_Key: menu.play
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715042
+  - m_Id: 464510979
+    m_Key: menu.controls
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715043
+  - m_Id: 464510980
+    m_Key: menu.sound
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715044
+  - m_Id: 464510981
+    m_Key: menu.language
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715045
+  - m_Id: 464510982
+    m_Key: menu.credits
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715046
+  - m_Id: 464510983
+    m_Key: menu.quit
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715047
+  - m_Id: 464510984
+    m_Key: menu.sound.title
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715048
+  - m_Id: 464510985
+    m_Key: menu.sound.music
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715049
+  - m_Id: 464510986
+    m_Key: menu.sound.effects
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715050
+  - m_Id: 464510987
+    m_Key: menu.controls.title
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715051
+  - m_Id: 464510988
+    m_Key: menu.controls.keyboard
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715052
+  - m_Id: 464510989
+    m_Key: menu.controls.gamepad
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715053
+  - m_Id: 464510990
+    m_Key: menu.controls.reset
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715054
+  - m_Id: 464510991
+    m_Key: menu.controls.waiting
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715055
+  - m_Id: 464510992
+    m_Key: control.Move.up
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715056
+  - m_Id: 464510993
+    m_Key: control.Move.down
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715057
+  - m_Id: 464510994
+    m_Key: control.Move.left
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715058
+  - m_Id: 464510995
+    m_Key: control.Move.right
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715059
+  - m_Id: 464510996
+    m_Key: control.Aim
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715060
+  - m_Id: 464510997
+    m_Key: control.Fire
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715061
+  - m_Id: 464510998
+    m_Key: control.Record
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715062
+  - m_Id: 464510999
+    m_Key: control.Gadget
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715063
+  - m_Id: 464511000
+    m_Key: control.Dodge
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715064
+  - m_Id: 464511001
+    m_Key: control.Pause
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715065
+  - m_Id: 464511002
+    m_Key: bind.space
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715066
+  - m_Id: 464511003
+    m_Key: bind.numpadEnter
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715067
+  - m_Id: 464511004
+    m_Key: bind.num
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715068
+  - m_Id: 464511005
+    m_Key: bind.mouse
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715069
+  - m_Id: 464511006
+    m_Key: bind.mouseLeft
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715070
+  - m_Id: 464511007
+    m_Key: bind.mouseRight
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715071
+  - m_Id: 464511008
+    m_Key: bind.mouseMiddle
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715072
+  - m_Id: 464511009
+    m_Key: bind.stickLeft
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715073
+  - m_Id: 464511010
+    m_Key: bind.stickRight
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715074
+  - m_Id: 464511011
+    m_Key: bind.click
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715075
+  - m_Id: 464511012
+    m_Key: bind.plusClick
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715076
+  - m_Id: 464511013
+    m_Key: bind.plusClickRight
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715077
+  - m_Id: 464511014
+    m_Key: menu.credits.title
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715078
+  - m_Id: 464511015
+    m_Key: menu.credits.body
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715079
+  - m_Id: 464511016
+    m_Key: menu.language.title
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715080
+  - m_Id: 464511017
+    m_Key: menu.missions.title
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715081
+  - m_Id: 464511018
+    m_Key: menu.mission.number
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715082
+  - m_Id: 464511019
+    m_Key: menu.locked
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715083
+  - m_Id: 464511020
+    m_Key: menu.locked.hint
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715084
+  - m_Id: 464511021
+    m_Key: menu.hint.list
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715085
+  - m_Id: 464511022
+    m_Key: menu.hint.sound
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715086
+  - m_Id: 464511023
+    m_Key: menu.hint.map
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715087
+  - m_Id: 464511024
+    m_Key: menu.hint.back
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715088
+  - m_Id: 464511025
+    m_Key: menu.hint.controls
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715089
+  - m_Id: 464511026
+    m_Key: menu.hint.waiting
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715090
+  - m_Id: 464511027
+    m_Key: menu.hint.fixed
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715091
+  - m_Id: 464511028
+    m_Key: menu.hint.intro
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715092
+  - m_Id: 464511029
+    m_Key: hud.integrity
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715093
+  - m_Id: 464511030
+    m_Key: hud.memory
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715094
+  - m_Id: 464511031
+    m_Key: hud.gadget
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715095
+  - m_Id: 464511032
+    m_Key: hud.boss
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715096
+  - m_Id: 464511033
+    m_Key: hud.score
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715097
+  - m_Id: 464511034
+    m_Key: hud.echoes
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715098
+  - m_Id: 464511035
+    m_Key: hud.echoSlot
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715099
+  - m_Id: 464511036
+    m_Key: hud.memory.time
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715100
+  - m_Id: 464511037
+    m_Key: hud.memory.cooldown
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715101
+  - m_Id: 464511038
+    m_Key: hud.memory.ready
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715102
+  - m_Id: 464511039
+    m_Key: hud.memory.state.recording
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715103
+  - m_Id: 464511040
+    m_Key: hud.memory.state.recalibrating
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715104
+  - m_Id: 464511041
+    m_Key: hud.memory.state.idle
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715105
+  - m_Id: 464511042
+    m_Key: hud.memory.state.playing
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715106
+  - m_Id: 464511043
+    m_Key: hud.slot.playing
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715107
+  - m_Id: 464511044
+    m_Key: hud.slot.available
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715108
+  - m_Id: 464511045
+    m_Key: hud.gadget.ready
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715109
+  - m_Id: 464511046
+    m_Key: hud.gadget.recharge
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715110
+  - m_Id: 464511047
+    m_Key: hud.boss.phase1
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715111
+  - m_Id: 464511048
+    m_Key: hud.boss.phase2
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715112
+  - m_Id: 464511049
+    m_Key: hud.boss.entering
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715113
+  - m_Id: 464511050
+    m_Key: hud.boss.defeated
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715114
+  - m_Id: 464511051
+    m_Key: hud.boss.shielded
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715115
+  - m_Id: 464511052
+    m_Key: hud.boss.teethBoth
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715116
+  - m_Id: 464511053
+    m_Key: hud.boss.teethUpper
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715117
+  - m_Id: 464511054
+    m_Key: hud.boss.teethLower
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715118
+  - m_Id: 464511055
+    m_Key: hud.boss.dismantleHint
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715119
+  - m_Id: 464511056
+    m_Key: hud.combo.crossfire
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715120
+  - m_Id: 464511057
+    m_Key: hud.combo.crossfire.hint
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715121
+  - m_Id: 464511058
+    m_Key: hud.combo.strike
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715122
+  - m_Id: 464511059
+    m_Key: hud.combo.strike.hint
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715123
+  - m_Id: 464511060
+    m_Key: hud.pause
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715124
+  - m_Id: 464511061
+    m_Key: hud.pause.hint
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715125
+  - m_Id: 464511062
+    m_Key: hud.defeat
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715126
+  - m_Id: 464511063
+    m_Key: hud.defeat.hint
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715127
+  - m_Id: 464511064
+    m_Key: hud.cleared
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715128
+  - m_Id: 464511065
+    m_Key: hud.cleared.stats
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715129
+  - m_Id: 464511066
+    m_Key: hud.cleared.combo
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715130
+  - m_Id: 464511067
+    m_Key: hud.cleared.combos
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715131
+  - m_Id: 464511068
+    m_Key: hud.hint.keyboard
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715132
+  - m_Id: 464511069
+    m_Key: hud.hint.gamepad
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715133
+  - m_Id: 464511070
+    m_Key: mission.01.place
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715134
+  - m_Id: 464511071
+    m_Key: mission.01.title
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715135
+  - m_Id: 464511072
+    m_Key: mission.01.story.1
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715136
+  - m_Id: 464511073
+    m_Key: mission.01.story.2
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715137
+  - m_Id: 464511074
+    m_Key: mission.01.story.3
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715138
+  - m_Id: 464511075
+    m_Key: mission.01.story.4
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715139
+  - m_Id: 464511076
+    m_Key: mission.01.story.5
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715140
+  - m_Id: 464511077
+    m_Key: mission.01.story.6
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715141
+  - m_Id: 42332987580416
+    m_Key: mission.01.story.7
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715148
+  - m_Id: 42333029523456
+    m_Key: mission.01.story.8
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715149
+  - m_Id: 42333029523457
+    m_Key: mission.01.story.9
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715150
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8629141398965715034
+  references:
+    version: 2
+    RefIds:
+    - rid: 8629141398965715034
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1792348024813
+    - rid: 8629141398965715038
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: First line of the logo. The name of the game; not translated.
+    - rid: 8629141398965715039
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Second line of the logo. The name of the game; not translated.
+    - rid: 8629141398965715040
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Slogan under the logo.
+    - rid: 8629141398965715041
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Blinks on the title screen.
+    - rid: 8629141398965715042
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Main menu button: opens the mission map.'
+    - rid: 8629141398965715043
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Main menu button.
+    - rid: 8629141398965715044
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Main menu button.
+    - rid: 8629141398965715045
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Main menu button: opens the language screen.'
+    - rid: 8629141398965715046
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Main menu button.
+    - rid: 8629141398965715047
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Main menu button: closes the game.'
+    - rid: 8629141398965715048
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title of the sound screen.
+    - rid: 8629141398965715049
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Volume slider.
+    - rid: 8629141398965715050
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Volume slider of the sound effects.
+    - rid: 8629141398965715051
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title of the controls screen.
+    - rid: 8629141398965715052
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Column header.
+    - rid: 8629141398965715053
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Column header.
+    - rid: 8629141398965715054
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Button that puts every key and button back.
+    - rid: 8629141398965715055
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shown in the cell while it waits for the new key.
+    - rid: 8629141398965715056
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen.
+    - rid: 8629141398965715057
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen.
+    - rid: 8629141398965715058
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen.
+    - rid: 8629141398965715059
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen.
+    - rid: 8629141398965715060
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen.
+    - rid: 8629141398965715061
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen.
+    - rid: 8629141398965715062
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen. The echo is the time-ghost of
+          the ship.
+    - rid: 8629141398965715063
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen. The gadget of the ship.
+    - rid: 8629141398965715064
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen.
+    - rid: 8629141398965715065
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Line of the controls screen.
+    - rid: 8629141398965715066
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715067
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715068
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715069
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715070
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715071
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715072
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715073
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715074
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715075
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715076
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715077
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a key, a button or a note beside it on the controls
+          screen. Keep it short.
+    - rid: 8629141398965715078
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title of the credits screen.
+    - rid: 8629141398965715079
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Names of artists and packs stay as they are; only the headings
+          and the last line are translated.
+    - rid: 8629141398965715080
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title of the language screen. Each language is listed by its
+          own name, which is not in this table.
+    - rid: 8629141398965715081
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title of the mission map.
+    - rid: 8629141398965715082
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: '{0} = number of the mission. Also the first line of the mission
+          card.'
+    - rid: 8629141398965715083
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: A mission slot that does not exist yet.
+    - rid: 8629141398965715084
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Under LOCKED.
+    - rid: 8629141398965715085
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Hint line at the foot of a screen. Arrows and ENTER / ESC
+          / A / B are the keys of the player.
+    - rid: 8629141398965715086
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Hint line at the foot of a screen. Arrows and ENTER / ESC
+          / A / B are the keys of the player.
+    - rid: 8629141398965715087
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Hint line at the foot of a screen. Arrows and ENTER / ESC
+          / A / B are the keys of the player.
+    - rid: 8629141398965715088
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Hint line at the foot of a screen. Arrows and ENTER / ESC
+          / A / B are the keys of the player.
+    - rid: 8629141398965715089
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Hint line at the foot of a screen. Arrows and ENTER / ESC
+          / A / B are the keys of the player.
+    - rid: 8629141398965715090
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Hint line at the foot of a screen. Arrows and ENTER / ESC
+          / A / B are the keys of the player.
+    - rid: 8629141398965715091
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Shown when the player tries to change a fixed control (the
+          mouse aim, for instance).
+    - rid: 8629141398965715092
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Hint under the scrolling story.
+    - rid: 8629141398965715093
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'HUD caption: the health bar of the ship.'
+    - rid: 8629141398965715094
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'HUD caption: how long the ship can record the echo.'
+    - rid: 8629141398965715095
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD caption.
+    - rid: 8629141398965715096
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'HUD caption: name of the boss (provisional).'
+    - rid: 8629141398965715097
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: HUD caption.
+    - rid: 8629141398965715098
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'HUD caption: the list of echo slots.'
+    - rid: 8629141398965715099
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: '{0} = slot number, with two digits.'
+    - rid: 8629141398965715100
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: '{0} = seconds recorded, {1} = maximum, in seconds.'
+    - rid: 8629141398965715101
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: '{0} = seconds until the anchor can be planted again.'
+    - rid: 8629141398965715102
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The echo can be recorded.
+    - rid: 8629141398965715103
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Recording. SHIFT is the default key; the anchor is the point
+          the ship returns to.
+    - rid: 8629141398965715104
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The anchor is on cooldown.
+    - rid: 8629141398965715105
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: SHIFT is the default key.
+    - rid: 8629141398965715106
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: An echo is playing and no anchor is available.
+    - rid: 8629141398965715107
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'State of an echo slot in use. Short: it sits in a small box.'
+    - rid: 8629141398965715108
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'State of a free echo slot. Short: it sits in a small box.'
+    - rid: 8629141398965715109
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Q is the default key.
+    - rid: 8629141398965715110
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: '{0} = seconds left.'
+    - rid: 8629141398965715111
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Boss phase.
+    - rid: 8629141398965715112
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Boss phase: the player takes the boss apart piece by piece.'
+    - rid: 8629141398965715113
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Boss state.
+    - rid: 8629141398965715114
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Boss state.
+    - rid: 8629141398965715115
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Boss state in phase 1: nothing can be hurt yet.'
+    - rid: 8629141398965715116
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Boss state: the weak points are open.'
+    - rid: 8629141398965715117
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Boss state: the weak points are open.'
+    - rid: 8629141398965715118
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Boss state: the weak points are open.'
+    - rid: 8629141398965715119
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Boss state: tells which part opens which teeth.'
+    - rid: 8629141398965715120
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a combo; kept in English.
+    - rid: 8629141398965715121
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: How the Crossfire combo is made.
+    - rid: 8629141398965715122
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Name of a combo; kept in English.
+    - rid: 8629141398965715123
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: How the Synchronized Strike combo is made.
+    - rid: 8629141398965715124
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Title of the pause message.
+    - rid: 8629141398965715125
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Under PAUSE.
+    - rid: 8629141398965715126
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: The ship was destroyed.
+    - rid: 8629141398965715127
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Under TRY AGAIN.
+    - rid: 8629141398965715128
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'The boss fell: end of the stage.'
+    - rid: 8629141398965715129
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: '{0} = score, {1} = enemies destroyed, {2} = number of combos,
+          {3} = the word ''combo'' or ''combos'' (hud.cleared.combo / .combos).'
+    - rid: 8629141398965715130
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: '{3} of hud.cleared.stats when there is one combo.'
+    - rid: 8629141398965715131
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: '{3} of hud.cleared.stats when there are zero or several combos.'
+    - rid: 8629141398965715132
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hint line at the foot of the HUD with a keyboard. Each {n}
+          is a key as the player set it: 0 move keys, 1 the word MOUSE, 2 fire key,
+          3 the word CLICK, 4 record, 5 dodge, 6 mine, 7 pause.'
+    - rid: 8629141398965715133
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Hint line at the foot of the HUD with a gamepad. Each {n}
+          is a button: 0 left stick, 1 right stick, 2 fire, 3 record, 4 dodge, 5
+          mine, 6 pause.'
+    - rid: 8629141398965715134
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Mission card and map: the place, under the mission number.'
+    - rid: 8629141398965715135
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Mission card and map: the name of the mission.'
+    - rid: 8629141398965715136
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Story crawl, paragraph 1. Bilu is the hero, an alien.
+    - rid: 8629141398965715137
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Story crawl, paragraph 2.
+    - rid: 8629141398965715138
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Story crawl, paragraph 3.
+    - rid: 8629141398965715139
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Story crawl, paragraph 4.
+    - rid: 8629141398965715140
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Story crawl, paragraph 5.
+    - rid: 8629141398965715141
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Story crawl, last paragraph. 'One more time' is the old name
+          of the game.
+    - rid: 8629141398965715148
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Story crawl, paragraph 7.
+    - rid: 8629141398965715149
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Story crawl, paragraph 8. 'One more time' is the old name
+          of the game.
+    - rid: 8629141398965715150
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: 'Story crawl, last line, shouted. It is the message Bilu delivers:
+          the pt text is BUSQUEM CONHECIMENTO!!!!'

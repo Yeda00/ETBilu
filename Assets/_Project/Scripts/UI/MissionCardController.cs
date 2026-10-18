@@ -1,5 +1,6 @@
 using OneMoreTime.Gameplay.Audio;
 using OneMoreTime.Core.Audio;
+using OneMoreTime.Gameplay.Language;
 using OneMoreTime.Gameplay.Session;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,7 +8,7 @@ using UnityEngine.UIElements;
 namespace OneMoreTime.UI
 {
     /// <summary>
-    /// The card at the start of a stage: "Missão Nº 1", the place and the mission's name, on black, like the
+    /// The card at the start of a stage: "Mission No. 1", the place and the mission's name, on black, like the
     /// stage intros of Star Fox 64. The stage waits behind it (it is the <see cref="StageGate"/>) and starts as
     /// the card fades out. It does not show again after a death, when the scene reloads in the middle of a run.
     /// The mission is the one picked on the menu, or <c>fallbackMission</c> when the scene is opened directly.
@@ -15,7 +16,6 @@ namespace OneMoreTime.UI
     [RequireComponent(typeof(UIDocument))]
     public sealed class MissionCardController : StageGate
     {
-        [SerializeField] MenuTexts texts;
         [SerializeField] MissionData fallbackMission;
         [SerializeField] SfxPlayer sfx;
         [Header("Timing (seconds)")]
@@ -50,10 +50,9 @@ namespace OneMoreTime.UI
                 return;
             }
 
-            string format = texts != null ? texts.missionNumberFormat : "MISSÃO Nº {0}";
-            number.text = string.Format(format, mission.number);
-            place.text = mission.place;
-            title.text = mission.title;
+            number.text = L10n.Format("menu.mission.number", mission.number);
+            place.text = mission.Place;
+            title.text = mission.Title;
             card.RemoveFromClassList("hidden");
             card.style.opacity = 1f;
             age = 0f;

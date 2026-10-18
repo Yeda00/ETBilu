@@ -3,61 +3,65 @@
     <ui:VisualElement name="hud" class="hud" picking-mode="Ignore">
         <ui:VisualElement class="top" picking-mode="Ignore">
             <ui:VisualElement class="left" picking-mode="Ignore">
-                <ui:Label text="INTEGRIDADE" class="caption integrity" />
+                <ui:Label text="INTEGRITY" class="caption integrity" />
                 <ui:VisualElement class="bar">
                     <ui:VisualElement name="integrity-fill" class="fill integrity" />
                 </ui:VisualElement>
 
-                <ui:Label text="MEMÓRIA TEMPORAL" class="caption memory" />
+                <ui:Label text="TEMPORAL MEMORY" class="caption memory" />
                 <ui:VisualElement class="row" picking-mode="Ignore">
                     <ui:VisualElement class="bar wide">
                         <ui:VisualElement name="memory-fill" class="fill memory" />
                     </ui:VisualElement>
-                    <ui:Label name="memory-value" text="0,0 / 5,0 s" class="value" />
+                    <ui:Label name="memory-value" text="0.0 / 5.0 s" class="value" />
                 </ui:VisualElement>
                 <ui:VisualElement class="row" picking-mode="Ignore">
                     <ui:VisualElement name="rec-dot" class="rec-dot" />
-                    <ui:Label name="memory-state" text="Segure SHIFT para gravar" class="state" />
+                    <ui:Label name="memory-state" text="hold SHIFT · record echo" class="state" />
                 </ui:VisualElement>
 
-                <ui:Label text="GADGET · MINA TEMPORAL" class="caption gadget" />
+                <ui:Label text="GADGET · TEMPORAL MINE" class="caption gadget" />
                 <ui:VisualElement class="row" picking-mode="Ignore">
                     <ui:VisualElement class="bar">
                         <ui:VisualElement name="gadget-fill" class="fill gadget" />
                     </ui:VisualElement>
-                    <ui:Label name="gadget-state" text="Q · pronta" class="value" />
+                    <ui:Label name="gadget-state" text="Q · ready" class="value" />
                 </ui:VisualElement>
             </ui:VisualElement>
 
             <ui:VisualElement name="boss" class="boss hidden" picking-mode="Ignore">
-                <ui:Label text="O GUARDIÃO DO CICLO" class="caption boss" />
+                <ui:Label text="THE CYCLE'S GUARDIAN" class="caption boss" />
                 <ui:VisualElement class="bar boss">
                     <ui:VisualElement name="boss-fill" class="fill boss" />
                 </ui:VisualElement>
                 <ui:VisualElement class="row" picking-mode="Ignore">
-                    <ui:VisualElement name="generator-1" class="pip" />
-                    <ui:VisualElement name="generator-2" class="pip" />
+                    <ui:VisualElement name="part-antenna" class="pip" />
+                    <ui:VisualElement name="part-eyes" class="pip" />
+                    <ui:VisualElement name="part-cannon-1" class="pip" />
+                    <ui:VisualElement name="part-cannon-2" class="pip" />
+                    <ui:VisualElement name="part-teeth-1" class="pip teeth" />
+                    <ui:VisualElement name="part-teeth-2" class="pip teeth" />
                     <ui:Label name="boss-state" text="" class="state" />
                 </ui:VisualElement>
                 <ui:Label name="boss-phase" text="" class="boss-phase" />
             </ui:VisualElement>
 
             <ui:VisualElement class="right" picking-mode="Ignore">
-                <ui:Label text="PONTUAÇÃO" class="caption score" />
+                <ui:Label text="SCORE" class="caption score" />
                 <ui:Label name="score" text="000000" class="score-value" />
-                <ui:Label text="ECOS ATIVOS" class="caption echo" />
+                <ui:Label text="ACTIVE ECHOES" class="caption echo" />
                 <ui:VisualElement class="slots" picking-mode="Ignore">
                     <ui:VisualElement name="echo-slot-1" class="slot">
-                        <ui:Label text="Eco 01" class="slot-name" />
-                        <ui:Label text="disponível" class="slot-state" />
+                        <ui:Label text="Echo 01" class="slot-name" />
+                        <ui:Label text="anchor available" class="slot-state" />
                     </ui:VisualElement>
                     <ui:VisualElement name="echo-slot-2" class="slot">
-                        <ui:Label text="Eco 02" class="slot-name" />
-                        <ui:Label text="disponível" class="slot-state" />
+                        <ui:Label text="Echo 02" class="slot-name" />
+                        <ui:Label text="anchor available" class="slot-state" />
                     </ui:VisualElement>
                     <ui:VisualElement name="echo-slot-3" class="slot">
-                        <ui:Label text="Eco 03" class="slot-name" />
-                        <ui:Label text="disponível" class="slot-state" />
+                        <ui:Label text="Echo 03" class="slot-name" />
+                        <ui:Label text="anchor available" class="slot-state" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
@@ -65,7 +69,7 @@
 
         <ui:VisualElement name="combo" class="combo hidden" picking-mode="Ignore">
             <ui:Label name="combo-title" text="CROSSFIRE" class="combo-title" />
-            <ui:Label name="combo-hint" text="NAVE + ECO NO MESMO ALVO" class="combo-hint" />
+            <ui:Label name="combo-hint" text="SHIP + ECHO ON THE SAME TARGET" class="combo-hint" />
         </ui:VisualElement>
 
         <ui:VisualElement name="message" class="message hidden" picking-mode="Ignore">
@@ -73,6 +77,6 @@
             <ui:Label name="message-hint" text="" class="message-hint" />
         </ui:VisualElement>
 
-        <ui:Label name="controls-hint" text="WASD mover · MOUSE mirar · ESPAÇO/CLIQUE atirar · SHIFT gravar · E invocar eco · Q mina · ESC pausar" class="hint" />
+        <ui:Label name="controls-hint" text="WASD move · MOUSE aim · SPACE/CLICK shoot · SHIFT record · E summon echo · Q mine · ESC pause" class="hint" />
     </ui:VisualElement>
 </ui:UXML>

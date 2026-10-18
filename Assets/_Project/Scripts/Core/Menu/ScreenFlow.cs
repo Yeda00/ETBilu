@@ -12,6 +12,7 @@ namespace OneMoreTime.Core.Menu
         Credits = 4,
         Missions = 5,
         Intro = 6,
+        Language = 7,
     }
 
     /// <summary>Which screen is showing and how to go back to the one before it.</summary>

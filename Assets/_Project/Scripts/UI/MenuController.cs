@@ -4,6 +4,7 @@ using OneMoreTime.Core.Controls;
 using OneMoreTime.Core.Menu;
 using OneMoreTime.Gameplay.Audio;
 using OneMoreTime.Gameplay.Input;
+using OneMoreTime.Gameplay.Language;
 using OneMoreTime.Gameplay.Session;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,8 +17,9 @@ namespace OneMoreTime.UI
     /// The menu scene: title screen, main menu, sound, controls, credits, the mission map and the story that
     /// scrolls before the stage. The order of screens and the highlighted entries live in Core (ScreenFlow,
     /// MenuCursor, CrawlScroll, SoundLevels); this component draws them with UI Toolkit (UI/Menu.uxml and
-    /// Menu.uss), plays the sounds and loads the stage. Words come from <see cref="MenuTexts"/> and
-    /// <see cref="MissionData"/>. Works with keyboard and gamepad (MenuInputReader) and mouse. The controls
+    /// Menu.uss), plays the sounds and loads the stage. Words come from the string table (<see cref="L10n"/>) and
+    /// <see cref="MissionData"/>; the Language screen switches between the languages of the project and the
+    /// screens redraw their words at once. Works with keyboard and gamepad (MenuInputReader) and mouse. The controls
     /// screen lets the player change the keys and buttons of the game (the Input System's interactive rebinding).
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
@@ -26,7 +28,6 @@ namespace OneMoreTime.UI
         [SerializeField] MenuInputReader input;
         [SerializeField] SfxPlayer sfx;
         [SerializeField] MusicPlayer music;
-        [SerializeField] MenuTexts texts;
         [Tooltip("Missions in the order of the map. Only the first one exists for now; the other slots show as locked.")]
         [SerializeField] MissionData[] missions;
         [Tooltip("The ship shown behind the title and the main menu. Optional.")]
@@ -37,8 +38,8 @@ namespace OneMoreTime.UI
         [SerializeField, Min(100f)] float crawlViewportHeight = 480f;
         [SerializeField, Min(0.05f)] float fadeSeconds = 0.5f;
 
-        enum MainItem { Play, Controls, Sound, Credits, Quit }
-        static readonly MainItem[] MainItems = { MainItem.Play, MainItem.Controls, MainItem.Sound, MainItem.Credits, MainItem.Quit };
+        enum MainItem { Play, Controls, Sound, Language, Credits, Quit }
+        static readonly MainItem[] MainItems = { MainItem.Play, MainItem.Controls, MainItem.Sound, MainItem.Language, MainItem.Credits, MainItem.Quit };
 
         readonly Dictionary<MenuScreen, VisualElement> screens = new();
         readonly List<VisualElement> mainBars = new();
@@ -47,9 +48,11 @@ namespace OneMoreTime.UI
         readonly List<VisualElement> slots = new();
         readonly List<VisualElement> links = new();
         readonly List<Label[]> controlCells = new();
+        readonly List<VisualElement> languageBars = new();
+        List<LanguageOption> languages = new();
 
         ScreenFlow flow;
-        MenuCursor mainCursor, soundCursor, missionCursor, controlsCursor;
+        MenuCursor mainCursor, soundCursor, missionCursor, controlsCursor, languageCursor;
         int controlsColumn;   // 0 keyboard, 1 gamepad
         InputActionRebindingExtensions.RebindingOperation rebinding;
         bool waitingForKey;
@@ -64,8 +67,6 @@ namespace OneMoreTime.UI
         float fadeValue = 1f;
         bool loading;
 
-        MenuTexts Texts => texts;
-
         void OnEnable()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
@@ -77,6 +78,9 @@ namespace OneMoreTime.UI
             mainCursor = new MenuCursor(MainItems.Length);
             soundCursor = new MenuCursor(2);
             missionCursor = new MenuCursor(mapSlots);
+            languages = L10n.Languages();
+            languageCursor = new MenuCursor(Mathf.Max(1, languages.Count));
+            languageCursor.Set(Mathf.Max(0, languages.FindIndex(l => l.Code == L10n.CurrentCode)));
             loading = false;
             fadeValue = 1f;
 
@@ -85,15 +89,18 @@ namespace OneMoreTime.UI
             BuildSoundScreen();
             BuildControlsScreen();
             BuildCreditsScreen();
+            BuildLanguageScreen();
             BuildMissionMap();
             ApplyLevels();
             Show(MenuScreen.Title, silent: true);
+            L10n.Changed += OnLanguageChanged;
         }
 
         void Start() => music?.Play(MusicTrack.Title);
 
         void OnDisable()
         {
+            L10n.Changed -= OnLanguageChanged;
             rebinding?.Dispose();
             rebinding = null;
         }
@@ -115,23 +122,30 @@ namespace OneMoreTime.UI
             missionPlace = root.Q<Label>("mission-place");
             missionTitle = root.Q<Label>("mission-title");
 
-            root.Q<Label>("logo-top").text = Texts.logoTop;
-            root.Q<Label>("logo-bottom").text = Texts.logoBottom;
-            root.Q<Label>("tagline").text = Texts.tagline;
-            pressStart.text = Texts.pressStart;
-            root.Q<Label>("main-hint").text = Texts.listHint;
-            root.Q<Label>("sound-hint").text = Texts.soundHint;
-            controlsHint = root.Q<Label>("controls-hint");
-            controlsHint.text = Texts.controlsHint;
-            root.Q<Label>("credits-hint").text = Texts.backHint;
-            root.Q<Label>("missions-hint").text = Texts.mapHint;
-            root.Q<Label>("intro-hint").text = Texts.introHint;
-            root.Q<Label>("sound-title").text = Texts.soundTitle;
-            root.Q<Label>("controls-title").text = Texts.controlsTitle;
-            root.Q<Label>("credits-title").text = Texts.creditsTitle;
-            root.Q<Label>("missions-title").text = Texts.missionsTitle;
-
             screens[MenuScreen.Title].RegisterCallback<ClickEvent>(_ => OnTitleConfirm());
+            ApplyStaticTexts();
+        }
+
+        // The words that sit in Menu.uxml; drawn again whenever the language changes.
+        void ApplyStaticTexts()
+        {
+            root.Q<Label>("logo-top").text = L10n.Get("menu.logoTop");
+            root.Q<Label>("logo-bottom").text = L10n.Get("menu.logoBottom");
+            root.Q<Label>("tagline").text = L10n.Get("menu.tagline");
+            pressStart.text = L10n.Get("menu.pressStart");
+            root.Q<Label>("main-hint").text = L10n.Get("menu.hint.list");
+            root.Q<Label>("sound-hint").text = L10n.Get("menu.hint.sound");
+            controlsHint = root.Q<Label>("controls-hint");
+            controlsHint.text = L10n.Get("menu.hint.controls");
+            root.Q<Label>("credits-hint").text = L10n.Get("menu.hint.back");
+            root.Q<Label>("language-hint").text = L10n.Get("menu.hint.list");
+            root.Q<Label>("missions-hint").text = L10n.Get("menu.hint.map");
+            root.Q<Label>("intro-hint").text = L10n.Get("menu.hint.intro");
+            root.Q<Label>("sound-title").text = L10n.Get("menu.sound.title");
+            root.Q<Label>("controls-title").text = L10n.Get("menu.controls.title");
+            root.Q<Label>("credits-title").text = L10n.Get("menu.credits.title");
+            root.Q<Label>("language-title").text = L10n.Get("menu.language.title");
+            root.Q<Label>("missions-title").text = L10n.Get("menu.missions.title");
         }
 
         void BuildMainMenu()
@@ -139,7 +153,7 @@ namespace OneMoreTime.UI
             var list = root.Q("main-list");
             list.Clear();
             mainBars.Clear();
-            string[] labels = { Texts.playLabel, Texts.controlsLabel, Texts.soundLabel, Texts.creditsLabel, Texts.quitLabel };
+            string[] labels = { L10n.Get("menu.play"), L10n.Get("menu.controls"), L10n.Get("menu.sound"), L10n.Get("menu.language"), L10n.Get("menu.credits"), L10n.Get("menu.quit") };
             for (int i = 0; i < labels.Length; i++)
             {
                 int index = i;
@@ -158,7 +172,7 @@ namespace OneMoreTime.UI
             rows.Clear();
             soundRows.Clear();
             soundCells.Clear();
-            string[] labels = { Texts.musicLabel, Texts.effectsLabel };
+            string[] labels = { L10n.Get("menu.sound.music"), L10n.Get("menu.sound.effects") };
             for (int r = 0; r < 2; r++)
             {
                 int row = r;
@@ -194,8 +208,8 @@ namespace OneMoreTime.UI
             var head = new VisualElement();
             head.AddToClassList("ctl-row");
             head.Add(new Label("").WithClass("ctl-label"));
-            head.Add(new Label(Texts.keyboardHeader).WithClass("ctl-head"));
-            head.Add(new Label(Texts.gamepadHeader).WithClass("ctl-head"));
+            head.Add(new Label(L10n.Get("menu.controls.keyboard")).WithClass("ctl-head"));
+            head.Add(new Label(L10n.Get("menu.controls.gamepad")).WithClass("ctl-head"));
             grid.Add(head);
 
             for (int r = 0; r < ControlLayout.Rows.Count; r++)
@@ -203,7 +217,7 @@ namespace OneMoreTime.UI
                 int row = r;
                 var line = new VisualElement();
                 line.AddToClassList("ctl-row");
-                line.Add(new Label(Texts.LabelFor(ControlLayout.Rows[r].Key)).WithClass("ctl-label"));
+                line.Add(new Label(L10n.Get("control." + ControlLayout.Rows[r].Key)).WithClass("ctl-label"));
                 var cells = new Label[2];
                 for (int c = 0; c < 2; c++)
                 {
@@ -218,7 +232,7 @@ namespace OneMoreTime.UI
                 grid.Add(line);
             }
 
-            resetBar = new Label(Texts.resetLabel).WithClass("ctl-reset");
+            resetBar = new Label(L10n.Get("menu.controls.reset")).WithClass("ctl-reset");
             int resetRow = ControlLayout.Rows.Count;
             resetBar.RegisterCallback<PointerEnterEvent>(_ => HoverControl(resetRow, controlsColumn));
             resetBar.RegisterCallback<ClickEvent>(_ => { HoverControl(resetRow, controlsColumn); ActivateControl(); });
@@ -226,7 +240,7 @@ namespace OneMoreTime.UI
             RefreshControls();
         }
 
-        void BuildCreditsScreen() => root.Q<Label>("credits-body").text = Texts.credits;
+        void BuildCreditsScreen() => root.Q<Label>("credits-body").text = L10n.Get("menu.credits.body");
 
         void BuildMissionMap()
         {
@@ -286,6 +300,9 @@ namespace OneMoreTime.UI
                     if (input != null && (input.CancelPressed || input.SubmitPressed))
                         GoBack();
                     break;
+                case MenuScreen.Language:
+                    UpdateLanguage();
+                    break;
                 case MenuScreen.Missions:
                     UpdateMissions();
                     break;
@@ -337,6 +354,10 @@ namespace OneMoreTime.UI
                     break;
                 case MenuScreen.Controls:
                     RefreshControls();
+                    break;
+                case MenuScreen.Language:
+                    languageCursor.Set(Mathf.Max(0, languages.FindIndex(l => l.Code == L10n.CurrentCode)));
+                    RefreshLanguage();
                     break;
                 case MenuScreen.Missions:
                     RefreshMissions();
@@ -416,6 +437,7 @@ namespace OneMoreTime.UI
                 case MainItem.Play: GoTo(MenuScreen.Missions); break;
                 case MainItem.Controls: GoTo(MenuScreen.Controls); break;
                 case MainItem.Sound: GoTo(MenuScreen.Sound); break;
+                case MainItem.Language: GoTo(MenuScreen.Language); break;
                 case MainItem.Credits: GoTo(MenuScreen.Credits); break;
                 case MainItem.Quit: Quit(); break;
             }
@@ -535,14 +557,14 @@ namespace OneMoreTime.UI
                     var device = c == 0 ? ControlDevice.Keyboard : ControlDevice.Gamepad;
                     bool selected = r == controlsCursor.Index && c == controlsColumn;
                     var cell = controlCells[r][c];
-                    cell.text = selected && waitingForKey ? Texts.waitingLabel : ControlsCatalog.Describe(asset, row, device);
+                    cell.text = selected && waitingForKey ? L10n.Get("menu.controls.waiting") : ControlsCatalog.Describe(asset, row, device);
                     cell.EnableInClassList("fixed", !row.IsEditable(device));
                     cell.EnableInClassList("selected", selected);
                     cell.EnableInClassList("waiting", selected && waitingForKey);
                 }
             }
             resetBar.EnableInClassList("selected", OnResetRow);
-            controlsHint.text = waitingForKey ? Texts.waitingHint : Texts.controlsHint;
+            controlsHint.text = L10n.Get(waitingForKey ? "menu.hint.waiting" : "menu.hint.controls");
         }
 
         void ActivateControl()
@@ -562,7 +584,7 @@ namespace OneMoreTime.UI
             if (!row.IsEditable(Device))
             {
                 Play(SoundCue.MenuDenied);
-                controlsHint.text = Texts.fixedControlHint;
+                controlsHint.text = L10n.Get("menu.hint.fixed");
                 return;
             }
             BeginRebind(asset, row, controlsCursor.Index, Device);
@@ -623,6 +645,85 @@ namespace OneMoreTime.UI
             RefreshControls();
         }
 
+        // ---------------------------------------------------------------- language
+
+        void BuildLanguageScreen()
+        {
+            var list = root.Q("language-list");
+            list.Clear();
+            languageBars.Clear();
+            for (int i = 0; i < languages.Count; i++)
+            {
+                int index = i;
+                var bar = new Label(languages[i].Name);
+                bar.AddToClassList("bar");
+                bar.RegisterCallback<PointerEnterEvent>(_ => HoverLanguage(index));
+                bar.RegisterCallback<ClickEvent>(_ => { HoverLanguage(index); ActivateLanguage(); });
+                list.Add(bar);
+                languageBars.Add(bar);
+            }
+        }
+
+        void UpdateLanguage()
+        {
+            if (input == null)
+                return;
+            if (input.Up) MoveLanguage(-1);
+            if (input.Down) MoveLanguage(1);
+            if (input.SubmitPressed) ActivateLanguage();
+            if (input.CancelPressed) GoBack();
+        }
+
+        void MoveLanguage(int delta)
+        {
+            if (languageCursor.Move(delta))
+                Play(SoundCue.MenuMove);
+            RefreshLanguage();
+        }
+
+        void HoverLanguage(int index)
+        {
+            if (flow.Current != MenuScreen.Language || languageCursor.Index == index)
+                return;
+            languageCursor.Set(index);
+            Play(SoundCue.MenuMove);
+            RefreshLanguage();
+        }
+
+        void RefreshLanguage()
+        {
+            for (int i = 0; i < languageBars.Count; i++)
+            {
+                languageBars[i].EnableInClassList("selected", i == languageCursor.Index);
+                languageBars[i].EnableInClassList("current", languages[i].Code == L10n.CurrentCode);
+            }
+        }
+
+        void ActivateLanguage()
+        {
+            if (languageCursor.Index >= languages.Count)
+                return;
+            Play(SoundCue.MenuSelect);
+            L10n.SetLanguage(languages[languageCursor.Index].Code);   // OnLanguageChanged redraws the words
+            RefreshLanguage();
+        }
+
+        // Every screen draws its words again; the cursors and the screen in view stay where they are.
+        void OnLanguageChanged()
+        {
+            if (root == null)
+                return;
+            ApplyStaticTexts();
+            BuildMainMenu();
+            BuildSoundScreen();
+            BuildControlsScreen();
+            BuildCreditsScreen();
+            RefreshMain();
+            RefreshSound();
+            RefreshMissions();
+            RefreshLanguage();
+        }
+
         // ---------------------------------------------------------------- mission map
 
         void UpdateMissions()
@@ -656,14 +757,14 @@ namespace OneMoreTime.UI
             var mission = MissionAt(missionCursor.Index);
             if (mission != null)
             {
-                missionNumber.text = string.Format(Texts.missionNumberFormat, mission.number);
-                missionPlace.text = mission.place;
-                missionTitle.text = mission.title;
+                missionNumber.text = L10n.Format("menu.mission.number", mission.number);
+                missionPlace.text = mission.Place;
+                missionTitle.text = mission.Title;
             }
             else
             {
-                missionNumber.text = Texts.lockedLabel;
-                missionPlace.text = Texts.lockedHint;
+                missionNumber.text = L10n.Get("menu.locked");
+                missionPlace.text = L10n.Get("menu.locked.hint");
                 missionTitle.text = "";
             }
         }
@@ -691,7 +792,7 @@ namespace OneMoreTime.UI
                 : new StyleBackground(StyleKeyword.None);
             introViewport.style.height = crawlViewportHeight;
 
-            string story = chosen.story != null ? string.Join("\n\n", chosen.story) : "";
+            string story = string.Join("\n\n", chosen.Story);
             introText.text = story;
             float width = introViewport.resolvedStyle.width;
             if (float.IsNaN(width) || width <= 0f)

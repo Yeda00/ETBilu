@@ -4,8 +4,9 @@ using UnityEngine;
 namespace OneMoreTime.UI
 {
     /// <summary>
-    /// Every word of the menu screens, in one asset (Data/Menu/MenuTexts). Edit here to change what the menu
-    /// says; the layout and look live in UI/Menu.uxml and UI/Menu.uss. Game text is Brazilian Portuguese.
+    /// The menu words before localization (Brazilian Portuguese only). Nothing reads this any more: the words
+    /// live in the Game string table (Assets/_Project/Localization), in English and Portuguese. Kept only until
+    /// the owner confirms the asset can go; do not edit it.
     /// </summary>
     [CreateAssetMenu(menuName = "One More Time/Menu Texts", fileName = "MenuTexts")]
     public sealed class MenuTexts : ScriptableObject
@@ -50,8 +51,9 @@ namespace OneMoreTime.UI
             new() { key = "Move.right", label = "MOVER PARA A DIREITA" },
             new() { key = "Aim", label = "MIRAR" },
             new() { key = "Fire", label = "ATIRAR" },
-            new() { key = "Record", label = "ÂNCORA / RETORNO TEMPORAL" },
+            new() { key = "Record", label = "GRAVAR ECO (SEGURAR)" },
             new() { key = "Gadget", label = "MINA TEMPORAL" },
+            new() { key = "Dodge", label = "ESQUIVA" },
             new() { key = "Pause", label = "PAUSAR" },
         };
 

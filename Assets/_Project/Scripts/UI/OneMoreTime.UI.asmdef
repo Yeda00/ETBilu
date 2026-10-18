@@ -4,7 +4,8 @@
     "references": [
         "OneMoreTime.Core",
         "OneMoreTime.Gameplay",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.Localization"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

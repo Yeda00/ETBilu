@@ -77,6 +77,8 @@
     border-bottom-color: rgb(14, 40, 100);
     color: rgb(255, 226, 70);
 }
+/* the language in use, on the Language screen */
+.bar.current { border-color: rgb(255, 226, 70); }
 .title-bar { min-width: 460px; height: 70px; margin-bottom: 36px; font-size: 38px; }
 
 .bar-list { align-items: stretch; }

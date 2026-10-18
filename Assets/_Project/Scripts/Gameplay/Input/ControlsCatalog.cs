@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using OneMoreTime.Core.Controls;
+using OneMoreTime.Gameplay.Language;
 using UnityEngine.InputSystem;
 
 namespace OneMoreTime.Gameplay.Input
@@ -66,32 +67,34 @@ namespace OneMoreTime.Gameplay.Input
         /// <summary>What the controls screen shows in a cell: the label of the binding, plus the line's note.</summary>
         public static string Describe(InputActionAsset asset, ControlRow row, ControlDevice device)
         {
-            string note = row.Note(device);
+            string note = BindingLabels.Token(row.Note(device), L10n.Find);
             if (!row.IsEditable(device))
                 return note;
-            string label = BindingLabels.Format(EffectivePath(asset, row, device));
+            string label = BindingLabels.Format(EffectivePath(asset, row, device), L10n.Find);
             return note.Length > 0 ? $"{label}  {note}" : label;
         }
 
-        /// <summary>The line of hints at the foot of the HUD, with the controls as they are now.</summary>
+        /// <summary>The line of hints at the foot of the HUD, with the controls as they are now and the words of the current language.</summary>
         public static string HintLine(InputActionAsset asset, ControlDevice device)
         {
             string L(string key)
             {
                 foreach (var row in ControlLayout.Rows)
                     if (row.Key == key)
-                        return device == ControlDevice.Gamepad && !row.GamepadEditable ? row.GamepadNote : BindingLabels.Format(EffectivePath(asset, row, device));
+                        return device == ControlDevice.Gamepad && !row.GamepadEditable
+                            ? BindingLabels.Token(row.GamepadNote, L10n.Find)
+                            : BindingLabels.Format(EffectivePath(asset, row, device), L10n.Find);
                 return "";
             }
 
             if (device == ControlDevice.Gamepad)
-                return $"{L("Move.up")} mover · {L("Aim")} mirar · {L("Fire")} atirar · {L("Record")} âncora/retorno · {L("Gadget")} mina · {L("Pause")} pausar";
+                return L10n.Format("hud.hint.gamepad", L("Move.up"), L("Aim"), L("Fire"), L("Record"), L("Dodge"), L("Gadget"), L("Pause"));
 
             string up = L("Move.up"), left = L("Move.left"), down = L("Move.down"), right = L("Move.right");
             string move = up.Length == 1 && left.Length == 1 && down.Length == 1 && right.Length == 1
                 ? up + left + down + right
                 : $"{up}/{left}/{down}/{right}";
-            return $"{move} mover · MOUSE mirar · {L("Fire")}/CLIQUE atirar · {L("Record")} âncora/retorno · {L("Gadget")} mina · {L("Pause")} pausar";
+            return L10n.Format("hud.hint.keyboard", move, BindingLabels.Token("bind.mouse", L10n.Find), L("Fire"), BindingLabels.Token("bind.click", L10n.Find), L("Record"), L("Dodge"), L("Gadget"), L("Pause"));
         }
     }
 }

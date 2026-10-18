@@ -1,0 +1,471 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Game_pt-BR
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: pt-BR
+  m_SharedData: {fileID: 11400000, guid: cabe8f9caed834af5a652e55fb030d55, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 426762240
+    m_Localized: BILU'S
+    m_Metadata:
+      m_Items: []
+  - m_Id: 460316672
+    m_Localized: INVASION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510976
+    m_Localized: O PASSADO CONTINUA LUTANDO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510977
+    m_Localized: PRESSIONE ENTER / START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510978
+    m_Localized: JOGO PRINCIPAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510979
+    m_Localized: CONTROLES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510980
+    m_Localized: SOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510981
+    m_Localized: IDIOMA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510982
+    m_Localized: "CR\xC9DITOS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510983
+    m_Localized: SAIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510984
+    m_Localized: SOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510985
+    m_Localized: "M\xDASICA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510986
+    m_Localized: EFEITOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510987
+    m_Localized: CONTROLES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510988
+    m_Localized: TECLADO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510989
+    m_Localized: CONTROLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510990
+    m_Localized: "RESTAURAR PADR\xC3O"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510991
+    m_Localized: "PRESSIONE\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510992
+    m_Localized: MOVER PARA CIMA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510993
+    m_Localized: MOVER PARA BAIXO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510994
+    m_Localized: MOVER PARA A ESQUERDA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510995
+    m_Localized: MOVER PARA A DIREITA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510996
+    m_Localized: MIRAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510997
+    m_Localized: ATIRAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510998
+    m_Localized: GRAVAR ECO (SEGURAR)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464510999
+    m_Localized: MINA TEMPORAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511000
+    m_Localized: ESQUIVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511001
+    m_Localized: PAUSAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511002
+    m_Localized: "ESPA\xC7O"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511003
+    m_Localized: ENTER (NUM)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511004
+    m_Localized: NUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511005
+    m_Localized: MOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511006
+    m_Localized: CLIQUE ESQ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511007
+    m_Localized: CLIQUE DIR.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511008
+    m_Localized: CLIQUE MEIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511009
+    m_Localized: STICK ESQ.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511010
+    m_Localized: STICK DIR.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511011
+    m_Localized: CLIQUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511012
+    m_Localized: + CLIQUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511013
+    m_Localized: + CLIQUE DIR.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511014
+    m_Localized: "CR\xC9DITOS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511015
+    m_Localized: "M\xDASICA\nNES Shooter Music \xB7 SketchyLogic\n8-bit Epic Space
+      Shooter \xB7 HydroGene\nPulsar \xB7 celestialghost8\n4 Chiptunes (Adventure)
+      \xB7 Juhani Junkala\n\nEFEITOS SONOROS\n8-Bit Sound Effect Pack \xB7 Deva (@Shades)\n8
+      bit Mini pack \xB7 phoenix1291\nSci-Fi Sounds \xB7 Kenney\nReversing Time \xB7
+      isaiah658\n8bit Menu \xB7 Fupi\n\nTodos em CC0, pelo OpenGameArt.org"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511016
+    m_Localized: IDIOMA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511017
+    m_Localized: "MISS\xD5ES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511018
+    m_Localized: "MISS\xC3O N\xBA {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511019
+    m_Localized: BLOQUEADA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511020
+    m_Localized: "AINDA N\xC3O DISPON\xCDVEL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511021
+    m_Localized: "\u2191 \u2193 ESCOLHE  \xB7  ENTER OU A CONFIRMA  \xB7  ESC OU
+      B VOLTA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511022
+    m_Localized: "\u2191 \u2193 ESCOLHE  \xB7  \u2190 \u2192 AJUSTA  \xB7  ESC OU
+      B VOLTA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511023
+    m_Localized: "\u2190 \u2192 ESCOLHE  \xB7  ENTER OU A CONFIRMA  \xB7  ESC OU
+      B VOLTA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511024
+    m_Localized: ESC OU B VOLTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511025
+    m_Localized: "\u2191 \u2193 \u2190 \u2192 ESCOLHE  \xB7  ENTER OU A MUDA  \xB7 
+      ESC OU B VOLTA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511026
+    m_Localized: "APERTE O NOVO BOT\xC3O  \xB7  ESC CANCELA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511027
+    m_Localized: "ESTE CONTROLE N\xC3O MUDA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511028
+    m_Localized: "ENTER OU A PULA  \xB7  \u2193 ACELERA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511029
+    m_Localized: INTEGRIDADE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511030
+    m_Localized: "MEM\xD3RIA TEMPORAL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511031
+    m_Localized: "GADGET \xB7 MINA TEMPORAL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511032
+    m_Localized: "O GUARDI\xC3O DO CICLO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511033
+    m_Localized: "PONTUA\xC7\xC3O"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511034
+    m_Localized: ECOS ATIVOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511035
+    m_Localized: Eco {0:00}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511036
+    m_Localized: '{0:0.0} / {1:0.0} s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511037
+    m_Localized: '{0:0.0} s'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511038
+    m_Localized: PRONTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511039
+    m_Localized: "solte SHIFT \xB7 retornar \xE0 \xE2ncora"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511040
+    m_Localized: "recalibrando \xE2ncora"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511041
+    m_Localized: "segure SHIFT \xB7 gravar eco"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511042
+    m_Localized: eco reproduzindo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511043
+    m_Localized: reproduzindo rota
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511044
+    m_Localized: "\xE2ncora dispon\xEDvel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511045
+    m_Localized: "Q \xB7 pronta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511046
+    m_Localized: recarga {0:0.0} s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511047
+    m_Localized: "FASE 1 \xB7 SOBREVIV\xCANCIA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511048
+    m_Localized: "FASE 2 \xB7 DESMONTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511049
+    m_Localized: "o Guardi\xE3o se aproxima"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511050
+    m_Localized: "Guardi\xE3o destru\xEDdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511051
+    m_Localized: tudo blindado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511052
+    m_Localized: DENTES DE CIMA E DE BAIXO EXPOSTOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511053
+    m_Localized: DENTES DE CIMA EXPOSTOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511054
+    m_Localized: DENTES DE BAIXO EXPOSTOS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511055
+    m_Localized: "olhos abrem os dentes de cima \xB7 canh\xF5es, os de baixo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511056
+    m_Localized: CROSSFIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511057
+    m_Localized: NAVE + ECO NO MESMO ALVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511058
+    m_Localized: SYNCHRONIZED STRIKE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511059
+    m_Localized: "NAVE + ECO NOS CANH\xD5ES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511060
+    m_Localized: PAUSA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511061
+    m_Localized: Esc para continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511062
+    m_Localized: TENTE NOVAMENTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511063
+    m_Localized: "o encontro recome\xE7a\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511064
+    m_Localized: "GUARDI\xC3O DERROTADO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511065
+    m_Localized: "pontua\xE7\xE3o {0} \xB7 {1} abates \xB7 {2} {3}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511066
+    m_Localized: combo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511067
+    m_Localized: combos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511068
+    m_Localized: "{0} mover \xB7 {1} mirar \xB7 {2}/{3} atirar \xB7 {4} segurar:
+      gravar \xB7 {5} esquiva \xB7 {6} mina \xB7 {7} pausar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511069
+    m_Localized: "{0} mover \xB7 {1} mirar \xB7 {2} atirar \xB7 {3} segurar: gravar
+      \xB7 {4} esquiva \xB7 {5} mina \xB7 {6} pausar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511070
+    m_Localized: "Terra \xB7 Sert\xE3o Seco"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511071
+    m_Localized: "Derrubar o Imp\xE9rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511072
+    m_Localized: "Outubro de 2010. Bilu visitou a Terra numa miss\xE3o de paz, trazendo
+      palavras s\xE1bias que deveriam mudar o destino do planeta para sempre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511073
+    m_Localized: "42 anos depois, tomado por uma mistura de ira, decep\xE7\xE3o e
+      revolta, Bilu volta \xE0 Terra. Mas desta vez a paz n\xE3o \xE9 mais uma op\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511074
+    m_Localized: "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida
+      at\xE9 a \xFAltima gota. Depois de uma s\xE9rie de cat\xE1strofes clim\xE1ticas,
+      o mar secou, e o planeta virou um deserto \xE1rido e decadente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511075
+    m_Localized: "Os recursos que restavam foram saqueados e levados numa miss\xE3o
+      desesperada para a t\xE3o sonhada col\xF4nia em Marte. Que, ironicamente, deu
+      errado: pelo visto, eles precisavam de professores universit\xE1rios, afinal..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511076
+    m_Localized: "E o tal 1% saiu \xE0 deriva pelo infinito, num cruzeiro de luxo
+      com um destino t\xE3o certo quanto o do Titanic."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464511077
+    m_Localized: "A Terra virou uma piada sem gra\xE7a: as ru\xEDnas de um imp\xE9rio
+      decadente, defendido pelas engrenagens de um sistema sem patr\xE3o que j\xE1
+      n\xE3o sabe como parar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42332987580416
+    m_Localized: Bilu volta para entregar a mensagem de novo. E desta vez ela vai
+      descer goela abaixo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42333029523456
+    m_Localized: "Uma vez n\xE3o bastou. Ent\xE3o, mais uma vez:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42333029523457
+    m_Localized: BUSQUEM CONHECIMENTO!!!!
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

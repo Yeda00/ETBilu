@@ -27,6 +27,12 @@
             <ui:Label name="controls-hint" class="hint" />
         </ui:VisualElement>
 
+        <ui:VisualElement name="screen-language" class="screen hidden">
+            <ui:Label name="language-title" class="bar title-bar" />
+            <ui:VisualElement name="language-list" class="bar-list" />
+            <ui:Label name="language-hint" class="hint" />
+        </ui:VisualElement>
+
         <ui:VisualElement name="screen-credits" class="screen hidden">
             <ui:Label name="credits-title" class="bar title-bar" />
             <ui:Label name="credits-body" class="panel credits-body" />

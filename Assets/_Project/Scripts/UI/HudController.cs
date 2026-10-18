@@ -1,4 +1,3 @@
-using System.Globalization;
 using OneMoreTime.Core.Boss;
 using OneMoreTime.Core.Controls;
 using OneMoreTime.Core.Combos;
@@ -6,6 +5,7 @@ using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Echo;
 using OneMoreTime.Gameplay.Input;
+using OneMoreTime.Gameplay.Language;
 using OneMoreTime.Gameplay.Session;
 using OneMoreTime.Gameplay.Ship;
 using UnityEngine;
@@ -32,14 +32,19 @@ namespace OneMoreTime.UI
         [Tooltip("Seconds the combo notice stays on screen.")]
         [SerializeField, Min(0.1f)] float comboNoticeSeconds = 1.4f;
 
-        static readonly CultureInfo PtBr = CultureInfo.GetCultureInfo("pt-BR");
+        // The captions in Hud.uxml: the second class of each one, and the key of its words.
+        static readonly (string cssClass, string key)[] Captions =
+        {
+            ("integrity", "hud.integrity"), ("memory", "hud.memory"), ("gadget", "hud.gadget"),
+            ("boss", "hud.boss"), ("score", "hud.score"), ("echo", "hud.echoes"),
+        };
 
         VisualElement integrityFill, memoryFill, recDot, message, gadgetFill, bossPanel, bossFill, comboNotice;
         Label controlsHint;
         bool hintShown;
         ControlDevice hintDevice;
         Label memoryValue, memoryState, score, messageTitle, messageHint, gadgetState, bossState, bossPhase, comboTitle, comboHint;
-        VisualElement[] generatorPips;
+        VisualElement[] partPips;   // in GuardianPart order
         VisualElement[] slots;
         Label[] slotStates;
         float comboTimer;
@@ -64,7 +69,11 @@ namespace OneMoreTime.UI
             bossFill = root.Q("boss-fill");
             bossState = root.Q<Label>("boss-state");
             bossPhase = root.Q<Label>("boss-phase");
-            generatorPips = new[] { root.Q("generator-1"), root.Q("generator-2") };
+            partPips = new[]
+            {
+                root.Q("part-antenna"), root.Q("part-eyes"), root.Q("part-cannon-1"), root.Q("part-cannon-2"),
+                root.Q("part-teeth-1"), root.Q("part-teeth-2"),
+            };
             comboNotice = root.Q("combo");
             comboTitle = root.Q<Label>("combo-title");
             comboHint = root.Q<Label>("combo-hint");
@@ -72,12 +81,22 @@ namespace OneMoreTime.UI
             hintShown = false;
             comboTimer = 0f;
 
+            foreach (var (cssClass, key) in Captions)
+            {
+                var caption = root.Query<Label>(className: "caption").Where(l => l.ClassListContains(cssClass)).First();
+                if (caption != null)
+                    caption.text = L10n.Get(key);
+            }
+
             slots = new VisualElement[3];
             slotStates = new Label[3];
             for (int i = 0; i < 3; i++)
             {
                 slots[i] = root.Q($"echo-slot-{i + 1}");
                 slotStates[i] = slots[i]?.Q<Label>(className: "slot-state");
+                var slotName = slots[i]?.Q<Label>(className: "slot-name");
+                if (slotName != null)
+                    slotName.text = L10n.Format("hud.echoSlot", i + 1);
             }
 
             if (combos != null)
@@ -132,8 +151,9 @@ namespace OneMoreTime.UI
             comboShown = combo.Type;
             comboTimer = comboNoticeSeconds;
 
-            string title = combo.Type == ComboType.SynchronizedStrike ? "SYNCHRONIZED STRIKE" : "CROSSFIRE";
-            string hint = combo.Type == ComboType.SynchronizedStrike ? "NAVE + ECO NOS GERADORES · ESCUDO DESATIVADO" : "NAVE + ECO NO MESMO ALVO";
+            bool strike = combo.Type == ComboType.SynchronizedStrike;
+            string title = L10n.Get(strike ? "hud.combo.strike" : "hud.combo.crossfire");
+            string hint = L10n.Get(strike ? "hud.combo.strike.hint" : "hud.combo.crossfire.hint");
             comboTitle.text = comboRepeat > 1 ? $"{title} ×{comboRepeat}" : title;
             comboHint.text = combo.Points > 0 ? $"{hint} · +{combo.Points}" : hint;
             comboNotice.EnableInClassList("strike", combo.Type == ComboType.SynchronizedStrike);
@@ -162,14 +182,14 @@ namespace OneMoreTime.UI
                 : echo.CooldownRemaining > 0f ? 1f - echo.CooldownNormalized : echo.CanPlantAnchor ? 1f : 0f;
             SetFill(memoryFill, fill);
             memoryValue.text = echo.IsRecording
-                ? string.Format(PtBr, "{0:0.0} / {1:0.0} s", seconds, max)
-                : echo.CooldownRemaining > 0f ? string.Format(PtBr, "{0:0.0} s", echo.CooldownRemaining) : "PRONTA";
+                ? L10n.Format("hud.memory.time", seconds, max)
+                : echo.CooldownRemaining > 0f ? L10n.Format("hud.memory.cooldown", echo.CooldownRemaining) : L10n.Get("hud.memory.ready");
 
             recDot.EnableInClassList("on", echo.IsRecording);
             memoryFill.EnableInClassList("ready", !echo.IsRecording && echo.CanPlantAnchor);
-            memoryState.text = echo.IsRecording
-                ? "SHIFT · retornar à âncora"
-                : echo.CooldownRemaining > 0f ? "recalibrando âncora" : echo.CanPlantAnchor ? "SHIFT · plantar âncora" : "eco reproduzindo";
+            memoryState.text = L10n.Get(echo.IsRecording ? "hud.memory.state.recording"
+                : echo.CooldownRemaining > 0f ? "hud.memory.state.recalibrating"
+                : echo.CanPlantAnchor ? "hud.memory.state.idle" : "hud.memory.state.playing");
 
             var active = echo.ActiveEchoes;
             for (int i = 0; i < slots.Length; i++)
@@ -181,7 +201,7 @@ namespace OneMoreTime.UI
                 slots[i].EnableInClassList("playing", used);
                 slots[i].EnableInClassList("locked", !exists);
                 if (slotStates[i] != null)
-                    slotStates[i].text = !exists ? "—" : used ? "reproduzindo rota" : "âncora disponível";
+                    slotStates[i].text = !exists ? "—" : L10n.Get(used ? "hud.slot.playing" : "hud.slot.available");
             }
         }
 
@@ -189,7 +209,7 @@ namespace OneMoreTime.UI
         {
             SetFill(gadgetFill, 1f - gadget.CooldownNormalized);
             gadgetFill.EnableInClassList("charging", !gadget.IsReady);
-            gadgetState.text = gadget.IsReady ? "Q · pronta" : string.Format(PtBr, "recarga {0:0.0} s", gadget.CooldownRemaining);
+            gadgetState.text = gadget.IsReady ? L10n.Get("hud.gadget.ready") : L10n.Format("hud.gadget.recharge", gadget.CooldownRemaining);
         }
 
         void UpdateBoss(GuardianBoss boss)
@@ -198,44 +218,54 @@ namespace OneMoreTime.UI
             if (boss == null)
                 return;
 
-            SetFill(bossFill, boss.CoreNormalized);
-            bossFill.EnableInClassList("vulnerable", boss.CoreVulnerable);
-            for (int i = 0; i < generatorPips.Length; i++)
-                generatorPips[i]?.EnableInClassList("down", !boss.IsGeneratorUp(i));
+            // The bar is what is left of the teeth, the weak points; the pips are the parts and the teeth.
+            SetFill(bossFill, boss.TeethNormalized);
+            bool teethOpen = boss.IsPartExposed(GuardianPart.TeethUpper) || boss.IsPartExposed(GuardianPart.TeethLower);
+            bossFill.EnableInClassList("vulnerable", teethOpen);
+            for (int i = 0; i < partPips.Length; i++)
+            {
+                var part = (GuardianPart)i;
+                partPips[i]?.EnableInClassList("down", boss.IsPartDown(part));
+                partPips[i]?.EnableInClassList("guarded", !boss.IsPartDown(part) && !boss.IsPartExposed(part));
+            }
 
             bossPhase.text = boss.IsEntering ? "" : boss.Phase switch
             {
-                GuardianPhase.Survival => "FASE 1 · SOBREVIVÊNCIA",
-                GuardianPhase.Preparation => "FASE 2 · PREPARAÇÃO",
-                GuardianPhase.Synchronization => "FASE 3 · SINCRONIZAÇÃO",
+                GuardianPhase.Survival => L10n.Get("hud.boss.phase1"),
+                GuardianPhase.Dismantle => L10n.Get("hud.boss.phase2"),
                 _ => "",
             };
 
             if (boss.IsEntering)
-                bossState.text = "o Guardião se aproxima";
+                bossState.text = L10n.Get("hud.boss.entering");
             else if (boss.Phase == GuardianPhase.Defeated)
-                bossState.text = "núcleo destruído";
-            else if (boss.CoreVulnerable)
-                bossState.text = string.Format(PtBr, "NÚCLEO VULNERÁVEL · {0:0.0} s", boss.VulnerableRemaining);
-            else if (boss.WindowRemaining > 0f)
-                bossState.text = string.Format(PtBr, "gerador caído · janela {0:0.0} s", boss.WindowRemaining);
+                bossState.text = L10n.Get("hud.boss.defeated");
+            else if (boss.Phase == GuardianPhase.Survival)
+                bossState.text = L10n.Get("hud.boss.shielded");
             else
-                bossState.text = boss.Phase == GuardianPhase.Survival ? "núcleo blindado" : "núcleo protegido pelos geradores";
+            {
+                bool upper = boss.IsPartExposed(GuardianPart.TeethUpper), lower = boss.IsPartExposed(GuardianPart.TeethLower);
+                bossState.text = L10n.Get(upper && lower ? "hud.boss.teethBoth"
+                    : upper ? "hud.boss.teethUpper"
+                    : lower ? "hud.boss.teethLower"
+                    : "hud.boss.dismantleHint");
+            }
         }
 
         void UpdateSession()
         {
-            score.text = session.Score.ToString("000000", PtBr);
+            score.text = session.Score.ToString("000000");
             switch (session.State)
             {
                 case SessionState.Paused:
-                    ShowMessage("PAUSA", "Esc para continuar");
+                    ShowMessage(L10n.Get("hud.pause"), L10n.Get("hud.pause.hint"));
                     break;
                 case SessionState.Defeated:
-                    ShowMessage("TENTE NOVAMENTE", "o encontro recomeça…");
+                    ShowMessage(L10n.Get("hud.defeat"), L10n.Get("hud.defeat.hint"));
                     break;
                 case SessionState.Cleared:
-                    ShowMessage("GUARDIÃO DERROTADO", $"pontuação {session.Score:000000} · {session.Kills} abates · {session.ComboCount} combo{(session.ComboCount == 1 ? "" : "s")}");
+                    ShowMessage(L10n.Get("hud.cleared"), L10n.Format("hud.cleared.stats", session.Score.ToString("000000"), session.Kills, session.ComboCount,
+                        L10n.Get(session.ComboCount == 1 ? "hud.cleared.combo" : "hud.cleared.combos")));
                     break;
                 default:
                     message.AddToClassList("hidden");
