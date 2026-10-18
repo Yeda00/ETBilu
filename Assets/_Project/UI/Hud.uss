@@ -73,6 +73,18 @@
 .slot-state { color: rgb(93, 111, 158); font-size: 12px; -unity-font-style: normal; margin: 2px 0 0 0; padding: 0; }
 .slot.playing .slot-state { color: rgb(177, 140, 255); }
 
+/* Combo notice (GDD 03): pops up for a moment when a temporal combo lands, as in the HUD mockup. */
+.combo {
+    position: absolute; left: 0; right: 0; top: 24%;
+    align-items: center;
+    transition-property: opacity, scale;
+    transition-duration: 0.12s, 0.18s;
+}
+.combo.hidden { opacity: 0; scale: 0.8 0.8; }
+.combo-title { color: rgb(255, 138, 61); font-size: 34px; letter-spacing: 5px; margin: 0; padding: 0; }
+.combo.strike .combo-title { font-size: 40px; }
+.combo-hint { color: rgb(255, 201, 161); font-size: 14px; letter-spacing: 2px; -unity-font-style: normal; margin: 2px 0 0 0; padding: 0; }
+
 .message { position: absolute; left: 0; right: 0; top: 38%; align-items: center; }
 .message.hidden { display: none; }
 .message-title { color: rgb(255, 138, 61); font-size: 46px; letter-spacing: 6px; }

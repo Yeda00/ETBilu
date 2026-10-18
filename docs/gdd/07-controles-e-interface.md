@@ -39,9 +39,20 @@ No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControl
 
 O HUD do protótipo (UI Toolkit: `Hud.uxml` e `Hud.uss`) já mostra integridade, memória temporal com o
 tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s")
-e as mensagens de pausa, derrota e vitória ("GUARDIÃO DERROTADO"). Com o Guardião em cena, um painel no
-topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo: blindado, protegido pelos
-geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta. Falta o aviso de combo.
+e as mensagens de pausa, derrota e vitória ("GUARDIÃO DERROTADO", com pontuação, abates e combos). Com o
+Guardião em cena, um painel no topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo:
+blindado, protegido pelos geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta.
+
+O **aviso de combo** aparece no alto da tela, no centro, por 1,4 s, como no mockup: o nome do combo e o que o
+causou, com os pontos → [03](03-combate.md).
+
+| Combo | Aviso |
+|---|---|
+| Crossfire | "CROSSFIRE" · "NAVE + ECO NO MESMO ALVO · +100" |
+| Synchronized Strike | "SYNCHRONIZED STRIKE" · "NAVE + ECO NOS GERADORES · ESCUDO DESATIVADO · +1000" |
+
+O mesmo combo de novo enquanto o aviso está na tela conta "×2", "×3"; um Crossfire não cobre um Synchronized
+Strike que ainda está à vista. A duração fica em `HUD` → `HudController`.
 
 O HUD mostra com clareza:
 
@@ -58,3 +69,4 @@ O HUD mostra com clareza:
 
 - [ ] Suporte a controle: "pode vir depois" — entra na jam?
 - [ ] Mapeamento definitivo das teclas no Input System.
+- [ ] O aviso de combo usa laranja, como o mockup; laranja também é a cor de perigo → [08](08-direcao-visual-e-sonora.md). Fica assim, ou o combo ganha uma cor própria?

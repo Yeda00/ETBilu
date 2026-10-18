@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using OneMoreTime.Core.Boss;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.World;
@@ -66,6 +67,8 @@ namespace OneMoreTime.Gameplay.Boss
 
         public event Action Defeated;
         public event Action<int> Scored;
+        /// <summary>A generator fell and counted: its index and the hit that brought it down.</summary>
+        public event Action<GuardianBoss, int, DamageInfo> GeneratorDestroyed;
 
         public bool IsEntering => model == null;
         public GuardianPhase Phase => model?.Phase ?? GuardianPhase.Survival;
@@ -74,6 +77,9 @@ namespace OneMoreTime.Gameplay.Boss
         public float WindowRemaining => model?.WindowRemaining ?? 0f;
         public float CoreNormalized => core != null ? core.Normalized : 0f;
         public bool IsGeneratorUp(int i) => model == null || model.IsGeneratorUp(i);
+        public Health CoreHealth => core;
+        public IReadOnlyList<Health> Generators => generators;
+        public Vector3 CorePosition => core != null ? core.transform.position : transform.position;
 
         /// <summary>Fly in from the right edge. Called by the stage right after spawning.</summary>
         public void Begin(Playfield field, Transform shipTransform, ProjectilePool projectiles)
@@ -96,7 +102,7 @@ namespace OneMoreTime.Gameplay.Boss
             for (int i = 0; i < generators.Length; i++)
             {
                 int index = i;
-                generatorHandlers[i] = (_, __) => OnGeneratorDied(index);
+                generatorHandlers[i] = (_, info) => OnGeneratorDied(index, info);
             }
         }
 
@@ -182,7 +188,7 @@ namespace OneMoreTime.Gameplay.Boss
             }
         }
 
-        void OnGeneratorDied(int index)
+        void OnGeneratorDied(int index, DamageInfo info)
         {
             if (model != null && model.DestroyGenerator(index))
             {
@@ -190,6 +196,7 @@ namespace OneMoreTime.Gameplay.Boss
                 shownUp[index] = false;
                 Scored?.Invoke(generatorScore);
                 ApplyShields();
+                GeneratorDestroyed?.Invoke(this, index, info);
             }
             else
             {

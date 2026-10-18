@@ -68,6 +68,7 @@
     <header><h2 id="combat">Combate e combos <a class="to" href="gdd-full.html#c03">→ 03</a></h2><span class="osd">dano direto · de gadget · combinado</span></header>
     <figure><img src="img/combos.svg" alt="Os cinco combos: Crossfire, Trap Bait, Double Pulse, Reflect Chain e Synchronized Strike." width="800" height="300"></figure>
     <p>Movimento em 8 direções, disparo contínuo, um gadget e invulnerabilidade breve após o dano. Os combos são <strong>eventos que o jogo reconhece</strong>, não multiplicadores — e cada um tem feedback visual e sonoro próprio, para o jogador entender por que funcionou.</p>
+    <p>No protótipo, os dois primeiros a existir: <strong>Crossfire</strong> (nave e eco acertam o mesmo alvo em até 1 s: dano combinado) e <strong>Synchronized Strike</strong> (um gerador do Guardião pela nave, o outro pelo eco, em até 2,5 s: o escudo do núcleo cai). Janelas generosas, valores de partida.</p>
   </section>
 
   <section class="plate" aria-labelledby="foes">
@@ -138,8 +139,8 @@
 
   <section class="plate" aria-labelledby="proto">
     <header><h2 id="proto">Protótipo — estado atual <a class="to" href="gdd-full.html#c10">→ 10</a></h2><span class="osd">Assets/_Project/Scenes/Arena_01.unity</span></header>
-    <p>Jogável, todo em placeholder (primitivas 3D): nave, tiro, gravação de 5 s, eco que repete movimento, tiros e gadget, drones e ondulantes em ondas por script, corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo (fases 1 a 3), HUD, pausa, derrota (o encontro atual recomeça) e vitória (derrotar o Guardião).</p>
-    <div class="rule warn"><span class="osd">Falta</span>Torreta, combos, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).</div>
+    <p>Jogável, todo em placeholder (primitivas 3D): nave, tiro, gravação de 5 s, eco que repete movimento, tiros e gadget, drones e ondulantes em ondas por script, corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro atual recomeça) e vitória (derrotar o Guardião).</p>
+    <div class="rule warn"><span class="osd">Falta</span>Torreta, os outros três combos, som, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).</div>
   </section>
 
   <section class="plate" aria-labelledby="open">
@@ -151,6 +152,7 @@
       <li><span>Regra do eco para dispositivos de presença contínua. <a href="gdd-full.html#c02">→ 02</a></span></li>
       <li><span>A gravação é relativa à tela: o protótipo para a rolagem nos puzzles; vira regra? <a href="gdd-full.html#c02">→ 02</a></span></li>
       <li><span>Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração. <a href="gdd-full.html#c06">→ 06</a></span></li>
+      <li><span>Janelas dos combos (1 s e 2,5 s) e se só o Synchronized Strike deve abrir o núcleo. <a href="gdd-full.html#c03">→ 03</a></span></li>
       <li><span>Quais elementos são modelos 3D e quais são sprites 2D. <a href="gdd-full.html#c08">→ 08</a></span></li>
       <li><span>Donos de cada capítulo, data da jam e equipe. <a href="gdd-full.html#c10">→ 10</a></span></li>
     </ul>

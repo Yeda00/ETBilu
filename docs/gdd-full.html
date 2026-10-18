@@ -185,7 +185,7 @@
   <header>
     <h2 id="h03"><span class="n">03</span>Combate</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Drone, Ondulante) · <code>docs/gdd/03-combate.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §5.1–5.4; protótipo em Assets/_Project (prefabs PlayerShip, Drone, Ondulante; ComboTracker, CrossfireRule, SynchronizedStrikeRule) · <code>docs/gdd/03-combate.md</code></p>
   </header>
   <p class="summary">O que a nave do jogador faz, os tipos de dano, os combos temporais e o que a pontuação premia.</p>
   <section class="part"><h3>Nave do jogador</h3>
@@ -211,6 +211,8 @@
       <tr><th scope="row">Laser gate e barreira móvel</th><td>1 de dano ao contato</td><td>prefabs em <code>Prefabs/Traps</code></td></tr>
       <tr><th scope="row">Tiros do Guardião</th><td>1 de dano</td><td><code>Shot_Enemy</code></td></tr>
       <tr><th scope="row">Guardião</th><td>núcleo 120 de vida, geradores 12</td><td><code>Guardian</code> → <a href="#c06">06</a></td></tr>
+      <tr><th scope="row">Crossfire</th><td>janela de 1 s entre o acerto da nave e o do eco; +3 de dano combinado; o mesmo alvo só dá outro Crossfire depois de 1 s</td><td><code>ComboTracker</code> (cena, em <code>Systems</code>)</td></tr>
+      <tr><th scope="row">Synchronized Strike</th><td>janela de 2,5 s entre a queda dos dois geradores</td><td><code>ComboTracker</code></td></tr>
     </tbody></table></div>
     <p class="muted small">Valores para testar, não definitivos.</p>
   </section>
@@ -220,7 +222,7 @@
       <tr><th scope="row"><span class="chip st">De gadget</span></th><td>Minas, pulsos ou ataques especiais</td></tr>
       <tr><th scope="row"><span class="chip echo">Combinado</span></th><td>Efeitos especiais ativados quando as ações da nave atual e do eco coincidem</td></tr>
     </tbody></table></div>
-    <p>O código também marca o dano de <strong>contato</strong> (um inimigo que bate na nave), que o GDD v0.1 não lista. O protótipo já separa os tiros da nave dos tiros do eco (<code>ShotSource</code>), o que os combos vão precisar. O dano de gadget já existe: é o da mina temporal → <a href="#c05">05</a>. O dano combinado ainda não.</p>
+    <p>O código também marca o dano de <strong>contato</strong> (um inimigo que bate na nave), que o GDD v0.1 não lista. O protótipo separa os tiros da nave dos tiros do eco (<code>ShotSource</code>), e é isso que os combos usam. O dano de gadget é o da mina temporal → <a href="#c05">05</a>. O dano combinado é o bônus do Crossfire.</p>
   </section>
   <section class="part"><h3>Combos temporais</h3>
     <p>Os combos são <strong>eventos específicos</strong> que o jogo reconhece, não multiplicadores genéricos.</p>
@@ -234,17 +236,29 @@
     </tbody></table></div>
     <p>Cada combo tem <strong>feedback visual e sonoro próprio</strong> → <a href="#c08">08</a>.</p>
     <p class="why"><em>Por quê:</em> o jogador precisa entender por que a combinação funcionou — é assim que ele aprende a repeti-la.</p>
+    <h4>No protótipo atual</h4>
+    <p>Dois dos cinco combos existem: <strong>Crossfire</strong> e <strong>Synchronized Strike</strong>. Os dois partem de acertos reais da nave e do eco: um tiro ou uma mina conta para quem o disparou, a nave atual ou um eco.</p>
+    <div class="scroll"><table><thead><tr><th>Combo</th><th>Como o jogo reconhece</th><th>Resultado</th></tr></thead><tbody>
+      <tr><th scope="row">Crossfire</th><td>A nave e um eco acertam o <strong>mesmo alvo</strong> (inimigo, gerador ou núcleo do Guardião) com até <strong>1 s</strong> de diferença. Dois acertos da mesma fonte não contam. Cada par de acertos dá um combo só, e o mesmo alvo só dá outro depois de 1 s</td><td><strong>+3 de dano combinado</strong> no alvo, se ele ainda estiver vivo, e <strong>100 pontos</strong></td></tr>
+      <tr><th scope="row">Synchronized Strike</th><td>Os dois geradores do Guardião caem com até <strong>2,5 s</strong> de diferença, <strong>um derrubado pela nave e o outro por um eco</strong>, e o núcleo fica vulnerável</td><td>O <strong>escudo do núcleo cai</strong>, pela regra do próprio Guardião → <a href="#c06">06</a>, e <strong>1000 pontos</strong></td></tr>
+    </tbody></table></div>
+    <p>Os dois ficam no <code>ComboTracker</code>; as regras, em <code>CrossfireRule</code> e <code>SynchronizedStrikeRule</code> (Core, com testes). O feedback, por enquanto, é só o aviso no HUD → <a href="#c07">07</a>: o nome do combo e o que o causou. Ainda não há som nem efeito no mundo.</p>
+    <p>Os tamanhos das janelas são <strong>valores de partida</strong>, generosos de propósito (o §16 pede janelas de sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike, o mesmo da janela curta da fase 3 do Guardião. Falta validar jogando.</p>
+    <p class="why"><em>Por quê:</em> derrubar os geradores sem o eco ainda abre o núcleo, se o jogador for rápido o bastante (pergunta em aberto em <a href="#c06">06</a>). O Synchronized Strike não muda essa regra: ele reconhece e premia quando a abertura veio da nave e do eco juntos.</p>
   </section>
   <section class="part"><h3>Pontuação por habilidade</h3>
     <ul class="clean"><li>Combos temporais.</li><li>Inimigos eliminados por armadilhas.</li><li>Sequências sem sofrer dano.</li><li>Sincronizações precisas.</li><li>Destruição de projéteis ou mecanismos usando o ambiente.</li></ul>
     <p>A pontuação <strong>não é necessária</strong> para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.</p>
-    <p class="muted small">No protótipo atual a pontuação é só <strong>100 por inimigo abatido</strong>, <strong>250 por gerador do Guardião</strong> e <strong>5000 pelo núcleo</strong>, como placeholder; os prêmios acima ainda não existem.</p>
+    <p class="muted small">No protótipo atual a pontuação é <strong>100 por inimigo abatido</strong>, <strong>250 por gerador do Guardião</strong>, <strong>5000 pelo núcleo</strong>, <strong>100 por Crossfire</strong> e <strong>1000 por Synchronized Strike</strong>, como placeholder. Dos prêmios acima, só os combos temporais existem. A tela de vitória mostra quantos combos o jogador fez.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Valores de vida, dano e invulnerabilidade: os de partida estão na tabela acima; falta validar jogando.</span></li>
     <li><span>O dano de contato entra como quarta categoria, ou é parte do dano direto?</span></li>
-    <li><span>Combos temporais: nenhum implementado ainda. A sincronização dos geradores do Guardião já pede nave e eco juntos, como o Synchronized Strike, mas não é reconhecida como combo nem tem feedback próprio. Trap Bait depende de armadilhas que firam inimigos, e as do protótipo só ferem a nave.</span></li>
-    <li><span>Tamanho da "janela curta" de Crossfire e Synchronized Strike: <span class="tbd">_TBD_</span> (§16 pede janelas generosas no começo).</span></li>
+    <li><span>Combos temporais: Crossfire e Synchronized Strike implementados; faltam Trap Bait, Double Pulse e Reflect Chain. Trap Bait depende de armadilhas que firam inimigos, e as do protótipo só ferem a nave; Double Pulse depende do pulso de interferência; Reflect Chain, do escudo refletor (expansão).</span></li>
+    <li><span>Tamanho da "janela curta" de Crossfire e Synchronized Strike: o protótipo usa 1 s e 2,5 s como valores de partida (§16 pede janelas generosas no começo). Falta validar jogando.</span></li>
+    <li><span>Crossfire: o bônus (+3 de dano combinado) e o intervalo de 1 s antes de o mesmo alvo dar outro combo são valores de partida, não vêm do v0.1.</span></li>
+    <li><span>Synchronized Strike: deve ser a <strong>única</strong> forma de abrir o núcleo (o que responderia à pergunta dos geradores sem regeneração em <a href="#c06">06</a>), ou continua só reconhecendo e premiando a abertura feita com o eco?</span></li>
+    <li><span>Feedback próprio de cada combo: o protótipo só tem o aviso no HUD; faltam o som exclusivo e um efeito no mundo → <a href="#c08">08</a>.</span></li>
   </ul></div>
 </section>
 
@@ -396,7 +410,7 @@
   <header>
     <h2 id="h06"><span class="n">06</span>Chefe e estrutura das runs</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker) · <code>docs/gdd/06-chefe-e-runs.md</code></p>
   </header>
   <p class="summary">O chefe do protótipo, fase a fase, e como os encontros de uma run ensinam e combinam as mecânicas.</p>
   <section class="part"><h3>O Guardião do Ciclo <span class="muted small">(nome provisório)</span></h3>
@@ -423,6 +437,12 @@
       <tr><th scope="row">3 · Sincronização</th><td>A mesma regra com janela <strong>curta de 2,5 s</strong>. Um anel de 14 tiros a cada 1,3 s, que gira um pouco a cada anel. Repete até o núcleo cair</td></tr>
     </tbody></table></div>
     <p>O núcleo destruído derrota o Guardião, e <strong>essa é a vitória do encontro</strong>. Pontuação: 250 por gerador derrubado e 5000 pelo núcleo. O HUD mostra a vida do núcleo, os dois geradores, a fase, a janela e o tempo de vulnerabilidade → <a href="#c07">07</a>.</p>
+    <p><strong>Combos no Guardião</strong> → <a href="#c03">03</a>:</p>
+    <div class="scroll"><table><thead><tr><th>Combo</th><th>No Guardião</th></tr></thead><tbody>
+      <tr><th scope="row">Synchronized Strike</th><td>Um gerador cai pela nave e o outro por um eco, com até 2,5 s entre as quedas, e o núcleo abre. O escudo cai pela regra de sempre; o combo dá o aviso "SYNCHRONIZED STRIKE" no HUD e 1000 pontos. Na fase 3 a janela do Guardião também é de 2,5 s, então toda abertura feita com nave e eco conta; na fase 2 (janela de 6 s) as quedas precisam estar mais próximas</td></tr>
+      <tr><th scope="row">Crossfire</th><td>A nave e um eco acertando o mesmo gerador, ou o núcleo vulnerável, com até 1 s de diferença: +3 de dano combinado</td></tr>
+    </tbody></table></div>
+    <p>Derrubar os dois geradores só com a nave ainda abre o núcleo, mas não é Synchronized Strike.</p>
     <p class="muted small">Todos os números são valores de partida para testar, no prefab <code>Guardian</code>.</p>
     <p class="why"><em>Por quê:</em> a janela é o que pede o eco. Grave os tiros contra um gerador (a fase 1, com tudo blindado, é um bom momento) e invoque o eco quando os geradores abrirem, atacando o outro com a nave.</p>
   </section>
@@ -454,7 +474,7 @@
     <li><span>Confirmar o modelo A como sistema do protótipo (é o que está implementado).</span></li>
     <li class="done"><span>O Guardião do Ciclo: versão mínima implementada (fases 1 a 3).</span></li>
     <li><span>Na fase 2 o núcleo também fica vulnerável quando os dois geradores caem; o v0.1 só fala de núcleo exposto na fase 3. Manter assim?</span></li>
-    <li><span>Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar?</span></li>
+    <li><span>Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar? (Outra saída: só o Synchronized Strike abrir o núcleo → <a href="#c03">03</a>.)</span></li>
     <li><span>O Guardião entrando fere a nave que estiver no caminho (dano de contato da blindagem). É justo, ou a blindagem só fere depois que ele para?</span></li>
   </ul></div>
 </section>
@@ -482,7 +502,13 @@
   </section>
   <section class="part"><h3>HUD</h3>
     <figure><img src="img/hud.svg" alt="Mockup conceitual do HUD." width="800" height="250" loading="lazy"><figcaption>Mockup conceitual — não representa uma interface implementada.</figcaption></figure>
-    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s") e as mensagens de pausa, derrota e vitória ("GUARDIÃO DERROTADO"). Com o Guardião em cena, um painel no topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo: blindado, protegido pelos geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta. Falta o aviso de combo.</p>
+    <p>O HUD do protótipo (UI Toolkit: <code>Hud.uxml</code> e <code>Hud.uss</code>) já mostra integridade, memória temporal com o tempo gravado, os três espaços de eco, a pontuação, o gadget com a recarga ("Q · pronta" ou "recarga 1,2 s") e as mensagens de pausa, derrota e vitória ("GUARDIÃO DERROTADO", com pontuação, abates e combos). Com o Guardião em cena, um painel no topo mostra a vida do núcleo, os dois geradores, a fase e o estado do núcleo: blindado, protegido pelos geradores, a janela aberta quando um gerador cai, ou vulnerável com o tempo que resta.</p>
+    <p>O <strong>aviso de combo</strong> aparece no alto da tela, no centro, por 1,4 s, como no mockup: o nome do combo e o que o causou, com os pontos → <a href="#c03">03</a>.</p>
+    <div class="scroll"><table><thead><tr><th>Combo</th><th>Aviso</th></tr></thead><tbody>
+      <tr><th scope="row">Crossfire</th><td>"CROSSFIRE" · "NAVE + ECO NO MESMO ALVO · +100"</td></tr>
+      <tr><th scope="row">Synchronized Strike</th><td>"SYNCHRONIZED STRIKE" · "NAVE + ECO NOS GERADORES · ESCUDO DESATIVADO · +1000"</td></tr>
+    </tbody></table></div>
+    <p>O mesmo combo de novo enquanto o aviso está na tela conta "×2", "×3"; um Crossfire não cobre um Synchronized Strike que ainda está à vista. A duração fica em <code>HUD</code> → <code>HudController</code>.</p>
     <div class="scroll"><table><thead><tr><th>Elemento</th><th>Por que o jogador precisa</th></tr></thead><tbody>
       <tr><th scope="row">Vida restante (integridade)</th><td>Saber quanto risco ainda pode correr</td></tr>
       <tr><th scope="row">Gravação (memória temporal)</th><td>Planejar a sequência sem olhar o relógio</td></tr>
@@ -495,6 +521,7 @@
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Suporte a controle: "pode vir depois" — entra na jam?</span></li>
     <li><span>Mapeamento definitivo das teclas no Input System.</span></li>
+    <li><span>O aviso de combo usa laranja, como o mockup; laranja também é a cor de perigo → <a href="#c08">08</a>. Fica assim, ou o combo ganha uma cor própria?</span></li>
   </ul></div>
 </section>
 
@@ -566,8 +593,8 @@
   <section class="part"><h3>Implementação atual</h3>
     <p>O código fica em <code>Assets/_Project/Scripts</code>, em quatro assemblies; os testes em <code>Assets/_Project/Tests/EditMode</code>.</p>
     <div class="scroll"><table><thead><tr><th>Assembly</th><th>Conteúdo</th></tr></thead><tbody>
-      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião</td></tr>
-      <tr><td><code>OneMoreTime.Gameplay</code></td><td>Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros e sessão</td></tr>
+      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião, combos temporais</td></tr>
+      <tr><td><code>OneMoreTime.Gameplay</code></td><td>Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros, combos e sessão</td></tr>
       <tr><td><code>OneMoreTime.UI</code></td><td>O HUD</td></tr>
       <tr><td><code>OneMoreTime.Editor</code></td><td>A ferramenta que monta o conteúdo placeholder (menu <em>One More Time › Bootstrap</em>)</td></tr>
     </tbody></table></div>
@@ -582,12 +609,13 @@
       <tr><td><code>GadgetSystem</code></td><td><code>ShipGadget</code> + <code>TimeMine</code> (+ <code>Cooldown</code>, <code>TimeMineModel</code> no Core)</td><td>A nave solta a mina; o eco reproduz o evento <code>Gadget</code></td></tr>
       <tr><td><code>TrapController</code></td><td><code>TrapSection</code> + <code>LaserGate</code> + <code>MovingBarrier</code> + <code>SwitchPad</code> (+ <code>TrapCycle</code>, <code>ShutterCycle</code>, <code>PresenceSwitch</code>, <code>LaserGateModel</code> no Core)</td><td><code>TrapSection</code> para a rolagem no puzzle e encerra o encontro</td></tr>
       <tr><td><code>BossController</code></td><td><code>GuardianBoss</code> + <code>SweepLaser</code> (+ <code>GuardianModel</code> no Core)</td><td>Fases, escudos, geradores e padrões de tiro</td></tr>
-      <tr><td><code>ComboEvaluator</code></td><td>—</td><td>Ainda não existe</td></tr>
+      <tr><td><code>ComboEvaluator</code></td><td><code>ComboTracker</code> (+ <code>CrossfireRule</code>, <code>SynchronizedStrikeRule</code> no Core)</td><td>Uma regra por combo; só Crossfire e Synchronized Strike existem. O <code>ComboTracker</code> ouve o <code>Health.Damaged</code> dos inimigos que as ondas criam e das partes do Guardião, e o <code>GeneratorDestroyed</code> do Guardião; aplica o bônus e avisa o HUD e a sessão (<code>Triggered</code>)</td></tr>
       <tr><td>—</td><td><code>Playfield</code></td><td>O quadro que rola, com a câmera, a nave e os ecos</td></tr>
       <tr><td>—</td><td><code>StageDirector</code> + <code>RunCheckpoint</code></td><td>Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte</td></tr>
-      <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação, pausa, vitória (o Guardião cai) e derrota</td></tr>
+      <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota</td></tr>
     </tbody></table></div>
     <p>Armadilhas e tiros do chefe usam a layer <code>EnemyProjectile</code>, que só colide com a nave. A mina não tem colisor: o alcance e a explosão são consultas de física (<code>CheckSphere</code>, <code>OverlapSphere</code>) na layer <code>Enemy</code>. O interruptor também não usa física: compara posições, para o eco, que não tem colisor, poder segurá-lo.</p>
+    <p>Os combos sabem quem acertou pelo <code>DamageInfo.Source</code> (<code>Ship</code> ou <code>Echo</code>) de cada dano. O bônus do Crossfire é dano <code>Combined</code>, que o próprio <code>ComboTracker</code> ignora, para não realimentar a regra. O <code>Health</code> decide se o acerto matou antes de avisar <code>Damaged</code>: um ouvinte que cause mais dano nesse aviso (o bônus) não faz o <code>Died</code> disparar duas vezes.</p>
   </section>
   <section class="part"><h3>Como armazenar a gravação</h3>
     <p>Uma amostra de movimento:</p>
@@ -626,7 +654,7 @@
   <header>
     <h2 id="h10"><span class="n">10</span>Produção — escopo da jam</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (armadilhas, gadget e chefe) · <code>docs/gdd/10-producao.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (armadilhas, gadget, chefe e os dois primeiros combos) · <code>docs/gdd/10-producao.md</code></p>
   </header>
   <p class="summary">O que entra na jam, o que fica de fora, quando o protótipo está pronto para teste e o que pode dar errado.</p>
   <p>O objetivo é <strong>validar se a mecânica central é divertida</strong>, não construir todo o conteúdo previsto para o jogo final.</p>
@@ -652,6 +680,7 @@
       <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, fases 1 a 3 → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = derrotar o Guardião; derrota recomeça o encontro atual</td></tr>
     </tbody></table></div>
+    <p>Dos opcionais, já entraram <strong>dois combos temporais com aviso no HUD</strong> (Crossfire e Synchronized Strike) e a <strong>pontuação por combos</strong> → <a href="#c03">03</a>. Ainda sem som próprio.</p>
   </section>
   <section class="part"><h3>Critérios de aceitação do protótipo</h3>
     <p>O protótipo está pronto para teste quando:</p>
@@ -660,7 +689,7 @@
       <li class="done"><span>O eco repete movimentos e disparos sem depender do controle atual.</span></li>
       <li class="done"><span>A reprodução continua funcionando quando os inimigos se movem ou morrem.</span></li>
       <li class="done"><span>Uma armadilha pode ser manipulada por uma ação registrada. (O eco segura o interruptor do corredor enquanto a nave passa.)</span></li>
-      <li><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Derrubar os dois geradores do Guardião já pede nave e eco juntos, mas nenhum combo é reconhecido nem tem feedback próprio → <a href="#c03">03</a>.)</span></li>
+      <li class="done"><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um gerador do Guardião pela nave e o outro pelo eco derrubam o escudo do núcleo. Os dois têm aviso no HUD → <a href="#c03">03</a>.)</span></li>
       <li class="done"><span>O chefe pode ser derrotado usando a mecânica temporal. (O eco derruba um gerador enquanto a nave derruba o outro.)</span></li>
       <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (Com placeholder já se distingue; falta testar com jogadores.)</span></li>
       <li><span>A mecânica continua legível nos momentos com mais projéteis.</span></li>
@@ -679,7 +708,7 @@
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Data e regras da game jam: <span class="tbd">_TBD_</span>.</span></li>
-    <li><span>Os critérios 4 e 6 foram verificados pelo Unity CLI, não com jogadores. Falta o teste sem explicação.</span></li>
+    <li><span>Os critérios 4, 5 e 6 foram verificados pelo Unity CLI, não com jogadores. Falta o teste sem explicação.</span></li>
     <li><span>Equipe e quem faz o quê: <span class="tbd">_TBD_</span>.</span></li>
   </ul></div>
 </section>

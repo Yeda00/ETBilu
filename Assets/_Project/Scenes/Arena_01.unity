@@ -153,6 +153,7 @@ Transform:
   - {fileID: 880318358}
   - {fileID: 340722395}
   - {fileID: 1943902052}
+  - {fileID: 1205768503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &230011974
@@ -278,6 +279,7 @@ MonoBehaviour:
   player: {fileID: 567245531}
   spawner: {fileID: 880318357}
   stage: {fileID: 1943902051}
+  combos: {fileID: 1205768502}
   restartDelay: 2
 --- !u!4 &340722395
 Transform:
@@ -487,6 +489,8 @@ MonoBehaviour:
   session: {fileID: 340722394}
   gadget: {fileID: 567245532}
   stage: {fileID: 1943902051}
+  combos: {fileID: 1205768502}
+  comboNoticeSeconds: 1.4
 --- !u!114 &567456075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,6 +728,58 @@ Transform:
   m_Children:
   - {fileID: 567456073}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1205768501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1205768503}
+  - component: {fileID: 1205768502}
+  m_Layer: 0
+  m_Name: ComboTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1205768502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205768501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37263c53ee6243ee9fd28561528046e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Session.ComboTracker
+  waves: {fileID: 880318357}
+  stage: {fileID: 1943902051}
+  crossfireWindow: 1
+  crossfireRearm: 1
+  crossfireDamage: 3
+  crossfireScore: 100
+  strikeWindow: 2.5
+  strikeScore: 1000
+--- !u!4 &1205768503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205768501}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 143153982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1401411811
 GameObject:

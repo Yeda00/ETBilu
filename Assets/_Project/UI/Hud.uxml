@@ -63,6 +63,11 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <ui:VisualElement name="combo" class="combo hidden" picking-mode="Ignore">
+            <ui:Label name="combo-title" text="CROSSFIRE" class="combo-title" />
+            <ui:Label name="combo-hint" text="NAVE + ECO NO MESMO ALVO" class="combo-hint" />
+        </ui:VisualElement>
+
         <ui:VisualElement name="message" class="message hidden" picking-mode="Ignore">
             <ui:Label name="message-title" text="ONE MORE TIME" class="message-title" />
             <ui:Label name="message-hint" text="" class="message-hint" />

@@ -37,8 +37,11 @@ namespace OneMoreTime.Gameplay.Combat
         {
             if (!Model.TryDamage(info.Amount, Time.time))
                 return false;
+            // Read before Damaged: a listener may deal more damage (a combo bonus), and a nested hit
+            // that kills reports the death itself.
+            bool killed = Model.IsDead;
             Damaged?.Invoke(this, info);
-            if (Model.IsDead)
+            if (killed)
                 Died?.Invoke(this, info);
             return true;
         }

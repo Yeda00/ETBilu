@@ -18,6 +18,7 @@ namespace OneMoreTime.Gameplay.Session
 
     /// <summary>
     /// Score, pause, win and loss. Victory is the Guardian of the Cycle falling (the stage reports it).
+    /// Temporal combos add to the score (GDD 03, pontuação por habilidade).
     /// Death reloads the scene at the current encounter — the "eco durante a vida" model recommended
     /// for the prototype (GDD 06).
     /// </summary>
@@ -27,6 +28,7 @@ namespace OneMoreTime.Gameplay.Session
         [SerializeField] Health player;
         [SerializeField] WaveSpawner spawner;
         [SerializeField] StageDirector stage;
+        [SerializeField] ComboTracker combos;
         [SerializeField, Min(0f)] float restartDelay = 2f;
 
         public event Action Changed;
@@ -34,6 +36,7 @@ namespace OneMoreTime.Gameplay.Session
         public SessionState State { get; private set; } = SessionState.Playing;
         public int Score { get; private set; }
         public int Kills { get; private set; }
+        public int ComboCount { get; private set; }
 
         void OnEnable()
         {
@@ -45,6 +48,8 @@ namespace OneMoreTime.Gameplay.Session
                 stage.Scored += AddScore;
                 stage.Completed += OnCleared;
             }
+            if (combos != null)
+                combos.Triggered += OnCombo;
         }
 
         void OnDisable()
@@ -57,6 +62,8 @@ namespace OneMoreTime.Gameplay.Session
                 stage.Scored -= AddScore;
                 stage.Completed -= OnCleared;
             }
+            if (combos != null)
+                combos.Triggered -= OnCombo;
             Time.timeScale = 1f;
         }
 
@@ -81,6 +88,14 @@ namespace OneMoreTime.Gameplay.Session
                 return;
             Kills++;
             AddScore(enemy.ScoreValue);
+        }
+
+        void OnCombo(ComboReport combo)
+        {
+            if (State != SessionState.Playing)
+                return;
+            ComboCount++;
+            AddScore(combo.Points);
         }
 
         void AddScore(int points)
