@@ -53,6 +53,8 @@ namespace OneMoreTime.Gameplay.Combat
             return true;
         }
 
+        public void GrantInvulnerability(float seconds) => Model.GrantInvulnerability(seconds, Time.time);
+
         public void ResetHealth() => Model.Reset();
 
         void OnValidate() => model = null;

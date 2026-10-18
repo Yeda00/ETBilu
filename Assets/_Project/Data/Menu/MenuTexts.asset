@@ -43,9 +43,7 @@ MonoBehaviour:
   - key: Fire
     label: ATIRAR
   - key: Record
-    label: GRAVAR O ECO (SEGURAR)
-  - key: InvokeEcho
-    label: INVOCAR O ECO
+    label: "\xC2NCORA / RETORNO TEMPORAL"
   - key: Gadget
     label: MINA TEMPORAL
   - key: Pause

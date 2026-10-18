@@ -104,7 +104,7 @@ nome, texto da história, imagem e cena). O layout e o visual ficam em `UI/Menu.
 
 Na tela de controles, o jogador troca a tecla de cada ação (e o botão do controle). Valem as regras:
 
-- **Só o que faz sentido trocar.** As quatro direções (a primeira composição, WASD), atirar, gravar, invocar, mina e pausar. A mira (mouse e stick direito) e o movimento do controle (stick esquerdo) são fixos, e aparecem apagados. As setas e o clique esquerdo continuam valendo como segunda opção.
+- **Só o que faz sentido trocar.** As quatro direções (a primeira composição, WASD), atirar, âncora/retorno, mina e pausar. A mira (mouse e stick direito) e o movimento do controle (stick esquerdo) são fixos, e aparecem apagados. As setas e o clique esquerdo continuam valendo como segunda opção.
 - **Nenhum botão faz duas coisas.** Se o jogador escolhe uma tecla que já era de outra ação, as duas trocam de lugar.
 - **Ficam salvos** entre partidas (`ControlsStore`, em `PlayerPrefs`), e o jogo e o menu leem as mesmas teclas. A dica no pé do HUD acompanha.
 - Esc (teclado) e Start (controle) cancelam a escolha; por isso não dá para trocar uma ação para esses botões pela tela, só voltando ao padrão.

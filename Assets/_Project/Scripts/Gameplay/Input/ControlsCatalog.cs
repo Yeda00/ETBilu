@@ -85,13 +85,13 @@ namespace OneMoreTime.Gameplay.Input
             }
 
             if (device == ControlDevice.Gamepad)
-                return $"{L("Move.up")} mover · {L("Aim")} mirar · {L("Fire")} atirar · {L("Record")} gravar · {L("InvokeEcho")} invocar eco · {L("Gadget")} mina · {L("Pause")} pausar";
+                return $"{L("Move.up")} mover · {L("Aim")} mirar · {L("Fire")} atirar · {L("Record")} âncora/retorno · {L("Gadget")} mina · {L("Pause")} pausar";
 
             string up = L("Move.up"), left = L("Move.left"), down = L("Move.down"), right = L("Move.right");
             string move = up.Length == 1 && left.Length == 1 && down.Length == 1 && right.Length == 1
                 ? up + left + down + right
                 : $"{up}/{left}/{down}/{right}";
-            return $"{move} mover · MOUSE mirar · {L("Fire")}/CLIQUE atirar · {L("Record")} gravar · {L("InvokeEcho")} invocar eco · {L("Gadget")} mina · {L("Pause")} pausar";
+            return $"{move} mover · MOUSE mirar · {L("Fire")}/CLIQUE atirar · {L("Record")} âncora/retorno · {L("Gadget")} mina · {L("Pause")} pausar";
         }
     }
 }

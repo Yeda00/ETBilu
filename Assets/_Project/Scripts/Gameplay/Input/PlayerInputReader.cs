@@ -23,6 +23,7 @@ namespace OneMoreTime.Gameplay.Input
             : new Vector2(Screen.width, Screen.height * 0.5f);
         public bool FireHeld => fire != null && fire.IsPressed();
         public bool RecordHeld => record != null && record.IsPressed();
+        public bool RecordPressed => record != null && record.WasPressedThisFrame();
         public bool InvokeEchoPressed => invokeEcho != null && invokeEcho.WasPressedThisFrame();
         public bool GadgetPressed => gadget != null && gadget.WasPressedThisFrame();
         public bool PausePressed => pause != null && pause.WasPressedThisFrame();

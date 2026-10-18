@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e0f6eb75dc64e758eaa562fe8f046f, type: 3}
   m_Name: EchoConfig
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Echo.EchoConfig
-  maxRecordSeconds: 5
+  maxRecordSeconds: 3.5
   samplesPerSecond: 20
-  maxActiveEchoes: 3
+  maxActiveEchoes: 1
   consumeRecordingOnInvoke: 1
   fadeSeconds: 0.2
+  cooldownSeconds: 2
+  returnInvulnerabilitySeconds: 0.2
+  returnBulletClearRadius: 1.6
+  previewDelaySeconds: 0.18

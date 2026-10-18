@@ -52,7 +52,6 @@ namespace OneMoreTime.Core.Controls
             new ControlRow("Aim", "Aim", "", false, false, "MOUSE", "STICK DIR."),
             new ControlRow("Fire", "Fire", "", true, true, "+ CLIQUE"),
             new ControlRow("Record", "Record", "", true, true),
-            new ControlRow("InvokeEcho", "InvokeEcho", "", true, true),
             new ControlRow("Gadget", "Gadget", "", true, true),
             new ControlRow("Pause", "Pause", "", true, true),
         };

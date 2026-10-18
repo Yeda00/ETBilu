@@ -19,7 +19,7 @@ namespace OneMoreTime.Gameplay.Enemies
     /// <summary>
     /// A scripted enemy. Spawned by <see cref="WaveSpawner"/>, which injects the playfield, the ship and
     /// the projectile pool. Moves in playfield space (screen-relative), with the path rules in
-    /// <see cref="SwoopMotion"/> and <see cref="HoverMotion"/>; arms its <see cref="EnemyGun"/> when the
+        /// <see cref="SwoopMotion"/>, <see cref="SerpentineMotion"/> and <see cref="HoverMotion"/>; arms its <see cref="EnemyGun"/> when the
     /// path allows. Leaving through the left edge removes it without penalty (GDD 04).
     /// </summary>
     [RequireComponent(typeof(Health))]
@@ -33,25 +33,25 @@ namespace OneMoreTime.Gameplay.Enemies
 
         [Header("Swoop (small) — starting values")]
         [Tooltip("Units per second toward the left, relative to the screen.")]
-        [SerializeField, Min(0f)] float speed = 6.5f;
+        [SerializeField, Min(0f)] float speed = 7.2f;
         [Tooltip("Where the swoop starts, as a fraction of the half width: 1 is the right edge, 0 the middle.")]
         [SerializeField, Range(-1f, 1f)] float swoopAt = 0.3f;
-        [SerializeField, Min(0.05f)] float swoopSeconds = 1f;
+        [SerializeField, Min(0.05f)] float swoopSeconds = 0.75f;
         [Tooltip("Most units the swoop can bend up or down.")]
-        [SerializeField, Min(0f)] float maxSwoop = 4.5f;
+        [SerializeField, Min(0f)] float maxSwoop = 5f;
 
         [Header("Serpentine (interceptor) — starting values")]
-        [SerializeField, Min(0f)] float waveAmplitude = 1.35f;
+        [SerializeField, Min(0f)] float waveAmplitude = 1.4f;
         [SerializeField, Min(0f)] float waveFrequency = 0.55f;
 
         [Header("Hover (medium) — starting values")]
         [Tooltip("Column where it holds, measured from the right edge.")]
         [SerializeField, Min(0f)] float holdFromRightEdge = 4.5f;
-        [SerializeField, Min(0.05f)] float enterSeconds = 1.6f;
-        [SerializeField, Min(0f)] float holdSeconds = 7f;
-        [SerializeField, Min(0f)] float bobAmplitude = 0.5f;
-        [SerializeField, Min(0f)] float bobFrequency = 0.3f;
-        [SerializeField, Min(0f)] float leaveAcceleration = 5f;
+        [SerializeField, Min(0.05f)] float enterSeconds = 1.25f;
+        [SerializeField, Min(0f)] float holdSeconds = 6.5f;
+        [SerializeField, Min(0f)] float bobAmplitude = 0.8f;
+        [SerializeField, Min(0f)] float bobFrequency = 0.45f;
+        [SerializeField, Min(0f)] float leaveAcceleration = 6f;
 
         Health health;
         EnemyGun gun;
@@ -78,7 +78,7 @@ namespace OneMoreTime.Gameplay.Enemies
 
         /// <param name="queueOffset">How far behind the first enemy of its wave this one entered; a hovering
         /// enemy keeps that gap at its column, so a wave of two does not stack.</param>
-        /// <param name="phase">Desynchronises the bob of enemies in the same wave.</param>
+        /// <param name="phase">Desynchronises the bob or sine path of enemies in the same wave.</param>
         public void Spawn(Playfield field, Transform ship, ProjectilePool pool, float queueOffset, float phase)
         {
             playfield = field;

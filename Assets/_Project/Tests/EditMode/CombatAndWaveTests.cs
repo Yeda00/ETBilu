@@ -37,6 +37,16 @@ namespace OneMoreTime.Tests
             hp.Shielded = false;
             Assert.That(hp.TryDamage(1, 0.1f), Is.True, "no invulnerability left over from the absorbed hit");
         }
+
+        [Test]
+        public void Granted_invulnerability_extends_the_window_without_changing_health()
+        {
+            var hp = new HealthModel(3, 0f);
+            hp.GrantInvulnerability(0.2f, 10f);
+            Assert.That(hp.Current, Is.EqualTo(3));
+            Assert.That(hp.TryDamage(1, 10.19f), Is.False);
+            Assert.That(hp.TryDamage(1, 10.21f), Is.True);
+        }
     }
 
     public class TimelineCursorTests

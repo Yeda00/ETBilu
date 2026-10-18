@@ -26,9 +26,9 @@ namespace OneMoreTime.Gameplay.Boss
         [SerializeField] Projectile shot;
 
         [Header("Phases (GDD 06) — starting values")]
-        [SerializeField, Min(0f)] float survivalSeconds = 12f;
+        [SerializeField, Min(0f)] float survivalSeconds = 10f;
         [Tooltip("Window for the second generator in phase 2 (generous).")]
-        [SerializeField, Min(0.1f)] float preparationWindow = 6f;
+        [SerializeField, Min(0.1f)] float preparationWindow = 5f;
         [Tooltip("Window for the second generator in phase 3 (short).")]
         [SerializeField, Min(0.1f)] float syncWindow = 2.5f;
         [SerializeField, Min(0.1f)] float vulnerableSeconds = 4f;
@@ -49,15 +49,15 @@ namespace OneMoreTime.Gameplay.Boss
 
         [Header("Attacks")]
         [Tooltip("Phase 1: aimed fan.")]
-        [SerializeField, Min(0.1f)] float fanInterval = 1.4f;
-        [SerializeField, Min(1)] int fanShots = 5;
-        [SerializeField, Min(0f)] float fanSpread = 14f;
+        [SerializeField, Min(0.1f)] float fanInterval = 1.1f;
+        [SerializeField, Min(1)] int fanShots = 7;
+        [SerializeField, Min(0f)] float fanSpread = 11f;
         [Tooltip("Phase 2: small aimed burst.")]
-        [SerializeField, Min(0.1f)] float burstInterval = 1.2f;
-        [SerializeField, Min(1)] int burstShots = 3;
+        [SerializeField, Min(0.1f)] float burstInterval = 1f;
+        [SerializeField, Min(1)] int burstShots = 5;
         [Tooltip("Phase 3: ring of shots, turning a little each time.")]
-        [SerializeField, Min(0.1f)] float ringInterval = 1.3f;
-        [SerializeField, Min(3)] int ringShots = 14;
+        [SerializeField, Min(0.1f)] float ringInterval = 1.1f;
+        [SerializeField, Min(3)] int ringShots = 18;
 
         [Header("Score")]
         [SerializeField, Min(0)] int generatorScore = 250;

@@ -84,6 +84,8 @@ O feedback segue uma hierarquia para preservar a leitura do bullet hell:
 | Inimigo destruído | Explosão de partículas e anel expansivo que persistem depois que o inimigo some |
 | Artilheiro, gerador ou núcleo destruído | Mesma composição em escala, densidade e shake progressivamente maiores |
 | Combo temporal | **Convergência Temporal**: faíscas violetas e dois anéis ciano/violeta no ponto do combo |
+| Âncora plantada | Faíscas ciano e dois anéis curtos marcam o ponto fixo antes do rastro aparecer |
+| Retorno temporal | Explosão violeta no ponto abandonado, convergência ciano/violeta na âncora, limpeza local de projéteis e impulso de câmera/lente mais forte |
 
 `CameraImpact` usa trauma com limite de deslocamento e retorno rápido. Hits comuns não acumulam um tremor
 constante; dano do jogador, inimigos resistentes, partes do chefe e o núcleo recebem pesos diferentes.
@@ -95,8 +97,9 @@ O áudio também comunica a mecânica temporal.
 
 | Momento | Som |
 |---|---|
-| Gravação | Pulso eletrônico que aumenta de frequência |
-| Invocação do eco | Som de reversão seguido de um impacto digital |
+| Âncora plantada | Trava eletrônica ascendente com ataque curto |
+| Gravação | Pulso eletrônico que acelera, sobe de tom e alterna discretamente no estéreo |
+| Retorno e chegada do eco | Reversão, impacto grave e brilho filtrado em camadas; a música abaixa por um instante |
 | Reprodução | Versão filtrada dos sons da nave original |
 | Combo temporal | Efeito sonoro exclusivo e curto |
 | Chefe vulnerável | Mudança musical ou sinal sonoro marcante |
@@ -117,8 +120,9 @@ nome dos arquivos, e precisam de ajuste de ouvido.
 | Dano na nave | *Ouch* do Mini pack |
 | Inimigo, gerador, núcleo e nave destruídos | Explosões em escala crescente (Deva e Kenney) |
 | Mina solta e detonada | *Powerup* do Deva; explosão grave da Kenney |
-| Gravando (Shift) | Pulso gerado em código (onda quadrada) que acelera e sobe de tom até os 5 s; bipe ao começar e ao parar |
-| Invocação do eco (E) | Loop de reversão de tempo cortado em 0,7 s, depois um impacto 0,55 s mais tarde |
+| Plantar âncora (Shift) | Bipe existente mais uma trava ascendente gerada em código; faíscas e anéis confirmam o ponto |
+| Rota ativa | Pulso gerado em código que acelera, sobe de tom, abre o filtro e alterna discretamente no estéreo até 3,5 s |
+| Retorno (Shift) | Loop de reversão, sweep procedural com impacto grave, impacto metálico e shimmer filtrado; a música sofre um duck curto para o efeito atravessar a mixagem |
 | Combo temporal | *Starpower* do Mini pack, curto |
 | Chefe vulnerável, nova fase | Campo de força da Kenney; rugido do Mini pack |
 | Interruptor, corredor limpo, pausa, vitória | Bipes e jingles curtos (*Pickup*, *Powerup*, menu, *Win Jingle*) |

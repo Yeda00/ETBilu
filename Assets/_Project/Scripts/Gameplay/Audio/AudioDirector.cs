@@ -40,16 +40,25 @@ namespace OneMoreTime.Gameplay.Audio
         readonly List<SwitchPad> switches = new();
         readonly List<bool> switchHeld = new();
         AudioClip pulseClip;
+        AudioClip anchorClip;
+        AudioClip returnClip;
+        AudioClip arrivalClip;
         GuardianBoss boss;
         TrapSection section;
         bool bossVulnerable;
         int bossPhase;
         bool sectionCleared;
-        bool wasRecording;
-        int echoCount;
         SessionState lastState = SessionState.Playing;
 
-        void Awake() => pulseClip = ProceduralClips.Blip(pulseFrequency);
+        bool pulsePanRight;
+
+        void Awake()
+        {
+            pulseClip = ProceduralClips.Blip(pulseFrequency);
+            anchorClip = ProceduralClips.TemporalAnchor();
+            returnClip = ProceduralClips.TemporalReturn();
+            arrivalClip = ProceduralClips.TemporalArrival();
+        }
 
         void OnEnable()
         {
@@ -66,7 +75,10 @@ namespace OneMoreTime.Gameplay.Audio
             if (combos != null)
                 combos.Triggered += OnCombo;
             if (echoes != null)
-                echoes.Changed += OnEchoChanged;
+            {
+                echoes.AnchorPlanted += OnAnchorPlanted;
+                echoes.Returned += OnTemporalReturned;
+            }
             if (session != null)
                 session.Changed += OnSessionChanged;
         }
@@ -91,7 +103,10 @@ namespace OneMoreTime.Gameplay.Audio
             if (combos != null)
                 combos.Triggered -= OnCombo;
             if (echoes != null)
-                echoes.Changed -= OnEchoChanged;
+            {
+                echoes.AnchorPlanted -= OnAnchorPlanted;
+                echoes.Returned -= OnTemporalReturned;
+            }
             if (session != null)
                 session.Changed -= OnSessionChanged;
             foreach (var target in new List<Health>(targets.Keys))
@@ -107,6 +122,12 @@ namespace OneMoreTime.Gameplay.Audio
         {
             if (pulseClip != null)
                 Destroy(pulseClip);
+            if (anchorClip != null)
+                Destroy(anchorClip);
+            if (returnClip != null)
+                Destroy(returnClip);
+            if (arrivalClip != null)
+                Destroy(arrivalClip);
         }
 
         void Update()
@@ -181,29 +202,23 @@ namespace OneMoreTime.Gameplay.Audio
 
         void OnCombo(ComboReport combo) => Play(SoundCue.Combo, combo.Position);
 
-        void OnEchoChanged()
+        void OnAnchorPlanted(Vector3 position)
         {
-            if (echoes == null)
-                return;
+            pulse.Begin();
+            pulsePanRight = false;
+            Play(SoundCue.RecordStart, position);
+            sfx?.PlayClip(anchorClip, 0.7f, 1f);
+        }
 
-            bool recording = echoes.IsRecording;
-            if (recording && !wasRecording)
-            {
-                pulse.Begin();
-                Play(SoundCue.RecordStart, ShipPosition());
-            }
-            else if (!recording && wasRecording)
-                Play(SoundCue.RecordStop, ShipPosition());
-            wasRecording = recording;
-
-            int count = echoes.ActiveEchoes.Count;
-            if (count > echoCount)
-            {
-                // Reversal first, then the digital impact as the echo lands (GDD 08).
-                Play(SoundCue.EchoInvoke, ShipPosition());
-                Play(SoundCue.EchoArrive, ShipPosition(), 0.55f);
-            }
-            echoCount = count;
+        void OnTemporalReturned(Vector3 position, int bulletsDispelled)
+        {
+            Play(SoundCue.RecordStop, position);
+            Play(SoundCue.EchoInvoke, position);
+            Play(SoundCue.EchoArrive, position, 0.14f);
+            float weight = Mathf.Clamp01(bulletsDispelled / 8f);
+            sfx?.PlayClip(returnClip, Mathf.Lerp(0.72f, 0.9f, weight), Mathf.Lerp(1f, 0.9f, weight));
+            sfx?.PlayClip(arrivalClip, 0.5f, 1f, 0.09f, 0f, 2800f);
+            music?.PulseDuck(Mathf.Lerp(0.42f, 0.28f, weight), 0.08f);
         }
 
         void UpdateRecordingPulse()
@@ -212,7 +227,11 @@ namespace OneMoreTime.Gameplay.Audio
                 return;
             float progress = echoes.MaxRecordSeconds > 0f ? echoes.RecordedSeconds / echoes.MaxRecordSeconds : 0f;
             if (pulse.Tick(Time.deltaTime, progress))
-                sfx.PlayClip(pulseClip, pulseVolume, pulse.PitchAt(progress));
+            {
+                pulsePanRight = !pulsePanRight;
+                float pan = (pulsePanRight ? 1f : -1f) * Mathf.Lerp(0.05f, 0.26f, progress);
+                sfx.PlayClip(pulseClip, pulseVolume, pulse.PitchAt(progress), 0f, pan, Mathf.Lerp(4200f, 12000f, progress));
+            }
         }
 
         // ---------------------------------------------------------------- stage, boss, traps

@@ -108,12 +108,12 @@ namespace OneMoreTime.Gameplay.Audio
         }
 
         /// <summary>Plays a clip that is not in the library (the recording pulse).</summary>
-        public void PlayClip(AudioClip clip, float volume, float pitch)
+        public void PlayClip(AudioClip clip, float volume, float pitch, float delaySeconds = 0f, float pan = 0f, float lowPassHz = 0f)
         {
             var voice = clip != null ? FreeVoice() : null;
             if (voice == null)
                 return;
-            Begin(voice, clip, volume * masterVolume * level, pitch, 0f, 0f, 0f);
+            Begin(voice, clip, volume * masterVolume * level, pitch, pan, lowPassHz, delaySeconds);
             voice.StopAt = 0f;
         }
 

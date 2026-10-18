@@ -15,19 +15,19 @@ O loop central do jogo e o sistema que o sustenta: o que é gravado, como o eco 
 
 O jogo gira em torno de aprender os padrões, gravar ações úteis e usá-las para criar oportunidades de ataque.
 
-![Core loop: avançar, gravar, invocar o eco, criar combos, derrotar o chefe](../img/loop.svg)
+![Core loop: avançar, plantar a âncora, retornar com o eco, criar combos, derrotar o chefe](../img/loop.svg)
 
 | Passo | O jogador… |
 |---|---|
 | **Avançar** | desvia, atira e lê os inimigos |
-| **Gravar** | registra movimento, tiros e gadgets |
-| **Invocar o eco** | reproduz as ações gravadas |
+| **Plantar âncora** | marca o retorno e registra movimento, tiros e gadgets |
+| **Retornar** | leva a nave à âncora e solta o eco para reproduzir as ações |
 | **Criar combos** | combina nave + eco + armadilhas |
 | **Derrotar o chefe** | usa o conhecimento adquirido |
 
 ## O que o jogador grava
 
-O sistema registra uma sequência de ações da nave numa janela de **cinco segundos**.
+O sistema registra uma sequência de ações da nave numa janela de **até 3,5 segundos**.
 
 | Dado | Comportamento |
 |---|---|
@@ -35,25 +35,27 @@ O sistema registra uma sequência de ações da nave numa janela de **cinco segu
 | Mira e inclinação | A direção apontada pelo mouse e a inclinação visual da nave |
 | Disparos | Instante, tipo e direção de cada tiro |
 | Gadgets | Momento e direção de uso |
-| Duração | 5 segundos por gravação |
+| Duração | Até 3,5 segundos por gravação |
 | Reprodução | Uma cópia independente repete a sequência |
-| Limite | Até 3 ecos ativos no protótipo |
+| Limite | 1 eco ativo nesta primeira versão |
 
 A gravação **não é um replay de vídeo**: é uma lista de dados que permite reproduzir os eventos da nave
 → [09](09-arquitetura-tecnica.md).
 
 ## Ciclo de gravação
 
-![Linha do tempo de uma gravação de 5 segundos e sua reprodução](../img/echo-recording.svg)
+![Linha do tempo de uma gravação e sua reprodução](../img/echo-recording.svg)
 
-1. O jogador **segura Shift**: a gravação começa.
-2. O jogo armazena até 5 segundos de movimento e eventos.
-3. Ao **soltar**, a sequência fica pronta.
-4. O jogador **aperta E** para invocar o eco.
-5. O eco é uma nave fantasma que começa no ponto inicial gravado e executa a sequência na mesma ordem.
-6. Depois da reprodução o eco desaparece — a menos que uma habilidade permita mantê-lo ativo.
+1. O jogador **toca Shift**: planta a âncora e a gravação começa.
+2. Uma sombra violeta segue a nave com pequeno atraso. Ela é somente uma prévia visual: não atira e não colide.
+3. O jogo armazena até 3,5 segundos de movimento, mira, tiros e gadgets; a rota fica desenhada no campo.
+4. O jogador **toca Shift novamente**, ou o tempo se esgota.
+5. A nave retorna instantaneamente à âncora e a sombra volta para o início da rota.
+6. O eco executa a sequência na mesma ordem enquanto o jogador age livremente a partir da âncora.
+7. Depois da reprodução o eco desaparece e a habilidade respeita 2 segundos de recarga.
 
-Durante a reprodução o jogador continua controlando a nave atual e pode gravar uma nova sequência.
+Durante a reprodução o jogador continua controlando a nave atual, mas só planta outra âncora quando o eco
+termina e a recarga está pronta.
 
 A gravação tem um **indicador visual de tempo restante**, para o jogador planejar sem olhar o tempo
 todo para a interface → [07](07-controles-e-interface.md).
@@ -86,9 +88,12 @@ explícita do objeto.
 | Regra | Como está implementado |
 |---|---|
 | Espaço da gravação | Posições relativas à **tela** (o playfield que rola), não ao mundo: o eco refaz o mesmo trajeto na tela mesmo com a câmera avançando |
-| Uma gravação por eco | Invocar consome a gravação; para outro eco, grave de novo (`EchoConfig.consumeRecordingOnInvoke`, ligado) |
-| Limite de 5 s | A gravação para sozinha em 5 s; para começar outra é preciso soltar Shift |
-| Ecos ao mesmo tempo | Até 3 (`EchoConfig.maxActiveEchoes`) |
+| Um botão | Shift planta a âncora; o próximo toque retorna. E fica apenas como alias temporário de compatibilidade durante a gravação e não aparece no HUD |
+| Retorno | Volta só a posição da nave; não cura e não restaura o mundo. Concede 0,2 s de invulnerabilidade e apaga projéteis inimigos num raio de 1,6 unidade ao redor da âncora |
+| Limite de 3,5 s | Ao completar a janela, o retorno acontece automaticamente |
+| Prévia | Uma cópia inofensiva segue a nave com 0,18 s de atraso, acompanhada por âncora pulsante e rastro da rota |
+| Ecos ao mesmo tempo | 1 (`EchoConfig.maxActiveEchoes`), para o sincronismo ficar legível |
+| Recarga | 2 s a partir do retorno; uma nova âncora também espera o eco atual terminar |
 | Corpo do eco | Sem colisor e sem vida: não bloqueia a nave nem recebe dano |
 | Entrada e saída | O eco aparece e some com um fade de 0,2 s |
 | Mira | A direção é amostrada junto da pose; o eco gira para a mira gravada e cada tiro usa sua direção registrada |
@@ -103,6 +108,6 @@ para trás, fora da tela, poucos segundos depois.
 
 - [ ] Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final. O protótipo segura o interruptor só enquanto o eco ou a nave está sobre a placa, com 0,15 s de folga ao sair.
 - [ ] O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".
-- [ ] Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional. O protótipo já suporta 3 → [10](10-producao.md).
+- [x] Ecos simultâneos no MVP: a primeira versão usa um eco ativo para privilegiar leitura e intenção. Mais ecos ficam como expansão → [10](10-producao.md).
 - [ ] Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (`Playfield.ScrollSpeed = 0`) ou o eco grava em coordenadas do mundo ali? O protótipo para a rolagem; falta confirmar como regra → [05](05-armadilhas-gadgets-puzzles.md)
-- [ ] Manter a gravação consumida a cada invocação, ou permitir reinvocar a mesma gravação?
+- [x] A rota é consumida no retorno; cada eco exige uma nova âncora e uma nova rota.

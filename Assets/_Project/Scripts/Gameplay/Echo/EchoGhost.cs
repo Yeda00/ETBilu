@@ -36,6 +36,7 @@ namespace OneMoreTime.Gameplay.Echo
         float fadeSeconds;
         MaterialPropertyBlock block;
         Color[] baseColors;
+        bool previewing;
 
         public event Action<EchoGhost> Finished;
         public float Progress => playback?.Progress ?? 1f;
@@ -48,6 +49,7 @@ namespace OneMoreTime.Gameplay.Echo
 
         public void Play(EchoRecording recording, Playfield field, ProjectilePool projectiles, float fade)
         {
+            previewing = false;
             playback = new EchoPlayback(recording);
             playfield = field;
             pool = projectiles;
@@ -55,6 +57,23 @@ namespace OneMoreTime.Gameplay.Echo
             CacheColors();
             ApplyPose();
             Step(0f);
+        }
+
+        /// <summary>Shows a harmless, delayed afterimage while the route is being recorded.</summary>
+        public void BeginPreview(EchoSample pose)
+        {
+            playback = null;
+            previewing = true;
+            CacheColors();
+            SetPreviewPose(pose);
+            ApplyOpacity(0.34f);
+        }
+
+        public void SetPreviewPose(EchoSample pose)
+        {
+            if (!previewing)
+                return;
+            ApplyPose(pose);
         }
 
         void Update()
@@ -89,7 +108,11 @@ namespace OneMoreTime.Gameplay.Echo
 
         void ApplyPose()
         {
-            var pose = playback.Pose;
+            ApplyPose(playback.Pose);
+        }
+
+        void ApplyPose(EchoSample pose)
+        {
             transform.localPosition = new Vector3(pose.position.x, pose.position.y, 0f);
             if (visual != null)
             {
@@ -118,12 +141,19 @@ namespace OneMoreTime.Gameplay.Echo
                 return;
             float t = playback.Time, d = playback.Duration;
             float k = Mathf.Clamp01(Mathf.Min(t, d - t) / fadeSeconds);
+            ApplyOpacity(k);
+        }
+
+        void ApplyOpacity(float opacity)
+        {
+            if (baseColors == null)
+                return;
             for (int i = 0; i < fadeRenderers.Length; i++)
             {
                 if (fadeRenderers[i] == null)
                     continue;
                 var c = baseColors[i];
-                c.a *= k;
+                c.a *= Mathf.Clamp01(opacity);
                 fadeRenderers[i].GetPropertyBlock(block);
                 block.SetColor(BaseColorId, c);
                 fadeRenderers[i].SetPropertyBlock(block);

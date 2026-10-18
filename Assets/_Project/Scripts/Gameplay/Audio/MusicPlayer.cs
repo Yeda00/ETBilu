@@ -24,6 +24,8 @@ namespace OneMoreTime.Gameplay.Audio
         AudioSource loopSource;
         AudioLibrary.MusicEntry current;
         AudioLibrary.MusicEntry pending;
+        float impactDuck = 1f;
+        float impactDuckUntil;
 
         public AudioLibrary.MusicEntry Current => current;
 
@@ -56,6 +58,13 @@ namespace OneMoreTime.Gameplay.Audio
 
         public void SetPaused(bool paused) => duck.Target = paused ? pausedLevel : 1f;
 
+        /// <summary>Makes a major SFX cut through the mix, then quickly restores the music.</summary>
+        public void PulseDuck(float level = 0.34f, float holdSeconds = 0.08f)
+        {
+            impactDuck = Mathf.Min(impactDuck, Mathf.Clamp01(level));
+            impactDuckUntil = Mathf.Max(impactDuckUntil, Time.unscaledTime + Mathf.Max(0f, holdSeconds));
+        }
+
         void Update()
         {
             float dt = Time.unscaledDeltaTime;
@@ -72,7 +81,9 @@ namespace OneMoreTime.Gameplay.Audio
             }
 
             duck.Step(dt, 0.15f);
-            float volume = current != null ? masterVolume * level * current.volume * fade.Value * duck.Value : 0f;
+            if (Time.unscaledTime >= impactDuckUntil)
+                impactDuck = Mathf.MoveTowards(impactDuck, 1f, dt / 0.22f);
+            float volume = current != null ? masterVolume * level * current.volume * fade.Value * duck.Value * impactDuck : 0f;
             introSource.volume = volume;
             loopSource.volume = volume;
         }

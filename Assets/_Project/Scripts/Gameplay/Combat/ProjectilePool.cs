@@ -16,6 +16,8 @@ namespace OneMoreTime.Gameplay.Combat
         [SerializeField, Min(1)] int maxSize = 512;
 
         readonly Dictionary<Projectile, ObjectPool<Projectile>> pools = new();
+        readonly HashSet<Projectile> active = new();
+        readonly List<Projectile> dispelBuffer = new();
 
         /// <summary>Raised when a shot leaves or a mine is dropped or goes off, with where it happened.</summary>
         public event Action<SoundCue, Vector3> CueRaised;
@@ -28,7 +30,12 @@ namespace OneMoreTime.Gameplay.Combat
                 return null;
             var pool = GetPool(prefab);
             var p = pool.Get();
-            p.Launch(position, direction, faction, source, pool.Release);
+            active.Add(p);
+            p.Launch(position, direction, faction, source, released =>
+            {
+                active.Remove(released);
+                pool.Release(released);
+            });
             CueRaised?.Invoke(source switch
             {
                 ShotSource.Echo => SoundCue.EchoShot,
@@ -36,6 +43,23 @@ namespace OneMoreTime.Gameplay.Combat
                 _ => SoundCue.ShipShot,
             }, position);
             return p;
+        }
+
+        /// <summary>Clears hostile bullets around a temporal return point, preserving player and echo shots.</summary>
+        public int DispelEnemyProjectiles(Vector3 center, float radius)
+        {
+            float radiusSq = Mathf.Max(0f, radius) * Mathf.Max(0f, radius);
+            dispelBuffer.Clear();
+            foreach (Projectile projectile in active)
+                if (projectile != null && projectile.IsLive && projectile.Faction == Faction.Enemy &&
+                    (projectile.transform.position - center).sqrMagnitude <= radiusSq)
+                    dispelBuffer.Add(projectile);
+
+            for (int i = 0; i < dispelBuffer.Count; i++)
+                dispelBuffer[i].Dispel();
+            int count = dispelBuffer.Count;
+            dispelBuffer.Clear();
+            return count;
         }
 
         ObjectPool<Projectile> GetPool(Projectile prefab)
@@ -60,6 +84,8 @@ namespace OneMoreTime.Gameplay.Combat
             foreach (var pool in pools.Values)
                 pool.Dispose();
             pools.Clear();
+            active.Clear();
+            dispelBuffer.Clear();
         }
     }
 }

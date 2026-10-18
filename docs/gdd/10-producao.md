@@ -50,7 +50,7 @@ Dos opcionais, já entraram **dois combos temporais com aviso no HUD** (Crossfir
 
 O protótipo está pronto para teste quando:
 
-1. [x] O jogador grava e reproduz uma sequência de cinco segundos.
+1. [x] O jogador planta uma âncora, grava e reproduz uma sequência de até 3,5 segundos, retornando ao ponto inicial.
 2. [x] O eco repete movimentos e disparos sem depender do controle atual.
 3. [x] A reprodução continua funcionando quando os inimigos se movem ou morrem.
 4. [x] Uma armadilha pode ser manipulada por uma ação registrada. (O eco segura o interruptor do corredor enquanto a nave passa.)

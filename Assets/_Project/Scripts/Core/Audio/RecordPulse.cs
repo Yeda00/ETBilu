@@ -3,7 +3,7 @@ using System;
 namespace OneMoreTime.Core.Audio
 {
     /// <summary>
-    /// The recording sound (GDD 08): an electronic pulse that rises in frequency as the 5 s fill up. Beats
+    /// The recording sound (GDD 08): an electronic pulse that rises in frequency as the route fills up. Beats
     /// come faster and higher as <c>progress</c> goes from 0 to 1.
     /// </summary>
     public sealed class RecordPulse

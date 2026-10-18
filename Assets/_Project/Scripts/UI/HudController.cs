@@ -156,15 +156,20 @@ namespace OneMoreTime.UI
         void UpdateEcho()
         {
             float max = echo.MaxRecordSeconds;
-            float seconds = echo.IsRecording ? echo.RecordedSeconds : echo.HasRecordingReady ? echo.ReadyDuration : 0f;
-            SetFill(memoryFill, max > 0f ? seconds / max : 0f);
-            memoryValue.text = string.Format(PtBr, "{0:0.0} / {1:0.0} s", seconds, max);
+            float seconds = echo.IsRecording ? echo.RecordedSeconds : 0f;
+            float fill = echo.IsRecording
+                ? (max > 0f ? seconds / max : 0f)
+                : echo.CooldownRemaining > 0f ? 1f - echo.CooldownNormalized : echo.CanPlantAnchor ? 1f : 0f;
+            SetFill(memoryFill, fill);
+            memoryValue.text = echo.IsRecording
+                ? string.Format(PtBr, "{0:0.0} / {1:0.0} s", seconds, max)
+                : echo.CooldownRemaining > 0f ? string.Format(PtBr, "{0:0.0} s", echo.CooldownRemaining) : "PRONTA";
 
             recDot.EnableInClassList("on", echo.IsRecording);
-            memoryFill.EnableInClassList("ready", !echo.IsRecording && echo.HasRecordingReady);
+            memoryFill.EnableInClassList("ready", !echo.IsRecording && echo.CanPlantAnchor);
             memoryState.text = echo.IsRecording
-                ? "SHIFT · gravando sequência"
-                : echo.HasRecordingReady ? "E · invocar eco" : "Segure SHIFT para gravar";
+                ? "SHIFT · retornar à âncora"
+                : echo.CooldownRemaining > 0f ? "recalibrando âncora" : echo.CanPlantAnchor ? "SHIFT · plantar âncora" : "eco reproduzindo";
 
             var active = echo.ActiveEchoes;
             for (int i = 0; i < slots.Length; i++)
@@ -176,7 +181,7 @@ namespace OneMoreTime.UI
                 slots[i].EnableInClassList("playing", used);
                 slots[i].EnableInClassList("locked", !exists);
                 if (slotStates[i] != null)
-                    slotStates[i].text = !exists ? "—" : used ? "reproduzindo" : "disponível";
+                    slotStates[i].text = !exists ? "—" : used ? "reproduzindo rota" : "âncora disponível";
             }
         }
 

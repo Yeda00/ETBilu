@@ -24,6 +24,13 @@ namespace OneMoreTime.Core.Combat
 
         public bool IsInvulnerable(float now) => now < invulnerableUntil;
 
+        /// <summary>Extends, but never shortens, the current invulnerability window.</summary>
+        public void GrantInvulnerability(float seconds, float now)
+        {
+            if (seconds > 0f && !IsDead)
+                invulnerableUntil = Math.Max(invulnerableUntil, now + seconds);
+        }
+
         /// <summary>Apply damage at time <paramref name="now"/>. Returns true if it landed.</summary>
         public bool TryDamage(int amount, float now)
         {

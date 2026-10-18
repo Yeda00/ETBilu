@@ -80,6 +80,22 @@ namespace OneMoreTime.Gameplay.Feedback
             Ring(position, new Color(0.72f, 0.35f, 1f, 0.9f), 3f, 0.5f, 0.075f);
         }
 
+        public void TemporalAnchorPlanted(Vector3 position)
+        {
+            Burst(position, new Color(0.2f, 0.95f, 1f, 1f), 0.75f, 14);
+            Ring(position, new Color(0.35f, 0.95f, 1f, 0.95f), 0.9f, 0.24f, 0.075f);
+            Ring(position, new Color(0.72f, 0.35f, 1f, 0.75f), 1.3f, 0.34f, 0.045f);
+        }
+
+        public void TemporalReturn(Vector3 departure, Vector3 anchor, int bulletsDispelled)
+        {
+            Burst(departure, new Color(0.72f, 0.35f, 1f, 0.9f), 0.9f, 18);
+            Ring(departure, new Color(0.72f, 0.35f, 1f, 0.75f), 1.35f, 0.2f, 0.065f);
+            Burst(anchor, new Color(0.25f, 0.95f, 1f, 1f), 1.55f, Mathf.Clamp(30 + bulletsDispelled * 2, 30, 52));
+            Ring(anchor, new Color(0.2f, 0.95f, 1f, 1f), 2.3f, 0.28f, 0.12f);
+            Ring(anchor, new Color(0.72f, 0.35f, 1f, 0.9f), 3.35f, 0.46f, 0.075f);
+        }
+
         void Update()
         {
             if (rings == null)

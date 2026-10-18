@@ -50,8 +50,7 @@ namespace OneMoreTime.UI
             new() { key = "Move.right", label = "MOVER PARA A DIREITA" },
             new() { key = "Aim", label = "MIRAR" },
             new() { key = "Fire", label = "ATIRAR" },
-            new() { key = "Record", label = "GRAVAR O ECO (SEGURAR)" },
-            new() { key = "InvokeEcho", label = "INVOCAR O ECO" },
+            new() { key = "Record", label = "ÂNCORA / RETORNO TEMPORAL" },
             new() { key = "Gadget", label = "MINA TEMPORAL" },
             new() { key = "Pause", label = "PAUSAR" },
         };

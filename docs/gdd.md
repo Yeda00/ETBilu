@@ -34,13 +34,14 @@ derrotar chefes. Cada tentativa deixa para trás ações que viram estratégia: 
 
 ![Core loop](img/loop.svg)
 
-**Avançar** (desviar, atirar, ler inimigos) → **Gravar** (movimento, tiros, gadgets) → **Invocar o eco**
+**Avançar** (desviar, atirar, ler inimigos) → **Plantar âncora** (gravar movimento, tiros, gadgets) → **Retornar e soltar o eco**
 → **Criar combos** (nave + eco + armadilhas) → **Derrotar o chefe**.
 
 ## O eco temporal → [02](gdd/02-eco-temporal.md)
 
-Segure **Shift** para gravar até **5 s** de posição, mira, inclinação, tiros e gadgets. Aperte **E** e uma nave
-fantasma repete a sequência a partir do ponto inicial, enquanto você continua pilotando. Até **3 ecos**.
+Toque **Shift** para plantar uma âncora e gravar até **3,5 s** de posição, mira, inclinação, tiros e gadgets.
+Toque **Shift** novamente — ou deixe o tempo acabar — para voltar ao ponto plantado. A sombra que seguia a
+nave volta à âncora e repete a rota enquanto você continua pilotando. Há **um eco ativo** nessa primeira versão.
 
 **Regra fundamental:** o eco reproduz as ações, mas não rebobina o mundo. O que morreu continua morto.
 
@@ -90,7 +91,7 @@ O som também explica: a gravação pulsa, a invocação reverte, o eco soa filt
 
 ## Escopo da jam → [10](gdd/10-producao.md)
 
-**MVP:** nave, uma arena, gravação de 5 s, reprodução, drones por script, duas armadilhas, um gadget,
+**MVP:** nave, uma arena, âncora com rota de até 3,5 s, retorno e reprodução, drones por script, duas armadilhas, um gadget,
 um chefe com janela de vulnerabilidade, vitória e derrota. O teste que importa: alguém joga sem
 explicação e descobre sozinho para que serve o eco.
 
@@ -98,7 +99,7 @@ explicação e descobre sozinho para que serve o eco.
 
 Jogável em `Assets/_Project/Scenes/Arena_01.unity`. Nave, eco, inimigos e chefe usam os modelos 3D de
 blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
-gravação de 5 s, eco que repete movimento, tiros e gadget, caças, interceptadores e artilheiros que atiram, em ondas por script,
+âncora temporal com retorno e eco que repete movimento, tiros e gadget, caças, interceptadores e artilheiros que atiram, em ondas por script,
 corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
 (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
 atual recomeça), vitória (derrotar o Guardião), o fluxo de menus (título, menu, mapa de missões, história e cartão de missão) e som: efeitos e música CC0 ligados ao jogo, com os valores ainda por ajustar de ouvido.

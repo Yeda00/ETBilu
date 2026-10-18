@@ -22,6 +22,7 @@ namespace OneMoreTime.Gameplay.Combat
 
         public Faction Faction { get; private set; }
         public ShotSource Source { get; private set; }
+        public bool IsLive => live;
 
         public void Launch(Vector3 position, Vector3 dir, Faction faction, ShotSource source, Action<Projectile> onRelease)
         {
@@ -52,6 +53,9 @@ namespace OneMoreTime.Gameplay.Combat
             target.TakeDamage(new DamageInfo(damage, kind, Source));
             Release();
         }
+
+        /// <summary>Returns this projectile to its pool without applying damage.</summary>
+        public void Dispel() => Release();
 
         // Guarded: one projectile can touch two colliders in the same physics step.
         void Release()
