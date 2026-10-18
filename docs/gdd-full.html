@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BILU'S INVASION — GDD completo</title>
-<meta name="description" content="Os dez capítulos do GDD numa página: eco temporal, combate, inimigos, armadilhas, chefe, controles, direção, arquitetura e produção.">
+<meta name="description" content="Os dez capítulos do GDD numa página: eco temporal, combate, inimigos, gadgets, chefe, controles, direção, arquitetura e produção.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
     <a href="#c02"><span class="num">02 · _TBD_</span><b>Loop e eco temporal</b><small>O que é gravado, como o eco nasce e suas regras.</small></a>
     <a href="#c03"><span class="num">03 · _TBD_</span><b>Combate</b><small>Nave, tipos de dano, combos e pontuação.</small></a>
     <a href="#c04"><span class="num">04 · _TBD_</span><b>Inimigos e ondas</b><small>Os três inimigos e como as ondas entram.</small></a>
-    <a href="#c05"><span class="num">05 · _TBD_</span><b>Armadilhas, gadgets e puzzles</b><small>O cenário e as ferramentas que pedem o eco.</small></a>
+    <a href="#c05"><span class="num">05 · _TBD_</span><b>Gadgets</b><small>As ferramentas que a nave carrega.</small></a>
     <a href="#c06"><span class="num">06 · _TBD_</span><b>Chefe e estrutura das runs</b><small>O Guardião, os encontros e a progressão.</small></a>
     <a href="#c07"><span class="num">07 · _TBD_</span><b>Controles e interface</b><small>Teclas e o que o HUD precisa mostrar.</small></a>
     <a href="#c08"><span class="num">08 · _TBD_</span><b>Direção visual e sonora</b><small>Cor e som que explicam a mecânica.</small></a>
@@ -54,7 +54,7 @@
   <p class="summary">O que o jogo é, qual é a fantasia do jogador, os pilares que orientam cada decisão e o formato do protótipo.</p>
   <figure><img src="img/echo-concept.svg" alt="A nave atual e o eco temporal atiram juntos no mesmo inimigo." width="800" height="340" loading="lazy"></figure>
   <section class="part"><h3>High concept</h3>
-    <p>Um shooter de nave em que o jogador <strong>grava e reproduz suas próprias ações passadas</strong> para lutar ao mesmo tempo com versões anteriores de si mesmo, desviar de armadilhas e explorar combinações temporais para derrotar chefes.</p>
+    <p>Um shooter de nave em que o jogador <strong>grava e reproduz suas próprias ações passadas</strong> para lutar ao mesmo tempo com versões anteriores de si mesmo, desviar dos ataques e explorar combinações temporais para derrotar chefes.</p>
     <p>O tema central é <em>One More Time</em>: cada tentativa deixa para trás ações que podem ser reproduzidas para criar novas estratégias.</p>
     <p>O jogo se chama <strong>Bilu's Invasion</strong>. <em>One More Time</em> foi o nome inicial e ficou como o tema do design; o código mantém o nome <code>OneMoreTime</code> nos namespaces e nos menus do Editor.</p>
     <div class="scroll"><table class="kv"><tbody>
@@ -68,7 +68,7 @@
     <div class="pillars">
       <div class="pillar"><span class="n">PILAR 1</span><b>O passado continua lutando</b><p>As ações gravadas viram ecos que repetem trajetórias, tiros e gadgets.</p></div>
       <div class="pillar"><span class="n">PILAR 2</span><b>Combate baseado em habilidade</b><p>Dominar o movimento, ler padrões de ataque e criar boas trajetórias.</p></div>
-      <div class="pillar"><span class="n">PILAR 3</span><b>Soluções inteligentes</b><p>Armadilhas, dispositivos e chefes vencidos por sincronização e posicionamento, não só por dano bruto.</p></div>
+      <div class="pillar"><span class="n">PILAR 3</span><b>Soluções inteligentes</b><p>Inimigos e chefes vencidos por sincronização e posicionamento, não só por dano bruto.</p></div>
     </div>
   </section>
   <section class="part"><h3>Formato e escopo</h3>
@@ -83,8 +83,8 @@
       <tr><th scope="row">Duração-alvo da run</th><td>5–10 minutos no protótipo completo</td></tr>
       <tr><th scope="row">Duração de uma gravação</th><td>5 segundos → <a href="#c02">02</a></td></tr>
       <tr><th scope="row">Ecos simultâneos</th><td>Até 3 no protótipo</td></tr>
-      <tr><th scope="row">Conteúdo inicial</th><td>Uma arena, um conjunto de armadilhas e um chefe</td></tr>
-      <tr><th scope="row">Controles</th><td>Teclado e mouse, ou só teclado; suporte a controle pode vir depois → <a href="#c07">07</a></td></tr>
+      <tr><th scope="row">Conteúdo inicial</th><td>Uma arena, ondas de inimigos e um chefe (sem armadilhas nem puzzles)</td></tr>
+      <tr><th scope="row">Controles</th><td>Teclado e mouse, ou controle (gamepad); as teclas e botões podem ser trocados → <a href="#c07">07</a></td></tr>
       <tr><th scope="row">Contexto</th><td>Protótipo para game jam</td></tr>
     </tbody></table></div>
     <p class="muted small">Os números são parâmetros iniciais de design para testar, não valores definitivos.</p>
@@ -93,7 +93,7 @@
     <p>O diferencial é transformar o <strong>próprio histórico do jogador em ferramenta de gameplay</strong>. Uma esquiva pode virar distração, um disparo pode preparar um ataque posterior e um gadget pode abrir uma rota que seria impossível atravessar sozinho.</p>
     <div class="pillars">
       <div class="pillar"><span class="n">REPETIR</span><p>Observar o eco executando exatamente o que foi gravado.</p></div>
-      <div class="pillar"><span class="n">COMBINAR</span><p>Usar a nave atual e o eco para atacar, desviar ou manipular armadilhas.</p></div>
+      <div class="pillar"><span class="n">COMBINAR</span><p>Usar a nave atual e o eco para atacar e desviar.</p></div>
       <div class="pillar"><span class="n">DESCOBRIR</span><p>Perceber uma solução temporal para um desafio que parecia impossível.</p></div>
     </div>
     <div class="rule ok"><span class="osd">Recomendação de produção</span>Começar com uma única arena e um chefe que exija dois ataques sincronizados. Se essa experiência funcionar, e o jogador sentir que planejou uma solução inteligente, o coração do jogo está validado. O resto — mais gadgets, chefes, upgrades e estrutura roguelite — cresce a partir desse núcleo sem pôr em risco a entrega da jam.</div>
@@ -110,7 +110,7 @@
   <header>
     <h2 id="h02"><span class="n">02</span>Loop e eco temporal</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost, SwitchPad) · <code>docs/gdd/02-eco-temporal.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost) · <code>docs/gdd/02-eco-temporal.md</code></p>
   </header>
   <p class="summary">O loop central do jogo e o sistema que o sustenta: o que é gravado, como o eco nasce e as regras que o mantêm previsível.</p>
   <section class="part"><h3>Core gameplay loop</h3>
@@ -143,7 +143,7 @@
     <p style="margin-top:14px">Durante a reprodução o jogador continua controlando a nave atual e pode gravar uma nova sequência. A gravação tem um <strong>indicador visual de tempo restante</strong>, para o jogador planejar sem olhar o tempo todo para a interface → <a href="#c07">07</a>.</p>
   </section>
   <section class="part" id="regra-fundamental"><h3>Regra fundamental</h3>
-    <div class="rule"><span class="osd">O mundo não rebobina</span>O eco <strong>reproduz as ações, mas não restaura o estado do mundo.</strong> Inimigos mortos não voltam, projéteis destruídos não reaparecem e armadilhas seguem suas regras atuais.</div>
+    <div class="rule"><span class="osd">O mundo não rebobina</span>O eco <strong>reproduz as ações, mas não restaura o estado do mundo.</strong> Inimigos mortos não voltam, projéteis destruídos não reaparecem.</div>
     <p class="why"><em>Por quê:</em> evita a complexidade de rebobinar a simulação inteira e torna o sistema mais previsível.</p>
   </section>
   <section class="part"><h3>Limites e consistência</h3>
@@ -156,7 +156,6 @@
       <tr><th scope="row">Usa gadgets?</th><td>Sim, e obedece às regras de cada gadget</td></tr>
       <tr><th scope="row">Quantos ao mesmo tempo?</th><td>Limitado, para a tela não ficar ilegível</td></tr>
     </tbody></table></div>
-    <p><strong>Dispositivos de presença contínua.</strong> Um eco pode manter um interruptor ativado enquanto sua trajetória permanece sobre ele, mas não ativa um mecanismo só por passar perto — a menos que essa seja a regra explícita do objeto.</p>
   </section>
   <section class="part"><h3>No protótipo atual</h3>
     <div class="scroll"><table><thead><tr><th>Regra</th><th>Como está implementado</th></tr></thead><tbody>
@@ -168,16 +167,12 @@
       <tr><th scope="row">Entrada e saída</th><td>O eco aparece e some com um fade de 0,2 s</td></tr>
       <tr><th scope="row">Mira</th><td>A direção é amostrada junto da pose; o eco gira para a mira gravada e cada tiro usa sua direção registrada</td></tr>
       <tr><th scope="row">Gadget</th><td>O uso da mina temporal entra na gravação (<code>EchoEventType.Gadget</code>); o eco solta a mina no mesmo ponto e instante → <a href="#c05">05</a></td></tr>
-      <tr><th scope="row">Interruptores</th><td>O eco segura um interruptor enquanto está sobre a placa. O interruptor confere posições, não colisões, então o eco sem colisor também conta → <a href="#c05">05</a></td></tr>
-      <tr><th scope="row">Puzzles fixos no mundo</th><td>A rolagem para no trecho do interruptor (<code>TrapSection</code> zera <code>Playfield.ScrollSpeed</code>), então o eco volta ao ponto onde foi gravado</td></tr>
     </tbody></table></div>
     <p class="why"><em>Por quê:</em> num side-scroller a tela anda o tempo todo; gravar em coordenadas do mundo deixaria o eco para trás, fora da tela, poucos segundos depois.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li><span>Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final. O protótipo segura o interruptor só enquanto o eco ou a nave está sobre a placa, com 0,15 s de folga ao sair.</span></li>
     <li><span>O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".</span></li>
     <li><span>Ecos simultâneos no MVP: §2 fala em até 3, mas o MVP (§14) põe "até três ecos" como opcional. O protótipo já suporta 3. <a href="#c10">→ 10</a></span></li>
-    <li><span>Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (<code>Playfield.ScrollSpeed = 0</code>) ou o eco grava em coordenadas do mundo ali? O protótipo para a rolagem; falta confirmar como regra. <a href="#c05">→ 05</a></span></li>
     <li><span>Manter a gravação consumida a cada invocação, ou permitir reinvocar a mesma gravação?</span></li>
   </ul></div>
 </section>
@@ -215,7 +210,6 @@
       <tr><th scope="row">Artilheiro (M)</th><td>20 de vida, 300 pontos; leques de 3 tiros</td><td><code>Enemy_M</code> → <a href="#c04">04</a></td></tr>
       <tr><th scope="row">Inimigo que bate na nave</th><td>1 de dano</td><td><code>ContactDamage</code></td></tr>
       <tr><th scope="row">Mina temporal</th><td>4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s</td><td><code>TimeMine_Ship</code>, <code>TimeMine_Echo</code>, <code>PlayerShip</code> → <code>ShipGadget</code></td></tr>
-      <tr><th scope="row">Laser gate e barreira móvel</th><td>1 de dano ao contato</td><td>prefabs em <code>Prefabs/Traps</code></td></tr>
       <tr><th scope="row">Tiros inimigos (caça, interceptador, artilheiro, Guardião)</th><td>1 de dano, 9,5 u/s</td><td><code>Shot_Enemy</code></td></tr>
       <tr><th scope="row">Guardião</th><td>núcleo 120 de vida, geradores 12</td><td><code>Guardian</code> → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Crossfire</th><td>janela de 1 s entre o acerto da nave e o do eco; +3 de dano combinado; o mesmo alvo só dá outro Crossfire depois de 1 s</td><td><code>ComboTracker</code> (cena, em <code>Systems</code>)</td></tr>
@@ -233,18 +227,17 @@
   </section>
   <section class="part"><h3>Combos temporais</h3>
     <p>Os combos são <strong>eventos específicos</strong> que o jogo reconhece, não multiplicadores genéricos.</p>
-    <figure><img src="img/combos.svg" alt="Os cinco combos temporais." width="800" height="300" loading="lazy"></figure>
+    <figure><img src="img/combos.svg" alt="Os três combos temporais." width="800" height="300" loading="lazy"></figure>
     <div class="scroll"><table><thead><tr><th>Combo</th><th>Condição</th><th>Resultado</th></tr></thead><tbody>
       <tr><th scope="row">Crossfire</th><td>Nave atual e eco acertam o mesmo alvo numa janela curta</td><td>Dano adicional</td></tr>
-      <tr><th scope="row">Trap Bait</th><td>O eco atrai inimigos para uma armadilha</td><td>Inimigos atingidos pela armadilha</td></tr>
-      <tr><th scope="row">Double Pulse</th><td>Dois pulsos atingem mecanismos conectados</td><td>Sobrecarga ou desativação</td></tr>
       <tr><th scope="row">Reflect Chain</th><td>Um projétil ricocheteia em escudos posicionados em sequência</td><td>Dano elevado ao alvo</td></tr>
       <tr><th scope="row">Synchronized Strike</th><td>Dois pontos fracos são atingidos quase ao mesmo tempo</td><td>Escudo do chefe desativado</td></tr>
     </tbody></table></div>
+    <p class="muted small"><strong>Trap Bait</strong> (o eco atrai inimigos para uma armadilha) e <strong>Double Pulse</strong> (dois pulsos em mecanismos conectados) saíram junto com as armadilhas e os mecanismos do cenário.</p>
     <p>Cada combo tem <strong>feedback visual e sonoro próprio</strong> → <a href="#c08">08</a>.</p>
     <p class="why"><em>Por quê:</em> o jogador precisa entender por que a combinação funcionou — é assim que ele aprende a repeti-la.</p>
     <h4>No protótipo atual</h4>
-    <p>Dois dos cinco combos existem: <strong>Crossfire</strong> e <strong>Synchronized Strike</strong>. Os dois partem de acertos reais da nave e do eco: um tiro ou uma mina conta para quem o disparou, a nave atual ou um eco.</p>
+    <p>Dois dos três combos existem: <strong>Crossfire</strong> e <strong>Synchronized Strike</strong>. Os dois partem de acertos reais da nave e do eco: um tiro ou uma mina conta para quem o disparou, a nave atual ou um eco.</p>
     <div class="scroll"><table><thead><tr><th>Combo</th><th>Como o jogo reconhece</th><th>Resultado</th></tr></thead><tbody>
       <tr><th scope="row">Crossfire</th><td>A nave e um eco acertam o <strong>mesmo alvo</strong> (inimigo, gerador ou núcleo do Guardião) com até <strong>1 s</strong> de diferença. Dois acertos da mesma fonte não contam. Cada par de acertos dá um combo só, e o mesmo alvo só dá outro depois de 1 s</td><td><strong>+3 de dano combinado</strong> no alvo, se ele ainda estiver vivo, e <strong>100 pontos</strong></td></tr>
       <tr><th scope="row">Synchronized Strike</th><td>Os dois geradores do Guardião caem com até <strong>2,5 s</strong> de diferença, <strong>um derrubado pela nave e o outro por um eco</strong>, e o núcleo fica vulnerável</td><td>O <strong>escudo do núcleo cai</strong>, pela regra do próprio Guardião → <a href="#c06">06</a>, e <strong>1000 pontos</strong></td></tr>
@@ -254,14 +247,14 @@
     <p class="why"><em>Por quê:</em> derrubar os geradores sem o eco ainda abre o núcleo, se o jogador for rápido o bastante (pergunta em aberto em <a href="#c06">06</a>). O Synchronized Strike não muda essa regra: ele reconhece e premia quando a abertura veio da nave e do eco juntos.</p>
   </section>
   <section class="part"><h3>Pontuação por habilidade</h3>
-    <ul class="clean"><li>Combos temporais.</li><li>Inimigos eliminados por armadilhas.</li><li>Sequências sem sofrer dano.</li><li>Sincronizações precisas.</li><li>Destruição de projéteis ou mecanismos usando o ambiente.</li></ul>
+    <ul class="clean"><li>Combos temporais.</li><li>Sequências sem sofrer dano.</li><li>Sincronizações precisas.</li></ul>
     <p>A pontuação <strong>não é necessária</strong> para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.</p>
     <p class="muted small">No protótipo atual a pontuação é <strong>100 por inimigo abatido</strong>, <strong>250 por gerador do Guardião</strong>, <strong>5000 pelo núcleo</strong>, <strong>100 por Crossfire</strong> e <strong>1000 por Synchronized Strike</strong>, como placeholder. Dos prêmios acima, só os combos temporais existem. A tela de vitória mostra quantos combos o jogador fez.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Valores de vida, dano e invulnerabilidade: os de partida estão na tabela acima; falta validar jogando.</span></li>
     <li><span>O dano de contato entra como quarta categoria, ou é parte do dano direto?</span></li>
-    <li><span>Combos temporais: Crossfire e Synchronized Strike implementados; faltam Trap Bait, Double Pulse e Reflect Chain. Trap Bait depende de armadilhas que firam inimigos, e as do protótipo só ferem a nave; Double Pulse depende do pulso de interferência; Reflect Chain, do escudo refletor (expansão).</span></li>
+    <li><span>Combos temporais: Crossfire e Synchronized Strike implementados; falta Reflect Chain, que depende do escudo refletor (expansão). Trap Bait e Double Pulse saíram com as armadilhas.</span></li>
     <li><span>Tamanho da "janela curta" de Crossfire e Synchronized Strike: o protótipo usa 1 s e 2,5 s como valores de partida (§16 pede janelas generosas no começo). Falta validar jogando.</span></li>
     <li><span>Crossfire: o bônus (+3 de dano combinado) e o intervalo de 1 s antes de o mesmo alvo dar outro combo são valores de partida, não vêm do v0.1.</span></li>
     <li><span>Synchronized Strike: deve ser a <strong>única</strong> forma de abrir o núcleo (o que responderia à pergunta dos geradores sem regeneração em <a href="#c06">06</a>), ou continua só reconhecendo e premiando a abertura feita com o eco?</span></li>
@@ -325,57 +318,38 @@
       <tr><td><code>0:00–0:15</code></td><td>Caças no alto (0:03), embaixo (0:07), interceptadores (0:11) e primeiro cerco em dois níveis (0:15)</td><td>Entrar em ação rápido e ensinar os três vetores de movimento sem misturá-los de imediato</td></tr>
       <tr><td><code>0:19–0:29</code></td><td>Primeiro artilheiro (0:19), interceptadores por baixo (0:22), caças no alto (0:26) e dupla de artilheiros (0:29)</td><td>Começar a sobrepor alvo resistente com ameaça móvel; criar alvos para Crossfire</td></tr>
       <tr><td><code>0:33–0:43</code></td><td>Tesoura de interceptadores (0:33), artilheiro de contenção (0:37), escolta sobreposta (0:38,5) e parede móvel (0:43)</td><td>Cobrar leitura de prioridade, mudança de altura e uso do eco para cobrir outra faixa</td></tr>
-      <tr><td><code>0:47–0:54</code></td><td>Artilheiros em pinça (0:47), caças em duas linhas (0:49) e clímax de interceptadores em duas linhas (0:54)</td><td>Pico de densidade antes do corredor, sem remover os avisos de entrada e de rajada</td></tr>
+      <tr><td><code>0:47–0:54</code></td><td>Artilheiros em pinça (0:47), caças em duas linhas (0:49) e clímax de interceptadores em duas linhas (0:54)</td><td>Pico de densidade antes do Guardião, sem remover os avisos de entrada e de rajada</td></tr>
     </tbody></table></div>
-    <p>Está em <code>Encounter01_PrimeiroCiclo.asset</code>: <strong>15 entradas e 66 inimigos em 54 s</strong> (antes eram 9 entradas e 35 inimigos em 73 s). O encontro termina 2,5 s depois da última onda, quando não resta inimigo vivo; aí começa o corredor de armadilhas → <a href="#c06">06</a>. A torreta ainda não entra.</p>
-    <p class="muted small">Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 devem reaproveitar os mesmos inimigos, combinados com as armadilhas e o gadget → <a href="#c06">06</a>.</p>
+    <p>Está em <code>Encounter01_PrimeiroCiclo.asset</code>: <strong>15 entradas e 66 inimigos em 54 s</strong> (antes eram 9 entradas e 35 inimigos em 73 s). O encontro termina 2,5 s depois da última onda, quando não resta inimigo vivo; depois de 2 s de respiro entra o Guardião → <a href="#c06">06</a>. A torreta ainda não entra.</p>
+    <p class="muted small">Os tempos são valores de partida para testar. Um encontro de Combinação, se entrar, deve reaproveitar os mesmos inimigos, combinados com o gadget → <a href="#c06">06</a>.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Limite rígido de inimigos simultâneos: <span class="tbd">_TBD_</span>; hoje a densidade é controlada pela timeline autoral.</span></li>
     <li><span>Torreta: falta implementar.</span></li>
     <li><span>O caça mira e mergulha para onde a nave está: as ondas continuam por script, mas parte do movimento responde ao jogador. Isso combina com "o jogador aprende o padrão e planeja o que gravar", ou o mergulho deve ir para alturas fixas?</span></li>
     <li><span>Vida, pontos, tempos de tiro e de aviso: primeira rodada frenética validada tecnicamente; falta playtest externo.</span></li>
-    <li><span>Ondas dos encontros 2 e 3: só o encontro 1 tem linha do tempo.</span></li>
+    <li><span>Ondas de um encontro de Combinação, se entrar: só o encontro 1 tem linha do tempo.</span></li>
   </ul></div>
 </section>
 
 <!-- 05 -->
 <section class="plate chapter" id="c05" aria-labelledby="h05">
   <header>
-    <h2 id="h05"><span class="n">05</span>Armadilhas, gadgets e puzzles</h2>
-    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §6, §7 e §8; protótipo em Assets/_Project (TrapSection, LaserGate, MovingBarrier, SwitchPad, ShipGadget, TimeMine) · <code>docs/gdd/05-armadilhas-gadgets-puzzles.md</code></p>
+    <h2 id="h05"><span class="n">05</span>Gadgets</h2>
+    <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
+    <p class="src">Fonte: GDD v0.1 (PDF) §6, §7 e §8; protótipo em Assets/_Project (ShipGadget, TimeMine) · <code>docs/gdd/05-gadgets.md</code></p>
   </header>
-  <p class="summary">O cenário que desafia o movimento, as ferramentas que a nave carrega e os puzzles que só se resolvem com o eco.</p>
-  <section class="part"><h3>Armadilhas e obstáculos</h3>
-    <p>As armadilhas são parte central do jogo: desafiam a movimentação <strong>e</strong> permitem soluções com os ecos.</p>
-    <figure><img src="img/traps.svg" alt="As quatro armadilhas e sua interação temporal." width="800" height="270" loading="lazy"></figure>
-    <div class="scroll"><table><thead><tr><th>Armadilha</th><th>Desafio</th><th>Interação temporal</th></tr></thead><tbody>
-      <tr><th scope="row">Laser gate</th><td>Barreiras que ligam e desligam em ciclos; atravessar no momento seguro</td><td>O eco ativa um interruptor que desliga uma barreira enquanto a nave atravessa outra</td></tr>
-      <tr><th scope="row">Laser rotativo</th><td>Um feixe varre a área e obriga a mudar de altitude</td><td>O eco atrai inimigos para a linha de fogo, ou repete uma sequência de ativação de escudos</td></tr>
-      <tr><th scope="row">Campo de minas</th><td>Minas explodem ao contato ou depois de um gatilho</td><td>A nave dispara um detonador quando os inimigos passam pela região registrada pelo eco</td></tr>
-      <tr><th scope="row">Barreiras móveis</th><td>Obstáculos que abrem e fecham rotas; exigem precisão</td><td>O eco mantém um mecanismo num estado, abrindo uma janela de passagem</td></tr>
-    </tbody></table></div>
-    <div class="rule warn"><span class="osd">Para a jam</span>Implemente <strong>apenas dois tipos de armadilha e uma variação de obstáculo</strong>. A variedade vem das combinações com o eco, não da quantidade de objetos diferentes.</div>
-    <h4>No protótipo atual</h4>
-    <p>O protótipo tem o <strong>laser gate</strong> (em duas variações: com ciclo, e preso a um interruptor) e as <strong>barreiras móveis</strong>, ligados por um <strong>interruptor de presença</strong>. Ficam no corredor do encontro 2 (prefab <code>TrapSection_Corredor</code>), que entra pela direita quando as ondas do encontro 1 acabam → <a href="#c06">06</a>.</p>
-    <div class="scroll"><table><thead><tr><th>Peça</th><th>Como funciona</th><th>Valores de partida</th></tr></thead><tbody>
-      <tr><th scope="row">Laser gate com ciclo</th><td>Feixe vertical de ponta a ponta da tela; liga e desliga sozinho e pisca uma linha fina de aviso antes de ligar</td><td>1,5 s ligado, 1,5 s desligado, aviso nos últimos 0,5 s</td></tr>
-      <tr><th scope="row">Laser gate do interruptor</th><td>Sempre ligado; desliga enquanto alguém está sobre o interruptor ligado a ele</td><td>—</td></tr>
-      <tr><th scope="row">Barreira móvel</th><td>Dois blocos, um de cima e um de baixo, que se afastam e se fecham no meio da tela</td><td>fechada 1,2 s, abre em 0,5 s, aberta 1,6 s, fecha em 0,5 s; vão de 4,5 u</td></tr>
-      <tr><th scope="row">Interruptor de presença</th><td>Fica pressionado enquanto a nave <strong>ou um eco</strong> está sobre a placa; acende ciano para a nave e violeta para o eco, junto com o conduto até o laser</td><td>placa de 1,8 × 1,4 u; solta 0,15 s depois que a placa fica vazia</td></tr>
-      <tr><th scope="row">Dano</th><td>Feixe e blocos ferem a nave ao contato; não ferem inimigos nem o eco</td><td>1 de dano, com a invulnerabilidade normal da nave → <a href="#c03">03</a></td></tr>
-    </tbody></table></div>
-    <p>O corredor, na ordem em que chega: o laser com ciclo e a barreira móvel atravessam a tela com a rolagem, e a nave precisa passar por eles no momento certo. Depois a rolagem <strong>para</strong> com o interruptor e o laser preso a ele na tela; o encontro termina quando a nave passa desse laser. Aí as armadilhas desligam, a tela acelera para tirar o corredor de cena e o chefe entra.</p>
-    <p class="why"><em>Por quê:</em> a gravação é relativa à tela → <a href="#c02">02</a>. Com a rolagem parada, o eco volta exatamente ao ponto do interruptor onde foi gravado.</p>
+  <p class="summary">As ferramentas que a nave carrega além do tiro principal.</p>
+  <section class="part"><h3>O que saiu do escopo</h3>
+    <p>O jogo é <strong>só combate</strong>: ondas de inimigos e o chefe. O PDF original previa armadilhas (laser gate, laser rotativo, campo de minas, barreiras móveis) e puzzles resolvidos com o eco (dois interruptores, refletir o ataque do chefe, sincronização de energia). Em 2026-10-18 o dono decidiu <strong>tirar tudo isso</strong>. O protótipo chegou a ter um corredor de armadilhas com laser gate, barreira móvel e um interruptor de presença; o código, os prefabs e os testes foram removidos. Ficou o laser que varre a tela no ataque do <strong>Guardião</strong> → <a href="#c06">06</a>, que é um ataque do chefe, não uma armadilha do cenário.</p>
   </section>
   <section class="part"><h3>Gadgets</h3>
     <p>A nave carrega <strong>um gadget por vez</strong> no protótipo. O objetivo é criar escolhas táticas sem sobrecarregar os controles.</p>
     <div class="scroll"><table><thead><tr><th>Gadget</th><th>Função principal</th><th>Interação temporal</th><th>Escopo</th></tr></thead><tbody>
       <tr><th scope="row">Mina temporal</th><td>Explode por proximidade ou detonação</td><td>O eco reproduz a colocação de minas</td><td><span class="chip ok">inicial</span></td></tr>
-      <tr><th scope="row">Pulso de interferência</th><td>Desativa por um tempo lasers e sensores</td><td>Duas ativações podem sincronizar mecanismos</td><td><span class="chip ok">inicial</span></td></tr>
+      <tr><th scope="row">Pulso de interferência</th><td>_TBD_: no PDF desativava lasers e sensores, que saíram do jogo</td><td>_TBD_</td><td><span class="chip">a redefinir</span></td></tr>
       <tr><th scope="row">Escudo refletor</th><td>Bloqueia ou reflete certos tiros</td><td>Permite construir uma sequência de ricochetes</td><td><span class="chip">expansão</span></td></tr>
-      <tr><th scope="row">Arpão magnético</th><td>Puxa a nave ou inimigos leves</td><td>Pode conduzir inimigos para uma armadilha</td><td><span class="chip">expansão</span></td></tr>
+      <tr><th scope="row">Arpão magnético</th><td>Puxa a nave ou inimigos leves</td><td>_TBD_: no PDF levava inimigos a uma armadilha</td><td><span class="chip">expansão</span></td></tr>
     </tbody></table></div>
     <p>Escudo refletor e arpão ficam para expansões, caso o núcleo já esteja divertido.</p>
     <h4>No protótipo atual</h4>
@@ -390,41 +364,10 @@
     </tbody></table></div>
     <p class="muted small">O pulso de interferência ainda não existe.</p>
   </section>
-  <section class="part"><h3>Puzzles integrados ao combate</h3>
-    <p>Os puzzles surgem naturalmente durante o voo e duram poucos segundos. São desafios de <strong>leitura, sincronização e execução</strong>.</p>
-    <h4>Puzzle 1 — Dois interruptores</h4>
-    <p><strong>Objetivo:</strong> atravessar um corredor com dois lasers ligados a interruptores em pontos diferentes.</p>
-    <figure><img src="img/puzzle-switches.svg" alt="Puzzle 1 resolvido em quatro passos." width="800" height="240" loading="lazy"></figure>
-    <ol class="steps">
-      <li><span>Gravar uma passagem pelo primeiro interruptor.</span></li>
-      <li><span>Reproduzir o eco para repetir essa ativação.</span></li>
-      <li><span>Pilotar a nave atual até o segundo interruptor.</span></li>
-      <li><span>Atravessar o corredor com as duas barreiras desativadas.</span></li>
-    </ol>
-    <p style="margin-top:12px">O jogador aprende a <strong>dividir uma tarefa entre duas versões da nave</strong>.</p>
-    <p class="muted small"><strong>No protótipo</strong>, o corredor do encontro 2 tem a versão com <strong>um</strong> interruptor: grave a nave parada sobre o interruptor, invoque o eco e atravesse o laser enquanto o eco segura o interruptor.</p>
-    <h4>Puzzle 2 — Refletir o ataque do chefe</h4>
-    <p><strong>Objetivo:</strong> atingir um núcleo protegido usando o ataque do próprio chefe.</p>
-    <ol class="steps echo">
-      <li><span>O chefe dispara um projétil pesado.</span></li>
-      <li><span>O jogador grava uma sequência que posiciona um escudo refletor.</span></li>
-      <li><span>O eco reproduz a colocação da barreira.</span></li>
-      <li><span>O jogador se posiciona para induzir o disparo na direção certa.</span></li>
-      <li><span>O projétil ricocheteia e atinge o núcleo.</span></li>
-    </ol>
-    <p class="muted small" style="margin-top:12px">Depende do escudo refletor — pode ficar fora do protótipo inicial.</p>
-    <h4>Puzzle 3 — Sincronização de energia</h4>
-    <p><strong>Objetivo:</strong> ativar dois receptores dentro de uma janela curta. O eco ativa um receptor durante a reprodução enquanto a nave atual ativa o outro. Se os dois estiverem ativos ao mesmo tempo, a porta ou a defesa do chefe é desativada.</p>
-    <p>Feedback visual claro: os receptores acendem, uma conexão de energia aparece e o mecanismo muda de estado.</p>
-  </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
-    <li class="done"><span>Quais duas armadilhas e qual variação de obstáculo entram na jam? No protótipo: laser gate (com ciclo, e a variação presa a um interruptor) e barreiras móveis.</span></li>
-    <li><span>Gadgets no MVP: §7 põe mina temporal <strong>e</strong> pulso de interferência no escopo inicial; §14 pede <strong>um</strong> gadget no MVP e o segundo como opcional. O protótipo tem só a mina temporal. <a href="#c10">→ 10</a></span></li>
+    <li><span>Gadgets no MVP: §7 põe mina temporal <strong>e</strong> pulso de interferência no escopo inicial; §14 pede <strong>um</strong> gadget no MVP e o segundo como opcional. O protótipo tem só a mina temporal. Sem armadilhas, o pulso de interferência precisa de uma nova função. <a href="#c10">→ 10</a></span></li>
     <li><span>"Detonação" da mina temporal: no protótipo ela explode sozinha no fim do pavio de 4 s. Falta decidir se o jogador também detona manualmente, e com qual tecla.</span></li>
-    <li><span>Barreiras móveis presas a um interruptor ("o eco mantém um mecanismo num estado"): no protótipo a barreira só segue o ciclo.</span></li>
-    <li><span>Puzzle 1 com dois interruptores, como no exemplo acima: o protótipo tem um.</span></li>
-    <li><span>As armadilhas devem ferir inimigos (o combo Trap Bait depende disso → <a href="#c03">03</a>)? No protótipo só ferem a nave.</span></li>
-    <li><span>Puzzle 2 entra no protótipo? Depende do escudo refletor, que é expansão.</span></li>
+    <li><span>Escudo refletor e arpão magnético (expansão): o que fazem agora que não há armadilhas?</span></li>
   </ul></div>
 </section>
 
@@ -479,24 +422,22 @@
   </section>
   <section class="part"><h3>Estrutura das runs</h3>
     <div class="scroll"><table><thead><tr><th>Encontro</th><th>Conteúdo</th><th>Objetivo de design</th></tr></thead><tbody>
-      <tr><th scope="row">1 · Primeiro ciclo</th><td>Inimigos simples e obstáculos básicos → <a href="#c04">04</a></td><td>Ensinar movimento, tiro e gravação</td></tr>
-      <tr><th scope="row">2 · Armadilha</th><td>Laser e interruptor → <a href="#c05">05</a></td><td>Ensinar a interação entre eco e cenário</td></tr>
-      <tr><th scope="row">3 · Combinação</th><td>Inimigos, armadilha e gadget</td><td>Ensinar combos temporais</td></tr>
-      <tr><th scope="row">4 · Guardião</th><td>O chefe</td><td>Testar o domínio da mecânica</td></tr>
+      <tr><th scope="row">1 · Primeiro ciclo</th><td>Inimigos simples → <a href="#c04">04</a></td><td>Ensinar movimento, tiro e gravação</td></tr>
+      <tr><th scope="row">2 · Combinação</th><td>Inimigos e gadget</td><td>Ensinar combos temporais</td></tr>
+      <tr><th scope="row">3 · Guardião</th><td>O chefe</td><td>Testar o domínio da mecânica</td></tr>
     </tbody></table></div>
     <p class="muted small">No protótipo, os encontros podem ser segmentos de uma única fase, sem mapa de progressão.</p>
-    <p><strong>No protótipo atual</strong>, a cena <code>Arena_01</code> encadeia três encontros (<code>StageDirector</code>):</p>
+    <p><strong>No protótipo atual</strong>, a cena <code>Arena_01</code> encadeia dois encontros (<code>StageDirector</code>):</p>
     <div class="scroll"><table><thead><tr><th>Ordem</th><th>Encontro</th><th>Começa quando</th><th>Termina quando</th></tr></thead><tbody>
       <tr><td>1</td><th scope="row">Primeiro ciclo — ondas → <a href="#c04">04</a></th><td>A cena carrega</td><td>2,5 s depois da última onda, sem inimigo vivo na tela</td></tr>
-      <tr><td>2</td><th scope="row">Armadilha — o corredor de armadilhas → <a href="#c05">05</a></th><td>O encontro 1 termina; o corredor entra pela direita</td><td>A nave passa do laser preso ao interruptor</td></tr>
-      <tr><td>4</td><th scope="row">Guardião</th><td>O corredor sai da tela (rolagem acelerada para 6 u/s)</td><td>O núcleo é destruído: vitória</td></tr>
+      <tr><td>2</td><th scope="row">Guardião</th><td>2 s depois do fim das ondas (<code>bossDelaySeconds</code>, valor de partida); a rolagem para</td><td>O núcleo é destruído: vitória</td></tr>
     </tbody></table></div>
-    <p class="muted small">O encontro 3, <strong>Combinação</strong>, ainda não existe. O <code>StageDirector</code> tem um campo <code>startAt</code> para começar direto no corredor ou no Guardião ao testar.</p>
+    <p class="muted small">O encontro de <strong>Combinação</strong> (inimigos e gadget) ainda não existe. O <code>StageDirector</code> tem um campo <code>startAt</code> para começar direto no Guardião ao testar.</p>
   </section>
   <section class="part"><h3>Progressão entre tentativas</h3>
     <p>A repetição deve reforçar o tema <em>One More Time</em>. Dois modelos estão em jogo:</p>
     <figure><img src="img/progression.svg" alt="Modelo A, eco durante a vida, e modelo B, ciclos acumulados." width="800" height="250" loading="lazy"></figure>
-    <p><strong>No protótipo atual</strong> o modelo A está implementado: ao morrer, a cena recarrega depois de 2 s <strong>no encontro em que a morte aconteceu</strong> (ondas, corredor ou Guardião), sem ecos e com a pontuação zerada (<code>RunCheckpoint</code>). Derrotar o Guardião é a vitória.</p>
+    <p><strong>No protótipo atual</strong> o modelo A está implementado: ao morrer, a cena recarrega depois de 2 s <strong>no encontro em que a morte aconteceu</strong> (ondas ou Guardião), sem ecos e com a pontuação zerada (<code>RunCheckpoint</code>). Derrotar o Guardião é a vitória.</p>
     <p class="why"><em>Por quê:</em> o modelo A é mais previsível e mais fácil de balancear. O modelo B pode entrar depois, se "tentar mais uma vez" também virar a estrutura narrativa do jogo.</p>
   </section>
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
@@ -532,7 +473,7 @@
       <tr><th scope="row">Usar gadget</th><td><kbd class="gadget">Q</kbd></td><td><kbd class="gadget">LB</kbd></td></tr>
       <tr><th scope="row">Pausar</th><td><kbd>Esc</kbd></td><td><kbd>Start</kbd></td></tr>
     </tbody></table></div>
-    <p class="why"><em>Por quê:</em> os atalhos são provisórios, e o jogador pode trocá-los na tela de controles (abaixo). O que importa é <strong>separar a gravação da reprodução</strong>, para o jogador não invocar o eco sem querer enquanto tenta desviar de uma armadilha.</p>
+    <p class="why"><em>Por quê:</em> os atalhos são provisórios, e o jogador pode trocá-los na tela de controles (abaixo). O que importa é <strong>separar a gravação da reprodução</strong>, para o jogador não invocar o eco sem querer enquanto tenta desviar dos tiros.</p>
     <p class="muted small">No protótipo, estas ações estão em <code>Assets/_Project/Input/OneMoreTimeControls.inputactions</code> (mapa <code>Gameplay</code>), lidas só pelo <code>PlayerInputReader</code>. A ação <code>Aim</code> lê a posição do ponteiro e o <code>ShipAim</code> a projeta no plano de jogo; o movimento continua independente da mira. Com um controle, a ação <code>AimStick</code> (stick direito) dá a direção da mira. O leitor sabe qual dispositivo o jogador usou por último (<code>UsingGamepad</code>): é ele que decide se a mira vem do mouse ou do stick e quais dicas aparecem no HUD. Q solta a mina temporal → <a href="#c05">05</a>.</p>
   </section>
   <section class="part"><h3>HUD</h3>
@@ -613,7 +554,7 @@
     </tbody></table></div>
     <p>As variações misturam peças entre os inimigos e mudam a cabeça. No caça: só a cabine (<code>S_1</code>), a cabine com dois canhões longos (<code>S</code>, a primeira exportação; não há um <code>S_2</code>) e a cabine com garras (<code>S_3</code>). No artilheiro: só a cabeça (<code>M_1</code>), a cabeça com garras (<code>M_2</code>) e a cabeça com os canhões do caça (<code>M_3</code>) → <a href="#c04">04</a>.</p>
     <p>Ao subir ou descer, nave, eco e inimigos inclinam até 25°: o topo vira para a câmera quando sobem e se afasta quando descem.</p>
-    <p>Inimigos e chefe seguem a regra de cor: laranja e vermelho são perigo. O resto — tiros, armadilhas e cenário — ainda é placeholder feito de primitivas, até a arte chegar.</p>
+    <p>Inimigos e chefe seguem a regra de cor: laranja e vermelho são perigo. O resto — tiros e cenário — ainda é placeholder feito de primitivas, até a arte chegar.</p>
     <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: projéteis, efeitos, cenário). Naves e chefe já são modelos 3D (blockout).</div>
     <h4>Visual pixelado</h4>
     <p>O mundo 3D é desenhado numa <strong>altura baixa fixa</strong> e ampliado sem suavizar, então cada pixel vira um bloco visível — o visual do <em>Star Fox</em> do SNES, a referência pedida pelo time em 2026-10-18. O HUD é desenhado depois, em resolução cheia, e fica nítido.</p>
@@ -663,11 +604,11 @@
       <tr><th scope="row">Invocação do eco (E)</th><td>Loop de reversão de tempo cortado em 0,7 s, depois um impacto 0,55 s mais tarde</td></tr>
       <tr><th scope="row">Combo temporal</th><td><em>Starpower</em> do Mini pack, curto</td></tr>
       <tr><th scope="row">Chefe vulnerável, nova fase</th><td>Campo de força da Kenney; rugido do Mini pack</td></tr>
-      <tr><th scope="row">Interruptor, corredor limpo, pausa, vitória</th><td>Bipes e jingles curtos (<em>Pickup</em>, <em>Powerup</em>, menu, <em>Win Jingle</em>)</td></tr>
+      <tr><th scope="row">Pausa e vitória</th><td>Bipes e jingles curtos (<em>Pickup</em>, <em>Powerup</em>, menu, <em>Win Jingle</em>)</td></tr>
       <tr><th scope="row">Menus e cartão de missão</th><td>Os dois bipes de menu, um som de negação (<em>Wrong</em>) e um campo de força curto no cartão</td></tr>
     </tbody></table></div>
-    <p>A música muda a cada tela e a cada encontro. O título e o menu tocam <em>Venus</em>, do <em>NES Shooter Music</em>; o mapa de missões, <em>Map</em>; a história, <em>Stage 1</em>, de Juhani Junkala, uma faixa provisória de aventura (o time pediu o clima de abertura do <em>Overground</em>, de <em>Shovel Knight Dig</em>, que tem direitos autorais e não pode ser usado). Nas fases, as ondas tocam <em>8-bit Epic Space Shooter</em>, o corredor de armadilhas <em>Pulsar</em> e o Guardião a faixa <em>Boss</em> do <em>NES Shooter Music</em> (intro e loop). A música abaixa na pausa e some na vitória e na derrota. Qual faixa vai em cada lugar é uma escolha pelo nome dos arquivos: falta ouvir e ajustar no <code>AudioLibrary</code>. O controle de MÚSICA e EFEITOS da tela de som (<a href="#c07">07</a>) multiplica o volume de tudo.</p>
-    <p>Ainda sem som: lasers e barreiras do corredor, o laser giratório do Guardião e a fase 4 do chefe (que não existe). O pulso de interferência também não existe ainda.</p>
+    <p>A música muda a cada tela e a cada encontro. O título e o menu tocam <em>Venus</em>, do <em>NES Shooter Music</em>; o mapa de missões, <em>Map</em>; a história, <em>Stage 1</em>, de Juhani Junkala, uma faixa provisória de aventura (o time pediu o clima de abertura do <em>Overground</em>, de <em>Shovel Knight Dig</em>, que tem direitos autorais e não pode ser usado). Nas fases, as ondas tocam <em>8-bit Epic Space Shooter</em> e o Guardião a faixa <em>Boss</em> do <em>NES Shooter Music</em> (intro e loop). A música abaixa na pausa e some na vitória e na derrota. Qual faixa vai em cada lugar é uma escolha pelo nome dos arquivos: falta ouvir e ajustar no <code>AudioLibrary</code>. O controle de MÚSICA e EFEITOS da tela de som (<a href="#c07">07</a>) multiplica o volume de tudo.</p>
+    <p>Ainda sem som: o laser giratório do Guardião e a fase 4 do chefe (que não existe). O pulso de interferência também não existe ainda.</p>
     <p>Os clipes ficam em <code>Assets/_Project/Audio</code>. Todos são CC0, do OpenGameArt (fontes e licenças em <code>Audio/CREDITS.md</code>):</p>
     <div class="scroll"><table><thead><tr><th>Pasta</th><th>Conteúdo</th></tr></thead><tbody>
       <tr><th scope="row"><code>SFX/Mini8bit</code></th><td>210 efeitos retrô em OGG: tiro (<em>Pew</em>), explosões, dano (<em>Ouch</em>), <em>Space</em>, <em>Teleport</em>, <em>Powerup</em>, <em>Pickup</em>, <em>Menu</em> e outros</td></tr>
@@ -699,7 +640,7 @@
     <p class="src">Fonte: GDD v0.1 (PDF) §13; código em Assets/_Project/Scripts · <code>docs/gdd/09-arquitetura-tecnica.md</code></p>
   </header>
   <p class="summary">A arquitetura sugerida para Unity: quem grava, quem reproduz, e como o eco conversa com os outros sistemas.</p>
-  <p>A implementação é <strong>modular</strong>: o sistema temporal não depende diretamente da lógica de cada inimigo ou armadilha.</p>
+  <p>A implementação é <strong>modular</strong>: o sistema temporal não depende diretamente da lógica de cada inimigo.</p>
   <figure><img src="img/architecture.svg" alt="Diagrama de componentes." width="800" height="470" loading="lazy"><figcaption>Diagrama conceitual do GDD v0.1. O que existe hoje está em "Implementação atual", abaixo.</figcaption></figure>
   <section class="part"><h3>Componentes principais</h3>
     <div class="scroll"><table><thead><tr><th>Componente</th><th>Responsabilidade</th></tr></thead><tbody>
@@ -709,7 +650,6 @@
       <tr><td><code>EchoPlayback</code></td><td>Reproduz a sequência em ordem temporal</td></tr>
       <tr><td><code>WeaponSystem</code></td><td>Gerencia disparos e projéteis</td></tr>
       <tr><td><code>GadgetSystem</code></td><td>Ativa e registra gadgets</td></tr>
-      <tr><td><code>TrapController</code></td><td>Controla lasers, interruptores e armadilhas</td></tr>
       <tr><td><code>EnemyController</code></td><td>Movimento e comportamento dos inimigos</td></tr>
       <tr><td><code>BossController</code></td><td>Fases, ataques e pontos fracos</td></tr>
       <tr><td><code>ComboEvaluator</code></td><td>Detecta as condições dos combos temporais</td></tr>
@@ -718,8 +658,8 @@
   <section class="part"><h3>Implementação atual</h3>
     <p>O código fica em <code>Assets/_Project/Scripts</code>, em quatro assemblies; os testes em <code>Assets/_Project/Tests/EditMode</code>.</p>
     <div class="scroll"><table><thead><tr><th>Assembly</th><th>Conteúdo</th></tr></thead><tbody>
-      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião, combos temporais, caminhos e tiro dos inimigos</td></tr>
-      <tr><td><code>OneMoreTime.Gameplay</code></td><td>Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros, combos e sessão</td></tr>
+      <tr><td><code>OneMoreTime.Core</code></td><td>Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclo do laser do Guardião, recarga e pavio da mina, fases do Guardião, combos temporais, caminhos e tiro dos inimigos</td></tr>
+      <tr><td><code>OneMoreTime.Gameplay</code></td><td>Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, chefe, encontros, combos e sessão</td></tr>
       <tr><td><code>OneMoreTime.UI</code></td><td>O HUD</td></tr>
       <tr><td><code>OneMoreTime.Editor</code></td><td>A ferramenta que monta o conteúdo placeholder (menu <em>One More Time › Bootstrap</em>)</td></tr>
     </tbody></table></div>
@@ -732,20 +672,19 @@
       <tr><td><code>DamageSystem</code></td><td><code>Health</code> (+ <code>HealthModel</code>) + <code>ContactDamage</code></td><td><code>Health</code> publica dano aceito, bloqueio por escudo e morte; invulnerabilidade repetida fica silenciosa para não gerar spam visual</td></tr>
       <tr><td><code>EnemyController</code></td><td><code>Enemy</code> + <code>EnemyGun</code> + <code>ModelVariants</code> + <code>WaveSpawner</code> + <code>WaveSchedule</code> (+ <code>SwoopMotion</code>, <code>HoverMotion</code>, <code>FireCycle</code> no Core)</td><td>Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (<code>Enemy_S</code>, <code>Enemy_M</code>). O <code>WaveSpawner</code> passa a nave e o pool de tiros aos inimigos. <code>ModelVariants</code> sorteia o modelo ao surgir e ajusta a hitbox e a boca do tiro a ele</td></tr>
       <tr><td><code>GadgetSystem</code></td><td><code>ShipGadget</code> + <code>TimeMine</code> (+ <code>Cooldown</code>, <code>TimeMineModel</code> no Core)</td><td>A nave solta a mina; o eco reproduz o evento <code>Gadget</code></td></tr>
-      <tr><td><code>TrapController</code></td><td><code>TrapSection</code> + <code>LaserGate</code> + <code>MovingBarrier</code> + <code>SwitchPad</code> (+ <code>TrapCycle</code>, <code>ShutterCycle</code>, <code>PresenceSwitch</code>, <code>LaserGateModel</code> no Core)</td><td><code>TrapSection</code> para a rolagem no puzzle e encerra o encontro</td></tr>
       <tr><td><code>BossController</code></td><td><code>GuardianBoss</code> + <code>SweepLaser</code> (+ <code>GuardianModel</code> no Core)</td><td>Fases, escudos, geradores e padrões de tiro</td></tr>
       <tr><td><code>ComboEvaluator</code></td><td><code>ComboTracker</code> (+ <code>CrossfireRule</code>, <code>SynchronizedStrikeRule</code> no Core)</td><td>Uma regra por combo; só Crossfire e Synchronized Strike existem. O <code>ComboTracker</code> ouve o <code>Health.Damaged</code> dos inimigos que as ondas criam e das partes do Guardião, e o <code>GeneratorDestroyed</code> do Guardião; aplica o bônus e avisa o HUD e a sessão (<code>Triggered</code>)</td></tr>
       <tr><td>—</td><td><code>Playfield</code></td><td>O quadro que rola, com a câmera, a nave e os ecos</td></tr>
       <tr><td>—</td><td><code>PixelView</code></td><td>O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → <a href="#c08">08</a></td></tr>
-      <tr><td>—</td><td><code>StageDirector</code> + <code>RunCheckpoint</code></td><td>Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte</td></tr>
+      <tr><td>—</td><td><code>StageDirector</code> + <code>RunCheckpoint</code></td><td>Encadeia os encontros (ondas → Guardião, com 2 s de respiro) e guarda em qual recomeçar depois de uma morte</td></tr>
       <tr><td>—</td><td><code>GameSession</code></td><td>Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota</td></tr>
       <tr><td><code>ControlsSystem</code></td><td><code>ControlsCatalog</code> + <code>ControlsStore</code> (+ <code>ControlLayout</code>, <code>BindingLabels</code>, <code>BindingConflicts</code> no Core)</td><td>Os controles que o jogador pode trocar. O Core diz quais linhas existem, como se escreve cada botão e quando dois conflitam; o <code>ControlsCatalog</code> acha o binding certo no mapa <code>Gameplay</code> e diz o que está ligado agora; o <code>ControlsStore</code> guarda as trocas (overrides do Input System) em <code>PlayerPrefs</code>, e os dois leitores de input as aplicam ao acordar → <a href="#c07">07</a></td></tr>
       <tr><td><code>MenuSystem</code></td><td><code>MenuController</code> + <code>MenuInputReader</code> + <code>StarfieldView</code> + <code>ShowcaseSpin</code> (+ <code>ScreenFlow</code>, <code>MenuCursor</code>, <code>CrawlScroll</code>, <code>SoundLevels</code> no Core)</td><td>A cena <code>Menu</code> (índice 0 do build). A ordem das telas, o cursor, a rolagem da história e os volumes são regras do Core; o <code>MenuController</code> desenha as telas em UI Toolkit (<code>Menu.uxml</code>), toca os sons e carrega a fase. O <code>MenuInputReader</code> lê o mapa <code>Menu</code> do mesmo asset de input → <a href="#c07">07</a></td></tr>
       <tr><td><code>MissionSystem</code></td><td><code>MissionData</code> + <code>MenuTexts</code> + <code>MissionSelection</code> + <code>MissionCardController</code> + <code>StageGate</code></td><td>Os textos são ScriptableObjects. A missão escolhida no mapa chega à arena por <code>MissionSelection</code>; o cartão de missão é um <code>StageGate</code>: o <code>StageDirector</code> espera ele abrir antes do primeiro encontro, e o cartão não volta depois de uma morte (<code>RunCheckpoint.HasSaved</code>)</td></tr>
-      <tr><td><code>AudioSystem</code></td><td><code>AudioDirector</code> + <code>SfxPlayer</code> + <code>MusicPlayer</code> + <code>AudioLibrary</code> (+ <code>SoundCue</code>, <code>CueThrottle</code>, <code>RecordPulse</code>, <code>VolumeFader</code> no Core)</td><td>O <code>AudioDirector</code> traduz eventos de tiro, dano, morte, eco, combo, chefe, armadilha e pausa em cues; tiros e minas chegam por <code>ProjectilePool.CueRaised</code>. O <code>SfxPlayer</code> toca numa reserva fixa de <code>AudioSource</code> (escolhe clipe, tom, pan e abafamento) e o <code>MusicPlayer</code> encadeia intro e loop por encontro. Os clipes de cada cue ficam no <code>AudioLibrary</code> (asset em <code>Data/</code>); o menu <em>One More Time › Bootstrap › Build Audio</em> cria o asset e liga o áudio na cena → <a href="#c08">08</a></td></tr>
+      <tr><td><code>AudioSystem</code></td><td><code>AudioDirector</code> + <code>SfxPlayer</code> + <code>MusicPlayer</code> + <code>AudioLibrary</code> (+ <code>SoundCue</code>, <code>CueThrottle</code>, <code>RecordPulse</code>, <code>VolumeFader</code> no Core)</td><td>O <code>AudioDirector</code> traduz eventos de tiro, dano, morte, eco, combo, chefe e pausa em cues; tiros e minas chegam por <code>ProjectilePool.CueRaised</code>. O <code>SfxPlayer</code> toca numa reserva fixa de <code>AudioSource</code> (escolhe clipe, tom, pan e abafamento) e o <code>MusicPlayer</code> encadeia intro e loop por encontro. Os clipes de cada cue ficam no <code>AudioLibrary</code> (asset em <code>Data/</code>); o menu <em>One More Time › Bootstrap › Build Audio</em> cria o asset e liga o áudio na cena → <a href="#c08">08</a></td></tr>
       <tr><td>—</td><td><code>CombatFeedbackDirector</code> + <code>CombatVfxPool</code> + <code>CameraImpact</code></td><td>Traduz eventos de dano, escudo, morte e combo em flashes, VFX reutilizados e impulsos proporcionais de câmera; não altera vida, dano ou colisão</td></tr>
     </tbody></table></div>
-    <p>Armadilhas e tiros do chefe usam a layer <code>EnemyProjectile</code>, que só colide com a nave. A mina não tem colisor: o alcance e a explosão são consultas de física (<code>CheckSphere</code>, <code>OverlapSphere</code>) na layer <code>Enemy</code>. O interruptor também não usa física: compara posições, para o eco, que não tem colisor, poder segurá-lo.</p>
+    <p>Os tiros e o laser do chefe usam a layer <code>EnemyProjectile</code>, que só colide com a nave. A mina não tem colisor: o alcance e a explosão são consultas de física (<code>CheckSphere</code>, <code>OverlapSphere</code>) na layer <code>Enemy</code>.</p>
     <p>Os combos sabem quem acertou pelo <code>DamageInfo.Source</code> (<code>Ship</code> ou <code>Echo</code>) de cada dano. O bônus do Crossfire é dano <code>Combined</code>, que o próprio <code>ComboTracker</code> ignora, para não realimentar a regra. O <code>Health</code> decide se o acerto matou antes de avisar <code>Damaged</code>: um ouvinte que cause mais dano nesse aviso (o bônus) não faz o <code>Died</code> disparar duas vezes.</p>
     <p>O feedback de combate acompanha os alvos dinâmicos pelo <code>EnemySpawned</code>/<code>EnemyRemoved</code> do <code>WaveSpawner</code> e as partes do chefe quando o <code>StageDirector</code> cria o Guardião. Partículas e anéis pertencem a um pool em <code>Systems</code>, então continuam visíveis mesmo quando o alvo morto é destruído no mesmo frame.</p>
   </section>
@@ -787,16 +726,16 @@
   <header>
     <h2 id="h10"><span class="n">10</span>Produção — escopo da jam</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-18</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (armadilhas, gadget, chefe e os dois primeiros combos) · <code>docs/gdd/10-producao.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (gadget, chefe e os dois primeiros combos) · <code>docs/gdd/10-producao.md</code></p>
   </header>
   <p class="summary">O que entra na jam, o que fica de fora, quando o protótipo está pronto para teste e o que pode dar errado.</p>
   <p>O objetivo é <strong>validar se a mecânica central é divertida</strong>, não construir todo o conteúdo previsto para o jogo final.</p>
   <section class="part"><h3>Escopo</h3>
     <div class="cols">
       <div class="col mvp"><h3>Obrigatório — MVP</h3><ul>
-        <li>Nave com movimento e disparo</li><li>Uma arena side-scrolling 2.5D</li><li>Gravação de cinco segundos</li><li>Reprodução de movimento e disparos</li><li>Pelo menos um tipo de inimigo (drone), com ondas por script</li><li>Duas armadilhas</li><li>Um gadget funcional</li><li>Um chefe com uma janela de vulnerabilidade temporal</li><li>Interface mínima e condição de vitória e derrota</li></ul></div>
+        <li>Nave com movimento e disparo</li><li>Uma arena side-scrolling 2.5D</li><li>Gravação de cinco segundos</li><li>Reprodução de movimento e disparos</li><li>Pelo menos um tipo de inimigo (drone), com ondas por script</li><li>Um gadget funcional</li><li>Um chefe com uma janela de vulnerabilidade temporal</li><li>Interface mínima e condição de vitória e derrota</li></ul></div>
       <div class="col opt"><h3>Opcional — depois do MVP</h3><ul>
-        <li>Até três ecos simultâneos</li><li>Um combo temporal com feedback próprio</li><li>Um puzzle de sincronização</li><li>Um segundo gadget</li><li>Pontuação por combos e esquivas</li></ul></div>
+        <li>Até três ecos simultâneos</li><li>Um combo temporal com feedback próprio</li><li>Um segundo gadget</li><li>Pontuação por combos e esquivas</li></ul></div>
       <div class="col out"><h3>Fora do escopo inicial</h3><ul>
         <li>Rebobinar o mundo inteiro</li><li>Campanha extensa</li><li>Vários chefes</li><li>Progressão roguelite complexa</li><li>Árvore de habilidades</li><li>Muitos gadgets com sistemas de física independentes</li></ul></div>
     </div>
@@ -808,7 +747,6 @@
       <tr><th scope="row">Gravação de cinco segundos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Reprodução de movimento e disparos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Inimigos com ondas por script</th><td><span class="chip ok">feito</span> caça (S) e artilheiro (M), que atiram → <a href="#c04">04</a></td></tr>
-      <tr><th scope="row">Duas armadilhas</th><td><span class="chip ok">feito</span> laser gate (com ciclo e preso a um interruptor) e barreira móvel → <a href="#c05">05</a></td></tr>
       <tr><th scope="row">Um gadget funcional</th><td><span class="chip ok">feito</span> mina temporal, na tecla Q, reproduzida pelo eco → <a href="#c05">05</a></td></tr>
       <tr><th scope="row">Um chefe com janela de vulnerabilidade temporal</th><td><span class="chip ok">feito</span> Guardião do Ciclo, fases 1 a 3 → <a href="#c06">06</a></td></tr>
       <tr><th scope="row">Interface mínima e condição de vitória e derrota</th><td><span class="chip ok">feito</span> vitória = derrotar o Guardião; derrota recomeça o encontro atual</td></tr>
@@ -823,7 +761,7 @@
       <li class="done"><span>O jogador grava e reproduz uma sequência de cinco segundos.</span></li>
       <li class="done"><span>O eco repete movimentos e disparos sem depender do controle atual.</span></li>
       <li class="done"><span>A reprodução continua funcionando quando os inimigos se movem ou morrem.</span></li>
-      <li class="done"><span>Uma armadilha pode ser manipulada por uma ação registrada. (O eco segura o interruptor do corredor enquanto a nave passa.)</span></li>
+      <li class="done"><span>Um gadget pode ser usado por uma ação registrada. (O eco solta a mina temporal no mesmo ponto e instante da gravação.)</span></li>
       <li class="done"><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um gerador do Guardião pela nave e o outro pelo eco derrubam o escudo do núcleo. Os dois têm aviso no HUD → <a href="#c03">03</a>.)</span></li>
       <li class="done"><span>O chefe pode ser derrotado usando a mecânica temporal. (O eco derruba um gerador enquanto a nave derruba o outro.)</span></li>
       <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (Com o modelo de blockout, a nave ciano e o eco violeta translúcido já se distinguem; falta testar com jogadores.)</span></li>
@@ -836,7 +774,7 @@
       <tr><th scope="row">O jogador não entende para que serve o eco</th><td>Um encontro inicial em que a solução exige claramente duas ações simultâneas</td></tr>
       <tr><th scope="row">Os ecos deixam a tela confusa</th><td>Limitar a quantidade, reduzir a opacidade e distinguir os efeitos visuais</td></tr>
       <tr><th scope="row">A gravação exige precisão excessiva</th><td>Janelas de sincronização generosas no começo</td></tr>
-      <tr><th scope="row">Os combos viram só bônus de dano</th><td>Interações com armadilhas, escudos e pontos fracos</td></tr>
+      <tr><th scope="row">Os combos viram só bônus de dano</th><td>Interações com escudos e pontos fracos</td></tr>
       <tr><th scope="row">O sistema fica complexo de implementar</th><td>Reproduzir só dados e eventos do jogador, sem rebobinar a cena</td></tr>
       <tr><th scope="row">O chefe parece injusto</th><td>Sinalizar os ataques, as janelas de vulnerabilidade e o resultado de cada combo</td></tr>
     </tbody></table></div>

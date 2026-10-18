@@ -106,17 +106,11 @@ namespace OneMoreTime.EditorTools
                 Cue(SoundCue.Combo, 0.55f, 2, 0.1f, 1f, 1f, true, 0f, 1.2f, 0.3f,
                     "SFX/Mini8bit/Starpower/Starpower__001.ogg", "SFX/Mini8bit/Starpower/Starpower__002.ogg"),
 
-                // Boss, traps, session.
+                // Boss and session.
                 Cue(SoundCue.BossVulnerable, 0.6f, 1, 0.3f, 1f, 1f, false, 0f, 0f, 0f,
                     "SFX/KenneySciFi/forceField_000.ogg"),
                 Cue(SoundCue.BossPhase, 0.7f, 1, 0.5f, 1f, 1f, false, 0f, 1.6f, 0.4f,
                     "SFX/Mini8bit/Roar1/Roar1__001.ogg", "SFX/Mini8bit/Roar1/Roar1__002.ogg"),
-                Cue(SoundCue.SwitchOn, 0.4f, 2, 0.1f, 1f, 1f, true, 0f, 0f, 0f,
-                    "SFX/Mini8bit/Pickup/Pickup__001.ogg"),
-                Cue(SoundCue.SwitchOff, 0.3f, 2, 0.1f, 0.8f, 0.8f, true, 0f, 0f, 0f,
-                    "SFX/Deva8bit/Select 3.wav"),
-                Cue(SoundCue.SectionCleared, 0.55f, 1, 0.3f, 1f, 1f, false, 0f, 0f, 0f,
-                    "SFX/Deva8bit/Powerup 1.wav"),
                 Cue(SoundCue.Pause, 0.5f, 1, 0.1f, 1f, 1f, false, 0f, 0f, 0f,
                     "UI/menu-select.ogg"),
                 Cue(SoundCue.Resume, 0.5f, 1, 0.1f, 1f, 1f, false, 0f, 0f, 0f,
@@ -142,7 +136,6 @@ namespace OneMoreTime.EditorTools
             var music = new List<AudioLibrary.MusicEntry>
             {
                 Music(MusicTrack.Waves, null, "Music/EpicSpaceShooter/8bit-spaceshooter.mp3", 0.6f),
-                Music(MusicTrack.Traps, null, "Music/Pulsar/Pulsar.wav", 0.6f),
                 Music(MusicTrack.Boss, "Music/NesShooter/BossIntro.wav", "Music/NesShooter/BossMain.wav", 0.65f),
                 Music(MusicTrack.Title, null, "Music/NesShooter/Venus.wav", 0.65f),
                 Music(MusicTrack.Missions, null, "Music/NesShooter/Map.wav", 0.6f),

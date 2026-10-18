@@ -9,7 +9,7 @@ se a tarefa tocar uma área específica, o capítulo correspondente em [`docs/gd
 ## Regras
 
 1. **O GDD descreve o jogo como ele é.** Quando uma mudança no código ou nos assets fizer o
-   jogo diferir do que o GDD diz (regra, número, controle, inimigo, armadilha, combo, chefe,
+   jogo diferir do que o GDD diz (regra, número, controle, inimigo, combo, chefe,
    HUD, escopo, arquitetura), atualize o capítulo afetado em `docs/gdd/` **no mesmo commit**.
    Se a mudança aparecer no resumo de uma página, atualize `docs/gdd.md` também.
    Código e GDD divergentes: o código é a verdade e o GDD é o bug.
@@ -48,13 +48,13 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 | Pasta | O que vai nela |
 |---|---|
 | `Scripts/Core` | Regras em C# puro, sem MonoBehaviour, cobertas por testes (`OneMoreTime.Core`) |
-| `Scripts/Gameplay` | Componentes da cena (`OneMoreTime.Gameplay`), uma subpasta por área: Input, World, Ship, Echo, Combat, Enemies, Gadgets, Traps, Boss, Session, Feedback, Audio |
+| `Scripts/Gameplay` | Componentes da cena (`OneMoreTime.Gameplay`), uma subpasta por área: Input, World, Ship, Echo, Combat, Enemies, Gadgets, Boss, Session, Feedback, Audio |
 | `Scripts/UI` | HUD, menus e cartão de missão (`OneMoreTime.UI`); layout e estilo em `UI/Hud.*`, `UI/Menu.*` e `UI/MissionCard.*` |
 | `Scripts/Editor` | Ferramentas de Editor (`OneMoreTime.Editor`) |
 | `Tests/EditMode` | Testes do Core |
 | `Data` | ScriptableObjects de ajuste: `EchoConfig`, `AudioLibrary` (qual clipe toca em cada cue e qual música em cada tela e encontro), `Menu/MenuTexts` (as palavras do menu), `Missions/Mission_01` (cartão, mapa e história da missão), ondas em `Data/Waves` |
 | `Audio` | Clipes CC0 do OpenGameArt: `SFX/`, `UI/`, `Music/`. Fontes e licenças em `Audio/CREDITS.md`; ao trocar ou somar um pack, atualize o arquivo |
-| `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Traps, Boss, World |
+| `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
 | `Art/Ships` | Modelos de blockout: `Bilu_BlockOut` (nave e eco), `Enemie_S_1`/`Enemie_S`/`Enemie_S_3_BlockOut` (caça), `Enemie_M_1`/`_2`/`_3_BlockOut` (artilheiro), `Enemie_Boss_BlockOut` (Guardião). `BI_Ships_BlockOut` e `Enemie_M_BlockOut` (igual ao `M_2`) estão sem uso |
 | `Scenes` | `Menu.unity` (título, menu, mapa de missões, história) é a cena 0 do build; `Arena_01.unity`, a cena 1 |
@@ -72,8 +72,8 @@ Convenções:
   hitbox e a boca do tiro ao modelo ligado.
 - **A cena tem grupos fixos na raiz:** `Systems`, `Lighting`, `Playfield` (câmera, nave, ecos), `World` (cenário), `UI`.
 - **Physics layers** (8–12): Player, PlayerProjectile, Enemy, EnemyProjectile, Echo. A matriz de colisão só deixa tiro acertar o outro lado e inimigo bater na nave; o eco não colide com nada.
-  Armadilhas e tiros do chefe ficam em EnemyProjectile (só ferem a nave). Mina e interruptor não usam colisão: a mina faz consultas de física, o interruptor compara posições.
-- **Encontros:** o `StageDirector` encadeia ondas → corredor de armadilhas → Guardião. Para testar um encontro direto, mude `startAt` no inspector (sem salvar a cena).
+  Os tiros e o laser do chefe ficam em EnemyProjectile (só ferem a nave). A mina não usa colisão: ela faz consultas de física.
+- **Encontros:** o `StageDirector` encadeia ondas → Guardião (o jogo é só combate: sem armadilhas nem puzzles). Para testar um encontro direto, mude `startAt` no inspector (sem salvar a cena).
 
 ## Trabalhando pelo Unity CLI
 

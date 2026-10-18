@@ -11,7 +11,7 @@ source: GDD v0.1 (PDF) §13; código em Assets/_Project/Scripts
 
 A arquitetura sugerida para Unity: quem grava, quem reproduz, e como o eco conversa com os outros sistemas.
 
-A implementação é **modular**: o sistema temporal não depende diretamente da lógica de cada inimigo ou armadilha.
+A implementação é **modular**: o sistema temporal não depende diretamente da lógica de cada inimigo.
 
 ![Diagrama de componentes](../img/architecture.svg)
 
@@ -27,7 +27,6 @@ A implementação é **modular**: o sistema temporal não depende diretamente da
 | `EchoPlayback` | Reproduz a sequência em ordem temporal |
 | `WeaponSystem` | Gerencia disparos e projéteis |
 | `GadgetSystem` | Ativa e registra gadgets |
-| `TrapController` | Controla lasers, interruptores e armadilhas |
 | `EnemyController` | Movimento e comportamento dos inimigos |
 | `BossController` | Fases, ataques e pontos fracos |
 | `ComboEvaluator` | Detecta as condições dos combos temporais |
@@ -38,8 +37,8 @@ O código fica em `Assets/_Project/Scripts`, em quatro assemblies:
 
 | Assembly | Conteúdo |
 |---|---|
-| `OneMoreTime.Core` | Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião, combos temporais, caminhos e tiro dos inimigos |
-| `OneMoreTime.Gameplay` | Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros, combos e sessão |
+| `OneMoreTime.Core` | Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclo do laser do Guardião, recarga e pavio da mina, fases do Guardião, combos temporais, caminhos e tiro dos inimigos |
+| `OneMoreTime.Gameplay` | Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, chefe, encontros, combos e sessão |
 | `OneMoreTime.UI` | O HUD |
 | `OneMoreTime.Editor` | A ferramenta que monta o conteúdo placeholder (menu *One More Time › Bootstrap*) |
 
@@ -55,22 +54,20 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | `DamageSystem` | `Health` (+ `HealthModel` no Core) + `ContactDamage` | `Health` publica dano aceito, bloqueio por escudo e morte; invulnerabilidade repetida fica silenciosa para não gerar spam visual |
 | `EnemyController` | `Enemy` + `EnemyGun` + `ModelVariants` + `WaveSpawner` + `WaveSchedule` (+ `SwoopMotion`, `HoverMotion`, `FireCycle` no Core) | Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (`Enemy_S`, `Enemy_M`). O `WaveSpawner` passa a nave e o pool de tiros aos inimigos. `ModelVariants` sorteia o modelo ao surgir e ajusta a hitbox e a boca do tiro a ele |
 | `GadgetSystem` | `ShipGadget` + `TimeMine` (+ `Cooldown`, `TimeMineModel` no Core) | A nave solta a mina; o eco reproduz o evento `Gadget` |
-| `TrapController` | `TrapSection` + `LaserGate` + `MovingBarrier` + `SwitchPad` (+ `TrapCycle`, `ShutterCycle`, `PresenceSwitch`, `LaserGateModel` no Core) | `TrapSection` para a rolagem no puzzle e encerra o encontro |
 | `BossController` | `GuardianBoss` + `SweepLaser` (+ `GuardianModel` no Core) | Fases, escudos, geradores e padrões de tiro |
 | `ComboEvaluator` | `ComboTracker` (+ `CrossfireRule`, `SynchronizedStrikeRule` no Core) | Uma regra por combo; só Crossfire e Synchronized Strike existem. O `ComboTracker` ouve o `Health.Damaged` dos inimigos que as ondas criam e das partes do Guardião, e o `GeneratorDestroyed` do Guardião; aplica o bônus e avisa o HUD e a sessão (`Triggered`) |
 | — | `Playfield` | O quadro que rola, com a câmera, a nave e os ecos |
 | — | `PixelView` | O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → [08](08-direcao-visual-e-sonora.md) |
-| — | `StageDirector` + `RunCheckpoint` | Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte |
+| — | `StageDirector` + `RunCheckpoint` | Encadeia os encontros (ondas → Guardião, com 2 s de respiro) e guarda em qual recomeçar depois de uma morte |
 | — | `GameSession` | Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota |
 | `ControlsSystem` | `ControlsCatalog` + `ControlsStore` (+ `ControlLayout`, `BindingLabels`, `BindingConflicts` no Core) | Os controles que o jogador pode trocar. O Core diz quais linhas existem, como se escreve cada botão e quando dois conflitam; o `ControlsCatalog` acha o binding certo no mapa `Gameplay` e diz o que está ligado agora; o `ControlsStore` guarda as trocas (overrides do Input System) em `PlayerPrefs`, e os dois leitores de input as aplicam ao acordar → [07](07-controles-e-interface.md) |
 | `MenuSystem` | `MenuController` + `MenuInputReader` + `StarfieldView` + `ShowcaseSpin` (+ `ScreenFlow`, `MenuCursor`, `CrawlScroll`, `SoundLevels` no Core) | A cena `Menu` (índice 0 do build). A ordem das telas, o cursor, a rolagem da história e os volumes são regras do Core; o `MenuController` desenha as telas em UI Toolkit (`Menu.uxml`), toca os sons e carrega a fase. O `MenuInputReader` lê o mapa `Menu` do mesmo asset de input → [07](07-controles-e-interface.md) |
 | `MissionSystem` | `MissionData` + `MenuTexts` + `MissionSelection` + `MissionCardController` + `StageGate` | Os textos são ScriptableObjects. A missão escolhida no mapa chega à arena por `MissionSelection`; o cartão de missão é um `StageGate`: o `StageDirector` espera ele abrir antes do primeiro encontro, e o cartão não volta depois de uma morte (`RunCheckpoint.HasSaved`) |
-| `AudioSystem` | `AudioDirector` + `SfxPlayer` + `MusicPlayer` + `AudioLibrary` (+ `SoundCue`, `CueThrottle`, `RecordPulse`, `VolumeFader` no Core) | O `AudioDirector` traduz eventos de tiro, dano, morte, eco, combo, chefe, armadilha e pausa em cues; tiros e minas chegam por `ProjectilePool.CueRaised`. O `SfxPlayer` toca numa reserva fixa de `AudioSource` (escolhe clipe, tom, pan e abafamento) e o `MusicPlayer` encadeia intro e loop por encontro. Os clipes de cada cue ficam no `AudioLibrary` (asset em `Data/`); o menu *One More Time › Bootstrap › Build Audio* cria o asset e liga o áudio na cena → [08](08-direcao-visual-e-sonora.md) |
+| `AudioSystem` | `AudioDirector` + `SfxPlayer` + `MusicPlayer` + `AudioLibrary` (+ `SoundCue`, `CueThrottle`, `RecordPulse`, `VolumeFader` no Core) | O `AudioDirector` traduz eventos de tiro, dano, morte, eco, combo, chefe e pausa em cues; tiros e minas chegam por `ProjectilePool.CueRaised`. O `SfxPlayer` toca numa reserva fixa de `AudioSource` (escolhe clipe, tom, pan e abafamento) e o `MusicPlayer` encadeia intro e loop por encontro. Os clipes de cada cue ficam no `AudioLibrary` (asset em `Data/`); o menu *One More Time › Bootstrap › Build Audio* cria o asset e liga o áudio na cena → [08](08-direcao-visual-e-sonora.md) |
 | — | `CombatFeedbackDirector` + `CombatVfxPool` + `CameraImpact` | Traduz eventos de dano, escudo, morte e combo em flashes, VFX reutilizados e impulsos proporcionais de câmera; não altera vida, dano ou colisão |
 
-Armadilhas e tiros do chefe usam a layer `EnemyProjectile`, que só colide com a nave. A mina não tem
+Os tiros e o laser do chefe usam a layer `EnemyProjectile`, que só colide com a nave. A mina não tem
 colisor: o alcance e a explosão são consultas de física (`CheckSphere`, `OverlapSphere`) na layer `Enemy`.
-O interruptor também não usa física: compara posições, para o eco, que não tem colisor, poder segurá-lo.
 
 Os combos sabem quem acertou pelo `DamageInfo.Source` (`Ship` ou `Echo`) de cada dano. O bônus do Crossfire é
 dano `Combined`, que o próprio `ComboTracker` ignora, para não realimentar a regra. O `Health` decide se o

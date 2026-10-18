@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 470" role="img" aria-labelledby="t d">
   <title id="t">Arquitetura técnica sugerida para Unity</title>
-  <desc id="d">PlayerController alimenta o TemporalRecorder, que guarda uma TemporalRecording; o EchoPlayback a reproduz numa EchoShip. O recorder separa movimento gravado e eventos de combate gravados, que vão para WeaponSystem e GadgetSystem. GadgetSystem leva ao DamageSystem; DamageSystem e TrapSystem afetam inimigos e chefe; daí o ComboEvaluator e o feedback visual e sonoro.</desc>
+  <desc id="d">PlayerController alimenta o TemporalRecorder, que guarda uma TemporalRecording; o EchoPlayback a reproduz numa EchoShip. O recorder separa movimento gravado e eventos de combate gravados, que vão para WeaponSystem e GadgetSystem. GadgetSystem leva ao DamageSystem; DamageSystem afeta inimigos e chefe; daí o ComboEvaluator e o feedback visual e sonoro.</desc>
   <style>
     .t{font:600 11.5px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#e6ecff}
     .g{font:700 9.5px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em;fill:#5d6f9e}
@@ -25,7 +25,7 @@
     <path d="M248 90V128"/><path d="M276 90L376 128"/>
     <path d="M384 170L262 218"/><path d="M400 170V218"/>
     <path d="M465 240H485"/>
-    <path d="M552 260V308"/><path d="M704 260V308"/>
+    <path d="M552 260V308"/>
     <path d="M487 330H248V398"/>
     <path d="M313 420H333"/>
   </g>
@@ -52,12 +52,11 @@
   <!-- row 3 -->
   <g fill="#111a33" stroke="#3a4a78">
     <rect x="183" y="220" width="130" height="40" rx="8"/><rect x="335" y="220" width="130" height="40" rx="8"/>
-    <rect x="487" y="220" width="130" height="40" rx="8"/><rect x="639" y="220" width="130" height="40" rx="8"/>
+    <rect x="487" y="220" width="130" height="40" rx="8"/>
   </g>
   <text x="248" y="237" class="t" text-anchor="middle">Weapon</text><text x="248" y="252" class="t" text-anchor="middle">System</text>
   <text x="400" y="237" class="t" text-anchor="middle">Gadget</text><text x="400" y="252" class="t" text-anchor="middle">System</text>
   <text x="552" y="237" class="t" text-anchor="middle">Damage</text><text x="552" y="252" class="t" text-anchor="middle">System</text>
-  <text x="704" y="237" class="t" text-anchor="middle">Trap</text><text x="704" y="252" class="t" text-anchor="middle">System</text>
   <!-- row 4 -->
   <rect x="487" y="310" width="282" height="40" rx="8" fill="#22140f" stroke="#ff8a3d"/>
   <text x="628" y="334" class="t" text-anchor="middle">Enemies and Boss</text>

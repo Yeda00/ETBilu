@@ -43,7 +43,7 @@
     <text x="500" y="64" class="n">04</text>
     <text x="556" y="90" class="k" fill="#b18cff" text-anchor="middle">CRIAR COMBOS</text>
     <text x="556" y="111" class="s" text-anchor="middle">Nave + eco</text>
-    <text x="556" y="127" class="s" text-anchor="middle">+ armadilhas</text>
+    <text x="556" y="127" class="s" text-anchor="middle">+ gadget</text>
   </g>
   <g>
     <rect x="644" y="44" width="136" height="96" rx="10" fill="#22140f" stroke="#ff8a3d" stroke-width="1.5"/>

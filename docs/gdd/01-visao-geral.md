@@ -16,7 +16,7 @@ O que o jogo é, qual é a fantasia do jogador, os pilares que orientam cada dec
 ## High concept
 
 Um shooter de nave em que o jogador **grava e reproduz suas próprias ações passadas** para lutar
-ao mesmo tempo com versões anteriores de si mesmo, desviar de armadilhas e explorar combinações
+ao mesmo tempo com versões anteriores de si mesmo, desviar dos ataques e explorar combinações
 temporais para derrotar chefes.
 
 O tema central é *One More Time*: cada tentativa deixa para trás ações que podem ser reproduzidas
@@ -40,7 +40,7 @@ aprende a coordenar suas ações com as versões anteriores da nave.
 |---|---|---|
 | 1 | **O passado continua lutando** | As ações gravadas viram ecos que repetem trajetórias, tiros e gadgets |
 | 2 | **Combate baseado em habilidade** | O jogador precisa dominar o movimento, ler padrões de ataque e criar boas trajetórias |
-| 3 | **Soluções inteligentes** | Armadilhas, dispositivos e chefes são vencidos por sincronização e posicionamento, não só por dano bruto |
+| 3 | **Soluções inteligentes** | Inimigos e chefes são vencidos por sincronização e posicionamento, não só por dano bruto |
 
 ## Formato e escopo
 
@@ -56,8 +56,8 @@ aprende a coordenar suas ações com as versões anteriores da nave.
 | Duração-alvo da run | 5–10 minutos no protótipo completo |
 | Duração de uma gravação | 5 segundos → [02](02-eco-temporal.md) |
 | Ecos simultâneos | Até 3 no protótipo |
-| Conteúdo inicial | Uma arena, um conjunto de armadilhas e um chefe |
-| Controles | Teclado e mouse, ou só teclado; suporte a controle pode vir depois → [07](07-controles-e-interface.md) |
+| Conteúdo inicial | Uma arena, ondas de inimigos e um chefe (sem armadilhas nem puzzles) |
+| Controles | Teclado e mouse, ou controle (gamepad); as teclas e botões podem ser trocados → [07](07-controles-e-interface.md) |
 | Contexto | Protótipo para game jam |
 
 Os números são parâmetros iniciais de design para testar, não valores definitivos.
@@ -73,7 +73,7 @@ O protótipo se concentra em três experiências:
 | Experiência | O jogador… |
 |---|---|
 | **Repetir** | observa o eco executando exatamente o que foi gravado |
-| **Combinar** | usa a nave atual e o eco para atacar, desviar ou manipular armadilhas |
+| **Combinar** | usa a nave atual e o eco para atacar e desviar |
 | **Descobrir** | percebe uma solução temporal para um desafio que parecia impossível |
 
 > **Recomendação de produção:** começar com uma única arena e um chefe que exija dois ataques

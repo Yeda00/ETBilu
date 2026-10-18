@@ -18,7 +18,7 @@ A nave começa com um conjunto pequeno de ações:
 - Movimento em **oito direções** dentro da área jogável, independente da mira.
 - **Mira livre com o mouse**: a nave aponta para o cursor e mostra uma linha curta com retículo na direção do tiro.
 - **Disparo principal** contínuo na direção da mira.
-- Um **gadget** equipado → [05](05-armadilhas-gadgets-puzzles.md).
+- Um **gadget** equipado → [05](05-gadgets.md).
 - A habilidade de **gravação e reprodução** temporal → [02](02-eco-temporal.md).
 - Vida limitada e **invulnerabilidade breve** depois de receber dano.
 
@@ -53,7 +53,6 @@ quase imperceptíveis no tiro comum, claros ao sofrer dano e fortes só em destr
 | Artilheiro (M) | 20 de vida, 300 pontos; leques de 3 tiros | `Enemy_M` → [04](04-inimigos-e-ondas.md) |
 | Inimigo que bate na nave | 1 de dano | `ContactDamage` |
 | Mina temporal | 4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s | `TimeMine_Ship`, `TimeMine_Echo`, `PlayerShip` → `ShipGadget` |
-| Laser gate e barreira móvel | 1 de dano ao contato | prefabs em `Prefabs/Traps` |
 | Tiros inimigos (caça, interceptador, artilheiro, Guardião) | 1 de dano, 9,5 u/s | `Shot_Enemy` |
 | Guardião | núcleo 120 de vida, geradores 12 | `Guardian` → [06](06-chefe-e-runs.md) |
 | Crossfire | janela de 1 s entre o acerto da nave e o do eco; +3 de dano combinado; o mesmo alvo só dá outro Crossfire depois de 1 s | `ComboTracker` (cena, em `Systems`) |
@@ -73,22 +72,23 @@ Só três categorias, para simplificar o protótipo. O código também marca o d
 que bate na nave), que o GDD v0.1 não lista.
 
 O protótipo separa os tiros da nave dos tiros do eco (`ShotSource`), e é isso que os combos usam.
-O dano de gadget é o da mina temporal → [05](05-armadilhas-gadgets-puzzles.md). O dano combinado é o bônus
+O dano de gadget é o da mina temporal → [05](05-gadgets.md). O dano combinado é o bônus
 do Crossfire.
 
 ## Combos temporais
 
 Os combos são **eventos específicos** que o jogo reconhece, não multiplicadores genéricos.
 
-![Os cinco combos temporais](../img/combos.svg)
+![Os três combos temporais](../img/combos.svg)
 
 | Combo | Condição | Resultado |
 |---|---|---|
 | **Crossfire** | Nave atual e eco acertam o mesmo alvo numa janela curta | Dano adicional |
-| **Trap Bait** | O eco atrai inimigos para uma armadilha | Inimigos atingidos pela armadilha |
-| **Double Pulse** | Dois pulsos atingem mecanismos conectados | Sobrecarga ou desativação |
 | **Reflect Chain** | Um projétil ricocheteia em escudos posicionados em sequência | Dano elevado ao alvo |
 | **Synchronized Strike** | Dois pontos fracos são atingidos quase ao mesmo tempo | Escudo do chefe desativado |
+
+**Trap Bait** (o eco atrai inimigos para uma armadilha) e **Double Pulse** (dois pulsos em mecanismos conectados)
+saíram junto com as armadilhas e os mecanismos do cenário.
 
 Cada combo tem **feedback visual e sonoro próprio** → [08](08-direcao-visual-e-sonora.md).
 
@@ -96,7 +96,7 @@ Cada combo tem **feedback visual e sonoro próprio** → [08](08-direcao-visual-
 
 ### No protótipo atual
 
-Dois dos cinco combos existem: **Crossfire** e **Synchronized Strike**. Os dois partem de acertos reais da
+Dois dos três combos existem: **Crossfire** e **Synchronized Strike**. Os dois partem de acertos reais da
 nave e do eco: um tiro ou uma mina conta para quem o disparou, a nave atual ou um eco.
 
 | Combo | Como o jogo reconhece | Resultado |
@@ -122,10 +122,8 @@ premia quando a abertura veio da nave e do eco juntos.
 O jogo pode premiar:
 
 - Combos temporais.
-- Inimigos eliminados por armadilhas.
 - Sequências sem sofrer dano.
 - Sincronizações precisas.
-- Destruição de projéteis ou mecanismos usando o ambiente.
 
 A pontuação **não é necessária** para terminar a fase. Ela incentiva o domínio da mecânica e a rejogabilidade.
 
@@ -137,7 +135,7 @@ existem. A tela de vitória mostra quantos combos o jogador fez.
 
 - [ ] Valores de vida, dano e invulnerabilidade: os de partida estão na tabela acima; falta validar jogando.
 - [ ] O dano de contato entra como quarta categoria, ou é parte do dano direto?
-- [ ] Combos temporais: Crossfire e Synchronized Strike implementados; faltam Trap Bait, Double Pulse e Reflect Chain. Trap Bait depende de armadilhas que firam inimigos, e as do protótipo só ferem a nave; Double Pulse depende do pulso de interferência; Reflect Chain, do escudo refletor (expansão).
+- [ ] Combos temporais: Crossfire e Synchronized Strike implementados; falta Reflect Chain, que depende do escudo refletor (expansão). Trap Bait e Double Pulse saíram com as armadilhas.
 - [ ] Tamanho da "janela curta" de Crossfire e Synchronized Strike: o protótipo usa 1 s e 2,5 s como valores de partida (§16 pede janelas generosas no começo). Falta validar jogando.
 - [ ] Crossfire: o bônus (+3 de dano combinado) e o intervalo de 1 s antes de o mesmo alvo dar outro combo são valores de partida, não vêm do v0.1.
 - [ ] Synchronized Strike: deve ser a **única** forma de abrir o núcleo (o que responderia à pergunta dos geradores sem regeneração em [06](06-chefe-e-runs.md)), ou continua só reconhecendo e premiando a abertura feita com o eco?

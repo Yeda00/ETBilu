@@ -273,42 +273,6 @@ MonoBehaviour:
     lowPassHz: 0
     maxSeconds: 1.6
     fadeOutSeconds: 0.4
-  - cue: 21
-    clips:
-    - {fileID: 8300000, guid: fb9c161b63a984d009ba1e07712499d3, type: 3}
-    volume: 0.4
-    pitchMin: 1
-    pitchMax: 1
-    maxVoices: 2
-    minInterval: 0.1
-    panned: 1
-    lowPassHz: 0
-    maxSeconds: 0
-    fadeOutSeconds: 0.1
-  - cue: 22
-    clips:
-    - {fileID: 8300000, guid: c0d2df86d1776419fb68633f8b6181e3, type: 3}
-    volume: 0.3
-    pitchMin: 0.8
-    pitchMax: 0.8
-    maxVoices: 2
-    minInterval: 0.1
-    panned: 1
-    lowPassHz: 0
-    maxSeconds: 0
-    fadeOutSeconds: 0.1
-  - cue: 23
-    clips:
-    - {fileID: 8300000, guid: 8fbd6fbfbc923488ea6d2f296a1a2ac5, type: 3}
-    volume: 0.55
-    pitchMin: 1
-    pitchMax: 1
-    maxVoices: 1
-    minInterval: 0.3
-    panned: 0
-    lowPassHz: 0
-    maxSeconds: 0
-    fadeOutSeconds: 0.1
   - cue: 24
     clips:
     - {fileID: 8300000, guid: fd067c06ebabf41fdb7c0860709f4265, type: 3}
@@ -421,10 +385,6 @@ MonoBehaviour:
   - track: 0
     intro: {fileID: 0}
     loop: {fileID: 8300000, guid: 229a893702efd40488dc6cd8a6f198cb, type: 3}
-    volume: 0.6
-  - track: 1
-    intro: {fileID: 0}
-    loop: {fileID: 8300000, guid: 66e9b9ce0ca16490db34656558865485, type: 3}
     volume: 0.6
   - track: 2
     intro: {fileID: 8300000, guid: 26b44b44fd44640a799a497917512793, type: 3}

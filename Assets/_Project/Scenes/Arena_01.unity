@@ -1645,15 +1645,12 @@ MonoBehaviour:
   playfield: {fileID: 904703256}
   waves: {fileID: 880318357}
   ship: {fileID: 567245529}
-  echoes: {fileID: 567245530}
   pool: {fileID: 1735093688}
   world: {fileID: 687199027}
-  trapSection: {fileID: 8156573256078891116, guid: 24aa144dd48464648b19093c9587c8a9, type: 3}
   boss: {fileID: 1985196233868160455, guid: c5030c6e15be14e10871eb43a0352992, type: 3}
   startAt: 0
   gate: {fileID: 1887850888}
-  sectionSpawnMargin: 1
-  exitScrollSpeed: 6
+  bossDelaySeconds: 2
 --- !u!4 &1943902052
 Transform:
   m_ObjectHideFlags: 0

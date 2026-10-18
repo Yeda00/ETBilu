@@ -89,23 +89,21 @@ Runs curtas, com encontros que introduzem e depois combinam as mecânicas.
 
 | Encontro | Conteúdo | Objetivo de design |
 |---|---|---|
-| 1. **Primeiro ciclo** | Inimigos simples e obstáculos básicos → [04](04-inimigos-e-ondas.md) | Ensinar movimento, tiro e gravação |
-| 2. **Armadilha** | Laser e interruptor → [05](05-armadilhas-gadgets-puzzles.md) | Ensinar a interação entre eco e cenário |
-| 3. **Combinação** | Inimigos, armadilha e gadget | Ensinar combos temporais |
-| 4. **Guardião** | O chefe | Testar o domínio da mecânica |
+| 1. **Primeiro ciclo** | Inimigos simples → [04](04-inimigos-e-ondas.md) | Ensinar movimento, tiro e gravação |
+| 2. **Combinação** | Inimigos e gadget | Ensinar combos temporais |
+| 3. **Guardião** | O chefe | Testar o domínio da mecânica |
 
 No protótipo, os encontros podem ser segmentos de **uma única fase**, sem mapa de progressão.
 
-**No protótipo atual**, a cena `Arena_01` encadeia três encontros (`StageDirector`):
+**No protótipo atual**, a cena `Arena_01` encadeia dois encontros (`StageDirector`):
 
 | Ordem | Encontro | Começa quando | Termina quando |
 |---|---|---|---|
 | 1 | **Primeiro ciclo** — ondas → [04](04-inimigos-e-ondas.md) | A cena carrega | 2,5 s depois da última onda, sem inimigo vivo na tela |
-| 2 | **Armadilha** — o corredor de armadilhas → [05](05-armadilhas-gadgets-puzzles.md) | O encontro 1 termina; o corredor entra pela direita | A nave passa do laser preso ao interruptor |
-| 4 | **Guardião** | O corredor sai da tela (rolagem acelerada para 6 u/s) | O núcleo é destruído: vitória |
+| 2 | **Guardião** | 2 s depois do fim das ondas (`bossDelaySeconds`, valor de partida); a rolagem para | O núcleo é destruído: vitória |
 
-O encontro 3, **Combinação**, ainda não existe. O `StageDirector` tem um campo `startAt` para começar
-direto no corredor ou no Guardião ao testar.
+O encontro de **Combinação** (inimigos e gadget) ainda não existe. O `StageDirector` tem um campo `startAt` para começar
+direto no Guardião ao testar.
 
 ## Progressão entre tentativas
 
@@ -118,7 +116,7 @@ A repetição deve reforçar o tema *One More Time*. Dois modelos estão em jogo
 | **A — Eco durante a vida** | O jogador grava e reproduz enquanto está vivo. A morte reinicia o encontro | **Recomendado para o protótipo** |
 | **B — Ciclos acumulados** | Ao reiniciar, o jogador deixa um eco persistente da tentativa anterior | Evolução futura |
 
-**No protótipo atual** o modelo A está implementado: ao morrer, a cena recarrega depois de 2 s **no encontro em que a morte aconteceu** (ondas, corredor ou Guardião), sem ecos e com a pontuação zerada (`RunCheckpoint`). Derrotar o Guardião é a vitória.
+**No protótipo atual** o modelo A está implementado: ao morrer, a cena recarrega depois de 2 s **no encontro em que a morte aconteceu** (ondas ou Guardião), sem ecos e com a pontuação zerada (`RunCheckpoint`). Derrotar o Guardião é a vitória.
 
 *Por quê:* o modelo A é mais previsível e mais fácil de balancear. O modelo B pode entrar depois, se
 "tentar mais uma vez" também virar a estrutura narrativa do jogo.

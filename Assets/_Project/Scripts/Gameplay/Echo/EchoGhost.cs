@@ -12,8 +12,7 @@ namespace OneMoreTime.Gameplay.Echo
     /// <summary>
     /// The ghost ship. Replays a recording on its own clock from the recorded start point, fires
     /// each recorded shot and drops each recorded mine once, and never decides anything (GDD 02).
-    /// It has no Health and no collider, so it neither blocks the ship nor takes damage. Switches
-    /// still see it: they check positions, not physics (see SwitchPad).
+    /// It has no Health and no collider, so it neither blocks the ship nor takes damage.
     /// </summary>
     public sealed class EchoGhost : MonoBehaviour
     {

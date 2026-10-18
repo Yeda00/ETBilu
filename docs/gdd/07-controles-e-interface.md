@@ -30,9 +30,9 @@ Como o jogador pilota, grava e invoca ecos sem parar de desviar — e o que o HU
 Os atalhos são provisórios, e o jogador pode trocá-los na tela de controles (abaixo).
 
 *Por quê:* o que importa é **separar a gravação da reprodução**, para o jogador não invocar o eco sem
-querer enquanto tenta desviar de uma armadilha.
+querer enquanto tenta desviar dos tiros.
 
-No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControls.inputactions` (mapa `Gameplay`), lidas só pelo `PlayerInputReader`. A ação `Aim` lê a posição do ponteiro e o `ShipAim` a projeta no plano de jogo; o movimento continua independente da mira. Com um controle, a ação `AimStick` (stick direito) dá a direção da mira. O leitor sabe qual dispositivo o jogador usou por último (`UsingGamepad`): é ele que decide se a mira vem do mouse ou do stick e quais dicas aparecem no HUD. Q solta a mina temporal → [05](05-armadilhas-gadgets-puzzles.md). Os menus usam o mapa `Menu` do mesmo asset, lido só pelo `MenuInputReader`.
+No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControls.inputactions` (mapa `Gameplay`), lidas só pelo `PlayerInputReader`. A ação `Aim` lê a posição do ponteiro e o `ShipAim` a projeta no plano de jogo; o movimento continua independente da mira. Com um controle, a ação `AimStick` (stick direito) dá a direção da mira. O leitor sabe qual dispositivo o jogador usou por último (`UsingGamepad`): é ele que decide se a mira vem do mouse ou do stick e quais dicas aparecem no HUD. Q solta a mina temporal → [05](05-gadgets.md). Os menus usam o mapa `Menu` do mesmo asset, lido só pelo `MenuInputReader`.
 
 ## HUD
 

@@ -15,7 +15,7 @@ Cada bloco aponta para o capítulo do GDD completo, em [`gdd/`](gdd/), que guard
 **O passado continua lutando.**
 
 Um shooter de nave em que o jogador grava e reproduz suas próprias ações passadas para lutar ao mesmo
-tempo com versões anteriores de si mesmo, desviar de armadilhas e explorar combinações temporais para
+tempo com versões anteriores de si mesmo, desviar dos ataques e explorar combinações temporais para
 derrotar chefes. Cada tentativa deixa para trás ações que viram estratégia: *One More Time*.
 
 ![Nave atual e eco temporal lutando juntos](img/echo-concept.svg)
@@ -35,7 +35,7 @@ derrotar chefes. Cada tentativa deixa para trás ações que viram estratégia: 
 ![Core loop](img/loop.svg)
 
 **Avançar** (desviar, atirar, ler inimigos) → **Plantar âncora** (gravar movimento, tiros, gadgets) → **Retornar e soltar o eco**
-→ **Criar combos** (nave + eco + armadilhas) → **Derrotar o chefe**.
+→ **Criar combos** (nave + eco + gadget) → **Derrotar o chefe**.
 
 ## O eco temporal → [02](gdd/02-eco-temporal.md)
 
@@ -48,7 +48,7 @@ nave volta à âncora e repete a rota enquanto você continua pilotando. Há **u
 ## Combate → [03](gdd/03-combate.md)
 
 Movimento em 8 direções independente da mira, disparo contínuo na direção do mouse, retículo pulsante, recoil, flash e squash a cada tiro, além de um gadget. Acertos piscam e soltam faíscas; escudos defletem; destruições deixam explosão, anel e impulso de câmera proporcionais. Três tipos de dano: direto, de gadget e combinado.
-Cinco combos temporais: **Crossfire**, **Trap Bait**, **Double Pulse**, **Reflect Chain**, **Synchronized Strike**.
+Três combos temporais: **Crossfire**, **Reflect Chain**, **Synchronized Strike**.
 No protótipo, os dois primeiros a existir: **Crossfire** (nave e eco acertam o mesmo alvo em até 1 s: dano
 combinado) e **Synchronized Strike** (um gerador do Guardião pela nave, o outro pelo eco, em até 2,5 s: o
 escudo do núcleo cai). Janelas generosas, valores de partida.
@@ -60,12 +60,11 @@ escudo do núcleo cai). Janelas generosas, valores de partida.
 nunca aleatórias: o encontro atual comprime 15 entradas e 66 inimigos em 54 s, com pressão crescente e
 sobreposições legíveis. Cada família sorteia um de três modelos; só o visual muda.
 
-## Armadilhas, gadgets, puzzles → [05](gdd/05-armadilhas-gadgets-puzzles.md)
+## Gadgets → [05](gdd/05-gadgets.md)
 
-Laser gate, laser rotativo, campo de minas, barreiras móveis. Gadgets: mina temporal e pulso de
-interferência (escudo refletor e arpão magnético são expansão). Puzzles de poucos segundos, resolvidos
-dividindo a tarefa entre a nave e o eco. No protótipo: laser gate, barreira móvel e um interruptor que o
-eco segura enquanto está sobre ele; a mina temporal (Q), que o eco também solta.
+O jogo é **só combate**: não tem armadilhas nem puzzles (saíram do escopo em 2026-10-18). O gadget do protótipo é a
+mina temporal (Q), que o eco também solta. Pulso de interferência (a redefinir), escudo refletor e arpão magnético
+ficam para depois.
 
 ## O chefe → [06](gdd/06-chefe-e-runs.md)
 
@@ -91,7 +90,7 @@ O som também explica: a gravação pulsa, a invocação reverte, o eco soa filt
 
 ## Escopo da jam → [10](gdd/10-producao.md)
 
-**MVP:** nave, uma arena, âncora com rota de até 3,5 s, retorno e reprodução, drones por script, duas armadilhas, um gadget,
+**MVP:** nave, uma arena, âncora com rota de até 3,5 s, retorno e reprodução, drones por script, um gadget,
 um chefe com janela de vulnerabilidade, vitória e derrota. O teste que importa: alguém joga sem
 explicação e descobre sozinho para que serve o eco.
 
@@ -100,18 +99,16 @@ explicação e descobre sozinho para que serve o eco.
 Jogável em `Assets/_Project/Scenes/Arena_01.unity`. Nave, eco, inimigos e chefe usam os modelos 3D de
 blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
 âncora temporal com retorno e eco que repete movimento, tiros e gadget, caças, interceptadores e artilheiros que atiram, em ondas por script,
-corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
+mina temporal, o Guardião do Ciclo
 (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
 atual recomeça), vitória (derrotar o Guardião), o fluxo de menus (título, menu, mapa de missões, história e cartão de missão) e som: efeitos e música CC0 ligados ao jogo, com os valores ainda por ajustar de ouvido.
-Faltam torreta, os outros três combos, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).
+Faltam torreta, o combo Reflect Chain, o pulso de interferência, a fase 4 do chefe e o encontro de Combinação.
 
 ## Perguntas em aberto
 
 - Chefe com quatro fases ou duas? → [06](gdd/06-chefe-e-runs.md)
-- Um ou dois gadgets no MVP? → [05](gdd/05-armadilhas-gadgets-puzzles.md)
+- Um ou dois gadgets no MVP? → [05](gdd/05-gadgets.md)
 - Um ou até três ecos no MVP? → [02](gdd/02-eco-temporal.md)
-- Regra do eco para dispositivos de presença contínua → [02](gdd/02-eco-temporal.md)
-- A gravação é relativa à tela: o protótipo para a rolagem nos puzzles; vira regra? → [02](gdd/02-eco-temporal.md)
 - Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração e tamanho sugerido pelo designer → [06](gdd/06-chefe-e-runs.md)
 - Janelas dos combos (1 s e 2,5 s) e se só o Synchronized Strike deve abrir o núcleo → [03](gdd/03-combate.md)
 - Quais elementos são modelos 3D e quais são sprites 2D; lente de 300 mm sugerida pelo designer → [08](gdd/08-direcao-visual-e-sonora.md)
@@ -128,7 +125,7 @@ estética) e depois produção. Versão visual: [`gdd-full.html`](gdd-full.html)
 | 02 | [Loop e eco temporal](gdd/02-eco-temporal.md) | _TBD_ | draft |
 | 03 | [Combate](gdd/03-combate.md) | _TBD_ | draft |
 | 04 | [Inimigos e ondas](gdd/04-inimigos-e-ondas.md) | _TBD_ | draft |
-| 05 | [Armadilhas, gadgets e puzzles](gdd/05-armadilhas-gadgets-puzzles.md) | _TBD_ | draft |
+| 05 | [Gadgets](gdd/05-gadgets.md) | _TBD_ | draft |
 | 06 | [Chefe e estrutura das runs](gdd/06-chefe-e-runs.md) | _TBD_ | draft |
 | 07 | [Controles e interface](gdd/07-controles-e-interface.md) | _TBD_ | draft |
 | 08 | [Direção visual e sonora](gdd/08-direcao-visual-e-sonora.md) | _TBD_ | draft |

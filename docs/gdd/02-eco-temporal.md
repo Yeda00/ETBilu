@@ -4,7 +4,7 @@ chapter: "02"
 status: draft
 owner: _TBD_
 updated: 2026-10-18
-source: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost, SwitchPad)
+source: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost)
 ---
 
 # BILU'S INVASION | Loop e eco temporal
@@ -22,7 +22,7 @@ O jogo gira em torno de aprender os padrões, gravar ações úteis e usá-las p
 | **Avançar** | desvia, atira e lê os inimigos |
 | **Plantar âncora** | marca o retorno e registra movimento, tiros e gadgets |
 | **Retornar** | leva a nave à âncora e solta o eco para reproduzir as ações |
-| **Criar combos** | combina nave + eco + armadilhas |
+| **Criar combos** | combina nave + eco + gadget |
 | **Derrotar o chefe** | usa o conhecimento adquirido |
 
 ## O que o jogador grava
@@ -63,7 +63,7 @@ todo para a interface → [07](07-controles-e-interface.md).
 ## Regra fundamental
 
 > O eco **reproduz as ações, mas não restaura o estado do mundo.** Inimigos mortos não voltam,
-> projéteis destruídos não reaparecem e armadilhas seguem suas regras atuais.
+> projéteis destruídos não reaparecem.
 
 *Por quê:* evita a complexidade de rebobinar a simulação inteira e torna o sistema mais previsível.
 
@@ -79,10 +79,6 @@ todo para a interface → [07](07-controles-e-interface.md).
 | Usa gadgets? | Sim, e obedece às regras de cada gadget |
 | Quantos ao mesmo tempo? | Limitado, para a tela não ficar ilegível |
 
-**Dispositivos de presença contínua.** Um eco pode manter um interruptor ativado enquanto sua trajetória
-permanece sobre ele, mas não ativa um mecanismo só por passar perto — a menos que essa seja a regra
-explícita do objeto.
-
 ## No protótipo atual
 
 | Regra | Como está implementado |
@@ -97,17 +93,13 @@ explícita do objeto.
 | Corpo do eco | Sem colisor e sem vida: não bloqueia a nave nem recebe dano |
 | Entrada e saída | O eco aparece e some com um fade de 0,2 s |
 | Mira | A direção é amostrada junto da pose; o eco gira para a mira gravada e cada tiro usa sua direção registrada |
-| Gadget | O uso da mina temporal entra na gravação (`EchoEventType.Gadget`); o eco solta a mina no mesmo ponto e instante → [05](05-armadilhas-gadgets-puzzles.md) |
-| Interruptores | O eco segura um interruptor enquanto está sobre a placa. O interruptor confere posições, não colisões, então o eco sem colisor também conta → [05](05-armadilhas-gadgets-puzzles.md) |
-| Puzzles fixos no mundo | A rolagem para no trecho do interruptor (`TrapSection` zera `Playfield.ScrollSpeed`), então o eco volta ao ponto onde foi gravado |
+| Gadget | O uso da mina temporal entra na gravação (`EchoEventType.Gadget`); o eco solta a mina no mesmo ponto e instante → [05](05-gadgets.md) |
 
 *Por quê:* num side-scroller a tela anda o tempo todo; gravar em coordenadas do mundo deixaria o eco
 para trás, fora da tela, poucos segundos depois.
 
 ## Perguntas em aberto
 
-- [ ] Regra final para dispositivos que exigem presença contínua: o GDD v0.1 marca como decisão da versão final. O protótipo segura o interruptor só enquanto o eco ou a nave está sobre a placa, com 0,15 s de folga ao sair.
 - [ ] O eco recebe dano de projéteis especiais ou do chefe? O v0.1 só diz "comuns, no protótipo".
 - [x] Ecos simultâneos no MVP: a primeira versão usa um eco ativo para privilegiar leitura e intenção. Mais ecos ficam como expansão → [10](10-producao.md).
-- [ ] Puzzles com interruptores fixos no mundo (Puzzle 1) e gravação relativa à tela: a rolagem para nesses trechos (`Playfield.ScrollSpeed = 0`) ou o eco grava em coordenadas do mundo ali? O protótipo para a rolagem; falta confirmar como regra → [05](05-armadilhas-gadgets-puzzles.md)
 - [x] A rota é consumida no retorno; cada eco exige uma nova âncora e uma nova rota.

@@ -5,7 +5,6 @@ using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Echo;
 using OneMoreTime.Gameplay.Enemies;
 using OneMoreTime.Gameplay.Session;
-using OneMoreTime.Gameplay.Traps;
 using UnityEngine;
 
 namespace OneMoreTime.Gameplay.Audio
@@ -37,17 +36,13 @@ namespace OneMoreTime.Gameplay.Audio
 
         readonly Dictionary<Health, TargetKind> targets = new();
         readonly RecordPulse pulse = new();
-        readonly List<SwitchPad> switches = new();
-        readonly List<bool> switchHeld = new();
         AudioClip pulseClip;
         AudioClip anchorClip;
         AudioClip returnClip;
         AudioClip arrivalClip;
         GuardianBoss boss;
-        TrapSection section;
         bool bossVulnerable;
         int bossPhase;
-        bool sectionCleared;
         SessionState lastState = SessionState.Playing;
 
         bool pulsePanRight;
@@ -112,10 +107,7 @@ namespace OneMoreTime.Gameplay.Audio
             foreach (var target in new List<Health>(targets.Keys))
                 Untrack(target);
             targets.Clear();
-            switches.Clear();
-            switchHeld.Clear();
             boss = null;
-            section = null;
         }
 
         void OnDestroy()
@@ -134,7 +126,6 @@ namespace OneMoreTime.Gameplay.Audio
         {
             UpdateRecordingPulse();
             UpdateBoss();
-            UpdateSwitches();
         }
 
         // ---------------------------------------------------------------- shots, mines
@@ -234,7 +225,7 @@ namespace OneMoreTime.Gameplay.Audio
             }
         }
 
-        // ---------------------------------------------------------------- stage, boss, traps
+        // ---------------------------------------------------------------- stage and boss
 
         void OnStageChanged()
         {
@@ -246,7 +237,6 @@ namespace OneMoreTime.Gameplay.Audio
                 switch (stage.Segment)
                 {
                     case StageSegment.Waves: music.Play(MusicTrack.Waves); break;
-                    case StageSegment.Traps: music.Play(MusicTrack.Traps); break;
                     case StageSegment.Boss: music.Play(MusicTrack.Boss); break;
                     default: music.Stop(); break;
                 }
@@ -260,25 +250,6 @@ namespace OneMoreTime.Gameplay.Audio
                 Track(boss.CoreHealth, TargetKind.Core);
                 foreach (Health generator in boss.Generators)
                     Track(generator, TargetKind.Generator);
-            }
-
-            if (stage.Section != null && stage.Section != section)
-            {
-                section = stage.Section;
-                sectionCleared = false;
-                switches.Clear();
-                switchHeld.Clear();
-                foreach (SwitchPad pad in section.GetComponentsInChildren<SwitchPad>(true))
-                {
-                    switches.Add(pad);
-                    switchHeld.Add(false);
-                }
-            }
-
-            if (section != null && !sectionCleared && section.State == SectionState.Cleared)
-            {
-                sectionCleared = true;
-                Play(SoundCue.SectionCleared, ShipPosition());
             }
         }
 
@@ -296,20 +267,6 @@ namespace OneMoreTime.Gameplay.Audio
             if (phase > bossPhase)
                 Play(SoundCue.BossPhase, boss.CorePosition);
             bossPhase = phase;
-        }
-
-        void UpdateSwitches()
-        {
-            for (int i = 0; i < switches.Count; i++)
-            {
-                SwitchPad pad = switches[i];
-                if (pad == null)
-                    continue;
-                bool held = pad.IsHeld;
-                if (held != switchHeld[i])
-                    Play(held ? SoundCue.SwitchOn : SoundCue.SwitchOff, pad.transform.position);
-                switchHeld[i] = held;
-            }
         }
 
         // ---------------------------------------------------------------- session

@@ -8,7 +8,6 @@ using OneMoreTime.Gameplay.Gadgets;
 using OneMoreTime.Gameplay.Input;
 using OneMoreTime.Gameplay.Session;
 using OneMoreTime.Gameplay.Ship;
-using OneMoreTime.Gameplay.Traps;
 using OneMoreTime.Gameplay.World;
 using OneMoreTime.UI;
 using UnityEditor;
@@ -26,7 +25,7 @@ namespace OneMoreTime.EditorTools
     /// Builds the placeholder content of the prototype: materials, prefabs, data assets, the HUD
     /// panel and the Arena_01 scene. Everything is made of primitives so mechanics can be validated
     /// before the art arrives (GDD 10). Idempotent: existing assets are kept, never overwritten —
-    /// delete an asset to have it rebuilt. Content added after the first build (gadget, traps, boss,
+    /// delete an asset to have it rebuilt. Content added after the first build (gadget, boss,
     /// stage) is added to existing prefabs and to the scene only where it is missing.
     /// </summary>
     public static class PlaceholderBootstrap
@@ -87,7 +86,7 @@ namespace OneMoreTime.EditorTools
         sealed class Materials
         {
             public Material Ship, Echo, Enemy, EnemyMedium, ShotShip, ShotEcho, Warning, Rock, Ground;
-            public Material ShotEnemy, Laser, TrapMetal, Barrier, Switch, Blast, BossHull, BossCore, Shield;
+            public Material ShotEnemy, Laser, Blast, BossHull, BossCore, Shield;
         }
 
         static Materials BuildMaterials()
@@ -107,9 +106,6 @@ namespace OneMoreTime.EditorTools
                 Ground = Mat("M_Backdrop_Ground", lit, new Color(0.035f, 0.05f, 0.1f), smoothness: 0f),
                 ShotEnemy = Mat("M_Shot_Enemy", unlit, new Color(1f, 0.38f, 0.24f) * 1.5f),
                 Laser = Mat("M_Trap_Laser", unlit, new Color(1f, 0.3f, 0.22f) * 1.6f),
-                TrapMetal = Mat("M_Trap_Metal", lit, new Color(0.2f, 0.23f, 0.33f), smoothness: 0.4f),
-                Barrier = Mat("M_Trap_Barrier", lit, new Color(0.62f, 0.24f, 0.12f), emission: Orange * 0.25f),
-                Switch = Mat("M_Trap_Switch", unlit, new Color(0.3f, 0.36f, 0.52f)),   // tinted at runtime by SwitchPad
                 Blast = Mat("M_Blast", unlit, new Color(Amber.r, Amber.g, Amber.b, 0.45f), transparent: true),
                 BossHull = Mat("M_Boss_Hull", lit, new Color(0.15f, 0.17f, 0.27f), smoothness: 0.35f),
                 BossCore = Mat("M_Boss_Core", lit, new Color(1f, 0.32f, 0.26f), emission: new Color(1f, 0.25f, 0.2f) * 0.9f),
@@ -160,7 +156,7 @@ namespace OneMoreTime.EditorTools
         sealed class Prefabs
         {
             public GameObject Ship, Echo, EnemyS, EnemyM, ShotShip, ShotEcho, Warning, Pillar, Rock;
-            public GameObject ShotEnemy, MineShip, MineEcho, LaserGate, Barrier, Switch, TrapSection, Guardian;
+            public GameObject ShotEnemy, MineShip, MineEcho, Guardian;
         }
 
         static Prefabs BuildPrefabs(Materials m)
@@ -178,10 +174,6 @@ namespace OneMoreTime.EditorTools
             p.EnemyM = Prefab($"{PrefabDir}/Enemies/Enemy_M.prefab", () => BuildEnemyM(m, p.ShotEnemy));
             p.MineShip = Prefab($"{PrefabDir}/Gadgets/TimeMine_Ship.prefab", () => BuildMine("TimeMine_Ship", m.Ship, m.Blast));
             p.MineEcho = Prefab($"{PrefabDir}/Gadgets/TimeMine_Echo.prefab", () => BuildMine("TimeMine_Echo", m.Echo, m.Blast));
-            p.LaserGate = Prefab($"{PrefabDir}/Traps/LaserGate.prefab", () => BuildLaserGate(m));
-            p.Barrier = Prefab($"{PrefabDir}/Traps/MovingBarrier.prefab", () => BuildBarrier(m));
-            p.Switch = Prefab($"{PrefabDir}/Traps/SwitchPad.prefab", () => BuildSwitch(m));
-            p.TrapSection = Prefab($"{PrefabDir}/Traps/TrapSection_Corredor.prefab", () => BuildTrapSection(m, p));
             p.Guardian = Prefab($"{PrefabDir}/Boss/Guardian.prefab", () => BuildGuardian(m, p.ShotEnemy));
             return p;
         }
@@ -473,103 +465,6 @@ namespace OneMoreTime.EditorTools
             return root;
         }
 
-        // ---------- traps ----------
-
-        const float ScreenHeight = 14.8f;   // a little taller than the visible plane (GDD 08 camera)
-
-        static GameObject BuildLaserGate(Materials m)
-        {
-            var root = new GameObject("LaserGate");
-            var gate = root.AddComponent<LaserGate>();
-            AddKinematicBody(root);
-            var visual = Visual(root.transform);
-            Part(visual, PrimitiveType.Cube, "Emitter_Top", new Vector3(0f, ScreenHeight * 0.5f, 0f), Vector3.zero, new Vector3(0.8f, 0.5f, 0.8f), m.TrapMetal);
-            Part(visual, PrimitiveType.Cube, "Emitter_Bottom", new Vector3(0f, -ScreenHeight * 0.5f, 0f), Vector3.zero, new Vector3(0.8f, 0.5f, 0.8f), m.TrapMetal);
-
-            var beam = new GameObject("Beam");
-            beam.transform.SetParent(root.transform, false);
-            var col = beam.AddComponent<BoxCollider>();
-            col.isTrigger = true;
-            col.size = new Vector3(0.35f, ScreenHeight, 1f);
-            beam.AddComponent<ContactDamage>();
-            Part(beam.transform, PrimitiveType.Cube, "Visual", Vector3.zero, Vector3.zero, new Vector3(0.22f, ScreenHeight, 0.22f), m.Laser, shadows: false);
-
-            var warning = new GameObject("Warning");
-            warning.transform.SetParent(root.transform, false);
-            Part(warning.transform, PrimitiveType.Cube, "Visual", Vector3.zero, Vector3.zero, new Vector3(0.06f, ScreenHeight, 0.06f), m.Warning, shadows: false);
-            warning.AddComponent<Blinker>();
-            warning.SetActive(false);
-
-            Set(gate, "beam", beam);
-            Set(gate, "warning", warning);
-            SetLayer(root, LayerEnemyShot);
-            return root;
-        }
-
-        static GameObject BuildBarrier(Materials m)
-        {
-            var root = new GameObject("MovingBarrier");
-            var barrier = root.AddComponent<MovingBarrier>();
-            const float height = 8f;
-            Transform Block(string name, float side)
-            {
-                var block = new GameObject(name);
-                block.transform.SetParent(root.transform, false);
-                AddKinematicBody(block);
-                var col = block.AddComponent<BoxCollider>();
-                col.isTrigger = true;
-                col.center = new Vector3(0f, side * height * 0.5f, 0f);
-                col.size = new Vector3(1.2f, height, 1.2f);
-                block.AddComponent<ContactDamage>();
-                Part(Visual(block.transform), PrimitiveType.Cube, "Block", new Vector3(0f, side * height * 0.5f, 0f), Vector3.zero, new Vector3(1.2f, height, 1.2f), m.Barrier);
-                return block.transform;
-            }
-            Set(barrier, "upper", Block("Upper", 1f));
-            Set(barrier, "lower", Block("Lower", -1f));
-            SetLayer(root, LayerEnemyShot);
-            return root;
-        }
-
-        static GameObject BuildSwitch(Materials m)
-        {
-            var root = new GameObject("SwitchPad");
-            var visual = Visual(root.transform);
-            // Behind the gameplay plane, so the ship and the echo pass in front of it.
-            var plate = Part(visual, PrimitiveType.Cube, "Plate", new Vector3(0f, 0f, 0.5f), Vector3.zero, new Vector3(1.8f, 1.4f, 0.1f), m.Switch, shadows: false);
-            var lamp = Part(visual, PrimitiveType.Sphere, "Lamp", new Vector3(0f, 0f, 0.35f), Vector3.zero, Vector3.one * 0.35f, m.Switch, shadows: false);
-            Part(visual, PrimitiveType.Cube, "Base", new Vector3(0f, -0.8f, 0.4f), Vector3.zero, new Vector3(2f, 0.2f, 0.6f), m.TrapMetal);
-            var pad = root.AddComponent<SwitchPad>();
-            SetArray(pad, "indicators", new Object[] { plate.GetComponent<Renderer>(), lamp.GetComponent<Renderer>() });
-            return root;
-        }
-
-        // Encounter 2 (GDD 06): a cycling gate and a moving barrier that cross the ship as the screen
-        // scrolls, then the scroll locks on a gate held off by a switch — the echo's job (GDD 05, puzzle 1).
-        static GameObject BuildTrapSection(Materials m, Prefabs p)
-        {
-            var root = new GameObject("TrapSection_Corredor");
-            var section = root.AddComponent<TrapSection>();
-            SetFloat(section, "exitX", 7f);
-
-            Nested(p.LaserGate, root.transform, "Gate_Ciclo", new Vector3(-26f, 0f, 0f));
-            Nested(p.Barrier, root.transform, "Barreira", new Vector3(-16f, 0f, 0f));
-            var padGo = Nested(p.Switch, root.transform, "Interruptor", new Vector3(1.5f, -5.6f, 0f));
-            var gate = Nested(p.LaserGate, root.transform, "Gate_Interruptor", new Vector3(6f, 0f, 0f)).GetComponent<LaserGate>();
-            var pad = padGo.GetComponent<SwitchPad>();
-            SetBool(gate, "cycles", false);
-            Set(gate, "holdOpenBy", pad);
-
-            // Conduit from the switch to the gate's foot, lit with the switch: shows what it controls.
-            var conduit = Part(root.transform, PrimitiveType.Cube, "Conduto", new Vector3(3.75f, -6.6f, 0.4f), Vector3.zero, new Vector3(4.5f, 0.12f, 0.12f), m.Switch, shadows: false);
-            SetArray(pad, "indicators", new Object[]
-            {
-                padGo.transform.Find("Visual/Plate").GetComponent<Renderer>(),
-                padGo.transform.Find("Visual/Lamp").GetComponent<Renderer>(),
-                conduit.GetComponent<Renderer>(),
-            });
-            return root;
-        }
-
         // ---------- boss ----------
 
         // O Guardião do Ciclo (GDD 06): armoured core, two generators, a sweeping laser.
@@ -857,7 +752,7 @@ namespace OneMoreTime.EditorTools
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
         }
 
-        // Adds the stage (waves → traps → Guardian), the combo tracker, the pixel view and the gadget links
+        // Adds the stage (waves → Guardian), the combo tracker, the pixel view and the gadget links
         // to the scene, only where missing.
         static void WireStage()
         {
@@ -893,10 +788,8 @@ namespace OneMoreTime.EditorTools
             changed |= SetIfNull(stage, "playfield", playfield);
             changed |= SetIfNull(stage, "waves", spawner);
             changed |= SetIfNull(stage, "ship", ability.transform);
-            changed |= SetIfNull(stage, "echoes", ability);
             changed |= SetIfNull(stage, "pool", pool);
             changed |= SetIfNull(stage, "world", world);
-            changed |= SetIfNull(stage, "trapSection", p.TrapSection.GetComponent<TrapSection>());
             changed |= SetIfNull(stage, "boss", p.Guardian.GetComponent<GuardianBoss>());
             changed |= SetIfNull(spawner, "pool", pool);
             changed |= SetIfNull(spawner, "ship", ability.transform);
@@ -951,14 +844,6 @@ namespace OneMoreTime.EditorTools
             var visual = new GameObject("Visual").transform;
             visual.SetParent(parent, false);
             return visual;
-        }
-
-        static GameObject Nested(GameObject prefab, Transform parent, string name, Vector3 position)
-        {
-            var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
-            go.name = name;
-            go.transform.localPosition = position;
-            return go;
         }
 
         static T Child<T>(Transform parent, string name) where T : Component

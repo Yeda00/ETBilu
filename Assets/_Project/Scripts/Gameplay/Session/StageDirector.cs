@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
-using OneMoreTime.Gameplay.Echo;
 using OneMoreTime.Gameplay.Enemies;
-using OneMoreTime.Gameplay.Traps;
 using OneMoreTime.Gameplay.World;
 using UnityEngine;
 
@@ -14,35 +12,30 @@ namespace OneMoreTime.Gameplay.Session
     public enum StageSegment
     {
         Waves = 0,
-        Traps = 1,
-        Boss = 2,
-        Done = 3,
+        Boss = 1,
+        Done = 2,
     }
 
     /// <summary>
-    /// Runs the arena's encounters in order — the scripted waves, the trap corridor, the Guardian of the
-    /// Cycle — and reports victory when the Guardian falls. After a death the scene reloads at the
-    /// encounter where it happened (<see cref="RunCheckpoint"/>), not at the first wave (GDD 06, model A).
+    /// Runs the arena's encounters in order — the scripted waves, then the Guardian of the Cycle — and reports
+    /// victory when the Guardian falls. After a death the scene reloads at the encounter where it happened
+    /// (<see cref="RunCheckpoint"/>), not at the first wave (GDD 06, model A).
     /// </summary>
     public sealed class StageDirector : MonoBehaviour
     {
         [SerializeField] Playfield playfield;
         [SerializeField] WaveSpawner waves;
         [SerializeField] Transform ship;
-        [SerializeField] EchoAbility echoes;
         [SerializeField] ProjectilePool pool;
         [Tooltip("Parent for what the stage spawns (the World group).")]
         [SerializeField] Transform world;
-        [SerializeField] TrapSection trapSection;
         [SerializeField] GuardianBoss boss;
-        [Tooltip("Encounter the scene starts at. Set to Traps or Boss to test them straight away.")]
+        [Tooltip("Encounter the scene starts at. Set to Boss to test the Guardian straight away.")]
         [SerializeField] StageSegment startAt = StageSegment.Waves;
         [Tooltip("Held until it opens before the first encounter starts (the mission card). Optional.")]
         [SerializeField] StageGate gate;
-        [Tooltip("Gap between the right edge and the trap section's first trap when it spawns.")]
-        [SerializeField, Min(0f)] float sectionSpawnMargin = 1f;
-        [Tooltip("Scroll speed while the cleared trap corridor leaves the screen.")]
-        [SerializeField, Min(0f)] float exitScrollSpeed = 6f;
+        [Tooltip("Breather between the last wave and the Guardian. Starting value.")]
+        [SerializeField, Min(0f)] float bossDelaySeconds = 2f;
 
         public event Action Changed;
         public event Action Completed;
@@ -51,7 +44,6 @@ namespace OneMoreTime.Gameplay.Session
         /// <summary>False while the stage waits for its gate.</summary>
         public bool HasBegun { get; private set; }
         public StageSegment Segment { get; private set; }
-        public TrapSection Section { get; private set; }
         public GuardianBoss Boss { get; private set; }
 
         IEnumerator Start()
@@ -86,19 +78,11 @@ namespace OneMoreTime.Gameplay.Session
                 case StageSegment.Waves:
                     if (waves == null)
                     {
-                        Begin(StageSegment.Traps);
+                        Begin(StageSegment.Boss);
                         return;
                     }
                     waves.Cleared += OnWavesCleared;
                     waves.Play();
-                    break;
-                case StageSegment.Traps:
-                    if (trapSection == null)
-                    {
-                        Begin(StageSegment.Boss);
-                        return;
-                    }
-                    SpawnSection();
                     break;
                 case StageSegment.Boss:
                     SpawnBoss();
@@ -109,43 +93,18 @@ namespace OneMoreTime.Gameplay.Session
                 Completed?.Invoke();
         }
 
-        void Update()
-        {
-            // The cleared corridor scrolls out fast; the Guardian comes once it is off the screen.
-            if (Segment == StageSegment.Traps && Section != null && Section.State == SectionState.Cleared)
-            {
-                var rightmost = Section.transform.position + Vector3.right * Section.ExtentX.y;
-                if (playfield.IsPastLeftEdge(rightmost, 0.5f))
-                {
-                    Destroy(Section.gameObject);
-                    Section = null;
-                    Begin(StageSegment.Boss);
-                }
-            }
-        }
-
         void OnWavesCleared()
         {
             waves.Cleared -= OnWavesCleared;
             if (Segment == StageSegment.Waves)
-                Begin(StageSegment.Traps);
+                StartCoroutine(BossAfterBreather());
         }
 
-        void SpawnSection()
+        IEnumerator BossAfterBreather()
         {
-            Section = Instantiate(trapSection, world);
-            Section.Begin(playfield, ship, echoes);
-            // Place it so its first trap starts just past the right edge.
-            float x = playfield.HalfExtents.x + sectionSpawnMargin - Section.ExtentX.x;
-            Section.transform.position = playfield.LocalToWorld(new Vector2(x, 0f));
-            Section.StateChanged += OnSectionStateChanged;
-        }
-
-        void OnSectionStateChanged(TrapSection section)
-        {
-            if (section.State == SectionState.Cleared)
-                playfield.ScrollSpeed = exitScrollSpeed;
-            Changed?.Invoke();
+            yield return new WaitForSeconds(bossDelaySeconds);
+            if (Segment == StageSegment.Waves)
+                Begin(StageSegment.Boss);
         }
 
         void SpawnBoss()

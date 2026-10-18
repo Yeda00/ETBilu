@@ -22,7 +22,7 @@
 ## Entradas
 - Fonte do fundo 2D: `iCloudDrive\Art repository_\Source Files_\TiagoGame_environment_.aseprite`. Canvas de 1536 × 768 em RGB; camada `sky` em modo Overlay; personagem em `Pasted Image`.
 - Cenário atual: `BackdropScroller` com props placeholder em `Art/Placeholder`.
-- Encontros na ordem: ondas → corredor de armadilhas → Guardião (GDD 06).
+- Encontros na ordem: ondas → Guardião (GDD 06).
 
 ## Props 3D: medidas
 - Ficam de 16 a 70 unidades atrás do plano de jogo. Nessa distância 1 pixel da tela ≈ 0,1 a 0,24 unidade: detalhe menor que ~0,5 unidade some.

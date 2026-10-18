@@ -34,13 +34,12 @@ namespace OneMoreTime.Core.Audio
         EchoArrive,
         Combo,
 
-        // Boss, traps, session
+        // Boss and session
         BossVulnerable,
         BossPhase,
-        SwitchOn,
-        SwitchOff,
-        SectionCleared,
-        Pause,
+        // 21-23 were the switch and corridor sounds, gone with the traps. The numbers below stay as they were,
+        // because the AudioLibrary asset stores cues by number.
+        Pause = 24,
         Resume,
         Victory,
 

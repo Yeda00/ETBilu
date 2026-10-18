@@ -84,14 +84,14 @@ mesma fileira, cada um para mais à direita que o anterior, mantendo a distânci
 | 0:00 – 0:15 | Caças no alto (0:03), embaixo (0:07), interceptadores (0:11) e primeiro cerco em dois níveis (0:15) | Entrar em ação rápido e ensinar os três vetores de movimento sem misturá-los de imediato |
 | 0:19 – 0:29 | Primeiro artilheiro (0:19), interceptadores por baixo (0:22), caças no alto (0:26) e dupla de artilheiros (0:29) | Começar a sobrepor alvo resistente com ameaça móvel; criar alvos para Crossfire |
 | 0:33 – 0:43 | Tesoura de interceptadores (0:33), artilheiro de contenção (0:37), escolta sobreposta (0:38,5) e parede móvel (0:43) | Cobrar leitura de prioridade, mudança de altura e uso do eco para cobrir outra faixa |
-| 0:47 – 0:54 | Artilheiros em pinça (0:47), caças em duas linhas (0:49) e clímax de interceptadores em duas linhas (0:54) | Pico de densidade antes do corredor, sem remover os avisos de entrada e de rajada |
+| 0:47 – 0:54 | Artilheiros em pinça (0:47), caças em duas linhas (0:49) e clímax de interceptadores em duas linhas (0:54) | Pico de densidade antes do Guardião, sem remover os avisos de entrada e de rajada |
 
 Está em `Encounter01_PrimeiroCiclo.asset`: **15 entradas e 66 inimigos em 54 s** (antes eram 9 entradas e
 35 inimigos em 73 s). O encontro termina 2,5 s depois da última onda, quando não resta
-inimigo vivo; aí começa o corredor de armadilhas → [06](06-chefe-e-runs.md). A torreta ainda não entra.
+inimigo vivo; depois de 2 s de respiro entra o Guardião → [06](06-chefe-e-runs.md). A torreta ainda não entra.
 
-Os tempos são valores de partida para testar. As ondas dos encontros 2 e 3 devem reaproveitar os mesmos
-inimigos, combinados com as armadilhas e o gadget → [06](06-chefe-e-runs.md).
+Os tempos são valores de partida para testar. Um encontro de Combinação, se entrar, deve reaproveitar os mesmos
+inimigos, combinados com o gadget → [06](06-chefe-e-runs.md).
 
 ## Perguntas em aberto
 
@@ -99,4 +99,4 @@ inimigos, combinados com as armadilhas e o gadget → [06](06-chefe-e-runs.md).
 - [ ] Torreta: falta implementar.
 - [ ] O caça mira e mergulha para onde a nave está: as ondas continuam por script, mas parte do movimento responde ao jogador. Isso combina com "o jogador aprende o padrão e planeja o que gravar", ou o mergulho deve ir para alturas fixas?
 - [ ] Vida, pontos, tempos de tiro e de aviso: primeira rodada frenética validada tecnicamente; falta playtest externo.
-- [ ] Ondas dos encontros 2 e 3: só o encontro 1 tem linha do tempo.
+- [ ] Ondas de um encontro de Combinação, se entrar: só o encontro 1 tem linha do tempo.
