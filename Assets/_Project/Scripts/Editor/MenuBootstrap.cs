@@ -56,12 +56,15 @@ namespace OneMoreTime.EditorTools
             mission.sceneName = "Arena_01";
             mission.story = new[]
             {
-                "Há muito tempo, o ET Bilu fez um único pedido à humanidade: busquem conhecimento.",
-                "A humanidade ouviu. E não fez nada.",
-                "Em vez de perguntas, escolheu ordens. Em vez de livros, escolheu um império, governado pela ignorância, que esgotou a Terra até o último gole: sem água, sem mata, só sertão seco e máquinas de extração enferrujadas sob um céu roxo e doente.",
-                "O Bilu voltou para ver o que fizeram com o lugar. Não gostou.",
-                "Ele tem uma nave pequena, um truque estranho (o passado dele continua lutando ao seu lado) e muita raiva acumulada.",
-                "Hora de derrubar o império. Uma vez. E, se for preciso, mais uma.",
+                "Outubro de 2010. Bilu visitou a Terra numa missão de paz, trazendo palavras sábias que deveriam mudar o destino do planeta para sempre.",
+                "42 anos depois, tomado por uma mistura de ira, decepção e revolta, Bilu volta à Terra. Mas desta vez a paz não é mais uma opção.",
+                "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida até a última gota. Depois de uma série de catástrofes climáticas, o mar secou, e o planeta virou um deserto árido e decadente.",
+                "Os recursos que restavam foram saqueados e levados numa missão desesperada para a tão sonhada colônia em Marte. Que, ironicamente, deu errado: pelo visto, eles precisavam de professores universitários, afinal...",
+                "E o tal 1% saiu à deriva pelo infinito, num cruzeiro de luxo com um destino tão certo quanto o do Titanic.",
+                "A Terra virou uma piada sem graça: as ruínas de um império decadente, defendido pelas engrenagens de um sistema sem patrão que já não sabe como parar.",
+                "Bilu volta para entregar a mensagem de novo. E desta vez ela vai descer goela abaixo.",
+                "Uma vez não bastou. Então, mais uma vez:",
+                "BUSQUEM CONHECIMENTO!!!!",
             };
             mission.storyPicture = AssetDatabase.LoadAssetAtPath<Sprite>(PicturePath);
             return mission;

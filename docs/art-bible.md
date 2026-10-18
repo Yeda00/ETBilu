@@ -5,7 +5,7 @@ Mecânica e regras de jogo ficam no [GDD](gdd.md).
 
 ## Tom
 
-Comédia, nascida de uma piada. O ET Bilu pediu à humanidade que buscasse conhecimento. Ela não buscou: a Terra virou um império fascista governado pela ignorância, que esgotou o planeta. O Bilu, puto, invade para derrubar o império.
+Comédia, nascida de uma piada. Em outubro de 2010 o ET Bilu pediu à humanidade que buscasse conhecimento (o meme "busquem conhecimento"). Ela não buscou: a Terra virou um império fascista governado pela ignorância, que esgotou o planeta. Em 2052, 42 anos depois, o Bilu, puto, invade para derrubar o império e entregar a mensagem mais uma vez. Texto da abertura: `Data/Missions/Mission_01` ([GDD 07](gdd/07-controles-e-interface.md)).
 
 ## Estética
 

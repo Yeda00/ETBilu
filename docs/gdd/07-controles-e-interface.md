@@ -96,9 +96,13 @@ A ordem das telas, o cursor, a rolagem do texto e os volumes são regras do Core
 nome, texto da história, imagem e cena). O layout e o visual ficam em `UI/Menu.uxml`, `Menu.uss`,
 `MissionCard.uxml` e `MissionCard.uss`.
 
-> **Q:** o texto da história e o nome da Missão Nº 1 ("Terra · Sertão Seco", "Derrubar o Império") são
-> rascunho, escritos a partir da premissa da [bíblia de arte](../art-bible.md). O dono precisa aprovar ou
-> reescrever. A imagem da história é um recorte da arena, só para ocupar o lugar da arte final.
+O texto da história é o do dono: em outubro de 2010 Bilu trouxe à Terra a mensagem "busquem conhecimento";
+42 anos depois, com a Terra seca e saqueada por um império decadente, ele volta para entregá-la mais uma vez,
+à força. O texto fecha no tema do design: "Uma vez não bastou. Então, mais uma vez: BUSQUEM CONHECIMENTO!!!!".
+
+> **Q:** o nome da Missão Nº 1 ("Terra · Sertão Seco", "Derrubar o Império") é rascunho, escrito a partir da
+> premissa da [bíblia de arte](../art-bible.md). O dono precisa aprovar ou reescrever. A imagem da história é
+> um recorte da arena, só para ocupar o lugar da arte final.
 
 ### Trocar os controles
 

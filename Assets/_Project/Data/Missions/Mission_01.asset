@@ -17,16 +17,14 @@ MonoBehaviour:
   title: "Derrubar o Imp\xE9rio"
   mapCode: SE
   story:
-  - "H\xE1 muito tempo, o ET Bilu fez um \xFAnico pedido \xE0 humanidade: busquem
-    conhecimento."
-  - "A humanidade ouviu. E n\xE3o fez nada."
-  - "Em vez de perguntas, escolheu ordens. Em vez de livros, escolheu um imp\xE9rio,
-    governado pela ignor\xE2ncia, que esgotou a Terra at\xE9 o \xFAltimo gole: sem
-    \xE1gua, sem mata, s\xF3 sert\xE3o seco e m\xE1quinas de extra\xE7\xE3o enferrujadas
-    sob um c\xE9u roxo e doente."
-  - "O Bilu voltou para ver o que fizeram com o lugar. N\xE3o gostou."
-  - Ele tem uma nave pequena, um truque estranho (o passado dele continua lutando
-    ao seu lado) e muita raiva acumulada.
-  - "Hora de derrubar o imp\xE9rio. Uma vez. E, se for preciso, mais uma."
+  - "Outubro de 2010. Bilu visitou a Terra numa miss\xE3o de paz, trazendo palavras s\xE1bias que deveriam mudar o destino do planeta para sempre."
+  - "42 anos depois, tomado por uma mistura de ira, decep\xE7\xE3o e revolta, Bilu volta \xE0 Terra. Mas desta vez a paz n\xE3o \xE9 mais uma op\xE7\xE3o."
+  - "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida at\xE9 a \xFAltima gota. Depois de uma s\xE9rie de cat\xE1strofes clim\xE1ticas, o mar secou, e o planeta virou um deserto \xE1rido e decadente."
+  - "Os recursos que restavam foram saqueados e levados numa miss\xE3o desesperada para a t\xE3o sonhada col\xF4nia em Marte. Que, ironicamente, deu errado: pelo visto, eles precisavam de professores universit\xE1rios, afinal..."
+  - "E o tal 1% saiu \xE0 deriva pelo infinito, num cruzeiro de luxo com um destino t\xE3o certo quanto o do Titanic."
+  - "A Terra virou uma piada sem gra\xE7a: as ru\xEDnas de um imp\xE9rio decadente, defendido pelas engrenagens de um sistema sem patr\xE3o que j\xE1 n\xE3o sabe como parar."
+  - "Bilu volta para entregar a mensagem de novo. E desta vez ela vai descer goela abaixo."
+  - "Uma vez n\xE3o bastou. Ent\xE3o, mais uma vez:"
+  - "BUSQUEM CONHECIMENTO!!!!"
   storyPicture: {fileID: 21300000, guid: c5117d901834f4e3ebf437f14177f85a, type: 3}
   sceneName: Arena_01
