@@ -128,6 +128,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 143153982}
+  - component: {fileID: 143153984}
+  - component: {fileID: 143153983}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -157,6 +159,38 @@ Transform:
   - {fileID: 1159577772}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &143153983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143153981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2033a7462a644ebad84ad5e5f7ecd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Feedback.CombatFeedbackDirector
+  player: {fileID: 567245531}
+  waves: {fileID: 880318357}
+  stage: {fileID: 1943902051}
+  combos: {fileID: 1205768502}
+  cameraImpact: {fileID: 1475743199}
+  effects: {fileID: 143153984}
+--- !u!114 &143153984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143153981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fef3fc4ebc64579a3c1d38c7da7f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Feedback.CombatVfxPool
+  burstPoolSize: 20
+  ringPoolSize: 16
 --- !u!1 &230011974
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,6 +921,7 @@ GameObject:
   - component: {fileID: 1475743195}
   - component: {fileID: 1475743197}
   - component: {fileID: 1475743196}
+  - component: {fileID: 1475743199}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1012,6 +1047,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 904703257}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1475743199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475743194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ff26dbea7bbb413f99f8696888f57b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Feedback.CameraImpact
+  maxOffset: 0.34
+  maxRoll: 0.65
+  noiseFrequency: 29
+  returnSharpness: 18
 --- !u!1 &1482473780
 GameObject:
   m_ObjectHideFlags: 0

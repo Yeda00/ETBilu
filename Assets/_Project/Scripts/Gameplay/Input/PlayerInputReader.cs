@@ -13,9 +13,13 @@ namespace OneMoreTime.Gameplay.Input
         [SerializeField] InputActionAsset controls;
         [SerializeField] string actionMap = "Gameplay";
 
-        InputAction move, fire, record, invokeEcho, gadget, pause;
+        InputAction move, aim, fire, record, invokeEcho, gadget, pause;
 
         public Vector2 Move => move != null ? Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f) : Vector2.zero;
+        /// <summary>Pointer position in screen pixels. Gameplay systems project it onto their own plane.</summary>
+        public Vector2 AimScreenPosition => aim != null
+            ? aim.ReadValue<Vector2>()
+            : new Vector2(Screen.width, Screen.height * 0.5f);
         public bool FireHeld => fire != null && fire.IsPressed();
         public bool RecordHeld => record != null && record.IsPressed();
         public bool InvokeEchoPressed => invokeEcho != null && invokeEcho.WasPressedThisFrame();
@@ -33,6 +37,7 @@ namespace OneMoreTime.Gameplay.Input
 
             var map = controls.FindActionMap(actionMap, throwIfNotFound: true);
             move = map.FindAction("Move", true);
+            aim = map.FindAction("Aim", true);
             fire = map.FindAction("Fire", true);
             record = map.FindAction("Record", true);
             invokeEcho = map.FindAction("InvokeEcho", true);

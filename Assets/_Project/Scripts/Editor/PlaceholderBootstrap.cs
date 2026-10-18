@@ -233,8 +233,11 @@ namespace OneMoreTime.EditorTools
 
             var motor = root.AddComponent<ShipMotor>();
             Set(motor, "visual", visual);
+            var aim = root.AddComponent<ShipAim>();
+            Set(aim, "motor", motor);
             var weapon = root.AddComponent<ShipWeapon>();
             Set(weapon, "projectile", shot.GetComponent<Projectile>());
+            Set(weapon, "aim", aim);
             var ability = root.AddComponent<EchoAbility>();
             Set(ability, "motor", motor);
             Set(ability, "weapon", weapon);

@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e24c935b500a4270a4b9fd1b008dedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Combat.Projectile
-  speed: 8
+  speed: 9.5
   damage: 1
   lifetime: 4.5
   kind: 0

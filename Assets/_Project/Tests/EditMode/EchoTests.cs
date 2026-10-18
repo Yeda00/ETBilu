@@ -59,6 +59,19 @@ namespace OneMoreTime.Tests
             rec.Begin(Vector2.zero, 0f);
             Assert.That(rec.End(), Is.Null);
         }
+
+        [Test]
+        public void Aim_direction_is_sampled_and_interpolated()
+        {
+            var rec = new EchoRecorder(5f, Rate);
+            rec.Begin(Vector2.zero, 0f, Vector2.right);
+            rec.Tick(1f, Vector2.zero, 0f, Vector2.up);
+            var recording = rec.End();
+
+            Vector2 halfway = recording.Evaluate(0.5f).aimDirection;
+            Assert.That(halfway.x, Is.EqualTo(0.7071f).Within(1e-3f));
+            Assert.That(halfway.y, Is.EqualTo(0.7071f).Within(1e-3f));
+        }
     }
 
     public class EchoPlaybackTests

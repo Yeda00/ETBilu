@@ -169,4 +169,45 @@ namespace OneMoreTime.Tests
             Assert.That(m.Position, Is.EqualTo(m.Evaluate(2f)));
         }
     }
+
+    public class SerpentineMotionTests
+    {
+        [Test]
+        public void Moves_left_at_constant_speed_and_joins_without_a_vertical_pop()
+        {
+            var m = new SerpentineMotion(new Vector2(10f, 2f), speed: 5f, amplitude: 1.5f, frequency: 0.5f, phase: 1.2f);
+            Assert.That(m.Evaluate(0f), Is.EqualTo(new Vector2(10f, 2f)));
+            m.Tick(0.5f);
+            Assert.That(m.Position.x, Is.EqualTo(7.5f).Within(1e-4f));
+        }
+
+        [Test]
+        public void Phase_desynchronises_members_of_the_same_formation()
+        {
+            var a = new SerpentineMotion(Vector2.zero, 5f, 1f, 0.5f, 0f);
+            var b = new SerpentineMotion(Vector2.zero, 5f, 1f, 0.5f, 1.2f);
+            a.Tick(0.4f);
+            b.Tick(0.4f);
+            Assert.That(a.Position.x, Is.EqualTo(b.Position.x).Within(1e-4f));
+            Assert.That(a.Position.y, Is.Not.EqualTo(b.Position.y).Within(1e-3f));
+        }
+
+        [Test]
+        public void Non_positive_delta_does_not_move()
+        {
+            var m = new SerpentineMotion(new Vector2(3f, -2f), 5f, 1f, 1f, 0f);
+            m.Tick(-1f);
+            Assert.That(m.Position, Is.EqualTo(new Vector2(3f, -2f)));
+            Assert.That(m.Time, Is.Zero);
+        }
+
+        [Test]
+        public void Vertical_displacement_stays_inside_the_authored_amplitude()
+        {
+            const float amplitude = 1.4f;
+            var m = new SerpentineMotion(new Vector2(0f, 2f), 5f, amplitude, 0.55f, 1.7f);
+            for (float t = 0f; t < 5f; t += 0.05f)
+                Assert.That(Mathf.Abs(m.Evaluate(t).y - 2f), Is.LessThanOrEqualTo(amplitude + 1e-4f));
+        }
+    }
 }

@@ -1,64 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 250" role="img" aria-labelledby="t d">
   <title id="t">Os tipos de inimigo</title>
-  <desc id="d">Caça (S): entra em fila pela direita, mergulha para a altura da nave e dispara um tiro mirado. Artilheiro (M): freia, segura uma posição à direita balançando e dispara leques de três tiros mirados, depois sai. Torreta (planejada): parada no cenário, atira na direção da nave.</desc>
+  <desc id="d">Caça mergulha e atira; interceptador cruza em senoide; artilheiro oscila e dispara leques de cinco; torreta é planejada.</desc>
   <style>
-    .h{font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.06em}
-    .s{font:400 12px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#c9d4f2}
-    .r{font:600 12px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#b18cff}
-    .n{font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#5d6f9e}
+    .h{font:700 10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.05em}.s{font:400 11px ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#c9d4f2}.r{font:600 11px ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#b18cff}.n{font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#5d6f9e}
   </style>
   <defs>
-    <path id="ship" d="M12 0 L-8 -8 L-4 0 L-8 8 Z"/>
-    <path id="fighter" d="M-11 0 L5 -6 L10 -3 L4 0 L10 3 L5 6 Z"/>
-    <g id="gunship"><path d="M-6 0 L4 -7 L12 0 L4 7 Z"/><path d="M-17 -11 L-1 -6 M-17 11 L-1 6" fill="none" stroke-width="3" stroke-linecap="round"/></g>
+    <path id="ship" d="M10 0L-7-7l3 7-3 7z"/><path id="fighter" d="M-10 0L5-6l9 6-9 6z"/>
+    <g id="gunship"><path d="M-7 0L4-8l12 8L4 8z"/><path d="M-17-11L-2-6M-17 11L-2 6" fill="none" stroke-width="3" stroke-linecap="round"/></g>
     <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff8a3d"/></marker>
   </defs>
   <rect width="800" height="250" rx="14" fill="#0a0f1f"/>
-  <g fill="#0f1830" stroke="#1e2b52"><rect x="10" y="10" width="252" height="230" rx="10"/><rect x="274" y="10" width="252" height="230" rx="10"/><rect x="538" y="10" width="252" height="230" rx="10"/></g>
-
-  <!-- Caça (S) -->
+  <g fill="#0f1830" stroke="#1e2b52"><rect x="10" y="10" width="185" height="230" rx="10"/><rect x="205" y="10" width="185" height="230" rx="10"/><rect x="400" y="10" width="185" height="230" rx="10"/><rect x="595" y="10" width="195" height="230" rx="10"/></g>
   <g transform="translate(10 10)">
-    <text x="14" y="26" class="h" fill="#ff8a3d">CAÇA · S</text><text x="238" y="26" class="n" text-anchor="end">MERGULHA · 1 TIRO MIRADO</text>
-    <rect x="12" y="38" width="228" height="112" rx="6" fill="#0a0f1f"/>
-    <path d="M232 60 H156 C128 60 118 112 88 112 H44" fill="none" stroke="#ff8a3d" stroke-opacity=".5" stroke-dasharray="4 5" marker-end="url(#a)"/>
-    <g fill="#ff8a3d" stroke="#ffd2a8" stroke-width=".8"><use href="#fighter" x="212" y="60"/><use href="#fighter" x="186" y="60"/><use href="#fighter" x="140" y="74"/></g>
-    <circle cx="126" cy="76" r="5" fill="#ffc94d"/>
-    <path d="M118 80 L64 110" stroke="#ff4d6d" stroke-opacity=".5" stroke-dasharray="2 5"/>
-    <g fill="#ff4d6d"><circle cx="102" cy="89" r="3.5"/><circle cx="80" cy="101" r="3.5"/></g>
-    <use href="#ship" transform="translate(48 112)" fill="#36e2ff"/>
-    <text x="14" y="176" class="s">Entra em fila e mergulha na sua altura.</text>
-    <text x="14" y="200" class="r">Com o eco:</text>
-    <text x="14" y="218" class="s">puxe a fila para a linha de tiro do eco</text>
+    <text x="12" y="25" class="h" fill="#ff8a3d">CAÇA · S</text><text x="173" y="25" class="n" text-anchor="end">MERGULHA</text>
+    <rect x="10" y="37" width="165" height="112" rx="6" fill="#0a0f1f"/><path d="M166 56h-47c-22 0-29 56-63 56H27" fill="none" stroke="#ff8a3d" stroke-opacity=".55" stroke-dasharray="4 5" marker-end="url(#a)"/>
+    <g fill="#ff8a3d" stroke="#ffd2a8"><use href="#fighter" x="150" y="56"/><use href="#fighter" x="118" y="65"/></g><circle cx="99" cy="76" r="4" fill="#ffc94d"/><path d="M94 80L48 109" stroke="#ff4d6d" stroke-dasharray="2 5"/><use href="#ship" transform="translate(34 115)" fill="#36e2ff"/>
+    <text x="12" y="173" class="s">Investe na altura da nave.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">puxe a fila para o fogo</text>
   </g>
-
-  <!-- Artilheiro (M) -->
-  <g transform="translate(274 10)">
-    <text x="14" y="26" class="h" fill="#ff4d6d">ARTILHEIRO · M</text><text x="238" y="26" class="n" text-anchor="end">PARA · LEQUE DE 3</text>
-    <rect x="12" y="38" width="228" height="112" rx="6" fill="#0a0f1f"/>
-    <path d="M238 94 H214" stroke="#ff8a3d" stroke-opacity=".5" stroke-dasharray="4 5"/>
-    <path d="M196 70 V118" stroke="#5d6f9e" stroke-dasharray="2 3"/><path d="M196 66 l-4 6 h8 z M196 122 l-4 -6 h8 z" fill="#5d6f9e"/>
-    <g fill="#ff4d6d" stroke="#ffb3c0" stroke-width=".8"><use href="#gunship" x="196" y="94"/></g>
-    <circle cx="176" cy="94" r="5" fill="#ffc94d"/>
-    <g stroke="#ff4d6d" stroke-opacity=".45" stroke-dasharray="2 5"><path d="M168 94 L52 64"/><path d="M168 94 L52 94"/><path d="M168 94 L52 124"/></g>
-    <g fill="#ff4d6d"><circle cx="128" cy="83.6" r="3.5"/><circle cx="128" cy="94" r="3.5"/><circle cx="128" cy="104.4" r="3.5"/><circle cx="92" cy="74.3" r="3.5"/><circle cx="92" cy="94" r="3.5"/><circle cx="92" cy="113.7" r="3.5"/></g>
-    <use href="#ship" transform="translate(40 94)" fill="#36e2ff"/>
-    <text x="14" y="176" class="s">Freia, para e dispara leques mirados.</text>
-    <text x="14" y="200" class="r">Com o eco:</text>
-    <text x="14" y="218" class="s">resistente: alvo de Crossfire</text>
+  <g transform="translate(205 10)">
+    <text x="12" y="25" class="h" fill="#ffb347">INTERCEPTADOR · W</text><text x="173" y="25" class="n" text-anchor="end">SENOIDE</text>
+    <rect x="10" y="37" width="165" height="112" rx="6" fill="#0a0f1f"/><path d="M166 92c-20-55-42-55-62 0s-42 55-72 0" fill="none" stroke="#ffb347" stroke-opacity=".65" stroke-dasharray="4 4" marker-end="url(#a)"/>
+    <g fill="#ffb347" stroke="#ffe0af"><use href="#fighter" x="151" y="63"/><use href="#fighter" x="116" y="112"/><use href="#fighter" x="78" y="64"/></g><g fill="#ff4d6d"><circle cx="91" cy="98" r="3"/><circle cx="78" cy="105" r="3"/></g>
+    <text x="12" y="173" class="s">Ocupa alturas em movimento.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">cubra a faixa oposta</text>
   </g>
-
-  <!-- Torreta (planejada) -->
-  <g transform="translate(538 10)">
-    <text x="14" y="26" class="h" fill="#8a9bc4">TORRETA</text><text x="238" y="26" class="n" text-anchor="end">FIXA · MIRA · PLANEJADA</text>
-    <rect x="12" y="38" width="228" height="112" rx="6" fill="#0a0f1f"/>
-    <path d="M12 138 H240" stroke="#2a3a63" stroke-width="2"/>
-    <g transform="translate(196 138)" opacity=".75"><path d="M-16 0 V-10 Q-16 -18 -8 -18 H8 Q16 -18 16 -10 V0 Z" fill="#ff8a3d" stroke="#ffd2a8" stroke-width=".8" stroke-dasharray="3 2"/><path d="M-4 -16 L-22 -32" stroke="#ff8a3d" stroke-width="5" stroke-linecap="round"/></g>
-    <path d="M172 106 L58 70" stroke="#ff4d6d" stroke-opacity=".5" stroke-dasharray="2 5"/>
-    <g fill="#ff4d6d"><circle cx="150" cy="99" r="3.5"/><circle cx="118" cy="89" r="3.5"/><circle cx="86" cy="79" r="3.5"/></g>
-    <use href="#ship" transform="translate(48 66)" fill="#36e2ff"/>
-    <use href="#ship" transform="translate(48 116)" fill="#b18cff" fill-opacity=".35" stroke="#d9c7ff"/>
-    <text x="14" y="176" class="s">Ficará no cenário atirando em você.</text>
-    <text x="14" y="200" class="r">Com o eco:</text>
-    <text x="14" y="218" class="s">nave e eco atacam de dois ângulos</text>
+  <g transform="translate(400 10)">
+    <text x="12" y="25" class="h" fill="#ff4d6d">ARTILHEIRO · M</text><text x="173" y="25" class="n" text-anchor="end">LEQUE ×5</text>
+    <rect x="10" y="37" width="165" height="112" rx="6" fill="#0a0f1f"/><path d="M155 58v68" stroke="#5d6f9e" stroke-dasharray="3 3"/><use href="#gunship" x="154" y="92" fill="#ff4d6d" stroke="#ffb3c0"/>
+    <g stroke="#ff4d6d" stroke-opacity=".5" stroke-dasharray="2 5"><path d="M135 92L36 53"/><path d="M135 92L36 72"/><path d="M135 92L36 92"/><path d="M135 92L36 112"/><path d="M135 92L36 131"/></g><use href="#ship" transform="translate(29 92)" fill="#36e2ff"/>
+    <text x="12" y="173" class="s">Sustenta pressão e oscila.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">alvo de Crossfire</text>
+  </g>
+  <g transform="translate(595 10)" opacity=".82">
+    <text x="12" y="25" class="h" fill="#8a9bc4">TORRETA</text><text x="183" y="25" class="n" text-anchor="end">PLANEJADA</text>
+    <rect x="10" y="37" width="175" height="112" rx="6" fill="#0a0f1f"/><path d="M10 135h175" stroke="#2a3a63" stroke-width="2"/><g transform="translate(152 135)"><path d="M-15 0v-10q0-9 9-9H6q9 0 9 9V0z" fill="#ff8a3d" stroke="#ffd2a8" stroke-dasharray="3 2"/><path d="M-3-17L-22-32" stroke="#ff8a3d" stroke-width="5" stroke-linecap="round"/></g><path d="M130 103L43 69" stroke="#ff4d6d" stroke-dasharray="2 5"/><use href="#ship" transform="translate(32 65)" fill="#36e2ff"/>
+    <text x="12" y="173" class="s">Fixa no cenário.</text><text x="12" y="199" class="r">Eco:</text><text x="12" y="216" class="s">ataque por dois ângulos</text>
   </g>
 </svg>

@@ -12,6 +12,8 @@ namespace OneMoreTime.Gameplay.Enemies
         Swoop = 0,
         /// <summary>Medium enemy (Enemy_M): slides in, holds a column bobbing while it shoots, leaves (GDD 04).</summary>
         Hover = 1,
+        /// <summary>Interceptor (Enemy_W): crosses the arena on a serpentine path while firing (GDD 04).</summary>
+        Serpentine = 2,
     }
 
     /// <summary>
@@ -38,6 +40,10 @@ namespace OneMoreTime.Gameplay.Enemies
         [Tooltip("Most units the swoop can bend up or down.")]
         [SerializeField, Min(0f)] float maxSwoop = 4.5f;
 
+        [Header("Serpentine (interceptor) — starting values")]
+        [SerializeField, Min(0f)] float waveAmplitude = 1.35f;
+        [SerializeField, Min(0f)] float waveFrequency = 0.55f;
+
         [Header("Hover (medium) — starting values")]
         [Tooltip("Column where it holds, measured from the right edge.")]
         [SerializeField, Min(0f)] float holdFromRightEdge = 4.5f;
@@ -53,6 +59,7 @@ namespace OneMoreTime.Gameplay.Enemies
         Transform target;
         SwoopMotion swoop;
         HoverMotion hover;
+        SerpentineMotion serpentine;
         Vector2 local;
         float bank;
         bool removed;
@@ -80,11 +87,17 @@ namespace OneMoreTime.Gameplay.Enemies
             var h = playfield.HalfExtents;
             if (pattern == MovementPattern.Swoop)
                 swoop = new SwoopMotion(local, speed, swoopAt * h.x, swoopSeconds, maxSwoop);
-            else
+            else if (pattern == MovementPattern.Hover)
                 hover = new HoverMotion(local, h.x - holdFromRightEdge + queueOffset, enterSeconds, holdSeconds,
                     bobAmplitude, bobFrequency, phase, leaveAcceleration);
+            else
+                serpentine = new SerpentineMotion(local, speed, waveAmplitude, waveFrequency, phase);
             if (gun != null)
+            {
                 gun.Configure(field, ship, pool);
+                if (serpentine != null)
+                    gun.Arm();
+            }
         }
 
         void Update()
@@ -110,6 +123,11 @@ namespace OneMoreTime.Gameplay.Enemies
                     else gun.Disarm();
                 }
                 local = hover.Position;
+            }
+            else if (serpentine != null)
+            {
+                serpentine.Tick(dt);
+                local = serpentine.Position;
             }
             transform.position = playfield.LocalToWorld(local);
             Bank(before, dt);

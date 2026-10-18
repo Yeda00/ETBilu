@@ -47,12 +47,12 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 
 | Sugerido no GDD | No protótipo | Nota |
 |---|---|---|
-| `PlayerController` | `PlayerInputReader` + `ShipMotor` | Input separado do movimento |
+| `PlayerController` | `PlayerInputReader` + `ShipMotor` + `ShipAim` | Input separado do movimento; `ShipAim` projeta o ponteiro no plano, orienta apenas o visual e desenha o indicador |
 | `TemporalRecorder` | `EchoRecorder` (Core) + `EchoAbility` | `EchoAbility` liga input, nave e arma ao gravador |
 | `TemporalRecording` | `EchoRecording` (Core) | |
 | `EchoPlayback` | `EchoPlayback` (Core) + `EchoGhost` | `EchoGhost` é a nave fantasma na cena |
 | `WeaponSystem` | `ShipWeapon` + `Projectile` + `ProjectilePool` | Tiros reaproveitados por pool |
-| `DamageSystem` | `Health` (+ `HealthModel` no Core) + `ContactDamage` | |
+| `DamageSystem` | `Health` (+ `HealthModel` no Core) + `ContactDamage` | `Health` publica dano aceito, bloqueio por escudo e morte; invulnerabilidade repetida fica silenciosa para não gerar spam visual |
 | `EnemyController` | `Enemy` + `EnemyGun` + `ModelVariants` + `WaveSpawner` + `WaveSchedule` (+ `SwoopMotion`, `HoverMotion`, `FireCycle` no Core) | Ondas são um asset de dados; o caminho e o tiro de cada inimigo vêm do prefab (`Enemy_S`, `Enemy_M`). O `WaveSpawner` passa a nave e o pool de tiros aos inimigos. `ModelVariants` sorteia o modelo ao surgir e ajusta a hitbox e a boca do tiro a ele |
 | `GadgetSystem` | `ShipGadget` + `TimeMine` (+ `Cooldown`, `TimeMineModel` no Core) | A nave solta a mina; o eco reproduz o evento `Gadget` |
 | `TrapController` | `TrapSection` + `LaserGate` + `MovingBarrier` + `SwitchPad` (+ `TrapCycle`, `ShutterCycle`, `PresenceSwitch`, `LaserGateModel` no Core) | `TrapSection` para a rolagem no puzzle e encerra o encontro |
@@ -62,6 +62,7 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | — | `PixelView` | O visual pixelado: enquanto está ligado, muda a escala de render e o filtro (Point) do asset do URP; devolve os dois ao desligar → [08](08-direcao-visual-e-sonora.md) |
 | — | `StageDirector` + `RunCheckpoint` | Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte |
 | — | `GameSession` | Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota |
+| — | `CombatFeedbackDirector` + `CombatVfxPool` + `CameraImpact` | Traduz eventos de dano, escudo, morte e combo em flashes, VFX reutilizados e impulsos proporcionais de câmera; não altera vida, dano ou colisão |
 
 Armadilhas e tiros do chefe usam a layer `EnemyProjectile`, que só colide com a nave. A mina não tem
 colisor: o alcance e a explosão são consultas de física (`CheckSphere`, `OverlapSphere`) na layer `Enemy`.
@@ -71,6 +72,10 @@ Os combos sabem quem acertou pelo `DamageInfo.Source` (`Ship` ou `Echo`) de cada
 dano `Combined`, que o próprio `ComboTracker` ignora, para não realimentar a regra. O `Health` decide se o
 acerto matou antes de avisar `Damaged`: um ouvinte que cause mais dano nesse aviso (o bônus) não faz o
 `Died` disparar duas vezes.
+
+O feedback de combate acompanha os alvos dinâmicos pelo `EnemySpawned`/`EnemyRemoved` do `WaveSpawner` e
+as partes do chefe quando o `StageDirector` cria o Guardião. Partículas e anéis pertencem a um pool em
+`Systems`, então continuam visíveis mesmo quando o alvo morto é destruído no mesmo frame.
 
 ## Como armazenar a gravação
 
@@ -82,6 +87,7 @@ public struct EchoSample
     public float time;
     public Vector2 position;
     public float rotation;
+    public Vector2 aimDirection;
 }
 ```
 
@@ -102,7 +108,7 @@ public struct EchoEvent
 | Regra | Detalhe |
 |---|---|
 | Taxa de amostragem | Fixa, não a cada frame — **20 amostras por segundo** costuma bastar para começar |
-| Posições entre amostras | A reprodução interpola |
+| Pose entre amostras | A reprodução interpola posição, inclinação e direção da mira pelo menor arco |
 | Eventos | Respeitam o instante original e disparam **uma única vez** |
 | Relógio | A reprodução usa o tempo decorrido do próprio eco |
 | Projéteis do eco | Nascem no ponto e na direção registrados; as colisões são avaliadas no estado **atual** do mundo |

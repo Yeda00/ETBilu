@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Combat.Health
   faction: 1
-  maxHealth: 20
+  maxHealth: 18
   invulnerabilitySeconds: 0
   shielded: 0
 --- !u!114 &1038516920087303488
@@ -124,12 +124,14 @@ MonoBehaviour:
   swoopAt: 0.3
   swoopSeconds: 1
   maxSwoop: 4.5
+  waveAmplitude: 1.35
+  waveFrequency: 0.55
   holdFromRightEdge: 4.5
-  enterSeconds: 1.6
-  holdSeconds: 7
-  bobAmplitude: 0.5
-  bobFrequency: 0.3
-  leaveAcceleration: 5
+  enterSeconds: 1.25
+  holdSeconds: 6.5
+  bobAmplitude: 0.8
+  bobFrequency: 0.45
+  leaveAcceleration: 6
 --- !u!114 &3672602547806058094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,12 +162,12 @@ MonoBehaviour:
   muzzle: {fileID: 43635478546807244}
   telegraph: {fileID: 3302062761459119419}
   aimAtShip: 1
-  spread: 12
-  firstDelay: 0.8
-  interval: 1.8
-  shotsPerBurst: 3
+  spread: 10
+  firstDelay: 0.65
+  interval: 1.45
+  shotsPerBurst: 5
   shotGap: 0
-  windup: 0.45
+  windup: 0.4
   maxBursts: 0
 --- !u!114 &981870761393367473
 MonoBehaviour:

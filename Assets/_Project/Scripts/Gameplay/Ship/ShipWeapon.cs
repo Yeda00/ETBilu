@@ -14,6 +14,7 @@ namespace OneMoreTime.Gameplay.Ship
         [SerializeField] Playfield playfield;
         [SerializeField] ProjectilePool pool;
         [SerializeField] Projectile projectile;
+        [SerializeField] ShipAim aim;
         [SerializeField, Min(0.1f)] float shotsPerSecond = 10f;
         [Tooltip("Where shots leave the ship, in local units.")]
         [SerializeField] Vector2 muzzle = new(1.1f, 0f);
@@ -22,6 +23,7 @@ namespace OneMoreTime.Gameplay.Ship
 
         /// <summary>Raised per shot with the playfield-local origin and direction.</summary>
         public event Action<Vector2, Vector2> Fired;
+        public Vector2 AimDirection => aim != null ? aim.Direction : Vector2.right;
 
         public void Configure(PlayerInputReader reader, Playfield field, ProjectilePool projectiles)
         {
@@ -37,9 +39,11 @@ namespace OneMoreTime.Gameplay.Ship
                 return;
 
             cooldown = 1f / shotsPerSecond;
-            var origin = (Vector2)transform.localPosition + muzzle;
-            var dir = Vector2.right;
+            var dir = AimDirection;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            var origin = (Vector2)transform.localPosition + (Vector2)(Quaternion.Euler(0f, 0f, angle) * muzzle);
             pool.Spawn(projectile, playfield.LocalToWorld(origin), playfield.DirectionToWorld(dir), Faction.Player, ShotSource.Ship);
+            aim?.Pulse();
             Fired?.Invoke(origin, dir);
         }
     }

@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 429042318736954027}
   - component: {fileID: 1167158097409581532}
+  - component: {fileID: 7397478919085230893}
   m_Layer: 12
   m_Name: EchoGhost
   m_TagString: Untagged
@@ -87,6 +88,27 @@ MonoBehaviour:
   - {fileID: 3801660152398833145}
   - {fileID: 7287566193984927926}
   - {fileID: 1736338120696444325}
+  shotFeedback: {fileID: 0}
+--- !u!114 &7397478919085230893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4633402999711427717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f83f4ec80b8324377a46ecb7f27445b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Ship.ShipFireFeedback
+  weapon: {fileID: 0}
+  visual: {fileID: 0}
+  recoilDistance: 0.14
+  recoilReturnTime: 0.075
+  maxRecoilDistance: 0.24
+  flashDuration: 0.065
+  flashLength: 0.8
+  flashColor: {r: 0.35, g: 0.95, b: 1, a: 1}
 --- !u!1 &8242904109065096452
 GameObject:
   m_ObjectHideFlags: 0

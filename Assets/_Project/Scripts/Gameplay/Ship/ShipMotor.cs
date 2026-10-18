@@ -27,7 +27,9 @@ namespace OneMoreTime.Gameplay.Ship
         public Vector2 LocalPosition => transform.localPosition;
         /// <summary>Current bank, recorded so the echo leans the same way.</summary>
         public float Bank => bank;
+        public PlayerInputReader Input => input;
         public Playfield Playfield => playfield;
+        public Transform Visual => visual;
 
         public void Configure(PlayerInputReader reader, Playfield field)
         {
@@ -48,8 +50,6 @@ namespace OneMoreTime.Gameplay.Ship
             transform.localPosition = new Vector3(p.x, p.y, 0f);
 
             bank = Mathf.Lerp(bank, -move.y * bankAngle, 1f - Mathf.Exp(-bankSharpness * Time.deltaTime));
-            if (visual != null)
-                visual.localRotation = Quaternion.Euler(bank, 0f, 0f);
         }
     }
 }

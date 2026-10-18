@@ -39,14 +39,14 @@ derrotar chefes. Cada tentativa deixa para trás ações que viram estratégia: 
 
 ## O eco temporal → [02](gdd/02-eco-temporal.md)
 
-Segure **Shift** para gravar até **5 s** de posição, rotação, tiros e gadgets. Aperte **E** e uma nave
+Segure **Shift** para gravar até **5 s** de posição, mira, inclinação, tiros e gadgets. Aperte **E** e uma nave
 fantasma repete a sequência a partir do ponto inicial, enquanto você continua pilotando. Até **3 ecos**.
 
 **Regra fundamental:** o eco reproduz as ações, mas não rebobina o mundo. O que morreu continua morto.
 
 ## Combate → [03](gdd/03-combate.md)
 
-Movimento em 8 direções, disparo contínuo, um gadget. Três tipos de dano: direto, de gadget e combinado.
+Movimento em 8 direções independente da mira, disparo contínuo na direção do mouse, retículo pulsante, recoil, flash e squash a cada tiro, além de um gadget. Acertos piscam e soltam faíscas; escudos defletem; destruições deixam explosão, anel e impulso de câmera proporcionais. Três tipos de dano: direto, de gadget e combinado.
 Cinco combos temporais: **Crossfire**, **Trap Bait**, **Double Pulse**, **Reflect Chain**, **Synchronized Strike**.
 No protótipo, os dois primeiros a existir: **Crossfire** (nave e eco acertam o mesmo alvo em até 1 s: dano
 combinado) e **Synchronized Strike** (um gerador do Guardião pela nave, o outro pelo eco, em até 2,5 s: o
@@ -54,10 +54,10 @@ escudo do núcleo cai). Janelas generosas, valores de partida.
 
 ## Inimigos → [04](gdd/04-inimigos-e-ondas.md)
 
-**Caça** (S: entra em fila, mergulha na altura da nave e dispara um tiro mirado), **Artilheiro** (M: para à
-direita e dispara leques de 3) e **Torreta** (fixa, mira na nave; planejada). Ondas por script, nunca
-aleatórias — o jogador aprende o padrão e planeja o que gravar. Cada caça e artilheiro sorteia um de três
-modelos do seu tipo; só o visual muda.
+**Caça** (S: entra em fila, mergulha e dispara), **Interceptador** (W: cruza em senoide com rajadas de 2),
+**Artilheiro** (M: oscila à direita e dispara leques de 5) e **Torreta** (planejada). Ondas por script,
+nunca aleatórias: o encontro atual comprime 15 entradas e 66 inimigos em 54 s, com pressão crescente e
+sobreposições legíveis. Cada família sorteia um de três modelos; só o visual muda.
 
 ## Armadilhas, gadgets, puzzles → [05](gdd/05-armadilhas-gadgets-puzzles.md)
 
@@ -72,11 +72,12 @@ eco segura enquanto está sobre ele; a mina temporal (Q), que o eco também solt
 Vencível com boa sequência temporal, nunca pixel-perfect. No protótipo, as fases 1 a 3: os dois
 geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, visto
 de lado como as naves, ele aponta dois braços-canhão para a nave, em alturas diferentes, com um gerador na
-ponta de cada um; o visor, no alto, é o núcleo.
+ponta de cada um; o visor, no alto, é o núcleo. Durante o combate ele deriva numa faixa curta e acelera os
+padrões a cada fase.
 
 ## Controles e HUD → [07](gdd/07-controles-e-interface.md)
 
-WASD/setas · Espaço/clique atira · **Shift** grava · **E** invoca · **Q** gadget · Esc pausa.
+WASD/setas movem · mouse mira · Espaço/clique atira · **Shift** grava · **E** invoca · **Q** gadget · Esc pausa.
 O HUD mostra integridade, memória temporal, ecos ativos, gadget, vida do chefe e combos.
 
 ## Visual e som → [08](gdd/08-direcao-visual-e-sonora.md)
@@ -95,7 +96,7 @@ explicação e descobre sozinho para que serve o eco.
 
 Jogável em `Assets/_Project/Scenes/Arena_01.unity`. Nave, eco, inimigos e chefe usam os modelos 3D de
 blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
-gravação de 5 s, eco que repete movimento, tiros e gadget, caças e artilheiros que atiram, em ondas por script,
+gravação de 5 s, eco que repete movimento, tiros e gadget, caças, interceptadores e artilheiros que atiram, em ondas por script,
 corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
 (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
 atual recomeça) e vitória (derrotar o Guardião).
@@ -108,7 +109,7 @@ Faltam torreta, os outros três combos, som, pulso de interferência, a fase 4 d
 - Um ou até três ecos no MVP? → [02](gdd/02-eco-temporal.md)
 - Regra do eco para dispositivos de presença contínua → [02](gdd/02-eco-temporal.md)
 - A gravação é relativa à tela: o protótipo para a rolagem nos puzzles; vira regra? → [02](gdd/02-eco-temporal.md)
-- Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração; movimento e tamanho sugeridos pelo designer → [06](gdd/06-chefe-e-runs.md)
+- Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração e tamanho sugerido pelo designer → [06](gdd/06-chefe-e-runs.md)
 - Janelas dos combos (1 s e 2,5 s) e se só o Synchronized Strike deve abrir o núcleo → [03](gdd/03-combate.md)
 - Quais elementos são modelos 3D e quais são sprites 2D; lente de 300 mm sugerida pelo designer → [08](gdd/08-direcao-visual-e-sonora.md)
 - Donos de cada capítulo, datas e equipe da jam → [10](gdd/10-producao.md)

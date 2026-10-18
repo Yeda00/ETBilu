@@ -3,7 +3,7 @@ title: Loop e eco temporal
 chapter: "02"
 status: draft
 owner: _TBD_
-updated: 2026-10-17
+updated: 2026-10-18
 source: GDD v0.1 (PDF) §3 e §4; protótipo em Assets/_Project (EchoRecorder, EchoAbility, EchoGhost, SwitchPad)
 ---
 
@@ -32,7 +32,7 @@ O sistema registra uma sequência de ações da nave numa janela de **cinco segu
 | Dado | Comportamento |
 |---|---|
 | Posição | A posição da nave ao longo do tempo |
-| Rotação | A orientação da nave |
+| Mira e inclinação | A direção apontada pelo mouse e a inclinação visual da nave |
 | Disparos | Instante, tipo e direção de cada tiro |
 | Gadgets | Momento e direção de uso |
 | Duração | 5 segundos por gravação |
@@ -91,6 +91,7 @@ explícita do objeto.
 | Ecos ao mesmo tempo | Até 3 (`EchoConfig.maxActiveEchoes`) |
 | Corpo do eco | Sem colisor e sem vida: não bloqueia a nave nem recebe dano |
 | Entrada e saída | O eco aparece e some com um fade de 0,2 s |
+| Mira | A direção é amostrada junto da pose; o eco gira para a mira gravada e cada tiro usa sua direção registrada |
 | Gadget | O uso da mina temporal entra na gravação (`EchoEventType.Gadget`); o eco solta a mina no mesmo ponto e instante → [05](05-armadilhas-gadgets-puzzles.md) |
 | Interruptores | O eco segura um interruptor enquanto está sobre a placa. O interruptor confere posições, não colisões, então o eco sem colisor também conta → [05](05-armadilhas-gadgets-puzzles.md) |
 | Puzzles fixos no mundo | A rolagem para no trecho do interruptor (`TrapSection` zera `Playfield.ScrollSpeed`), então o eco volta ao ponto onde foi gravado |

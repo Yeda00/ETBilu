@@ -39,10 +39,14 @@ namespace OneMoreTime.Core.Echo
             var b = samples[hi];
             float span = b.time - a.time;
             float k = span > 0f ? (t - a.time) / span : 1f;
+            float aimA = Mathf.Atan2(a.aimDirection.y, a.aimDirection.x) * Mathf.Rad2Deg;
+            float aimB = Mathf.Atan2(b.aimDirection.y, b.aimDirection.x) * Mathf.Rad2Deg;
+            float aim = Mathf.LerpAngle(aimA, aimB, k) * Mathf.Deg2Rad;
             return new EchoSample(
                 t,
                 Vector2.LerpUnclamped(a.position, b.position, k),
-                Mathf.LerpAngle(a.rotation, b.rotation, k));
+                Mathf.LerpAngle(a.rotation, b.rotation, k),
+                new Vector2(Mathf.Cos(aim), Mathf.Sin(aim)));
         }
 
         // Binary search: index of the first sample whose time is strictly greater than t.

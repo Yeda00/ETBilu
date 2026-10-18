@@ -15,14 +15,30 @@ O que a nave do jogador faz, os tipos de dano, os combos temporais e o que a pon
 
 A nave começa com um conjunto pequeno de ações:
 
-- Movimento em **oito direções** dentro da área jogável.
-- **Disparo principal** contínuo.
+- Movimento em **oito direções** dentro da área jogável, independente da mira.
+- **Mira livre com o mouse**: a nave aponta para o cursor e mostra uma linha curta com retículo na direção do tiro.
+- **Disparo principal** contínuo na direção da mira.
 - Um **gadget** equipado → [05](05-armadilhas-gadgets-puzzles.md).
 - A habilidade de **gravação e reprodução** temporal → [02](02-eco-temporal.md).
 - Vida limitada e **invulnerabilidade breve** depois de receber dano.
 
 O jogador atira enquanto se move. O foco é esquivar e se posicionar, não alternar o tempo todo entre
 movimento e ataque.
+
+A rotação acontece apenas no filho visual: o collider e o movimento continuam alinhados ao plano de jogo.
+O tiro usa a direção exata do cursor; a suavização curta afeta somente a apresentação da nave, para não
+adicionar atraso à resposta do disparo.
+
+Cada tiro confirma a ação em quatro camadas curtas: o retículo pulsa e avança, o pivô visual recua sem
+mover a hitbox, o canhão solta um flash ciano reutilizável e o Feel aplica squash-and-stretch na nave.
+O retículo tem uma respiração discreta e segue a direção com suavização visual, mas a trajetória continua
+usando a mira exata. O eco repete a rotação gravada, o recoil e o flash para preservar a leitura temporal.
+
+Acertos aceitos piscam rapidamente o alvo e soltam faíscas na cor da origem: ciano para a nave e violeta
+para o eco. Escudos respondem com uma deflexão azul mesmo quando bloqueiam todo o dano. A destruição deixa
+uma explosão e um anel expansivo depois que o objeto sai da cena; inimigos resistentes, geradores, núcleo
+e nave usam escalas progressivamente maiores. A câmera recebe impulsos curtos e limitados por importância:
+quase imperceptíveis no tiro comum, claros ao sofrer dano e fortes só em destruições relevantes.
 
 ## Valores de partida no protótipo
 
@@ -31,14 +47,14 @@ movimento e ataque.
 | Integridade da nave | 3 | `PlayerShip` → `Health` |
 | Invulnerabilidade após dano | 1,2 s | `PlayerShip` → `Health` |
 | Velocidade da nave | 9 u/s | `PlayerShip` → `ShipMotor` |
-| Disparo principal | 10 tiros/s, dano 1; sai do canhão mais perto da câmera | `PlayerShip` → `ShipWeapon`, `Shot_Ship` |
+| Disparo principal | 10 tiros/s, dano 1; segue a mira livre, com pulso do retículo, recoil, flash e squash | `PlayerShip` → `ShipWeapon`, `ShipAim`, `ShipFireFeedback`, `Shot_Ship` |
 | Hitbox da nave | caixa de 1,4 × 0,9 u no plano de jogo, em volta do disco e da cabine; menor que a arte (aletas, ponta da cúpula e canhões ficam de fora) | `PlayerShip` → `BoxCollider` |
 | Caça (S) | 1 de vida, 100 pontos; 1 tiro mirado | `Enemy_S` → [04](04-inimigos-e-ondas.md) |
 | Artilheiro (M) | 20 de vida, 300 pontos; leques de 3 tiros | `Enemy_M` → [04](04-inimigos-e-ondas.md) |
 | Inimigo que bate na nave | 1 de dano | `ContactDamage` |
 | Mina temporal | 4 de dano de gadget num raio de 2,4 u; recarga de 1,5 s | `TimeMine_Ship`, `TimeMine_Echo`, `PlayerShip` → `ShipGadget` |
 | Laser gate e barreira móvel | 1 de dano ao contato | prefabs em `Prefabs/Traps` |
-| Tiros inimigos (caça, artilheiro, Guardião) | 1 de dano, 8 u/s | `Shot_Enemy` |
+| Tiros inimigos (caça, interceptador, artilheiro, Guardião) | 1 de dano, 9,5 u/s | `Shot_Enemy` |
 | Guardião | núcleo 120 de vida, geradores 12 | `Guardian` → [06](06-chefe-e-runs.md) |
 | Crossfire | janela de 1 s entre o acerto da nave e o do eco; +3 de dano combinado; o mesmo alvo só dá outro Crossfire depois de 1 s | `ComboTracker` (cena, em `Systems`) |
 | Synchronized Strike | janela de 2,5 s entre a queda dos dois geradores | `ComboTracker` |
@@ -89,8 +105,9 @@ nave e do eco: um tiro ou uma mina conta para quem o disparou, a nave atual ou u
 | **Synchronized Strike** | Os dois geradores do Guardião caem com até **2,5 s** de diferença, **um derrubado pela nave e o outro por um eco**, e o núcleo fica vulnerável | O **escudo do núcleo cai**, pela regra do próprio Guardião → [06](06-chefe-e-runs.md), e **1000 pontos** |
 
 Os dois ficam no `ComboTracker`; as regras, em `CrossfireRule` e `SynchronizedStrikeRule` (Core, com testes).
-O feedback, por enquanto, é só o aviso no HUD → [07](07-controles-e-interface.md): o nome do combo e o que o
-causou. Ainda não há som nem efeito no mundo.
+Além do aviso no HUD → [07](07-controles-e-interface.md), ambos acionam **Convergência Temporal** no ponto
+do combo: faíscas violetas, dois pulsos expansivos ciano/violeta e um impulso curto de câmera. Ainda não há
+som exclusivo porque o projeto não possui clipes de áudio de combate.
 
 Os tamanhos das janelas são **valores de partida**, generosos de propósito (o §16 pede janelas de
 sincronização generosas no começo): 1 s para o Crossfire; 2,5 s para o Synchronized Strike, o mesmo da

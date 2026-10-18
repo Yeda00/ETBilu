@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 270" role="img" aria-labelledby="t d">
   <title id="t">Mapa de teclas proposto</title>
-  <desc id="d">WASD ou setas movimentam a nave. Espaço ou botão esquerdo do mouse atira. Segurar Shift grava. E invoca o eco. Q usa o gadget. Esc pausa.</desc>
+  <desc id="d">WASD ou setas movimentam a nave. O mouse mira; Espaço ou botão esquerdo atira na direção indicada. Segurar Shift grava. E invoca o eco. Q usa o gadget. Esc pausa.</desc>
   <style>
     .k{font:700 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
     .ks{font:700 10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -50,12 +50,12 @@
     <path d="M32 0 V44 M0 44 H64" stroke="#24345f"/>
     <path d="M32 0 A32 32 0 0 0 0 32 V44 H32 Z" fill="#0d2633" stroke="#36e2ff" stroke-width="1.5" stroke-dasharray="5 3"/>
   </g>
-  <text x="572" y="108" class="n" text-anchor="middle">OU CLIQUE</text>
+  <text x="572" y="108" class="n" text-anchor="middle">MIRAR · CLICAR</text>
 
   <!-- legend -->
   <g transform="translate(250 30)">
     <text x="0" y="0" class="n">AÇÃO</text>
-    <rect x="0" y="12" width="12" height="12" rx="3" fill="#36e2ff"/><text x="20" y="22" class="s">Movimentar · atirar</text>
+    <rect x="0" y="12" width="12" height="12" rx="3" fill="#36e2ff"/><text x="20" y="22" class="s">Mover · mirar · atirar</text>
     <rect x="0" y="34" width="12" height="12" rx="3" fill="#ff4d6d"/><text x="20" y="44" class="s">Segurar Shift: gravar</text>
     <rect x="160" y="12" width="12" height="12" rx="3" fill="#b18cff"/><text x="180" y="22" class="s">E: invocar o eco</text>
     <rect x="160" y="34" width="12" height="12" rx="3" fill="#ffc94d"/><text x="180" y="44" class="s">Q: usar o gadget</text>

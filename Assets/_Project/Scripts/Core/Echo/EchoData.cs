@@ -20,12 +20,19 @@ namespace OneMoreTime.Core.Echo
         public float time;
         public Vector2 position;
         public float rotation;
+        public Vector2 aimDirection;
 
         public EchoSample(float time, Vector2 position, float rotation)
+            : this(time, position, rotation, Vector2.right)
+        {
+        }
+
+        public EchoSample(float time, Vector2 position, float rotation, Vector2 aimDirection)
         {
             this.time = time;
             this.position = position;
             this.rotation = rotation;
+            this.aimDirection = aimDirection.sqrMagnitude > 0f ? aimDirection.normalized : Vector2.right;
         }
     }
 

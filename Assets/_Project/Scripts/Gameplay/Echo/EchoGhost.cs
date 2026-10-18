@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OneMoreTime.Core.Echo;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Gadgets;
+using OneMoreTime.Gameplay.Ship;
 using OneMoreTime.Gameplay.World;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ namespace OneMoreTime.Gameplay.Echo
         [SerializeField] Transform visual;
         [Tooltip("Renderers faded at the start and end of the playback.")]
         [SerializeField] Renderer[] fadeRenderers;
+        [Tooltip("Recoil and muzzle flash replayed with every recorded shot.")]
+        [SerializeField] ShipFireFeedback shotFeedback;
 
         static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
 
@@ -36,6 +39,12 @@ namespace OneMoreTime.Gameplay.Echo
 
         public event Action<EchoGhost> Finished;
         public float Progress => playback?.Progress ?? 1f;
+
+        void Awake()
+        {
+            if (shotFeedback == null)
+                shotFeedback = GetComponent<ShipFireFeedback>();
+        }
 
         public void Play(EchoRecording recording, Playfield field, ProjectilePool projectiles, float fade)
         {
@@ -68,7 +77,10 @@ namespace OneMoreTime.Gameplay.Echo
             foreach (var e in due)
             {
                 if (e.type == EchoEventType.Shot)
+                {
                     pool.Spawn(projectile, playfield.LocalToWorld(e.position), playfield.DirectionToWorld(e.direction), Faction.Player, ShotSource.Echo);
+                    shotFeedback?.Play(e.position, e.direction);
+                }
                 else if (e.type == EchoEventType.Gadget && mine != null)
                     Instantiate(mine, playfield.LocalToWorld(e.position), Quaternion.identity, pool.transform).Arm(Faction.Player, ShotSource.Echo);
             }
@@ -80,7 +92,11 @@ namespace OneMoreTime.Gameplay.Echo
             var pose = playback.Pose;
             transform.localPosition = new Vector3(pose.position.x, pose.position.y, 0f);
             if (visual != null)
-                visual.localRotation = Quaternion.Euler(pose.rotation, 0f, 0f);
+            {
+                Vector2 aim = pose.aimDirection.sqrMagnitude > 0f ? pose.aimDirection : Vector2.right;
+                float angle = Mathf.Atan2(aim.y, aim.x) * Mathf.Rad2Deg;
+                visual.localRotation = Quaternion.Euler(pose.rotation, 0f, angle);
+            }
         }
 
         void CacheColors()

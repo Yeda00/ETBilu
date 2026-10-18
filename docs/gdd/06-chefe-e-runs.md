@@ -31,8 +31,9 @@ de combate que protege uma passagem temporal. O núcleo fica blindado durante a 
 ### No protótipo atual
 
 Uma versão mínima com as **fases 1 a 3** (prefab `Guardian`, regras em `GuardianModel`). A fase 4 não existe.
-O Guardião entra pela direita em 2,5 s, com a tela parada, e fica parado na borda direita, ocupando a metade
-direita da tela.
+O Guardião entra pela direita em 2,5 s, com a tela parada, e luta na borda direita, ocupando a metade
+direita da tela. Depois da entrada, deriva 0,8 u na vertical (0,18 Hz) e 0,25 u na horizontal: as partes
+fracas continuam legíveis, mas deixam de ser alvos totalmente estáticos.
 
 Ele usa o modelo de blockout do designer (`Enemie_Boss_BlockOut`), **visto de lado**, como as naves e os
 inimigos: virado para a nave, com o topo inclinado 25° para a câmera e o rosto virado 15° para ela. A cabeça,
@@ -60,9 +61,9 @@ do corpo e dos canhões. Os geradores ficam 1,7 u um acima do outro, e o núcleo
 
 | Fase | No protótipo |
 |---|---|
-| 1 · Sobrevivência | 12 s com tudo blindado. Leque de 5 tiros mirados na nave a cada 1,4 s. O laser varre de uma borda até perto do meio da tela, alternando a metade de cima e a de baixo: aviso de 0,9 s, varredura de 2,2 s, pausa de 1,6 s |
-| 2 · Preparação | Geradores expostos, janela **generosa de 6 s**. Rajada de 3 tiros mirados a cada 1,2 s. A primeira vez que o núcleo fica vulnerável encerra a fase: quando a vulnerabilidade acaba, começa a fase 3 |
-| 3 · Sincronização | A mesma regra com janela **curta de 2,5 s**. Um anel de 14 tiros a cada 1,3 s, que gira um pouco a cada anel. Repete até o núcleo cair |
+| 1 · Sobrevivência | 10 s com tudo blindado. Leque de 7 tiros mirados na nave a cada 1,1 s. O laser varre de uma borda até perto do meio da tela, alternando a metade de cima e a de baixo: aviso de 0,9 s, varredura de 2,2 s, pausa de 1,15 s |
+| 2 · Preparação | Geradores expostos, janela **generosa de 5 s**. Rajada de 5 tiros mirados a cada 1 s. A primeira vez que o núcleo fica vulnerável encerra a fase: quando a vulnerabilidade acaba, começa a fase 3 |
+| 3 · Sincronização | A mesma regra com janela **curta de 2,5 s**. Um anel de 18 tiros a cada 1,1 s, que gira um pouco a cada anel. Repete até o núcleo cair |
 
 O núcleo destruído derrota o Guardião, e **essa é a vitória do encontro**. Pontuação: 250 por gerador
 derrubado e 5000 pelo núcleo. O HUD mostra a vida do núcleo, os dois geradores, a fase, a janela e o
@@ -72,7 +73,7 @@ tempo de vulnerabilidade → [07](07-controles-e-interface.md).
 
 | Combo | No Guardião |
 |---|---|
-| **Synchronized Strike** | Um gerador cai pela nave e o outro por um eco, com até 2,5 s entre as quedas, e o núcleo abre. O escudo cai pela regra de sempre; o combo dá o aviso "SYNCHRONIZED STRIKE" no HUD e 1000 pontos. Na fase 3 a janela do Guardião também é de 2,5 s, então toda abertura feita com nave e eco conta; na fase 2 (janela de 6 s) as quedas precisam estar mais próximas |
+| **Synchronized Strike** | Um gerador cai pela nave e o outro por um eco, com até 2,5 s entre as quedas, e o núcleo abre. O escudo cai pela regra de sempre; o combo dá o aviso "SYNCHRONIZED STRIKE" no HUD e 1000 pontos. Na fase 3 a janela do Guardião também é de 2,5 s, então toda abertura feita com nave e eco conta; na fase 2 (janela de 5 s) as quedas precisam estar mais próximas |
 | **Crossfire** | A nave e um eco acertando o mesmo gerador, ou o núcleo vulnerável, com até 1 s de diferença: +3 de dano combinado |
 
 Derrubar os dois geradores só com a nave ainda abre o núcleo, mas não é Synchronized Strike.
@@ -99,7 +100,7 @@ No protótipo, os encontros podem ser segmentos de **uma única fase**, sem mapa
 
 | Ordem | Encontro | Começa quando | Termina quando |
 |---|---|---|---|
-| 1 | **Primeiro ciclo** — ondas → [04](04-inimigos-e-ondas.md) | A cena carrega | 4 s depois da última onda, sem inimigo vivo na tela |
+| 1 | **Primeiro ciclo** — ondas → [04](04-inimigos-e-ondas.md) | A cena carrega | 2,5 s depois da última onda, sem inimigo vivo na tela |
 | 2 | **Armadilha** — o corredor de armadilhas → [05](05-armadilhas-gadgets-puzzles.md) | O encontro 1 termina; o corredor entra pela direita | A nave passa do laser preso ao interruptor |
 | 4 | **Guardião** | O corredor sai da tela (rolagem acelerada para 6 u/s) | O núcleo é destruído: vitória |
 
@@ -131,5 +132,5 @@ A repetição deve reforçar o tema *One More Time*. Dois modelos estão em jogo
 - [ ] Na fase 2 o núcleo também fica vulnerável quando os dois geradores caem; o v0.1 só fala de núcleo exposto na fase 3. Manter assim?
 - [ ] Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar? (Outra saída: só o Synchronized Strike abrir o núcleo → [03](03-combate.md).)
 - [ ] O Guardião entrando fere a nave que estiver no caminho (dano de contato da blindagem). É justo, ou a blindagem só fere depois que ele para?
-- [ ] O designer sugeriu que o Guardião se mova de um lado para o outro. Hoje ele fica parado na borda direita; com movimento, as alturas dos geradores e do núcleo mudariam durante a luta.
+- [x] Movimento do Guardião: deriva curta vertical e horizontal implementada, mantendo os pontos fracos dentro de uma faixa legível.
 - [ ] O designer também sugeriu um chefe grande o bastante para não caber na tela, com a peça grande dividida em partes. Hoje ele cabe na tela, e as partes são só os dois geradores e o núcleo.

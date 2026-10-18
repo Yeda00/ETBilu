@@ -3,7 +3,7 @@ title: Controles e interface
 chapter: "07"
 status: draft
 owner: _TBD_
-updated: 2026-10-17
+updated: 2026-10-18
 source: GDD v0.1 (PDF) §11; protótipo em Assets/_Project/Input e Assets/_Project/UI
 ---
 
@@ -15,9 +15,10 @@ Como o jogador pilota, grava e invoca ecos sem parar de desviar — e o que o HU
 
 ![Mapa de teclas proposto](../img/controls.svg)
 
-| Ação | Teclado |
+| Ação | Entrada |
 |---|---|
 | Movimentar nave | WASD ou setas |
+| Mirar | Mover o mouse; a linha e o retículo ciano mostram a direção do próximo tiro |
 | Disparo principal | Espaço ou botão esquerdo do mouse |
 | Gravar sequência | Segurar Shift |
 | Invocar eco | E |
@@ -29,7 +30,7 @@ Os atalhos são provisórios.
 *Por quê:* o que importa é **separar a gravação da reprodução**, para o jogador não invocar o eco sem
 querer enquanto tenta desviar de uma armadilha.
 
-No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControls.inputactions` (mapa `Gameplay`), lidas só pelo `PlayerInputReader`. Q solta a mina temporal → [05](05-armadilhas-gadgets-puzzles.md).
+No protótipo, estas ações estão em `Assets/_Project/Input/OneMoreTimeControls.inputactions` (mapa `Gameplay`), lidas só pelo `PlayerInputReader`. A ação `Aim` lê a posição do ponteiro e o `ShipAim` a projeta no plano de jogo; o movimento continua independente da mira. Q solta a mina temporal → [05](05-armadilhas-gadgets-puzzles.md).
 
 ## HUD
 

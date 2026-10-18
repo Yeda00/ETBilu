@@ -58,7 +58,7 @@
     <header><h2 id="echo">O eco temporal <a class="to" href="gdd-full.html#c02">→ 02</a></h2><span class="osd">sistema principal</span></header>
     <figure><img src="img/echo-recording.svg" alt="Linha do tempo de 5 segundos: segurar Shift grava amostras e eventos; apertar E faz o eco repetir tudo na mesma ordem." width="800" height="330"></figure>
     <ol class="steps">
-      <li><span>Segure <kbd class="rec">Shift</kbd>: o jogo grava até <strong>5 s</strong> de posição, rotação, tiros e gadgets.</span></li>
+      <li><span>Segure <kbd class="rec">Shift</kbd>: o jogo grava até <strong>5 s</strong> de posição, mira, inclinação, tiros e gadgets.</span></li>
       <li><span>Solte: a sequência fica pronta. Aperte <kbd class="echo">E</kbd>: uma nave fantasma repete tudo, a partir do ponto inicial gravado.</span></li>
       <li><span>Você continua pilotando — e pode gravar outra sequência enquanto o eco trabalha. Até <strong>3 ecos</strong> ativos.</span></li>
     </ol>
@@ -68,22 +68,22 @@
   <section class="plate" aria-labelledby="combat">
     <header><h2 id="combat">Combate e combos <a class="to" href="gdd-full.html#c03">→ 03</a></h2><span class="osd">dano direto · de gadget · combinado</span></header>
     <figure><img src="img/combos.svg" alt="Os cinco combos: Crossfire, Trap Bait, Double Pulse, Reflect Chain e Synchronized Strike." width="800" height="300"></figure>
-    <p>Movimento em 8 direções, disparo contínuo, um gadget e invulnerabilidade breve após o dano. Os combos são <strong>eventos que o jogo reconhece</strong>, não multiplicadores — e cada um tem feedback visual e sonoro próprio, para o jogador entender por que funcionou.</p>
+    <p>Movimento em 8 direções independente da mira, disparo contínuo na direção do mouse e resposta em camadas a cada tiro: retículo pulsante, recoil, flash ciano e squash-and-stretch. Acertos piscam e soltam faíscas; escudos defletem; destruições deixam explosão, anel e impulso de câmera proporcionais. A nave ainda tem um gadget e invulnerabilidade breve após o dano. Os combos são <strong>eventos que o jogo reconhece</strong>, não multiplicadores — e cada um recebe feedback próprio para o jogador entender por que funcionou.</p>
     <p>No protótipo, os dois primeiros a existir: <strong>Crossfire</strong> (nave e eco acertam o mesmo alvo em até 1 s: dano combinado) e <strong>Synchronized Strike</strong> (um gerador do Guardião pela nave, o outro pelo eco, em até 2,5 s: o escudo do núcleo cai). Janelas generosas, valores de partida.</p>
   </section>
 
   <section class="plate" aria-labelledby="foes">
     <header><h2 id="foes">Inimigos <a class="to" href="gdd-full.html#c04">→ 04</a></h2><span class="osd">ondas por script</span></header>
-    <figure><img src="img/enemies.svg" alt="Caça mergulhando com um tiro mirado, artilheiro parado disparando leques de três, torreta planejada." width="800" height="250"></figure>
-    <p><strong>Caça</strong> (S: entra em fila, mergulha na altura da nave e dispara um tiro mirado), <strong>Artilheiro</strong> (M: para à direita e dispara leques de 3) e <strong>Torreta</strong> (fixa, mira na nave; planejada). Cada caça e artilheiro sorteia um de três modelos do seu tipo; só o visual muda.</p>
-    <p>Nada de spawn aleatório: cada encontro segue uma lista de ondas com tempo e posição. O jogador aprende o padrão e planeja o que gravar. Matar inimigos nunca é obrigatório; o scroll continua.</p>
+    <figure><img src="img/enemies.svg" alt="Caça mergulhando, interceptador em senoide, artilheiro disparando leques e torreta planejada." width="800" height="250"></figure>
+    <p><strong>Caça</strong> (S: entra em fila, mergulha e dispara), <strong>Interceptador</strong> (W: cruza em senoide com rajadas de 2), <strong>Artilheiro</strong> (M: oscila à direita e dispara leques de 5) e <strong>Torreta</strong> (planejada). Cada família sorteia um de três modelos; só o visual muda.</p>
+    <p>Nada de spawn aleatório: cada encontro segue uma lista de ondas com tempo e posição. O encontro atual comprime <strong>15 entradas e 66 inimigos em 54 s</strong>, com pressão crescente e sobreposições legíveis. Matar inimigos nunca é obrigatório; o scroll continua.</p>
   </section>
 
   <section class="plate" aria-labelledby="boss">
     <header><h2 id="boss">O chefe <a class="to" href="gdd-full.html#c06">→ 06</a></h2><span class="osd">nome provisório</span></header>
     <figure><img src="img/boss.svg" alt="O Guardião do Ciclo: núcleo blindado, dois geradores, laser; quatro fases." width="800" height="300"></figure>
     <p><strong>O Guardião do Ciclo</strong> protege uma passagem temporal. Vencível com uma boa sequência temporal — <strong>nunca pixel-perfect</strong>. O desafio vem da leitura de padrões e do planejamento.</p>
-    <p class="muted">No protótipo, as fases 1 a 3: os dois geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, visto de lado como as naves, ele aponta dois braços-canhão para a nave, em alturas diferentes, com um gerador na ponta de cada um; o visor, no alto, é o núcleo.</p>
+    <p class="muted">No protótipo, as fases 1 a 3: os dois geradores precisam cair dentro de uma janela para o núcleo ficar vulnerável. Com o modelo do designer, visto de lado como as naves, ele aponta dois braços-canhão para a nave, em alturas diferentes, com um gerador na ponta de cada um; o visor, no alto, é o núcleo. Durante o combate ele deriva numa faixa curta e acelera os padrões a cada fase.</p>
   </section>
 
   <section class="plate" aria-labelledby="traps">
@@ -105,7 +105,7 @@
 
   <section class="plate" aria-labelledby="ctl">
     <header><h2 id="ctl">Controles <a class="to" href="gdd-full.html#c07">→ 07</a></h2><span class="osd">provisórios</span></header>
-    <figure><img src="img/controls.svg" alt="WASD ou setas movem; Espaço ou clique atiram; Shift grava; E invoca o eco; Q usa o gadget; Esc pausa." width="800" height="270"></figure>
+    <figure><img src="img/controls.svg" alt="WASD ou setas movem; mouse mira; Espaço ou clique atiram; Shift grava; E invoca o eco; Q usa o gadget; Esc pausa." width="800" height="270"></figure>
     <p>Gravar e invocar ficam em <strong>teclas separadas</strong>, para o jogador não soltar um eco sem querer enquanto desvia de uma armadilha.</p>
   </section>
 
@@ -154,7 +154,7 @@
       <li><span>Um ou até três ecos no MVP? §2 diz até 3; §14 põe três ecos como opcional. <a href="gdd-full.html#c02">→ 02</a></span></li>
       <li><span>Regra do eco para dispositivos de presença contínua. <a href="gdd-full.html#c02">→ 02</a></span></li>
       <li><span>A gravação é relativa à tela: o protótipo para a rolagem nos puzzles; vira regra? <a href="gdd-full.html#c02">→ 02</a></span></li>
-      <li><span>Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração; movimento e tamanho sugeridos pelo designer. <a href="gdd-full.html#c06">→ 06</a></span></li>
+      <li><span>Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração e tamanho sugerido pelo designer. <a href="gdd-full.html#c06">→ 06</a></span></li>
       <li><span>Janelas dos combos (1 s e 2,5 s) e se só o Synchronized Strike deve abrir o núcleo. <a href="gdd-full.html#c03">→ 03</a></span></li>
       <li><span>Quais elementos são modelos 3D e quais são sprites 2D; lente de 300 mm sugerida pelo designer. <a href="gdd-full.html#c08">→ 08</a></span></li>
       <li><span>Donos de cada capítulo, data da jam e equipe. <a href="gdd-full.html#c10">→ 10</a></span></li>

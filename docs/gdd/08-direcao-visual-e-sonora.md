@@ -70,6 +70,23 @@ Valor de partida, para testar.
 *Por quê:* com até três ecos e padrões de bullet hell, a cor é o que diz ao jogador quem ele é, quem
 é o passado dele e o que o machuca.
 
+### Feedback de combate no protótipo
+
+O feedback segue uma hierarquia para preservar a leitura do bullet hell:
+
+| Evento | Resposta implementada |
+|---|---|
+| Acerto comum | Flash branco curto no alvo, poucas faíscas na cor da origem e microimpulso de câmera |
+| Tiro bloqueado | Faíscas da origem e anel azul de deflexão; não dispara efeito de dano |
+| Dano na nave | Flash vermelho, faíscas ciano, anel de alerta e shake mais claro com pequeno pulso de lente |
+| Inimigo destruído | Explosão de partículas e anel expansivo que persistem depois que o inimigo some |
+| Artilheiro, gerador ou núcleo destruído | Mesma composição em escala, densidade e shake progressivamente maiores |
+| Combo temporal | **Convergência Temporal**: faíscas violetas e dois anéis ciano/violeta no ponto do combo |
+
+`CameraImpact` usa trauma com limite de deslocamento e retorno rápido. Hits comuns não acumulam um tremor
+constante; dano do jogador, inimigos resistentes, partes do chefe e o núcleo recebem pesos diferentes.
+`CombatVfxPool` reaproveita sistemas de partículas e anéis, evitando criar e destruir objetos a cada tiro.
+
 ## Direção sonora
 
 O áudio também comunica a mecânica temporal.
@@ -81,6 +98,10 @@ O áudio também comunica a mecânica temporal.
 | Reprodução | Versão filtrada dos sons da nave original |
 | Combo temporal | Efeito sonoro exclusivo e curto |
 | Chefe vulnerável | Mudança musical ou sinal sonoro marcante |
+
+O projeto ainda não contém clipes de áudio adequados para disparos, impactos ou destruição. A camada sonora
+da tabela continua planejada; os eventos de dano, morte e combo já estão separados para receber áudio sem
+alterar as regras de combate.
 
 > **Q:** fazer os disparos do eco soarem levemente abafados, como se viessem de outra camada temporal.
 

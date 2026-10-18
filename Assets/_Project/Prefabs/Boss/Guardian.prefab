@@ -90,20 +90,23 @@ MonoBehaviour:
   muzzle: {fileID: 6103872917061703835}
   laser: {fileID: 4885719729159587804}
   shot: {fileID: 992733288632202115, guid: 8972164f6379d4ce1a276a2a38dbd41e, type: 3}
-  survivalSeconds: 12
-  preparationWindow: 6
+  survivalSeconds: 10
+  preparationWindow: 5
   syncWindow: 2.5
   vulnerableSeconds: 4
   holdFromRightEdge: 3
   entryDistance: 14
   entrySeconds: 2.5
-  fanInterval: 1.4
-  fanShots: 5
-  fanSpread: 14
-  burstInterval: 1.2
-  burstShots: 3
-  ringInterval: 1.3
-  ringShots: 14
+  driftAmplitude: 0.8
+  driftFrequency: 0.18
+  driftHorizontal: 0.25
+  fanInterval: 1.1
+  fanShots: 7
+  fanSpread: 11
+  burstInterval: 1
+  burstShots: 5
+  ringInterval: 1.1
+  ringShots: 18
   generatorScore: 250
   coreScore: 5000
 --- !u!1 &612318259480319405
@@ -153,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Boss.SweepLaser
   sweepSeconds: 2.2
-  restSeconds: 1.6
+  restSeconds: 1.15
   warningSeconds: 0.9
   edgeY: 6.7794046
   innerY: 0.8

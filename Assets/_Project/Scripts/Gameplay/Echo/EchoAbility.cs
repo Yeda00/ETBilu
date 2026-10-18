@@ -76,7 +76,7 @@ namespace OneMoreTime.Gameplay.Echo
 
             if (recorder.IsRecording)
             {
-                recorder.Tick(Time.deltaTime, motor.LocalPosition, motor.Bank);
+                recorder.Tick(Time.deltaTime, motor.LocalPosition, motor.Bank, weapon != null ? weapon.AimDirection : Vector2.right);
                 if (recorder.IsFull)
                     waitForRelease = true;
                 if (!input.RecordHeld || recorder.IsFull)
@@ -84,7 +84,7 @@ namespace OneMoreTime.Gameplay.Echo
             }
             else if (input.RecordHeld && !waitForRelease)
             {
-                recorder.Begin(motor.LocalPosition, motor.Bank);
+                recorder.Begin(motor.LocalPosition, motor.Bank, weapon != null ? weapon.AimDirection : Vector2.right);
                 Changed?.Invoke();
             }
 

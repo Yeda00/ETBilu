@@ -40,6 +40,13 @@ namespace OneMoreTime.Gameplay.Boss
         [SerializeField, Min(0f)] float entryDistance = 5f;
         [SerializeField, Min(0.1f)] float entrySeconds = 2.5f;
 
+        [Header("Combat movement")]
+        [Tooltip("Vertical drift keeps the boss alive on screen without making its weak points unreadable.")]
+        [SerializeField, Min(0f)] float driftAmplitude = 0.8f;
+        [SerializeField, Min(0f)] float driftFrequency = 0.18f;
+        [Tooltip("Small horizontal counter-motion, in playfield units.")]
+        [SerializeField, Min(0f)] float driftHorizontal = 0.25f;
+
         [Header("Attacks")]
         [Tooltip("Phase 1: aimed fan.")]
         [SerializeField, Min(0.1f)] float fanInterval = 1.4f;
@@ -62,6 +69,7 @@ namespace OneMoreTime.Gameplay.Boss
         ProjectilePool pool;
         Vector2 entryFrom, entryTo;
         float entryAge;
+        float combatAge;
         float attackTimer;
         float ringTurn;
         readonly bool[] shownUp = new bool[GuardianModel.GeneratorCount];
@@ -140,6 +148,7 @@ namespace OneMoreTime.Gameplay.Boss
                 return;
 
             model.Tick(Time.deltaTime);
+            Drift();
             ApplyShields();
             RebuildGenerators();
             if (laser != null)
@@ -156,6 +165,14 @@ namespace OneMoreTime.Gameplay.Boss
                 return;
             model = new GuardianModel(survivalSeconds, preparationWindow, syncWindow, vulnerableSeconds);
             attackTimer = 0.8f;
+        }
+
+        void Drift()
+        {
+            combatAge += Time.deltaTime;
+            float angle = combatAge * driftFrequency * Mathf.PI * 2f;
+            var offset = new Vector2(Mathf.Sin(angle * 0.5f) * driftHorizontal, Mathf.Sin(angle) * driftAmplitude);
+            transform.position = playfield.LocalToWorld(entryTo + offset);
         }
 
         void ApplyShields()

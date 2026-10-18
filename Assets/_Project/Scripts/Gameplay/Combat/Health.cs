@@ -17,6 +17,8 @@ namespace OneMoreTime.Gameplay.Combat
         HealthModel model;
 
         public event Action<Health, DamageInfo> Damaged;
+        /// <summary>A shield absorbed this hit. Invulnerability frames stay silent to avoid feedback spam.</summary>
+        public event Action<Health, DamageInfo> Blocked;
         public event Action<Health, DamageInfo> Died;
 
         public Faction Faction => faction;
@@ -35,8 +37,13 @@ namespace OneMoreTime.Gameplay.Combat
 
         public bool TakeDamage(in DamageInfo info)
         {
+            bool shieldedBeforeHit = Model.Shielded;
             if (!Model.TryDamage(info.Amount, Time.time))
+            {
+                if (shieldedBeforeHit)
+                    Blocked?.Invoke(this, info);
                 return false;
+            }
             // Read before Damaged: a listener may deal more damage (a combo bonus), and a nested hit
             // that kills reports the death itself.
             bool killed = Model.IsDead;

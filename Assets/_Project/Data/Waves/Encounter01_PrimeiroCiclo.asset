@@ -12,78 +12,126 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d5213c1db9d1490a98563dd3069c842, type: 3}
   m_Name: Encounter01_PrimeiroCiclo
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Enemies.WaveSchedule
-  warningSeconds: 0.8
-  clearDelay: 4
+  warningSeconds: 0.9
+  clearDelay: 2.5
   waves:
-  - label: "4 ca\xE7as em fila, no alto"
-    time: 10
+  - label: "Aquecimento: 4 ca\xE7as no alto"
+    time: 3
     enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
     count: 4
-    height: 0.35
-    spacing: 1.6
-    secondRow: 0
-    secondRowHeight: 0.35
-  - label: "4 ca\xE7as em fila, embaixo"
-    time: 17
-    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
-    count: 4
-    height: -0.4
-    spacing: 1.6
-    secondRow: 0
-    secondRowHeight: -0.4
-  - label: "primeiro artilheiro: para \xE0 direita e dispara leques"
-    time: 25
-    enemy: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
-    count: 1
-    height: 0
-    spacing: 0
+    height: 0.4
+    spacing: 1.45
     secondRow: 0
     secondRowHeight: 0
-  - label: "ca\xE7as em dois n\xEDveis"
-    time: 35
+  - label: "Resposta: 4 ca\xE7as embaixo"
+    time: 7
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
+    count: 4
+    height: -0.45
+    spacing: 1.45
+    secondRow: 0
+    secondRowHeight: 0
+  - label: "Novo padr\xE3o: 4 interceptadores serpenteantes"
+    time: 11
+    enemy: {fileID: 5323093116180566380, guid: c803683b975ab4315a8ac165aafb722e, type: 3}
+    count: 4
+    height: 0.05
+    spacing: 1.35
+    secondRow: 0
+    secondRowHeight: 0
+  - label: "Primeiro cerco: ca\xE7as em dois n\xEDveis"
+    time: 15
     enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
     count: 3
-    height: 0.6
-    spacing: 1.6
+    height: 0.62
+    spacing: 1.45
     secondRow: 1
-    secondRowHeight: -0.6
-  - label: dois artilheiros, em cima e embaixo
-    time: 44
+    secondRowHeight: -0.62
+  - label: Primeiro artilheiro
+    time: 19
     enemy: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
     count: 1
-    height: 0.5
+    height: 0.05
     spacing: 0
-    secondRow: 1
-    secondRowHeight: -0.5
-  - label: "5 ca\xE7as pelo meio"
-    time: 55
-    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
-    count: 5
-    height: 0
-    spacing: 1.4
     secondRow: 0
     secondRowHeight: 0
-  - label: artilheiro com escolta
-    time: 62
+  - label: Interceptadores sob fogo do artilheiro
+    time: 22
+    enemy: {fileID: 5323093116180566380, guid: c803683b975ab4315a8ac165aafb722e, type: 3}
+    count: 5
+    height: -0.35
+    spacing: 1.2
+    secondRow: 0
+    secondRowHeight: 0
+  - label: "Ca\xE7as cortam a faixa superior"
+    time: 26
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
+    count: 4
+    height: 0.55
+    spacing: 1.35
+    secondRow: 0
+    secondRowHeight: 0
+  - label: Dupla de artilheiros
+    time: 29
     enemy: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
     count: 1
-    height: -0.35
+    height: 0.52
+    spacing: 0
+    secondRow: 1
+    secondRowHeight: -0.52
+  - label: "Tesoura serpenteante em dois n\xEDveis"
+    time: 33
+    enemy: {fileID: 5323093116180566380, guid: c803683b975ab4315a8ac165aafb722e, type: 3}
+    count: 3
+    height: 0.52
+    spacing: 1.3
+    secondRow: 1
+    secondRowHeight: -0.52
+  - label: "Artilheiro de conten\xE7\xE3o"
+    time: 37
+    enemy: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
+    count: 1
+    height: -0.2
     spacing: 0
     secondRow: 0
-    secondRowHeight: -0.35
-  - label: "escolta de ca\xE7as"
-    time: 63
+    secondRowHeight: 0
+  - label: "Escolta de 5 ca\xE7as sobreposta"
+    time: 38.5
     enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
-    count: 4
-    height: 0.6
-    spacing: 1.6
+    count: 5
+    height: 0.55
+    spacing: 1.25
     secondRow: 0
-    secondRowHeight: 0.6
-  - label: "ca\xE7as finais em dois n\xEDveis"
-    time: 73
-    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
-    count: 4
+    secondRowHeight: 0
+  - label: "Parede m\xF3vel de interceptadores"
+    time: 43
+    enemy: {fileID: 5323093116180566380, guid: c803683b975ab4315a8ac165aafb722e, type: 3}
+    count: 6
+    height: 0
+    spacing: 1.15
+    secondRow: 0
+    secondRowHeight: 0
+  - label: "Artilheiros finais em pin\xE7a"
+    time: 47
+    enemy: {fileID: 1038516920087303488, guid: 4165bfcdce82b463291c4474f4f15059, type: 3}
+    count: 1
     height: 0.5
-    spacing: 1.6
+    spacing: 0
     secondRow: 1
     secondRowHeight: -0.5
+  - label: "Ca\xE7as finais em duas linhas"
+    time: 49
+    enemy: {fileID: 5323093116180566380, guid: 47931608ebc5a4ad69186bc9519e47e3, type: 3}
+    count: 4
+    height: 0.65
+    spacing: 1.2
+    secondRow: 1
+    secondRowHeight: -0.65
+  - label: "Cl\xEDmax: interceptadores em duas linhas"
+    time: 54
+    enemy: {fileID: 5323093116180566380, guid: c803683b975ab4315a8ac165aafb722e, type: 3}
+    count: 4
+    height: 0.42
+    spacing: 1.1
+    secondRow: 1
+    secondRowHeight: -0.42

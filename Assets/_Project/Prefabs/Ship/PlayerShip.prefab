@@ -80,6 +80,9 @@ GameObject:
   - component: {fileID: 4503295146122120678}
   - component: {fileID: 5956445578714040267}
   - component: {fileID: 7780755683237546533}
+  - component: {fileID: 6622045825274505240}
+  - component: {fileID: 4279906125410160130}
+  - component: {fileID: 4777064127344643049}
   m_Layer: 8
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -181,6 +184,7 @@ MonoBehaviour:
   playfield: {fileID: 0}
   pool: {fileID: 0}
   projectile: {fileID: 7810099233026295980, guid: 645acc6f6f28f4c91a47d5193a81dfe8, type: 3}
+  aim: {fileID: 6622045825274505240}
   shotsPerSecond: 10
   muzzle: {x: 0.85310787, y: -0.56850195}
 --- !u!114 &4503295146122120678
@@ -242,6 +246,63 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2800001, y: 0.8483636, z: 1}
   m_Center: {x: 0.016195893, y: 0.18691948, z: 0}
+--- !u!114 &6622045825274505240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796504879319981029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d80b12c4f8b4fe68ba905c88377d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Ship.ShipAim
+  motor: {fileID: 5833313698970566445}
+  visualSharpness: 22
+  indicatorSharpness: 30
+  indicatorDistance: 3.2
+  indicatorRadius: 0.24
+  indicatorColor: {r: 0.2, g: 0.95, b: 1, a: 1}
+  idlePulseAmount: 0.025
+  idlePulseFrequency: 2.2
+  shotPulseScale: 0.42
+  shotPulseDecay: 14
+--- !u!114 &4279906125410160130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796504879319981029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f83f4ec80b8324377a46ecb7f27445b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Ship.ShipFireFeedback
+  weapon: {fileID: 0}
+  visual: {fileID: 0}
+  recoilDistance: 0.14
+  recoilReturnTime: 0.075
+  maxRecoilDistance: 0.24
+  flashDuration: 0.065
+  flashLength: 0.8
+  flashColor: {r: 0.35, g: 0.95, b: 1, a: 1}
+--- !u!114 &4777064127344643049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796504879319981029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57a325b80f65414abf32119f5148369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneMoreTime.Integration.Feel.ShipWeaponFeelBridge
+  weapon: {fileID: 0}
+  visual: {fileID: 0}
+  feedbackPlayer: {fileID: 0}
 --- !u!1001 &8124032496568746925
 PrefabInstance:
   m_ObjectHideFlags: 0
