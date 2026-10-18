@@ -53,6 +53,7 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 | `Data` | ScriptableObjects de ajuste: `EchoConfig`, ondas em `Data/Waves` |
 | `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Traps, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
+| `Art/Ships` | Modelos das naves. `BI_Ships_BlockOut.fbx` (BiluShip, blockout) é a arte da nave e do eco |
 | `Scenes` | `Arena_01.unity`, a única cena no build por enquanto |
 | `Input` | `OneMoreTimeControls.inputactions` — o único asset de input do jogo |
 
@@ -61,6 +62,8 @@ Convenções:
 - **Referências por `[SerializeField]`, não por busca** (`Find*`) nem singletons. O `Playfield` e o `ProjectilePool` chegam a quem precisa pela cena ou por injeção.
 - **Só o `PlayerInputReader` lê o Input System.**
 - **Arte troca sem tocar no código:** cada prefab tem um filho `Visual`; substitua o que está dentro dele.
+  Na nave e no eco o `Visual` é o pivô da inclinação (o código reescreve a rotação dele): o modelo fica em `Visual/Model`,
+  que guarda a rotação, a escala e o centro. O hitbox da nave é o `BoxCollider` da raiz, no plano de jogo, não o modelo.
 - **A cena tem grupos fixos na raiz:** `Systems`, `Lighting`, `Playfield` (câmera, nave, ecos), `World` (cenário), `UI`.
 - **Physics layers** (8–12): Player, PlayerProjectile, Enemy, EnemyProjectile, Echo. A matriz de colisão só deixa tiro acertar o outro lado e inimigo bater na nave; o eco não colide com nada.
   Armadilhas e tiros do chefe ficam em EnemyProjectile (só ferem a nave). Mina e interruptor não usam colisão: a mina faz consultas de física, o interruptor compara posições.
@@ -72,6 +75,7 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
 
 - **Testes:** `unity command run_tests --mode editor`.
 - **Conteúdo placeholder:** o menu *One More Time › Bootstrap › Build Placeholder Content* (`unity command menu --path "One More Time/Bootstrap/Build Placeholder Content"`) recria o que faltar — materiais, prefabs, dados, painel de UI e a cena. Não sobrescreve nada que exista; apague um asset para ele ser refeito.
+  Atenção: apagar `PlayerShip` ou `EchoGhost` refaz a versão de primitivas, sem o modelo da nave.
 - **Play mode só anda com a janela do Unity em primeiro plano.** Em segundo plano o jogo fica parado no frame 1 e o teclado é ignorado. Rode `unity command editor_focus` depois de `editor_play`.
 - **Teclas simultâneas:** `simulate_key` troca o estado inteiro do teclado. Para segurar várias, enfileire um `KeyboardState` com `unity command eval` (`InputSystem.QueueStateEvent`).
   O teclado só chega ao jogo com a Game view em foco (`EditorWindow.GetWindow(GameView).Focus()` por eval); com a tela do Mac bloqueada, os eventos se perdem.

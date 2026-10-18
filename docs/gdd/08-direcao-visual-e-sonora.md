@@ -4,7 +4,7 @@ chapter: "08"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01)
+source: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01, modelo Art/Ships/BI_Ships_BlockOut.fbx)
 ---
 
 # ONE MORE TIME | Direção visual e sonora
@@ -22,10 +22,14 @@ O jogo é um **side-scrolling 2.5D**: o mundo e a jogabilidade são 3D, vistos p
 *Por quê:* a leitura lateral mantém o bullet hell legível, e o 3D dá profundidade, luz e efeitos de energia.
 
 **No protótipo atual:** câmera em **perspectiva** (campo de visão 40°, a 20 unidades do plano de jogo), a
-jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade. Tudo é
-placeholder feito de primitivas — nave, eco, inimigos e cenário — até a arte chegar.
+jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade.
 
-> **Q:** quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: nave, eco, inimigos, projéteis, efeitos, cenário). Marcado como `_TBD_` até o dono decidir.
+A **nave** e o **eco** usam o modelo 3D de blockout da nave, o *BiluShip* (`Art/Ships/BI_Ships_BlockOut.fbx`):
+virado para a direita, com o topo do disco inclinado 15° para a câmera, ciano na nave e violeta translúcido no
+eco. O resto — inimigos, tiros, armadilhas, chefe e cenário — ainda é placeholder feito de primitivas, até a
+arte chegar.
+
+> **Q:** quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: inimigos, projéteis, efeitos, cenário). A nave já é um modelo 3D (blockout). Marcado como `_TBD_` até o dono decidir.
 
 ### Cor
 
@@ -56,5 +60,5 @@ O áudio também comunica a mecânica temporal.
 
 - [ ] Quem é dono da arte e do áudio?
 - [ ] Referências visuais além de *Cuphead* (câmera): `_TBD_`.
-- [ ] Quais elementos são modelos 3D e quais são sprites 2D: `_TBD_`.
+- [ ] Quais elementos são modelos 3D e quais são sprites 2D: `_TBD_` (a nave já é um modelo 3D).
 - [ ] A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? O protótipo usa perspectiva; falta confirmar.

@@ -203,7 +203,8 @@
       <tr><th scope="row">Integridade da nave</th><td>3</td><td><code>PlayerShip</code> → <code>Health</code></td></tr>
       <tr><th scope="row">Invulnerabilidade após dano</th><td>1,2 s</td><td><code>PlayerShip</code> → <code>Health</code></td></tr>
       <tr><th scope="row">Velocidade da nave</th><td>9 u/s</td><td><code>PlayerShip</code> → <code>ShipMotor</code></td></tr>
-      <tr><th scope="row">Disparo principal</th><td>10 tiros/s, dano 1</td><td><code>PlayerShip</code> → <code>ShipWeapon</code>, <code>Shot_Ship</code></td></tr>
+      <tr><th scope="row">Disparo principal</th><td>10 tiros/s, dano 1; sai do canhão mais perto da câmera</td><td><code>PlayerShip</code> → <code>ShipWeapon</code>, <code>Shot_Ship</code></td></tr>
+      <tr><th scope="row">Hitbox da nave</th><td>caixa de 1,4 × 0,9 u no plano de jogo, em volta do disco e da cabine; menor que a arte (aletas, ponta da cúpula e canhões ficam de fora)</td><td><code>PlayerShip</code> → <code>BoxCollider</code></td></tr>
       <tr><th scope="row">Drone</th><td>2 de vida, 100 pontos</td><td><code>Drone</code></td></tr>
       <tr><th scope="row">Ondulante</th><td>1 de vida, 100 pontos</td><td><code>Ondulante</code></td></tr>
       <tr><th scope="row">Inimigo que bate na nave</th><td>1 de dano</td><td><code>ContactDamage</code></td></tr>
@@ -258,6 +259,7 @@
     <li><span>Tamanho da "janela curta" de Crossfire e Synchronized Strike: o protótipo usa 1 s e 2,5 s como valores de partida (§16 pede janelas generosas no começo). Falta validar jogando.</span></li>
     <li><span>Crossfire: o bônus (+3 de dano combinado) e o intervalo de 1 s antes de o mesmo alvo dar outro combo são valores de partida, não vêm do v0.1.</span></li>
     <li><span>Synchronized Strike: deve ser a <strong>única</strong> forma de abrir o núcleo (o que responderia à pergunta dos geradores sem regeneração em <a href="#c06">06</a>), ou continua só reconhecendo e premiando a abertura feita com o eco?</span></li>
+    <li><span>Hitbox da nave menor que a arte, como é comum em shmups: confirmar o tamanho jogando.</span></li>
     <li><span>Feedback próprio de cada combo: o protótipo só tem o aviso no HUD; faltam o som exclusivo e um efeito no mundo → <a href="#c08">08</a>.</span></li>
   </ul></div>
 </section>
@@ -530,7 +532,7 @@
   <header>
     <h2 id="h08"><span class="n">08</span>Direção visual e sonora</h2>
     <div class="fm"><span class="chip">dono: _TBD_</span><span class="chip st">draft</span><span class="chip">atualizado 2026-10-17</span></div>
-    <p class="src">Fonte: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01) · <code>docs/gdd/08-direcao-visual-e-sonora.md</code></p>
+    <p class="src">Fonte: GDD v0.1 (PDF) §12; protótipo em Assets/_Project (cena Arena_01, modelo Art/Ships/BI_Ships_BlockOut.fbx) · <code>docs/gdd/08-direcao-visual-e-sonora.md</code></p>
   </header>
   <p class="summary">Como o jogo se parece e soa, com uma regra: a tela e o som têm que explicar a mecânica temporal.</p>
   <section class="part"><h3>Direção visual</h3>
@@ -538,8 +540,9 @@
     <h4>2.5D: mundo 3D, leitura 2D</h4>
     <p>O jogo é um <strong>side-scrolling 2.5D</strong>: o mundo e a jogabilidade são 3D, vistos por uma câmera lateral que lê como 2D. <strong>Alguns elementos serão sprites 2D</strong>, misturados ao mundo 3D.</p>
     <p class="why"><em>Por quê:</em> a leitura lateral mantém o bullet hell legível, e o 3D dá profundidade, luz e efeitos de energia.</p>
-    <p><strong>No protótipo atual:</strong> câmera em <strong>perspectiva</strong> (campo de visão 40°, a 20 unidades do plano de jogo), a jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade. Tudo é placeholder feito de primitivas — nave, eco, inimigos e cenário — até a arte chegar.</p>
-    <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: nave, eco, inimigos, projéteis, efeitos, cenário).</div>
+    <p><strong>No protótipo atual:</strong> câmera em <strong>perspectiva</strong> (campo de visão 40°, a 20 unidades do plano de jogo), a jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade.</p>
+    <p>A <strong>nave</strong> e o <strong>eco</strong> usam o modelo 3D de blockout da nave, o <em>BiluShip</em> (<code>Art/Ships/BI_Ships_BlockOut.fbx</code>): virado para a direita, com o topo do disco inclinado 15° para a câmera, ciano na nave e violeta translúcido no eco. O resto — inimigos, tiros, armadilhas, chefe e cenário — ainda é placeholder feito de primitivas, até a arte chegar.</p>
+    <div class="rule"><span class="osd">Q · a definir</span>Quais elementos são modelos 3D e quais são sprites 2D ainda não está definido (ex.: inimigos, projéteis, efeitos, cenário). A nave já é um modelo 3D (blockout).</div>
     <h4>Cor</h4>
     <div class="pillars">
       <div class="pillar"><span class="n">AZUL · CIANO</span><b>Nave atual</b><p>Contorno nítido e disparos bem visíveis.</p></div>
@@ -561,7 +564,7 @@
   <div class="oq"><span class="osd">Perguntas em aberto</span><ul class="q">
     <li><span>Quem é dono da arte e do áudio?</span></li>
     <li><span>Referências visuais além de <em>Cuphead</em> (câmera): <span class="tbd">_TBD_</span>.</span></li>
-    <li><span>Quais elementos são modelos 3D e quais são sprites 2D: <span class="tbd">_TBD_</span>.</span></li>
+    <li><span>Quais elementos são modelos 3D e quais são sprites 2D: <span class="tbd">_TBD_</span> (a nave já é um modelo 3D).</span></li>
     <li><span>A câmera lateral é fixa e ortográfica, ou tem alguma perspectiva? O protótipo usa perspectiva; falta confirmar.</span></li>
   </ul></div>
 </section>
@@ -671,7 +674,7 @@
   <section class="part"><h3>Estado do MVP</h3>
     <div class="scroll"><table><thead><tr><th>Item do MVP</th><th>Estado</th></tr></thead><tbody>
       <tr><th scope="row">Nave com movimento e disparo</th><td><span class="chip ok">feito</span></td></tr>
-      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code>, placeholder</td></tr>
+      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code>; nave e eco com o modelo de blockout da nave, o resto em placeholder</td></tr>
       <tr><th scope="row">Gravação de cinco segundos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Reprodução de movimento e disparos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Drone com ondas por script</th><td><span class="chip ok">feito</span> e o ondulante</td></tr>
@@ -691,7 +694,7 @@
       <li class="done"><span>Uma armadilha pode ser manipulada por uma ação registrada. (O eco segura o interruptor do corredor enquanto a nave passa.)</span></li>
       <li class="done"><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um gerador do Guardião pela nave e o outro pelo eco derrubam o escudo do núcleo. Os dois têm aviso no HUD → <a href="#c03">03</a>.)</span></li>
       <li class="done"><span>O chefe pode ser derrotado usando a mecânica temporal. (O eco derruba um gerador enquanto a nave derruba o outro.)</span></li>
-      <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (Com placeholder já se distingue; falta testar com jogadores.)</span></li>
+      <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (Com o modelo de blockout, a nave ciano e o eco violeta translúcido já se distinguem; falta testar com jogadores.)</span></li>
       <li><span>A mecânica continua legível nos momentos com mais projéteis.</span></li>
     </ul>
     <div class="rule ok"><span class="osd">O teste mais importante</span>Ver alguém jogar <strong>sem explicar a solução</strong>. A pessoa precisa perceber sozinha que pode gravar uma ação e aproveitar a repetição para fazer outra.</div>

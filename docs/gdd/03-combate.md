@@ -31,7 +31,8 @@ movimento e ataque.
 | Integridade da nave | 3 | `PlayerShip` → `Health` |
 | Invulnerabilidade após dano | 1,2 s | `PlayerShip` → `Health` |
 | Velocidade da nave | 9 u/s | `PlayerShip` → `ShipMotor` |
-| Disparo principal | 10 tiros/s, dano 1 | `PlayerShip` → `ShipWeapon`, `Shot_Ship` |
+| Disparo principal | 10 tiros/s, dano 1; sai do canhão mais perto da câmera | `PlayerShip` → `ShipWeapon`, `Shot_Ship` |
+| Hitbox da nave | caixa de 1,4 × 0,9 u no plano de jogo, em volta do disco e da cabine; menor que a arte (aletas, ponta da cúpula e canhões ficam de fora) | `PlayerShip` → `BoxCollider` |
 | Drone | 2 de vida, 100 pontos | `Drone` |
 | Ondulante | 1 de vida, 100 pontos | `Ondulante` |
 | Inimigo que bate na nave | 1 de dano | `ContactDamage` |
@@ -123,4 +124,5 @@ existem. A tela de vitória mostra quantos combos o jogador fez.
 - [ ] Tamanho da "janela curta" de Crossfire e Synchronized Strike: o protótipo usa 1 s e 2,5 s como valores de partida (§16 pede janelas generosas no começo). Falta validar jogando.
 - [ ] Crossfire: o bônus (+3 de dano combinado) e o intervalo de 1 s antes de o mesmo alvo dar outro combo são valores de partida, não vêm do v0.1.
 - [ ] Synchronized Strike: deve ser a **única** forma de abrir o núcleo (o que responderia à pergunta dos geradores sem regeneração em [06](06-chefe-e-runs.md)), ou continua só reconhecendo e premiando a abertura feita com o eco?
+- [ ] Hitbox da nave menor que a arte, como é comum em shmups: confirmar o tamanho jogando.
 - [ ] Feedback próprio de cada combo: o protótipo só tem o aviso no HUD; faltam o som exclusivo e um efeito no mundo → [08](08-direcao-visual-e-sonora.md).

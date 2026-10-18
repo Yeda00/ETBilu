@@ -88,7 +88,8 @@ explicação e descobre sozinho para que serve o eco.
 
 ## Protótipo — estado atual → [10](gdd/10-producao.md)
 
-Jogável em `Assets/_Project/Scenes/Arena_01.unity`, todo em placeholder (primitivas 3D): nave, tiro,
+Jogável em `Assets/_Project/Scenes/Arena_01.unity`. A nave e o eco usam o modelo 3D de blockout da nave
+(*BiluShip*); o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
 gravação de 5 s, eco que repete movimento, tiros e gadget, drones e ondulantes em ondas por script,
 corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
 (fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro

@@ -32,7 +32,7 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Item do MVP | Estado |
 |---|---|
 | Nave com movimento e disparo | ✅ |
-| Uma arena side-scrolling 2.5D | ✅ cena `Arena_01`, placeholder |
+| Uma arena side-scrolling 2.5D | ✅ cena `Arena_01`; nave e eco com o modelo de blockout da nave, o resto em placeholder |
 | Gravação de cinco segundos | ✅ |
 | Reprodução de movimento e disparos | ✅ |
 | Drone com ondas por script | ✅ (e o ondulante) |
@@ -54,7 +54,7 @@ O protótipo está pronto para teste quando:
 4. [x] Uma armadilha pode ser manipulada por uma ação registrada. (O eco segura o interruptor do corredor enquanto a nave passa.)
 5. [x] O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um gerador do Guardião pela nave e o outro pelo eco derrubam o escudo do núcleo. Os dois têm aviso no HUD → [03](03-combate.md).)
 6. [x] O chefe pode ser derrotado usando a mecânica temporal. (O eco derruba um gerador enquanto a nave derruba o outro.)
-7. [ ] O jogador entende visualmente qual nave é a atual e qual é o eco. (Com placeholder já se distingue; falta testar com jogadores.)
+7. [ ] O jogador entende visualmente qual nave é a atual e qual é o eco. (Com o modelo de blockout, a nave ciano e o eco violeta translúcido já se distinguem; falta testar com jogadores.)
 8. [ ] A mecânica continua legível nos momentos com mais projéteis.
 
 > **O teste mais importante:** ver alguém jogar **sem explicar a solução**. A pessoa precisa perceber
