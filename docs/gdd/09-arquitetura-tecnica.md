@@ -38,8 +38,8 @@ O código fica em `Assets/_Project/Scripts`, em quatro assemblies:
 
 | Assembly | Conteúdo |
 |---|---|
-| `OneMoreTime.Core` | Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião |
-| `OneMoreTime.Gameplay` | Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros e sessão |
+| `OneMoreTime.Core` | Regras em C# puro, testáveis sem cena: gravação, reprodução, vida e escudo, linha do tempo das ondas, ciclos das armadilhas, interruptor de presença, recarga e pavio da mina, fases do Guardião, combos temporais |
+| `OneMoreTime.Gameplay` | Componentes da cena: input, playfield, nave, tiro, gadget, inimigos, ondas, armadilhas, chefe, encontros, combos e sessão |
 | `OneMoreTime.UI` | O HUD |
 | `OneMoreTime.Editor` | A ferramenta que monta o conteúdo placeholder (menu *One More Time › Bootstrap*) |
 
@@ -57,14 +57,19 @@ Os testes ficam em `Assets/_Project/Tests/EditMode`.
 | `GadgetSystem` | `ShipGadget` + `TimeMine` (+ `Cooldown`, `TimeMineModel` no Core) | A nave solta a mina; o eco reproduz o evento `Gadget` |
 | `TrapController` | `TrapSection` + `LaserGate` + `MovingBarrier` + `SwitchPad` (+ `TrapCycle`, `ShutterCycle`, `PresenceSwitch`, `LaserGateModel` no Core) | `TrapSection` para a rolagem no puzzle e encerra o encontro |
 | `BossController` | `GuardianBoss` + `SweepLaser` (+ `GuardianModel` no Core) | Fases, escudos, geradores e padrões de tiro |
-| `ComboEvaluator` | — | Ainda não existe |
+| `ComboEvaluator` | `ComboTracker` (+ `CrossfireRule`, `SynchronizedStrikeRule` no Core) | Uma regra por combo; só Crossfire e Synchronized Strike existem. O `ComboTracker` ouve o `Health.Damaged` dos inimigos que as ondas criam e das partes do Guardião, e o `GeneratorDestroyed` do Guardião; aplica o bônus e avisa o HUD e a sessão (`Triggered`) |
 | — | `Playfield` | O quadro que rola, com a câmera, a nave e os ecos |
 | — | `StageDirector` + `RunCheckpoint` | Encadeia os encontros (ondas → corredor → Guardião) e guarda em qual recomeçar depois de uma morte |
-| — | `GameSession` | Pontuação, pausa, vitória (o Guardião cai) e derrota |
+| — | `GameSession` | Pontuação (inimigos, Guardião e combos), pausa, vitória (o Guardião cai) e derrota |
 
 Armadilhas e tiros do chefe usam a layer `EnemyProjectile`, que só colide com a nave. A mina não tem
 colisor: o alcance e a explosão são consultas de física (`CheckSphere`, `OverlapSphere`) na layer `Enemy`.
 O interruptor também não usa física: compara posições, para o eco, que não tem colisor, poder segurá-lo.
+
+Os combos sabem quem acertou pelo `DamageInfo.Source` (`Ship` ou `Echo`) de cada dano. O bônus do Crossfire é
+dano `Combined`, que o próprio `ComboTracker` ignora, para não realimentar a regra. O `Health` decide se o
+acerto matou antes de avisar `Damaged`: um ouvinte que cause mais dano nesse aviso (o bônus) não faz o
+`Died` disparar duas vezes.
 
 ## Como armazenar a gravação
 

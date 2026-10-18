@@ -4,7 +4,7 @@ chapter: "10"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (armadilhas, gadget e chefe)
+source: GDD v0.1 (PDF) §14, §15 e §16; estado do protótipo em 2026-10-17 (armadilhas, gadget, chefe e os dois primeiros combos)
 ---
 
 # ONE MORE TIME | Produção — escopo da jam
@@ -41,6 +41,9 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Um chefe com janela de vulnerabilidade temporal | ✅ Guardião do Ciclo, fases 1 a 3 → [06](06-chefe-e-runs.md) |
 | Interface mínima e condição de vitória e derrota | ✅ vitória = derrotar o Guardião; derrota recomeça o encontro atual |
 
+Dos opcionais, já entraram **dois combos temporais com aviso no HUD** (Crossfire e Synchronized Strike) e a
+**pontuação por combos** → [03](03-combate.md). Ainda sem som próprio.
+
 ## Critérios de aceitação do protótipo
 
 O protótipo está pronto para teste quando:
@@ -49,7 +52,7 @@ O protótipo está pronto para teste quando:
 2. [x] O eco repete movimentos e disparos sem depender do controle atual.
 3. [x] A reprodução continua funcionando quando os inimigos se movem ou morrem.
 4. [x] Uma armadilha pode ser manipulada por uma ação registrada. (O eco segura o interruptor do corredor enquanto a nave passa.)
-5. [ ] O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Derrubar os dois geradores do Guardião já pede nave e eco juntos, mas nenhum combo é reconhecido nem tem feedback próprio → [03](03-combate.md).)
+5. [x] O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um gerador do Guardião pela nave e o outro pelo eco derrubam o escudo do núcleo. Os dois têm aviso no HUD → [03](03-combate.md).)
 6. [x] O chefe pode ser derrotado usando a mecânica temporal. (O eco derruba um gerador enquanto a nave derruba o outro.)
 7. [ ] O jogador entende visualmente qual nave é a atual e qual é o eco. (Com placeholder já se distingue; falta testar com jogadores.)
 8. [ ] A mecânica continua legível nos momentos com mais projéteis.
@@ -71,5 +74,5 @@ O protótipo está pronto para teste quando:
 ## Perguntas em aberto
 
 - [ ] Data e regras da game jam: `_TBD_`.
-- [ ] Os critérios 4 e 6 foram verificados pelo Unity CLI, não com jogadores. Falta o teste sem explicação.
+- [ ] Os critérios 4, 5 e 6 foram verificados pelo Unity CLI, não com jogadores. Falta o teste sem explicação.
 - [ ] Equipe e quem faz o quê: `_TBD_`.

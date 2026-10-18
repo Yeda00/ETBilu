@@ -77,5 +77,11 @@ Com o Editor aberto, use `unity command <nome>` (lista: `unity command`) em vez 
   O teclado só chega ao jogo com a Game view em foco (`EditorWindow.GetWindow(GameView).Focus()` por eval); com a tela do Mac bloqueada, os eventos se perdem.
   Cada `eval` leva alguns segundos: para segurar uma tecla por um tempo exato, enfileire os estados a partir de um `EditorApplication.update` registrado no próprio eval.
 - **Play mode em segundo plano:** `unity command eval 'UnityEngine.Application.runInBackground = true;'` depois de `editor_play` mantém o jogo rodando sem foco (vale só até sair do Play mode).
+  Para o teclado enfileirado chegar ao jogo sem focar o Editor, ponha também `InputSystem.settings.backgroundBehavior = IgnoreFocus`
+  e `editorInputBehaviorInPlayMode = AllDeviceInputAlwaysGoesToGameView` por eval. O projeto não tem asset de InputSettings, então nada é salvo.
+- **Comece de um teclado solto:** uma tecla que já está pressionada quando a cena recarrega não dispara a ação de botão
+  (Fire, por exemplo) até ser solta e pressionada de novo. Enfileire um `KeyboardState()` vazio antes de uma sequência.
+- **`eval` roda dentro de um método:** sem `using`; escreva os nomes completos (`UnityEngine.Object.FindFirstObjectByType<...>`).
 - **Pular para um encontro no Play mode:** `RunCheckpoint.Save(StageSegment.Boss)` e `SceneManager.LoadScene(0)` por eval, o mesmo caminho de uma morte.
-- **Capturas** (`capture_game_view --save_path`) são relativas a `Assets/`: salve fora do projeto ou apague depois, para não versionar.
+- **Capturas** (`capture_game_view --save_path`) são relativas a `Assets/` e precisam ficar dentro do projeto: apague depois
+  (`AssetDatabase.DeleteAsset` por eval), para não versionar.

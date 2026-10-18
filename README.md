@@ -8,6 +8,8 @@ ao lado de versões anteriores de si mesmo. Protótipo para game jam, em Unity 6
 Abra o projeto no Unity 6 (6000.3.25f1), abra `Assets/_Project/Scenes/Arena_01.unity` e dê Play.
 Tudo é placeholder enquanto a arte não chega. A arena tem ondas de inimigos, um corredor de
 armadilhas (o eco pode segurar o interruptor) e o Guardião do Ciclo; derrotá-lo é a vitória.
+A nave e o eco acertando o mesmo alvo dão **Crossfire**; um gerador do Guardião derrubado pela nave e o
+outro pelo eco dão **Synchronized Strike**.
 
 | Tecla | Ação |
 |---|---|

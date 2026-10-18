@@ -36,6 +36,7 @@ namespace OneMoreTime.Gameplay.Enemies
 
         public event Action<Enemy, bool> Removed;   // bool: killed by the player
         public int ScoreValue => scoreValue;
+        public Health Health => health;
 
         void Awake()
         {

@@ -48,6 +48,9 @@ fantasma repete a sequência a partir do ponto inicial, enquanto você continua 
 
 Movimento em 8 direções, disparo contínuo, um gadget. Três tipos de dano: direto, de gadget e combinado.
 Cinco combos temporais: **Crossfire**, **Trap Bait**, **Double Pulse**, **Reflect Chain**, **Synchronized Strike**.
+No protótipo, os dois primeiros a existir: **Crossfire** (nave e eco acertam o mesmo alvo em até 1 s: dano
+combinado) e **Synchronized Strike** (um gerador do Guardião pela nave, o outro pelo eco, em até 2,5 s: o
+escudo do núcleo cai). Janelas generosas, valores de partida.
 
 ## Inimigos → [04](gdd/04-inimigos-e-ondas.md)
 
@@ -88,8 +91,9 @@ explicação e descobre sozinho para que serve o eco.
 Jogável em `Assets/_Project/Scenes/Arena_01.unity`, todo em placeholder (primitivas 3D): nave, tiro,
 gravação de 5 s, eco que repete movimento, tiros e gadget, drones e ondulantes em ondas por script,
 corredor de armadilhas (laser gate, barreira móvel, interruptor), mina temporal, o Guardião do Ciclo
-(fases 1 a 3), HUD, pausa, derrota (o encontro atual recomeça) e vitória (derrotar o Guardião).
-Faltam torreta, combos, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).
+(fases 1 a 3), os combos Crossfire e Synchronized Strike com aviso no HUD, HUD, pausa, derrota (o encontro
+atual recomeça) e vitória (derrotar o Guardião).
+Faltam torreta, os outros três combos, som, pulso de interferência, a fase 4 do chefe e o encontro 3 (Combinação).
 
 ## Perguntas em aberto
 
@@ -99,6 +103,7 @@ Faltam torreta, combos, pulso de interferência, a fase 4 do chefe e o encontro 
 - Regra do eco para dispositivos de presença contínua → [02](gdd/02-eco-temporal.md)
 - A gravação é relativa à tela: o protótipo para a rolagem nos puzzles; vira regra? → [02](gdd/02-eco-temporal.md)
 - Ajustes do Guardião: núcleo aberto já na fase 2, geradores sem regeneração → [06](gdd/06-chefe-e-runs.md)
+- Janelas dos combos (1 s e 2,5 s) e se só o Synchronized Strike deve abrir o núcleo → [03](gdd/03-combate.md)
 - Quais elementos são modelos 3D e quais são sprites 2D → [08](gdd/08-direcao-visual-e-sonora.md)
 - Donos de cada capítulo, datas e equipe da jam → [10](gdd/10-producao.md)
 

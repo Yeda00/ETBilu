@@ -4,7 +4,7 @@ chapter: "06"
 status: draft
 owner: _TBD_
 updated: 2026-10-17
-source: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession)
+source: GDD v0.1 (PDF) §9 e §10; protótipo em Assets/_Project (GuardianBoss, GuardianModel, StageDirector, GameSession, ComboTracker)
 ---
 
 # ONE MORE TIME | Chefe e estrutura das runs
@@ -49,6 +49,15 @@ O Guardião entra pela direita em 2,5 s, com a tela parada, e fica na borda dire
 O núcleo destruído derrota o Guardião, e **essa é a vitória do encontro**. Pontuação: 250 por gerador
 derrubado e 5000 pelo núcleo. O HUD mostra a vida do núcleo, os dois geradores, a fase, a janela e o
 tempo de vulnerabilidade → [07](07-controles-e-interface.md).
+
+**Combos no Guardião** → [03](03-combate.md):
+
+| Combo | No Guardião |
+|---|---|
+| **Synchronized Strike** | Um gerador cai pela nave e o outro por um eco, com até 2,5 s entre as quedas, e o núcleo abre. O escudo cai pela regra de sempre; o combo dá o aviso "SYNCHRONIZED STRIKE" no HUD e 1000 pontos. Na fase 3 a janela do Guardião também é de 2,5 s, então toda abertura feita com nave e eco conta; na fase 2 (janela de 6 s) as quedas precisam estar mais próximas |
+| **Crossfire** | A nave e um eco acertando o mesmo gerador, ou o núcleo vulnerável, com até 1 s de diferença: +3 de dano combinado |
+
+Derrubar os dois geradores só com a nave ainda abre o núcleo, mas não é Synchronized Strike.
 
 Todos os números são valores de partida para testar, no prefab `Guardian`.
 
@@ -102,5 +111,5 @@ A repetição deve reforçar o tema *One More Time*. Dois modelos estão em jogo
 - [ ] Confirmar o modelo A como sistema do protótipo (é o que está implementado).
 - [x] O Guardião do Ciclo: versão mínima implementada (fases 1 a 3).
 - [ ] Na fase 2 o núcleo também fica vulnerável quando os dois geradores caem; o v0.1 só fala de núcleo exposto na fase 3. Manter assim?
-- [ ] Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar?
+- [ ] Os geradores não recuperam vida enquanto estão de pé, então dá para enfraquecer os dois e derrubá-los em sequência dentro da janela curta sem o eco. Isso é aceitável, ou os geradores devem se regenerar? (Outra saída: só o Synchronized Strike abrir o núcleo → [03](03-combate.md).)
 - [ ] O Guardião entrando fere a nave que estiver no caminho (dano de contato da blindagem). É justo, ou a blindagem só fere depois que ele para?

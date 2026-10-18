@@ -710,7 +710,8 @@ namespace OneMoreTime.EditorTools
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
         }
 
-        // Adds the stage (waves → traps → Guardian) and the gadget links to the scene, only where missing.
+        // Adds the stage (waves → traps → Guardian), the combo tracker and the gadget links to the scene,
+        // only where missing.
         static void WireStage()
         {
             var scene = SceneManager.GetActiveScene();
@@ -751,12 +752,23 @@ namespace OneMoreTime.EditorTools
             changed |= SetIfNull(stage, "trapSection", p.TrapSection.GetComponent<TrapSection>());
             changed |= SetIfNull(stage, "boss", p.Guardian.GetComponent<GuardianBoss>());
 
+            var combos = Object.FindFirstObjectByType<ComboTracker>();
+            if (combos == null)
+            {
+                combos = Child<ComboTracker>(systems, "ComboTracker");
+                changed = true;
+            }
+            changed |= SetIfNull(combos, "waves", spawner);
+            changed |= SetIfNull(combos, "stage", stage);
+
             changed |= SetIfNull(gadget, "input", input);
             changed |= SetIfNull(gadget, "playfield", playfield);
             changed |= SetIfNull(gadget, "pool", pool);
             changed |= SetIfNull(session, "stage", stage);
             changed |= SetIfNull(hud, "gadget", gadget);
             changed |= SetIfNull(hud, "stage", stage);
+            changed |= SetIfNull(session, "combos", combos);
+            changed |= SetIfNull(hud, "combos", combos);
 
             if (!changed)
                 return;

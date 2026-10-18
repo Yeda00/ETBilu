@@ -1,5 +1,6 @@
 using System.Globalization;
 using OneMoreTime.Core.Boss;
+using OneMoreTime.Core.Combos;
 using OneMoreTime.Gameplay.Boss;
 using OneMoreTime.Gameplay.Combat;
 using OneMoreTime.Gameplay.Echo;
@@ -12,8 +13,8 @@ namespace OneMoreTime.UI
 {
     /// <summary>
     /// Placeholder HUD (GDD 07): integrity, temporal memory, active echoes, gadget recharge, score,
-    /// the Guardian's health and vulnerability, and the session message. Layout and look live in UI/Hud.uxml and UI/Hud.uss, so the artist can restyle
-    /// without touching code.
+    /// the Guardian's health and vulnerability, the combo notice and the session message. Layout and
+    /// look live in UI/Hud.uxml and UI/Hud.uss, so the artist can restyle without touching code.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
     public sealed class HudController : MonoBehaviour
@@ -23,14 +24,20 @@ namespace OneMoreTime.UI
         [SerializeField] GameSession session;
         [SerializeField] ShipGadget gadget;
         [SerializeField] StageDirector stage;
+        [SerializeField] ComboTracker combos;
+        [Tooltip("Seconds the combo notice stays on screen.")]
+        [SerializeField, Min(0.1f)] float comboNoticeSeconds = 1.4f;
 
         static readonly CultureInfo PtBr = CultureInfo.GetCultureInfo("pt-BR");
 
-        VisualElement integrityFill, memoryFill, recDot, message, gadgetFill, bossPanel, bossFill;
-        Label memoryValue, memoryState, score, messageTitle, messageHint, gadgetState, bossState, bossPhase;
+        VisualElement integrityFill, memoryFill, recDot, message, gadgetFill, bossPanel, bossFill, comboNotice;
+        Label memoryValue, memoryState, score, messageTitle, messageHint, gadgetState, bossState, bossPhase, comboTitle, comboHint;
         VisualElement[] generatorPips;
         VisualElement[] slots;
         Label[] slotStates;
+        float comboTimer;
+        ComboType comboShown;
+        int comboRepeat;
 
         void OnEnable()
         {
@@ -51,6 +58,10 @@ namespace OneMoreTime.UI
             bossState = root.Q<Label>("boss-state");
             bossPhase = root.Q<Label>("boss-phase");
             generatorPips = new[] { root.Q("generator-1"), root.Q("generator-2") };
+            comboNotice = root.Q("combo");
+            comboTitle = root.Q<Label>("combo-title");
+            comboHint = root.Q<Label>("combo-hint");
+            comboTimer = 0f;
 
             slots = new VisualElement[3];
             slotStates = new Label[3];
@@ -59,6 +70,15 @@ namespace OneMoreTime.UI
                 slots[i] = root.Q($"echo-slot-{i + 1}");
                 slotStates[i] = slots[i]?.Q<Label>(className: "slot-state");
             }
+
+            if (combos != null)
+                combos.Triggered += OnCombo;
+        }
+
+        void OnDisable()
+        {
+            if (combos != null)
+                combos.Triggered -= OnCombo;
         }
 
         void Update()
@@ -80,6 +100,33 @@ namespace OneMoreTime.UI
 
             if (session != null)
                 UpdateSession();
+
+            if (comboTimer > 0f)
+            {
+                comboTimer -= Time.deltaTime;
+                if (comboTimer <= 0f)
+                    comboNotice.AddToClassList("hidden");
+            }
+        }
+
+        // A Synchronized Strike on screen is not covered by a Crossfire; the same combo again counts up.
+        void OnCombo(ComboReport combo)
+        {
+            if (comboNotice == null || comboTitle == null || comboHint == null)
+                return;
+            bool showing = comboTimer > 0f;
+            if (showing && combo.Type < comboShown)
+                return;
+            comboRepeat = showing && combo.Type == comboShown ? comboRepeat + 1 : 1;
+            comboShown = combo.Type;
+            comboTimer = comboNoticeSeconds;
+
+            string title = combo.Type == ComboType.SynchronizedStrike ? "SYNCHRONIZED STRIKE" : "CROSSFIRE";
+            string hint = combo.Type == ComboType.SynchronizedStrike ? "NAVE + ECO NOS GERADORES · ESCUDO DESATIVADO" : "NAVE + ECO NO MESMO ALVO";
+            comboTitle.text = comboRepeat > 1 ? $"{title} ×{comboRepeat}" : title;
+            comboHint.text = combo.Points > 0 ? $"{hint} · +{combo.Points}" : hint;
+            comboNotice.EnableInClassList("strike", combo.Type == ComboType.SynchronizedStrike);
+            comboNotice.RemoveFromClassList("hidden");
         }
 
         void UpdateEcho()
@@ -159,7 +206,7 @@ namespace OneMoreTime.UI
                     ShowMessage("ONE MORE TIME", "o encontro recomeça…");
                     break;
                 case SessionState.Cleared:
-                    ShowMessage("GUARDIÃO DERROTADO", $"pontuação {session.Score:000000} · {session.Kills} abates");
+                    ShowMessage("GUARDIÃO DERROTADO", $"pontuação {session.Score:000000} · {session.Kills} abates · {session.ComboCount} combo{(session.ComboCount == 1 ? "" : "s")}");
                     break;
                 default:
                     message.AddToClassList("hidden");
