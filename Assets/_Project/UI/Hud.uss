@@ -88,9 +88,24 @@
 .combo.strike .combo-title { font-size: 40px; }
 .combo-hint { color: rgb(255, 201, 161); font-size: 14px; letter-spacing: 2px; -unity-font-style: normal; margin: 2px 0 0 0; padding: 0; }
 
-.message { position: absolute; left: 0; right: 0; top: 38%; align-items: center; }
+.message {
+    position: absolute; left: 14%; right: 14%; top: 34%;
+    padding: 26px 36px 28px 36px;
+    align-items: center;
+    background-color: rgba(7, 8, 28, 0.92);
+    border-width: 2px;
+    border-color: rgba(255, 138, 61, 0.6);
+}
+.message.victory {
+    border-width: 3px;
+    border-color: rgb(54, 226, 255);
+    background-color: rgba(7, 12, 34, 0.96);
+}
 .message.hidden { display: none; }
-.message-title { color: rgb(255, 138, 61); font-size: 46px; letter-spacing: 6px; }
-.message-hint { color: rgb(255, 201, 161); font-size: 16px; -unity-font-style: normal; }
+.message-title { color: rgb(255, 138, 61); font-size: 46px; letter-spacing: 6px; margin: 0; }
+.message.victory .message-title { color: rgb(255, 226, 70); font-size: 50px; }
+.message-subtitle { color: rgb(54, 226, 255); font-size: 18px; letter-spacing: 4px; margin-top: 8px; }
+.message-hint { color: rgb(255, 201, 161); font-size: 16px; letter-spacing: 1px; margin-top: 12px; -unity-font-style: normal; }
+.message-return { color: rgb(201, 212, 242); font-size: 14px; letter-spacing: 2px; margin-top: 18px; -unity-font-style: normal; }
 
 .hint { align-self: center; color: rgba(138, 155, 196, 0.85); font-size: 12px; -unity-font-style: normal; }

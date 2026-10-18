@@ -43,7 +43,7 @@ namespace OneMoreTime.UI
         Label controlsHint;
         bool hintShown;
         ControlDevice hintDevice;
-        Label memoryValue, memoryState, score, messageTitle, messageHint, gadgetState, bossState, bossPhase, comboTitle, comboHint;
+        Label memoryValue, memoryState, score, messageTitle, messageSubtitle, messageHint, messageReturn, gadgetState, bossState, bossPhase, comboTitle, comboHint;
         VisualElement[] partPips;   // in GuardianPart order
         VisualElement[] slots;
         Label[] slotStates;
@@ -62,7 +62,9 @@ namespace OneMoreTime.UI
             score = root.Q<Label>("score");
             message = root.Q("message");
             messageTitle = root.Q<Label>("message-title");
+            messageSubtitle = root.Q<Label>("message-subtitle");
             messageHint = root.Q<Label>("message-hint");
+            messageReturn = root.Q<Label>("message-return");
             gadgetFill = root.Q("gadget-fill");
             gadgetState = root.Q<Label>("gadget-state");
             bossPanel = root.Q("boss");
@@ -264,8 +266,13 @@ namespace OneMoreTime.UI
                     ShowMessage(L10n.Get("hud.defeat"), L10n.Get("hud.defeat.hint"));
                     break;
                 case SessionState.Cleared:
-                    ShowMessage(L10n.Get("hud.cleared"), L10n.Format("hud.cleared.stats", session.Score.ToString("000000"), session.Kills, session.ComboCount,
-                        L10n.Get(session.ComboCount == 1 ? "hud.cleared.combo" : "hud.cleared.combos")));
+                    ShowMessage(
+                        L10n.Get("hud.cleared.thanks"),
+                        L10n.Format("hud.cleared.stats", session.Score.ToString("000000"), session.Kills, session.ComboCount,
+                            L10n.Get(session.ComboCount == 1 ? "hud.cleared.combo" : "hud.cleared.combos")),
+                        L10n.Get("hud.cleared"),
+                        L10n.Format("hud.cleared.return", Mathf.CeilToInt(session.ReturnToMenuRemaining)),
+                        victory: true);
                     break;
                 default:
                     message.AddToClassList("hidden");
@@ -273,10 +280,15 @@ namespace OneMoreTime.UI
             }
         }
 
-        void ShowMessage(string title, string hint)
+        void ShowMessage(string title, string hint, string subtitle = null, string returnText = null, bool victory = false)
         {
             messageTitle.text = title;
+            messageSubtitle.text = subtitle ?? string.Empty;
             messageHint.text = hint;
+            messageReturn.text = returnText ?? string.Empty;
+            messageSubtitle.EnableInClassList("hidden", string.IsNullOrEmpty(subtitle));
+            messageReturn.EnableInClassList("hidden", string.IsNullOrEmpty(returnText));
+            message.EnableInClassList("victory", victory);
             message.RemoveFromClassList("hidden");
         }
 

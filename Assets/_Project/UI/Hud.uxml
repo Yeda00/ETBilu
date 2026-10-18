@@ -74,7 +74,9 @@
 
         <ui:VisualElement name="message" class="message hidden" picking-mode="Ignore">
             <ui:Label name="message-title" text="ONE MORE TIME" class="message-title" />
+            <ui:Label name="message-subtitle" text="" class="message-subtitle hidden" />
             <ui:Label name="message-hint" text="" class="message-hint" />
+            <ui:Label name="message-return" text="" class="message-return hidden" />
         </ui:VisualElement>
 
         <ui:Label name="controls-hint" text="WASD move · MOUSE aim · SPACE/CLICK shoot · SHIFT record · E summon echo · Q mine · ESC pause" class="hint" />

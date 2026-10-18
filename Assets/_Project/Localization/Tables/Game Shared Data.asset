@@ -550,6 +550,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 8629141398965715150
+  - m_Id: 56162413174784
+    m_Key: hud.cleared.thanks
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715153
+  - m_Id: 56162446729216
+    m_Key: hud.cleared.return
+    m_Metadata:
+      m_Items:
+      - rid: 8629141398965715154
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
@@ -1021,3 +1031,11 @@ MonoBehaviour:
       data:
         m_CommentText: 'Story crawl, last line, shouted. It is the message Bilu delivers:
           the pt text is BUSQUEM CONHECIMENTO!!!!'
+    - rid: 8629141398965715153
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Main title of the end-of-game victory card.
+    - rid: 8629141398965715154
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: Countdown on the end-of-game victory card. {0} = seconds remaining.

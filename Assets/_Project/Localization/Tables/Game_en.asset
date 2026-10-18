@@ -183,11 +183,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 464511015
-    m_Localized: "MUSIC\nNES Shooter Music \xB7 SketchyLogic\n8-bit Epic Space Shooter
-      \xB7 HydroGene\nPulsar \xB7 celestialghost8\n4 Chiptunes (Adventure) \xB7 Juhani
-      Junkala\n\nSOUND EFFECTS\n8-Bit Sound Effect Pack \xB7 Deva (@Shades)\n8 bit
-      Mini pack \xB7 phoenix1291\nSci-Fi Sounds \xB7 Kenney\nReversing Time \xB7
-      isaiah658\n8bit Menu \xB7 Fupi\n\nAll CC0, from OpenGameArt.org"
+    m_Localized: "DEVELOPMENT TEAM\n\nJO\xC3O DUMINGUZ\nArt Director \xB7 3D Artist
+      \xB7 Game Designer\nVisual direction, 3D models and co-design of the game.\n\nLUCAS
+      GON\xC7ALVES\nDeveloper \xB7 Game Designer\nProgramming, gameplay systems and
+      co-design of the game.\n\n\nMUSIC\nNES Shooter Music \xB7 SketchyLogic\n8-bit
+      Epic Space Shooter \xB7 HydroGene\nPulsar \xB7 celestialghost8\n4 Chiptunes
+      (Adventure) \xB7 Juhani Junkala\n\nSOUND EFFECTS\n8-Bit Sound Effect Pack \xB7
+      Deva (@Shades)\n8 bit Mini pack \xB7 phoenix1291\nSci-Fi Sounds \xB7 Kenney\nReversing
+      Time \xB7 isaiah658\n8bit Menu \xB7 Fupi\n\nAll CC0, from OpenGameArt.org"
     m_Metadata:
       m_Items: []
   - m_Id: 464511016
@@ -464,6 +467,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 42333029523457
     m_Localized: SEEK KNOWLEDGE!!!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56162413174784
+    m_Localized: THANK YOU FOR PLAYING!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56162446729216
+    m_Localized: Returning to main menu in {0}s
     m_Metadata:
       m_Items: []
   references:

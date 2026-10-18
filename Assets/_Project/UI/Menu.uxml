@@ -35,7 +35,9 @@
 
         <ui:VisualElement name="screen-credits" class="screen hidden">
             <ui:Label name="credits-title" class="bar title-bar" />
-            <ui:Label name="credits-body" class="panel credits-body" />
+            <ui:ScrollView name="credits-scroll" class="panel credits-scroll">
+                <ui:Label name="credits-body" class="credits-body" />
+            </ui:ScrollView>
             <ui:Label name="credits-hint" class="hint" />
         </ui:VisualElement>
 

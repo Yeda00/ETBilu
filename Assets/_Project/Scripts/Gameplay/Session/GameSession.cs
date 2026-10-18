@@ -30,6 +30,8 @@ namespace OneMoreTime.Gameplay.Session
         [SerializeField] StageDirector stage;
         [SerializeField] ComboTracker combos;
         [SerializeField, Min(0f)] float restartDelay = 2f;
+        [SerializeField, Min(0f)] float returnToMenuDelay = 7f;
+        [SerializeField] string menuSceneName = "Menu";
 
         public event Action Changed;
 
@@ -37,6 +39,7 @@ namespace OneMoreTime.Gameplay.Session
         public int Score { get; private set; }
         public int Kills { get; private set; }
         public int ComboCount { get; private set; }
+        public float ReturnToMenuRemaining { get; private set; }
 
         void OnEnable()
         {
@@ -108,7 +111,8 @@ namespace OneMoreTime.Gameplay.Session
 
         void OnPlayerDied(Health _, DamageInfo __)
         {
-            if (State == SessionState.Defeated)
+            // A lingering projectile must not turn a completed run into a defeat while the victory card is shown.
+            if (State != SessionState.Playing)
                 return;
             State = SessionState.Defeated;
             Changed?.Invoke();
@@ -121,7 +125,10 @@ namespace OneMoreTime.Gameplay.Session
             if (State != SessionState.Playing)
                 return;
             State = SessionState.Cleared;
+            ReturnToMenuRemaining = returnToMenuDelay;
+            player?.GrantInvulnerability(returnToMenuDelay + 1f);
             Changed?.Invoke();
+            StartCoroutine(ReturnToMenuAfterVictory());
         }
 
         IEnumerator RestartAfterDelay()
@@ -129,6 +136,18 @@ namespace OneMoreTime.Gameplay.Session
             yield return new WaitForSecondsRealtime(restartDelay);
             var scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.buildIndex >= 0 ? scene.buildIndex : 0);
+        }
+
+        IEnumerator ReturnToMenuAfterVictory()
+        {
+            while (ReturnToMenuRemaining > 0f)
+            {
+                ReturnToMenuRemaining = Mathf.Max(0f, ReturnToMenuRemaining - Time.unscaledDeltaTime);
+                yield return null;
+            }
+
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(menuSceneName);
         }
     }
 }

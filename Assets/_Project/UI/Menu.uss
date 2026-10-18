@@ -129,9 +129,16 @@
     font-size: 24px; letter-spacing: 4px; -unity-text-align: middle-center;
 }
 .ctl-reset.selected { background-color: rgb(46, 116, 230); color: rgb(255, 226, 70); }
+.credits-scroll {
+    width: 1000px;
+    height: 650px;
+}
+.credits-scroll .unity-scroll-view__content-container { align-items: center; }
 .credits-body {
+    width: 880px;
+    padding: 4px 20px 24px 20px;
     color: rgb(220, 228, 255);
-    font-size: 24px;
+    font-size: 22px;
     letter-spacing: 2px;
     white-space: normal;
     -unity-text-align: upper-center;

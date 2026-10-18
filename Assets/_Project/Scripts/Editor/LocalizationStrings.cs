@@ -69,6 +69,13 @@ namespace OneMoreTime.EditorTools
             // ---- credits
             yield return new("menu.credits.title", "CREDITS", "CRÉDITOS", "Title of the credits screen.");
             yield return new("menu.credits.body",
+                "DEVELOPMENT TEAM\n\n" +
+                "JOÃO DUMINGUZ\n" +
+                "Art Director · 3D Artist · Game Designer\n" +
+                "Visual direction, 3D models and co-design of the game.\n\n" +
+                "LUCAS GONÇALVES\n" +
+                "Developer · Game Designer\n" +
+                "Programming, gameplay systems and co-design of the game.\n\n\n" +
                 "MUSIC\n" +
                 "NES Shooter Music · SketchyLogic\n" +
                 "8-bit Epic Space Shooter · HydroGene\n" +
@@ -81,6 +88,13 @@ namespace OneMoreTime.EditorTools
                 "Reversing Time · isaiah658\n" +
                 "8bit Menu · Fupi\n\n" +
                 "All CC0, from OpenGameArt.org",
+                "EQUIPE DE DESENVOLVIMENTO\n\n" +
+                "JOÃO DUMINGUZ\n" +
+                "Diretor de Arte · Artista 3D · Game Designer\n" +
+                "Direção visual, modelos 3D e co-criação do game design.\n\n" +
+                "LUCAS GONÇALVES\n" +
+                "Desenvolvedor · Game Designer\n" +
+                "Programação, sistemas de gameplay e co-criação do game design.\n\n\n" +
                 "MÚSICA\n" +
                 "NES Shooter Music · SketchyLogic\n" +
                 "8-bit Epic Space Shooter · HydroGene\n" +
@@ -148,8 +162,10 @@ namespace OneMoreTime.EditorTools
             yield return new("hud.pause.hint", "Esc to resume", "Esc para continuar", "Under PAUSE.");
             yield return new("hud.defeat", "TRY AGAIN", "TENTE NOVAMENTE", "The ship was destroyed.");
             yield return new("hud.defeat.hint", "the encounter restarts…", "o encontro recomeça…", "Under TRY AGAIN.");
+            yield return new("hud.cleared.thanks", "THANK YOU FOR PLAYING!", "OBRIGADO POR JOGAR!", "Main title of the end-of-game victory card.");
             yield return new("hud.cleared", "GUARDIAN DEFEATED", "GUARDIÃO DERROTADO", "The boss fell: end of the stage.");
             yield return new("hud.cleared.stats", "score {0} · {1} kills · {2} {3}", "pontuação {0} · {1} abates · {2} {3}", "{0} = score, {1} = enemies destroyed, {2} = number of combos, {3} = the word 'combo' or 'combos' (hud.cleared.combo / .combos).");
+            yield return new("hud.cleared.return", "Returning to main menu in {0}s", "Voltando ao menu principal em {0}s", "Countdown on the end-of-game victory card. {0} = seconds remaining.");
             yield return new("hud.cleared.combo", "combo", "combo", "{3} of hud.cleared.stats when there is one combo.");
             yield return new("hud.cleared.combos", "combos", "combos", "{3} of hud.cleared.stats when there are zero or several combos.");
             yield return new("hud.hint.keyboard",
