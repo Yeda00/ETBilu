@@ -26,11 +26,11 @@ O jogo é um **side-scrolling 2.5D**: o mundo e a jogabilidade são 3D, vistos p
 **No protótipo atual:** câmera em **perspectiva** (campo de visão 40°, a 20 unidades do plano de jogo), a
 jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade.
 
-Naves e chefe usam os modelos 3D de blockout do designer, em `Art/Ships` (do arquivo `BI_Ships.blend`):
+Naves e chefe usam os modelos 3D do designer (a nave Bilu já texturizada, os outros em blockout), em `Art/Ships` (do arquivo `BI_Ships.blend`):
 
 | Modelo | Quem usa | Como aparece |
 |---|---|---|
-| `Bilu_BlockOut` | Nave e eco | Virado para a direita, topo do disco inclinado 15° para a câmera; ciano na nave, violeta translúcido no eco |
+| `Bilu_Ship` | Nave e eco | Virado para a direita, topo do disco inclinado 15° para a câmera; na nave, a textura pintada pelo designer (mapa de cor e luzes ciano emissivas); no eco, violeta translúcido |
 | `Enemie_S_1_BlockOut`, `Enemie_S_BlockOut`, `Enemie_S_3_BlockOut` | Caça (S) | Três variações, uma sorteada por caça; viradas para a nave, com a mesma inclinação; laranja |
 | `Enemie_M_1_BlockOut`, `Enemie_M_2_BlockOut`, `Enemie_M_3_BlockOut` | Artilheiro (M) | Três variações, sorteadas do mesmo jeito; vermelho |
 | `Enemie_Boss_BlockOut` | Guardião do Ciclo | Visto de lado, virado para a nave, topo inclinado 25° e rosto 15° para a câmera; casco azul-escuro, visor vermelho → [06](06-chefe-e-runs.md) |

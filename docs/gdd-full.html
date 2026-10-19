@@ -579,9 +579,9 @@
     <p>O jogo é um <strong>side-scrolling 2.5D</strong>: o mundo e a jogabilidade são 3D, vistos por uma câmera lateral que lê como 2D. <strong>Alguns elementos serão sprites 2D</strong>, misturados ao mundo 3D.</p>
     <p class="why"><em>Por quê:</em> a leitura lateral mantém o bullet hell legível, e o 3D dá profundidade, luz e efeitos de energia.</p>
     <p><strong>No protótipo atual:</strong> câmera em <strong>perspectiva</strong> (campo de visão 40°, a 20 unidades do plano de jogo), a jogabilidade num plano em z = 0 e cenário 3D atrás dele, com névoa para dar profundidade.</p>
-    <p>Naves e chefe usam os modelos 3D de blockout do designer, em <code>Art/Ships</code> (do arquivo <code>BI_Ships.blend</code>):</p>
+    <p>Naves e chefe usam os modelos 3D do designer (a nave Bilu já texturizada, os outros em blockout), em <code>Art/Ships</code> (do arquivo <code>BI_Ships.blend</code>):</p>
     <div class="scroll"><table><thead><tr><th>Modelo</th><th>Quem usa</th><th>Como aparece</th></tr></thead><tbody>
-      <tr><td><code>Bilu_BlockOut</code></td><td>Nave e eco</td><td>Virado para a direita, topo do disco inclinado 15° para a câmera; ciano na nave, violeta translúcido no eco</td></tr>
+      <tr><td><code>Bilu_Ship</code></td><td>Nave e eco</td><td>Virado para a direita, topo do disco inclinado 15° para a câmera; na nave, a textura pintada pelo designer (mapa de cor e luzes ciano emissivas); no eco, violeta translúcido</td></tr>
       <tr><td><code>Enemie_S_1_BlockOut</code>, <code>Enemie_S_BlockOut</code>, <code>Enemie_S_3_BlockOut</code></td><td>Caça (S)</td><td>Três variações, uma sorteada por caça; viradas para a nave, com a mesma inclinação; laranja</td></tr>
       <tr><td><code>Enemie_M_1_BlockOut</code>, <code>Enemie_M_2_BlockOut</code>, <code>Enemie_M_3_BlockOut</code></td><td>Artilheiro (M)</td><td>Três variações, sorteadas do mesmo jeito; vermelho</td></tr>
       <tr><td><code>Enemie_Boss_BlockOut</code></td><td>Guardião do Ciclo</td><td>Visto de lado, virado para a nave, topo inclinado 25° e rosto 15° para a câmera; casco azul-escuro, visor vermelho → <a href="#c06">06</a></td></tr>
@@ -780,7 +780,7 @@
   <section class="part"><h3>Estado do MVP</h3>
     <div class="scroll"><table><thead><tr><th>Item do MVP</th><th>Estado</th></tr></thead><tbody>
       <tr><th scope="row">Nave com movimento e disparo</th><td><span class="chip ok">feito</span></td></tr>
-      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code> (a cena <code>Menu</code> vem antes no build); naves e chefe com os modelos de blockout, o resto em placeholder</td></tr>
+      <tr><th scope="row">Uma arena side-scrolling 2.5D</th><td><span class="chip ok">feito</span> cena <code>Arena_01</code> (a cena <code>Menu</code> vem antes no build); a nave Bilu texturizada, inimigos e chefe com os modelos de blockout, o resto em placeholder</td></tr>
       <tr><th scope="row">Gravação de cinco segundos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Reprodução de movimento e disparos</th><td><span class="chip ok">feito</span></td></tr>
       <tr><th scope="row">Inimigos com ondas por script</th><td><span class="chip ok">feito</span> caça (S), interceptador (W) e artilheiro (M), com seis comportamentos por modelo → <a href="#c04">04</a></td></tr>
@@ -801,7 +801,7 @@
       <li class="done"><span>Um gadget pode ser usado por uma ação registrada. (O eco solta a mina temporal no mesmo ponto e instante da gravação.)</span></li>
       <li class="done"><span>O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um canhão do Guardião pela nave e o outro pelo eco. Os dois têm aviso no HUD → <a href="#c03">03</a>.)</span></li>
       <li class="done"><span>O chefe pode ser derrotado usando a mecânica temporal. (O eco ataca uma peça do Guardião enquanto a nave ataca outra; o Synchronized Strike dos dois canhões é o caso mais claro.)</span></li>
-      <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (Com o modelo de blockout, a nave ciano e o eco violeta translúcido já se distinguem; falta testar com jogadores.)</span></li>
+      <li><span>O jogador entende visualmente qual nave é a atual e qual é o eco. (A nave texturizada e o eco violeta translúcido já se distinguem; falta testar com jogadores.)</span></li>
       <li><span>A mecânica continua legível nos momentos com mais projéteis.</span></li>
     </ul>
     <div class="rule ok"><span class="osd">O teste mais importante</span>Ver alguém jogar <strong>sem explicar a solução</strong>. A pessoa precisa perceber sozinha que pode gravar uma ação e aproveitar a repetição para fazer outra.</div>

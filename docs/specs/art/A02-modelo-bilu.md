@@ -30,3 +30,4 @@
 - 2026-10-18 · spec criada
 - 2026-10-18 · nomes finais desde o blockout
 - 2026-10-18 · Yeda adotou `Bilu_BlockOut.fbx` na nave e no eco (`bb5fa22`); `BI_Ships_BlockOut` ficou sem uso. Nome final segue _TBD_. Cores ainda são as antigas (ciano e violeta).
+- 2026-10-18 · artista texturizou a nave (`Exports/BiluShip_Model/Bilu_Ship.fbx` + mapas de cor e emissivo, 512 px). Entrou como `Art/Ships/Bilu_Ship.fbx`, com as configurações de importação do `Bilu_BlockOut`; os objetos foram renomeados no Blender (`.001`…), então a troca foi feita por ferramenta (*One More Time › Art › Swap In Bilu Ship Model*), não por cima do arquivo. Materiais do FBX ligados a `M_BiluShip` (cor + emissivo) e `M_BiluShip_Glow` (slot `BlueEmissive`, ciano liso). O eco segue violeta translúcido. `Bilu_BlockOut` ficou sem uso.

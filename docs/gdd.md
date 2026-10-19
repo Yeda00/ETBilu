@@ -97,8 +97,8 @@ explicação e descobre sozinho para que serve o eco.
 
 ## Protótipo — estado atual → [10](gdd/10-producao.md)
 
-Jogável em `Assets/_Project/Scenes/Arena_01.unity`. Nave, eco, inimigos e chefe usam os modelos 3D de
-blockout do designer; o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
+Jogável em `Assets/_Project/Scenes/Arena_01.unity`. Nave, eco, inimigos e chefe usam os modelos 3D do designer (a nave já texturizada, os outros em
+blockout); o resto ainda é placeholder (primitivas 3D). Tem: nave, tiro,
 âncora temporal gravada segurando o botão, com retorno e eco que repete movimento, tiros, esquivas e gadget, esquiva da nave,
 caças, interceptadores e artilheiros com um comportamento por modelo (kamikaze, tanque, escopeta…), em ondas por script,
 mina temporal, o Guardião do Ciclo

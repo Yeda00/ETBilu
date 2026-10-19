@@ -32,7 +32,7 @@ O objetivo é **validar se a mecânica central é divertida**, não construir to
 | Item do MVP | Estado |
 |---|---|
 | Nave com movimento e disparo | ✅ |
-| Uma arena side-scrolling 2.5D | ✅ cena `Arena_01` (a cena `Menu` vem antes no build); naves e chefe com os modelos de blockout, o resto em placeholder |
+| Uma arena side-scrolling 2.5D | ✅ cena `Arena_01` (a cena `Menu` vem antes no build); a nave Bilu texturizada, inimigos e chefe com os modelos de blockout, o resto em placeholder |
 | Gravação de cinco segundos | ✅ |
 | Reprodução de movimento e disparos | ✅ |
 | Inimigos com ondas por script | ✅ caça (S), interceptador (W) e artilheiro (M), com seis comportamentos por modelo → [04](04-inimigos-e-ondas.md) |
@@ -55,7 +55,7 @@ O protótipo está pronto para teste quando:
 4. [x] Um gadget pode ser usado por uma ação registrada. (O eco solta a mina temporal no mesmo ponto e instante da gravação.)
 5. [x] O jogador combina o eco com a nave atual para criar pelo menos um ataque especial. (Crossfire: nave e eco no mesmo alvo dão dano combinado. Synchronized Strike: um canhão do Guardião pela nave e o outro pelo eco. Os dois têm aviso no HUD → [03](03-combate.md).)
 6. [x] O chefe pode ser derrotado usando a mecânica temporal. (O eco ataca uma peça do Guardião enquanto a nave ataca outra; o Synchronized Strike dos dois canhões é o caso mais claro.)
-7. [ ] O jogador entende visualmente qual nave é a atual e qual é o eco. (Com o modelo de blockout, a nave ciano e o eco violeta translúcido já se distinguem; falta testar com jogadores.)
+7. [ ] O jogador entende visualmente qual nave é a atual e qual é o eco. (A nave texturizada e o eco violeta translúcido já se distinguem; falta testar com jogadores.)
 8. [ ] A mecânica continua legível nos momentos com mais projéteis.
 
 > **O teste mais importante:** ver alguém jogar **sem explicar a solução**. A pessoa precisa perceber

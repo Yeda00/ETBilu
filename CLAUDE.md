@@ -57,7 +57,7 @@ Tudo do jogo fica em `Assets/_Project/`; `Assets/Settings/` guarda os assets do 
 | `Audio` | Clipes CC0 do OpenGameArt: `SFX/`, `UI/`, `Music/`. Fontes e licenças em `Audio/CREDITS.md`; ao trocar ou somar um pack, atualize o arquivo |
 | `Prefabs` | Por área: Ship, Echo, Enemies, Projectiles, Gadgets, Boss, World |
 | `Art/Placeholder` | Materiais placeholder; a arte final entra em `Art/` ao lado, sem mexer no gameplay |
-| `Art/Ships` | Modelos de blockout: `Bilu_BlockOut` (nave e eco), `Enemie_S_1`/`Enemie_S`/`Enemie_S_3_BlockOut` (caça), `Enemie_M_1`/`_2`/`_3_BlockOut` (artilheiro), `Enemie_Boss_BlockOut` (Guardião). `BI_Ships_BlockOut` e `Enemie_M_BlockOut` (igual ao `M_2`) estão sem uso |
+| `Art/Ships` | Modelos: `Bilu_Ship` (nave e eco, texturizado; mapas em `Textures/`, materiais em `Materials/`; reexporte com o mesmo nome e os mesmos nomes de objetos e materiais), `Enemie_S_1`/`Enemie_S`/`Enemie_S_3_BlockOut` (caça), `Enemie_M_1`/`_2`/`_3_BlockOut` (artilheiro), `Enemie_Boss_BlockOut` (Guardião). `Bilu_BlockOut`, `BI_Ships_BlockOut` e `Enemie_M_BlockOut` (igual ao `M_2`) estão sem uso |
 | `Scenes` | `Menu.unity` (título, menu, mapa de missões, história) é a cena 0 do build; `Arena_01.unity`, a cena 1 |
 | `Input` | `OneMoreTimeControls.inputactions` — o único asset de input do jogo |
 

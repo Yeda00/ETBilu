@@ -37,7 +37,7 @@ Paleta: _TBD_ ([A04](specs/art/A04-cenario-pixel-art.md)).
 
 | Arquivo | Uso |
 |---|---|
-| `Bilu_BlockOut` | Nave e eco |
+| `Bilu_Ship` | Nave e eco. Texturizado no Substance Painter: `Textures/Bilu_Ship_ColorMap` e `_EmissiveMap` (512 px), materiais `M_BiluShip` e `M_BiluShip_Glow` |
 | `Enemie_S_1`, `Enemie_S`, `Enemie_S_3_BlockOut` | Caça (S): uma sorteada por inimigo |
 | `Enemie_M_1`, `_2`, `_3_BlockOut` | Artilheiro (M): uma sorteada por inimigo |
 | `Enemie_Boss_BlockOut` | Guardião do Ciclo |
