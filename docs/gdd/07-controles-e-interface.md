@@ -78,11 +78,12 @@ O HUD mostra com clareza:
 
 O jogo abre no menu e só depois vai para a arena. O estilo é inspirado nos menus de *Star Fox 64*: fundo preto
 com estrelas, barras de aço com texto azul-escuro, um mapa de missões e uma história que sobe pela tela. A nave
-Bilu aparece em 3D atrás do título e do menu.
+Bilu aparece em 3D atrás do título e do menu, e as estrelas passam atrás dela, nas cores das estrelas de verdade:
+quase todas brancas e azuladas, algumas amarelas e laranja, poucas vermelhas.
 
 | Tela | O que tem | Como sai |
 |---|---|---|
-| Título | "BILU'S INVASION", "O PASSADO CONTINUA LUTANDO" e "PRESSIONE ENTER / START" piscando; música do título | Qualquer tecla, botão do controle ou clique: menu principal |
+| Título | A logo em pixel art (BILU'S INVASION, ver bíblia de arte), "O PASSADO CONTINUA LUTANDO" e "PRESSIONE ENTER / START" piscando; música do título | Qualquer tecla, botão do controle ou clique: menu principal |
 | Menu principal | JOGO PRINCIPAL · CONTROLES · SOM · IDIOMA · CRÉDITOS · SAIR | Esc volta ao título |
 | Som | Barras de MÚSICA e EFEITOS de 0 a 10, salvas entre partidas; o ajuste vale na hora | Esc ou Enter volta |
 | Controles | Uma linha por ação, com uma célula para o teclado e outra para o controle; Enter (ou A) numa célula espera a nova tecla ou botão, Esc cancela. "RESTAURAR PADRÃO" volta tudo ao original | Esc volta |

@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fb42388a59254628b82c68a55dc9681, type: 3}
   m_Name: MenuTexts
   m_EditorClassIdentifier: OneMoreTime.UI::OneMoreTime.UI.MenuTexts
-  logoTop: BILU'S
-  logoBottom: INVASION
   tagline: O PASSADO CONTINUA LUTANDO
   pressStart: PRESSIONE ENTER / START
   playLabel: JOGO PRINCIPAL

@@ -29,6 +29,7 @@ namespace OneMoreTime.EditorTools
         public const string MenuScenePath = Root + "/Scenes/Menu.unity";
         const string MissionPath = DataDir + "/Missions/Mission_01.asset";
         const string PicturePath = Root + "/Art/UI/Mission01_Story.png";
+        const string StarMaterialPath = Root + "/Art/UI/M_MenuStar.mat";
 
         static readonly Color Background = new(0.024f, 0.016f, 0.07f);
 
@@ -162,7 +163,9 @@ namespace OneMoreTime.EditorTools
             var doc = menuGo.AddComponent<UIDocument>();
             doc.panelSettings = AssetDatabase.LoadAssetAtPath<PanelSettings>($"{UiDir}/HudPanelSettings.asset");
             doc.visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>($"{UiDir}/Menu.uxml");
-            menuGo.AddComponent<StarfieldView>();
+            var starfield = menuGo.AddComponent<StarfieldView>();
+            Set(starfield, "view", cam);
+            Set(starfield, "material", LoadOrCreate(StarMaterialPath, () => new Material(Shader.Find("Universal Render Pipeline/Particles/Unlit"))));
             var menu = menuGo.AddComponent<MenuController>();
             Set(menu, "input", reader);
             Set(menu, "sfx", sfx);

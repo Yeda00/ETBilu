@@ -1,11 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="Menu.uss" />
     <ui:VisualElement name="menu" class="menu">
-        <ui:VisualElement name="stars" class="stars" picking-mode="Ignore" />
 
         <ui:VisualElement name="screen-title" class="screen">
-            <ui:Label name="logo-top" class="logo" />
-            <ui:Label name="logo-bottom" class="logo logo-big" />
+            <ui:VisualElement name="logo" class="logo" picking-mode="Ignore" />
             <ui:Label name="tagline" class="tagline" />
             <ui:Label name="press-start" class="press-start" />
         </ui:VisualElement>

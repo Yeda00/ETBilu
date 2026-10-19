@@ -4,12 +4,9 @@
 
 .menu {
     flex-grow: 1;
-    /* No background: the 3D ship behind the title is drawn by the camera, whose colour is the night. */
+    /* No background: the stars and the 3D ship behind the title are drawn by the camera (StarfieldView). */
     -unity-font-style: bold;
 }
-
-.stars { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
-.star { position: absolute; background-color: rgb(210, 220, 255); }
 
 .screen {
     position: absolute; left: 0; top: 0; right: 0; bottom: 0;
@@ -23,16 +20,14 @@
 .fade { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgb(0, 0, 0); opacity: 1; }
 
 /* ---- Title ---- */
+/* The logo is pixel art on the world's 270 px grid: 215 x 189 px shown at 4x, the size of a pixel at 1080p. */
 .logo {
-    color: rgb(255, 210, 31);
-    font-size: 96px;
-    letter-spacing: 14px;
-    -unity-text-align: middle-center;
-    -unity-text-outline-width: 6px;
-    -unity-text-outline-color: rgb(0, 104, 56);
-    margin: 0; padding: 0;
+    width: 860px;
+    height: 756px;
+    flex-shrink: 0;
+    background-image: url("../Art/UI/Logo_BilusInvasion.png");
+    -unity-background-scale-mode: scale-to-fit;
 }
-.logo-big { font-size: 200px; letter-spacing: 24px; color: rgb(255, 236, 120); margin-top: -10px; }
 .tagline {
     color: rgb(150, 190, 255);
     font-size: 28px;

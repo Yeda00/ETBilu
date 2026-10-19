@@ -129,8 +129,6 @@ namespace OneMoreTime.UI
         // The words that sit in Menu.uxml; drawn again whenever the language changes.
         void ApplyStaticTexts()
         {
-            root.Q<Label>("logo-top").text = L10n.Get("menu.logoTop");
-            root.Q<Label>("logo-bottom").text = L10n.Get("menu.logoBottom");
             root.Q<Label>("tagline").text = L10n.Get("menu.tagline");
             pressStart.text = L10n.Get("menu.pressStart");
             root.Q<Label>("main-hint").text = L10n.Get("menu.hint.list");

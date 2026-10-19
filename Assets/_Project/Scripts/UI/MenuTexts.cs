@@ -20,8 +20,6 @@ namespace OneMoreTime.UI
         }
 
         [Header("Title screen")]
-        public string logoTop = "BILU'S";
-        public string logoBottom = "INVASION";
         public string tagline = "O PASSADO CONTINUA LUTANDO";
         public string pressStart = "PRESSIONE ENTER / START";
 
