@@ -20,19 +20,24 @@
 .fade { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgb(0, 0, 0); opacity: 1; }
 
 /* ---- Title ---- */
-/* The logo is pixel art: 215 x 189 px, fitted to a 640 px width (about 3x) so it stays clear of the ship. */
+/* The logo is pixel art, 215 x 189 px, drawn at exactly 2x: it is a UI element, so the menu's pixel filter does not touch it. */
 .logo {
-    width: 640px;
-    height: 756px;
-    flex-shrink: 0;
+    position: absolute; left: 50%; top: 130px;
+    width: 430px; height: 378px; margin-left: -215px;
     background-image: url("../Art/UI/Logo_BilusInvasion.png");
     -unity-background-scale-mode: scale-to-fit;
 }
+/* The ship: a low-res picture of the 3D showcase, above the logo and below the screens, so it passes in front of the logo. */
+.ship-view {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+}
 .tagline {
+    position: absolute; left: 0; right: 0; top: 545px;
+    -unity-text-align: upper-center;
     color: rgb(150, 190, 255);
     font-size: 28px;
     letter-spacing: 8px;
-    margin-top: 6px;
     -unity-text-outline-width: 2px;
     -unity-text-outline-color: rgb(6, 4, 18);
 }

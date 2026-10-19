@@ -4,11 +4,16 @@ namespace OneMoreTime.UI
 {
     /// <summary>
     /// The ship shown behind the title and the main menu: it bobs and sways slowly, and slides to the right
-    /// when the menu buttons take the left side of the screen.
+    /// when the menu buttons take the left side of the screen. On the title it also drifts from side to side,
+    /// in front of the logo (which sits behind it in the scene).
     /// </summary>
     public sealed class ShowcaseSpin : MonoBehaviour
     {
-        [SerializeField] Vector3 titlePosition = new(0f, -1.15f, 0f);
+        [SerializeField] Vector3 titlePosition = new(0f, 0.6f, 0f);
+        [Tooltip("On the title the ship drifts this far to each side of its position, passing in front of the logo.")]
+        [SerializeField, Min(0f)] float titleSweep = 4f;
+        [Tooltip("Seconds for one full trip there and back on the title.")]
+        [SerializeField, Min(1f)] float titleSweepSeconds = 14f;
         [SerializeField] Vector3 menuPosition = new(3.0f, 0f, 0f);
         [SerializeField, Min(0f)] float bobHeight = 0.18f;
         [SerializeField, Min(0f)] float bobSpeed = 1.1f;
@@ -26,7 +31,7 @@ namespace OneMoreTime.UI
         void Update()
         {
             float t = Time.unscaledTime;
-            Vector3 target = menuPose ? menuPosition : titlePosition;
+            Vector3 target = menuPose ? menuPosition : titlePosition + new Vector3(Mathf.Sin(t * Mathf.PI * 2f / titleSweepSeconds) * titleSweep, 0f, 0f);
             Vector3 basePosition = Vector3.SmoothDamp(transform.localPosition - Bob(t), target, ref velocity, slideSeconds, Mathf.Infinity, Time.unscaledDeltaTime);
             transform.localPosition = basePosition + Bob(t);
             transform.localRotation = Quaternion.Euler(baseEuler + new Vector3(0f, Mathf.Sin(t * swaySpeed) * swayDegrees, Mathf.Sin(t * swaySpeed * 0.7f) * 4f));

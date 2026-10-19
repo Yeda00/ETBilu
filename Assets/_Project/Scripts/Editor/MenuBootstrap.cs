@@ -144,8 +144,24 @@ namespace OneMoreTime.EditorTools
             cam.farClipPlane = 60f;
             cam.GetUniversalAdditionalCameraData();
 
+            // The ship is shown through its own camera into a small texture that the menu draws above the logo
+            // (so the ship passes in front of a logo that the pixel filter does not touch). The stage sits far from the main camera.
+            var stage = new GameObject("ShipStage").transform;
+            stage.SetParent(world, false);
+            stage.localPosition = new Vector3(1000f, 0f, 0f);
             var showcase = new GameObject("Showcase").AddComponent<ShowcaseSpin>();
-            showcase.transform.SetParent(world, false);
+            showcase.transform.SetParent(stage, false);
+            var shipCam = new GameObject("ShowcaseCamera").AddComponent<Camera>();
+            shipCam.transform.SetParent(stage, false);
+            shipCam.transform.localPosition = new Vector3(0f, 0f, -10f);
+            shipCam.clearFlags = CameraClearFlags.SolidColor;
+            shipCam.backgroundColor = new Color(0f, 0f, 0f, 0f);
+            shipCam.fieldOfView = 30f;
+            shipCam.nearClipPlane = 0.3f;
+            shipCam.farClipPlane = 60f;
+            shipCam.GetUniversalAdditionalCameraData();
+            var showcaseView = shipCam.gameObject.AddComponent<ShowcaseView>();
+            Set(showcaseView, "view", shipCam);
             var shipVisual = AssetDatabase.LoadAssetAtPath<GameObject>($"{Root}/Prefabs/Ship/PlayerShip.prefab")?.transform.Find("Visual");
             if (shipVisual != null)
             {
@@ -171,6 +187,7 @@ namespace OneMoreTime.EditorTools
             Set(menu, "sfx", sfx);
             Set(menu, "music", music);
             Set(menu, "showcase", showcase);
+            Set(menu, "showcaseView", showcaseView);
             SetArray(menu, "missions", new Object[] { mission });
 
             EnsureFolder(Path.GetDirectoryName(MenuScenePath).Replace('\\', '/'));

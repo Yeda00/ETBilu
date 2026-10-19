@@ -83,7 +83,7 @@ quase todas brancas e azuladas, algumas amarelas e laranja, poucas vermelhas.
 
 | Tela | O que tem | Como sai |
 |---|---|---|
-| Título | A logo em pixel art (BILU'S INVASION, ver bíblia de arte), "O PASSADO CONTINUA LUTANDO" e "PRESSIONE ENTER / START" piscando; música do título | Qualquer tecla, botão do controle ou clique: menu principal |
+| Título | A logo em pixel art (BILU'S INVASION, ver bíblia de arte), pequena e nítida (2x o desenho, sem o filtro pixelado), com a nave de blockout indo e vindo na frente dela; "O PASSADO CONTINUA LUTANDO" e "PRESSIONE ENTER / START" piscando; música do título | Qualquer tecla, botão do controle ou clique: menu principal |
 | Menu principal | JOGO PRINCIPAL · CONTROLES · SOM · IDIOMA · CRÉDITOS · SAIR | Esc volta ao título |
 | Som | Barras de MÚSICA e EFEITOS de 0 a 10, salvas entre partidas; o ajuste vale na hora | Esc ou Enter volta |
 | Controles | Uma linha por ação, com uma célula para o teclado e outra para o controle; Enter (ou A) numa célula espera a nova tecla ou botão, Esc cancela. "RESTAURAR PADRÃO" volta tudo ao original | Esc volta |

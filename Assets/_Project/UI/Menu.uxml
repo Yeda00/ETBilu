@@ -2,8 +2,11 @@
     <Style src="Menu.uss" />
     <ui:VisualElement name="menu" class="menu">
 
+        <!-- The logo, then the ship (a picture of the 3D showcase, drawn above the logo), then the screens. -->
+        <ui:VisualElement name="logo" class="logo" picking-mode="Ignore" />
+        <ui:VisualElement name="ship-view" class="ship-view" picking-mode="Ignore" />
+
         <ui:VisualElement name="screen-title" class="screen">
-            <ui:VisualElement name="logo" class="logo" picking-mode="Ignore" />
             <ui:Label name="tagline" class="tagline" />
             <ui:Label name="press-start" class="press-start" />
         </ui:VisualElement>

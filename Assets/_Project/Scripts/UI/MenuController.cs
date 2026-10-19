@@ -32,6 +32,8 @@ namespace OneMoreTime.UI
         [SerializeField] MissionData[] missions;
         [Tooltip("The ship shown behind the title and the main menu. Optional.")]
         [SerializeField] ShowcaseSpin showcase;
+        [Tooltip("The picture of the ship that the menu draws above the logo, so the ship passes in front of it. Optional.")]
+        [SerializeField] ShowcaseView showcaseView;
         [SerializeField, Range(3, 9)] int mapSlots = 7;
         [Header("Story")]
         [SerializeField, Min(10f)] float crawlSpeed = 40f;
@@ -61,7 +63,7 @@ namespace OneMoreTime.UI
         CrawlScroll crawl;
         MissionData chosen;
 
-        VisualElement root, fade, introPicture, introViewport;
+        VisualElement root, fade, logo, introPicture, introViewport;
         Label pressStart, introText, missionNumber, missionPlace, missionTitle;
         float blinkTimer;
         float fadeValue = 1f;
@@ -114,6 +116,10 @@ namespace OneMoreTime.UI
                 screens[screen] = root.Q($"screen-{screen.ToString().ToLowerInvariant()}");
 
             fade = root.Q("fade");
+            logo = root.Q("logo");
+            var shipView = root.Q("ship-view");
+            if (shipView != null && showcaseView != null && showcaseView.Texture != null)
+                shipView.style.backgroundImage = new StyleBackground(Background.FromRenderTexture(showcaseView.Texture));
             pressStart = root.Q<Label>("press-start");
             introPicture = root.Q("intro-picture");
             introViewport = root.Q("intro-viewport");
@@ -334,6 +340,8 @@ namespace OneMoreTime.UI
         {
             foreach (var pair in screens)
                 pair.Value?.EnableInClassList("hidden", pair.Key != screen);
+
+            logo?.EnableInClassList("hidden", screen != MenuScreen.Title);
 
             bool shipVisible = screen == MenuScreen.Title || screen == MenuScreen.Main;
             if (showcase != null)
