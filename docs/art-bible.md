@@ -35,7 +35,7 @@ Paleta: _TBD_ ([A04](specs/art/A04-cenario-pixel-art.md)).
 
 ## Logo
 
-`Art/UI/Logo_BilusInvasion.png`: o letreiro desenhado pelo artista (BILU'S em forma de domo, INVASION abrindo em pirâmide), finalizado à mão no Aseprite. BILU'S vem em faixas de roxo, violeta e azul, com contorno ciano e extrusão escura; INVASION, em vermelho com planos de luz coral e sombra vinho. Pixel art de 215 × 189 px e 12 cores, mostrada em 4× na tela de título (a grade de 270 px do mundo). O sketch, as bases P&B e de cor (`.aseprite`) e as versões em alta resolução ficam com o artista, na pasta `Logo` do projeto de produção.
+`Art/UI/Logo_BilusInvasion.png`: o letreiro desenhado pelo artista (BILU'S em forma de domo, INVASION abrindo em pirâmide), finalizado à mão no Aseprite. BILU'S vem em faixas de roxo, violeta e azul, com contorno ciano e extrusão escura; INVASION, em vermelho com planos de luz coral e sombra vinho. Pixel art de 215 × 189 px e 12 cores, mostrada com 640 px de largura (cerca de 3×) na tela de título, para não cobrir a nave. O sketch, as bases P&B e de cor (`.aseprite`) e as versões em alta resolução ficam com o artista, na pasta `Logo` do projeto de produção.
 
 ## Modelos
 

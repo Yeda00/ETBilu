@@ -20,9 +20,9 @@
 .fade { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgb(0, 0, 0); opacity: 1; }
 
 /* ---- Title ---- */
-/* The logo is pixel art on the world's 270 px grid: 215 x 189 px shown at 4x, the size of a pixel at 1080p. */
+/* The logo is pixel art: 215 x 189 px, fitted to a 640 px width (about 3x) so it stays clear of the ship. */
 .logo {
-    width: 860px;
+    width: 640px;
     height: 756px;
     flex-shrink: 0;
     background-image: url("../Art/UI/Logo_BilusInvasion.png");
