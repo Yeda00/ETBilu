@@ -60,9 +60,9 @@ namespace OneMoreTime.EditorTools
             mission.story = new[]
             {
                 "Outubro de 2010. Bilu visitou a Terra numa missão de paz, trazendo palavras sábias que deveriam mudar o destino do planeta para sempre.",
-                "42 anos depois, tomado por uma mistura de ira, decepção e revolta, Bilu volta à Terra. Mas desta vez a paz não é mais uma opção.",
-                "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida até a última gota. Depois de uma série de catástrofes climáticas, o mar secou, e o planeta virou um deserto árido e decadente.",
-                "Os recursos que restavam foram saqueados e levados numa missão desesperada para a tão sonhada colônia em Marte. Que, ironicamente, deu errado: pelo visto, eles precisavam de professores universitários, afinal...",
+                "42 anos depois, tomado por uma mistura de ira, decepção e revolta, Bilu volta à Terra. Desta vez a paz não é uma opção.",
+                "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida até a última gota. Após uma série de catástrofes climáticas, o mar secou, e o planeta virou um deserto árido e decadente.",
+                "Os recursos restantes foram saqueados e levados numa missão desesperada para a tão sonhada colônia em Marte. Que, ironicamente, deu errado: pelo visto, eles precisavam de professores universitários, afinal...",
                 "E o tal 1% saiu à deriva pelo infinito, num cruzeiro de luxo com um destino tão certo quanto o do Titanic.",
                 "A Terra virou uma piada sem graça: as ruínas de um império decadente, defendido pelas engrenagens de um sistema sem patrão que já não sabe como parar.",
                 "Bilu volta para entregar a mensagem de novo. E desta vez ela vai descer goela abaixo.",

@@ -430,20 +430,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 464511073
-    m_Localized: "42 anos depois, tomado por uma mistura de ira, decep\xE7\xE3o e
-      revolta, Bilu volta \xE0 Terra. Mas desta vez a paz n\xE3o \xE9 mais uma op\xE7\xE3o."
+    m_Localized: "42 anos depois, tomado por uma mistura de ira, decep\xE7\xE3o e revolta, Bilu volta \xE0 Terra. Desta vez a paz n\xE3o \xE9 uma op\xE7\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 464511074
-    m_Localized: "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida
-      at\xE9 a \xFAltima gota. Depois de uma s\xE9rie de cat\xE1strofes clim\xE1ticas,
-      o mar secou, e o planeta virou um deserto \xE1rido e decadente."
+    m_Localized: "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida at\xE9 a \xFAltima gota. Ap\xF3s uma s\xE9rie de cat\xE1strofes clim\xE1ticas, o mar secou, e o planeta virou um deserto \xE1rido e decadente."
     m_Metadata:
       m_Items: []
   - m_Id: 464511075
-    m_Localized: "Os recursos que restavam foram saqueados e levados numa miss\xE3o
-      desesperada para a t\xE3o sonhada col\xF4nia em Marte. Que, ironicamente, deu
-      errado: pelo visto, eles precisavam de professores universit\xE1rios, afinal..."
+    m_Localized: "Os recursos restantes foram saqueados e levados numa miss\xE3o desesperada para a t\xE3o sonhada col\xF4nia em Marte. Que, ironicamente, deu errado: pelo visto, eles precisavam de professores universit\xE1rios, afinal..."
     m_Metadata:
       m_Items: []
   - m_Id: 464511076

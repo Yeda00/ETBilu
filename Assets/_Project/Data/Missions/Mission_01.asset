@@ -19,25 +19,15 @@ MonoBehaviour:
   titleKey: mission.01.title
   mapCode: SE
   story:
-  - "Outubro de 2010. Bilu visitou a Terra numa miss\xE3o de paz, trazendo palavras
-    s\xE1bias que deveriam mudar o destino do planeta para sempre."
-  - "42 anos depois, tomado por uma mistura de ira, decep\xE7\xE3o e revolta, Bilu
-    volta \xE0 Terra. Mas desta vez a paz n\xE3o \xE9 mais uma op\xE7\xE3o."
-  - "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida at\xE9 a
-    \xFAltima gota. Depois de uma s\xE9rie de cat\xE1strofes clim\xE1ticas, o mar
-    secou, e o planeta virou um deserto \xE1rido e decadente."
-  - "Os recursos que restavam foram saqueados e levados numa miss\xE3o desesperada
-    para a t\xE3o sonhada col\xF4nia em Marte. Que, ironicamente, deu errado: pelo
-    visto, eles precisavam de professores universit\xE1rios, afinal..."
-  - "E o tal 1% saiu \xE0 deriva pelo infinito, num cruzeiro de luxo com um destino
-    t\xE3o certo quanto o do Titanic."
-  - "A Terra virou uma piada sem gra\xE7a: as ru\xEDnas de um imp\xE9rio decadente,
-    defendido pelas engrenagens de um sistema sem patr\xE3o que j\xE1 n\xE3o sabe
-    como parar."
-  - Bilu volta para entregar a mensagem de novo. E desta vez ela vai descer goela
-    abaixo.
+  - "Outubro de 2010. Bilu visitou a Terra numa miss\xE3o de paz, trazendo palavras s\xE1bias que deveriam mudar o destino do planeta para sempre."
+  - "42 anos depois, tomado por uma mistura de ira, decep\xE7\xE3o e revolta, Bilu volta \xE0 Terra. Desta vez a paz n\xE3o \xE9 uma op\xE7\xE3o."
+  - "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida at\xE9 a \xFAltima gota. Ap\xF3s uma s\xE9rie de cat\xE1strofes clim\xE1ticas, o mar secou, e o planeta virou um deserto \xE1rido e decadente."
+  - "Os recursos restantes foram saqueados e levados numa miss\xE3o desesperada para a t\xE3o sonhada col\xF4nia em Marte. Que, ironicamente, deu errado: pelo visto, eles precisavam de professores universit\xE1rios, afinal..."
+  - "E o tal 1% saiu \xE0 deriva pelo infinito, num cruzeiro de luxo com um destino t\xE3o certo quanto o do Titanic."
+  - "A Terra virou uma piada sem gra\xE7a: as ru\xEDnas de um imp\xE9rio decadente, defendido pelas engrenagens de um sistema sem patr\xE3o que j\xE1 n\xE3o sabe como parar."
+  - "Bilu volta para entregar a mensagem de novo. E desta vez ela vai descer goela abaixo."
   - "Uma vez n\xE3o bastou. Ent\xE3o, mais uma vez:"
-  - BUSQUEM CONHECIMENTO!!!!
+  - "BUSQUEM CONHECIMENTO!!!!"
   storyKeys:
   - mission.01.story.1
   - mission.01.story.2

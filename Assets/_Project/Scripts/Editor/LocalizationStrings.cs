@@ -185,16 +185,16 @@ namespace OneMoreTime.EditorTools
                 "Outubro de 2010. Bilu visitou a Terra numa missão de paz, trazendo palavras sábias que deveriam mudar o destino do planeta para sempre.",
                 "Story crawl, paragraph 1. Bilu is the hero, an alien; 2010 is the year of his first visit.");
             yield return new("mission.01.story.2",
-                "42 years later, driven by a mix of rage, disappointment and revolt, Bilu returns to Earth. But this time peace is no longer an option.",
-                "42 anos depois, tomado por uma mistura de ira, decepção e revolta, Bilu volta à Terra. Mas desta vez a paz não é mais uma opção.",
+                "42 years later, driven by a mix of rage, disappointment and revolt, Bilu returns to Earth. This time peace is not an option.",
+                "42 anos depois, tomado por uma mistura de ira, decepção e revolta, Bilu volta à Terra. Desta vez a paz não é uma opção.",
                 "Story crawl, paragraph 2.");
             yield return new("mission.01.story.3",
                 "Consumed by tyranny and totalitarianism, Earth was squeezed down to the last drop. After a series of climate catastrophes, the sea dried up, and the planet became an arid, decaying desert.",
-                "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida até a última gota. Depois de uma série de catástrofes climáticas, o mar secou, e o planeta virou um deserto árido e decadente.",
+                "Consumida pela tirania e pelo totalitarismo, a Terra foi espremida até a última gota. Após uma série de catástrofes climáticas, o mar secou, e o planeta virou um deserto árido e decadente.",
                 "Story crawl, paragraph 3.");
             yield return new("mission.01.story.4",
-                "The resources that were left were looted and sent on a desperate mission to the long-dreamed-of colony on Mars. Which, ironically, went wrong: it seems they needed university professors after all...",
-                "Os recursos que restavam foram saqueados e levados numa missão desesperada para a tão sonhada colônia em Marte. Que, ironicamente, deu errado: pelo visto, eles precisavam de professores universitários, afinal...",
+                "The remaining resources were looted and sent on a desperate mission to the long-dreamed-of colony on Mars. Which, ironically, went wrong: it seems they needed university professors after all...",
+                "Os recursos restantes foram saqueados e levados numa missão desesperada para a tão sonhada colônia em Marte. Que, ironicamente, deu errado: pelo visto, eles precisavam de professores universitários, afinal...",
                 "Story crawl, paragraph 4.");
             yield return new("mission.01.story.5",
                 "And the so-called 1% drifted off into infinity, on a luxury cruise with a destination as certain as the Titanic's.",

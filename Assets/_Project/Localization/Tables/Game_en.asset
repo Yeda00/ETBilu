@@ -429,8 +429,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 464511073
-    m_Localized: 42 years later, driven by a mix of rage, disappointment and revolt,
-      Bilu returns to Earth. But this time peace is no longer an option.
+    m_Localized: "42 years later, driven by a mix of rage, disappointment and revolt, Bilu returns to Earth. This time peace is not an option."
     m_Metadata:
       m_Items: []
   - m_Id: 464511074
@@ -440,9 +439,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 464511075
-    m_Localized: 'The resources that were left were looted and sent on a desperate
-      mission to the long-dreamed-of colony on Mars. Which, ironically, went wrong:
-      it seems they needed university professors after all...'
+    m_Localized: "The remaining resources were looted and sent on a desperate mission to the long-dreamed-of colony on Mars. Which, ironically, went wrong: it seems they needed university professors after all..."
     m_Metadata:
       m_Items: []
   - m_Id: 464511076
