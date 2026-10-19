@@ -25,11 +25,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 8629141398965715039
-  - m_Id: 464510976
-    m_Key: menu.tagline
-    m_Metadata:
-      m_Items:
-      - rid: 8629141398965715040
   - m_Id: 464510977
     m_Key: menu.pressStart
     m_Metadata:
@@ -579,10 +574,6 @@ MonoBehaviour:
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Second line of the logo. The name of the game; not translated.
-    - rid: 8629141398965715040
-      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
-      data:
-        m_CommentText: Slogan under the logo.
     - rid: 8629141398965715041
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

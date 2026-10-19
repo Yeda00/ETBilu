@@ -31,7 +31,6 @@ namespace OneMoreTime.EditorTools
             // ---- title screen and main menu
             yield return new("menu.logoTop", "BILU'S", "BILU'S", "First line of the logo. The name of the game; not translated.");
             yield return new("menu.logoBottom", "INVASION", "INVASION", "Second line of the logo. The name of the game; not translated.");
-            yield return new("menu.tagline", "THE PAST KEEPS FIGHTING", "O PASSADO CONTINUA LUTANDO", "Slogan under the logo.");
             yield return new("menu.pressStart", "PRESS ENTER / START", "PRESSIONE ENTER / START", "Blinks on the title screen.");
             yield return new("menu.play", "MAIN GAME", "JOGO PRINCIPAL", "Main menu button: opens the mission map.");
             yield return new("menu.controls", "CONTROLS", "CONTROLES", "Main menu button.");

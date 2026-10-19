@@ -27,19 +27,16 @@
     background-image: url("../Art/UI/Logo_BilusInvasion.png");
     -unity-background-scale-mode: scale-to-fit;
 }
+/* On the main menu the logo sits small above the buttons (1.5x the drawing), and the list moves down to make room. */
+.logo.side {
+    left: 410px; top: 24px;
+    width: 322px; height: 283px; margin-left: -161px;
+}
+#main-list { top: 330px; justify-content: flex-start; }
 /* The ship: a low-res picture of the 3D showcase, above the logo and below the screens, so it passes in front of the logo. */
 .ship-view {
     position: absolute; left: 0; top: 0; right: 0; bottom: 0;
     -unity-background-scale-mode: stretch-to-fill;
-}
-.tagline {
-    position: absolute; left: 0; right: 0; top: 545px;
-    -unity-text-align: upper-center;
-    color: rgb(150, 190, 255);
-    font-size: 28px;
-    letter-spacing: 8px;
-    -unity-text-outline-width: 2px;
-    -unity-text-outline-color: rgb(6, 4, 18);
 }
 .press-start {
     position: absolute; bottom: 56px;

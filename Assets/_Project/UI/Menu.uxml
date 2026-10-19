@@ -7,7 +7,6 @@
         <ui:VisualElement name="ship-view" class="ship-view" picking-mode="Ignore" />
 
         <ui:VisualElement name="screen-title" class="screen">
-            <ui:Label name="tagline" class="tagline" />
             <ui:Label name="press-start" class="press-start" />
         </ui:VisualElement>
 

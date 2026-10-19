@@ -135,7 +135,6 @@ namespace OneMoreTime.UI
         // The words that sit in Menu.uxml; drawn again whenever the language changes.
         void ApplyStaticTexts()
         {
-            root.Q<Label>("tagline").text = L10n.Get("menu.tagline");
             pressStart.text = L10n.Get("menu.pressStart");
             root.Q<Label>("main-hint").text = L10n.Get("menu.hint.list");
             root.Q<Label>("sound-hint").text = L10n.Get("menu.hint.sound");
@@ -341,7 +340,9 @@ namespace OneMoreTime.UI
             foreach (var pair in screens)
                 pair.Value?.EnableInClassList("hidden", pair.Key != screen);
 
-            logo?.EnableInClassList("hidden", screen != MenuScreen.Title);
+            // The logo shows on the title (large, centred) and on the main menu (small, above the buttons).
+            logo?.EnableInClassList("hidden", screen != MenuScreen.Title && screen != MenuScreen.Main);
+            logo?.EnableInClassList("side", screen == MenuScreen.Main);
 
             bool shipVisible = screen == MenuScreen.Title || screen == MenuScreen.Main;
             if (showcase != null)
