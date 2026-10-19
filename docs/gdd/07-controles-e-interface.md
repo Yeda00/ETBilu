@@ -106,7 +106,7 @@ O texto da história é o do dono: em outubro de 2010 Bilu trouxe à Terra a men
 42 anos depois, com a Terra seca e saqueada por um império decadente, ele volta para entregá-la mais uma vez,
 à força. O texto fecha no tema do design: "Uma vez não bastou. Então, mais uma vez: BUSQUEM CONHECIMENTO!!!!".
 
-> **Q:** o nome da Missão Nº 1 ("Terra · Sertão Seco", "Derrubar o Império"; em inglês, "Earth · Dry Backlands", "Overthrow the Empire") é rascunho, escrito a partir da
+> **Q:** o nome da Missão Nº 1 ("Terra · Deserto Árido", "Derrubar o Império"; em inglês, "Earth · Arid Desert", "Overthrow the Empire") é rascunho, escrito a partir da
 > premissa da [bíblia de arte](../art-bible.md). O dono precisa aprovar ou reescrever. A imagem da história é
 > um recorte da arena, só para ocupar o lugar da arte final.
 

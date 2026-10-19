@@ -178,7 +178,7 @@ namespace OneMoreTime.EditorTools
                 "Hint line at the foot of the HUD with a gamepad. Each {n} is a button: 0 left stick, 1 right stick, 2 fire, 3 record, 4 dodge, 5 mine, 6 pause.");
 
             // ---- mission 01
-            yield return new("mission.01.place", "Earth · Dry Backlands", "Terra · Sertão Seco", "Mission card and map: the place, under the mission number.");
+            yield return new("mission.01.place", "Earth · Arid Desert", "Terra · Deserto Árido", "Mission card and map: the place, under the mission number.");
             yield return new("mission.01.title", "Overthrow the Empire", "Derrubar o Império", "Mission card and map: the name of the mission.");
             yield return new("mission.01.story.1",
                 "October 2010. Bilu visited Earth on a peace mission, bringing words of wisdom that were meant to change the planet's fate forever.",

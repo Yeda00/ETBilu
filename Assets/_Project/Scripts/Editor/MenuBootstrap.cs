@@ -50,7 +50,7 @@ namespace OneMoreTime.EditorTools
         {
             var mission = ScriptableObject.CreateInstance<MissionData>();
             mission.number = 1;
-            mission.place = "Earth · Dry Backlands";
+            mission.place = "Earth · Arid Desert";
             mission.title = "Overthrow the Empire";
             mission.placeKey = "mission.01.place";
             mission.titleKey = "mission.01.title";

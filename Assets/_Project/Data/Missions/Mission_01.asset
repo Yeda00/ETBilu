@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mission_01
   m_EditorClassIdentifier: OneMoreTime.Gameplay::OneMoreTime.Gameplay.Session.MissionData
   number: 1
-  place: "Terra \xB7 Sert\xE3o Seco"
+  place: "Terra \xB7 Deserto \xC1rido"
   title: "Derrubar o Imp\xE9rio"
   placeKey: mission.01.place
   titleKey: mission.01.title

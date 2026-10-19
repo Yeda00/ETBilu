@@ -18,7 +18,7 @@ namespace OneMoreTime.Gameplay.Session
 
         [Header("Mission card (shown when the stage starts)")]
         [Tooltip("Where it happens, like the planet under \"Mission No. 2\".")]
-        public string place = "Earth · Dry Backlands";
+        public string place = "Earth · Arid Desert";
         [Tooltip("The mission's name.")]
         public string title = "Overthrow the Empire";
         [Tooltip("Key in the Game string table for the place. Empty: use the plain text above.")]
